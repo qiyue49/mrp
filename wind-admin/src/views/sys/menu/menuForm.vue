@@ -91,11 +91,9 @@
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="图标" prop="icon">
-            <div id="iconBox" style="display: flex; border: 1px solid #DCDFE6; padding: 0 15px; border-radius: 4px;">
-              <i class="fas" :class="['fa-' + temp.icon]" style="line-height: 36px;" />
-              <el-input v-model="temp.icon" style="border: none; padding: 0" @click.native="addIcon" />
-              <a class="clear" @click="clear1()" />
-            </div>
+            <el-input v-model="temp.icon" clearable @focus="addIcon" @clear="clear1">
+              <i slot="prefix" :class="['fas', 'fa-' + temp.icon]" style="line-height: 36px;" />
+            </el-input>
           </el-form-item>
         </el-col>
         <el-col :span="12">
