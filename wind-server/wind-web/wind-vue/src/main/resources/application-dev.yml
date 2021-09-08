@@ -1,6 +1,6 @@
 #spring
 spring:
-  mail:                    #邮件发送
+  mail: #邮件发送
     host: smtp.163.com
     username: test@163.com
     sender: test@163.com
@@ -13,7 +13,7 @@ spring:
           starttls:
             enable: true
             required: true
-  redis:   #redis 配置
+  redis: #redis 配置
     host: localhost
     port: 6379
     password:
@@ -50,7 +50,7 @@ oss:
     #阿里云api的bucket名称
     bucket-name:
     #外部访问域名
-    domain:  http://xxxxx.oss-cn-beijing.aliyuncs.com
+    domain: http://xxxxx.oss-cn-beijing.aliyuncs.com
 
 #短信配置
 sms:

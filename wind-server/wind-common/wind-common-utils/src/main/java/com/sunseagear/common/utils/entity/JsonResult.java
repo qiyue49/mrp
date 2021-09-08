@@ -6,6 +6,10 @@ import java.io.Serializable;
 
 public class JsonResult<T>
         implements Serializable {
+
+    public static final int SUCCESS = 0;
+    public static final int FAIL = 1;
+
     private static final long serialVersionUID = 1L;
     private boolean success;
     private String message;

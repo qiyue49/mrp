@@ -26,6 +26,7 @@ import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.oltu.oauth2.common.utils.OAuthUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -178,18 +179,26 @@ public class Oauth2Controller {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha);
         try {
             subject.login(token);
-            LoginLogUtils.recordSuccessLoginLog(username, "登陆成功");
+            LoginLogUtils.recordSuccessLoginLog(UserUtils.getUser().getUsername(), "登陆成功");
             return true;
+        } catch (ExpiredCredentialsException e) {
+            request.setAttribute("error", e.getMessage());
+            request.setAttribute("errorCode", ResponseError.EXPIRED_FAIL);
+            LoginLogUtils.recordFailLoginLog(username, e.getMessage());
+            return false;
         } catch (IncorrectCredentialsException e) {
             request.setAttribute("error", "用户名或密码错误");
+            request.setAttribute("errorCode", ResponseError.USERNAME_OR_PASSWORD_ERROR);
             LoginLogUtils.recordFailLoginLog(username, "用户名或密码错误");
             return false;
         } catch (AuthenticationException e) {
             request.setAttribute("error", e.getMessage());
+            request.setAttribute("errorCode", ResponseError.MSG_LOGIN_FAILE);
             LoginLogUtils.recordFailLoginLog(username, e.getMessage());
             return false;
         } catch (Exception e) {
             request.setAttribute("error", e.getMessage());
+            request.setAttribute("errorCode", ResponseError.MSG_LOGIN_FAILE);
             LoginLogUtils.recordFailLoginLog(username, e.getMessage());
             return false;
         }
@@ -230,7 +239,8 @@ public class Oauth2Controller {
                 //如果用户没有登录，跳转到登陆页面
                 if (!subject.isAuthenticated() && !login(subject, username, password, "", request)) {
                     String error = (String) request.getAttribute("error");
-                    return ResponseUtils.getErrResponse(HttpServletResponse.SC_UNAUTHORIZED, ResponseError.MSG_LOGIN_FAILE, error);
+                    int errorCode = (Integer) request.getAttribute("errorCode");
+                    return ResponseUtils.getErrResponse(HttpServletResponse.SC_UNAUTHORIZED, errorCode, error);
                 } else {
                     Principal principal = UserUtils.getPrincipal(); // 如果已经登录，则跳转到管理首页
                     OAuthIssuerImpl oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());

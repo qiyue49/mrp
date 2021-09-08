@@ -143,7 +143,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 清除当前用户缓存
      */
-    public static void clearCache() {
+    public static void clearCurrentUserCache() {
         UserUtils.clearCache(getUser());
     }
 
@@ -162,7 +162,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         CacheUtils.remove(USER_CACHE, CACHE_PERMISSION_LIST_ + roleId);
     }
 
-    public static void clearAllCache() {
+    public static void clearAllUserCache() {
         CacheUtils.clear(USER_CACHE);
     }
 

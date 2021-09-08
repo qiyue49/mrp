@@ -1,9 +1,7 @@
 package com.sunseagear.wind.common.listener;
 
-import com.sunseagear.common.utils.CacheUtils;
 import com.sunseagear.common.utils.MessageUtils;
 import com.sunseagear.wind.common.helper.SysConfigHelper;
-import com.sunseagear.wind.modules.sys.entity.SysConfig;
 import com.sunseagear.wind.utils.DictUtils;
 import com.sunseagear.wind.utils.UserUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +22,7 @@ public class WebStartInitListener implements ApplicationListener<ContextRefreshe
         log.error("===初始化系统配置数据===");
         SysConfigHelper.getInstance().init();
         log.error("===清空用户缓存===");
-        UserUtils.clearAllCache();
+        UserUtils.clearAllUserCache();
         log.error("=================数据初始化完成=========================");
         printKeyLoadMessage();
     }

@@ -176,32 +176,45 @@ public class JsonUtils {
         return result;
     }
 
-    public static String successMessage(Object data, String includesProperties, boolean isInclude) {
+    public static <T> String successMessage(T data, String includesProperties, boolean isInclude) {
         return getGson(includesProperties, isInclude).toJson(new JsonResult(true, "操作成功", data));
     }
 
-    public static <T> String successMessage(String message) {
-        return successMessage(message, "");
-    }
-
-    public static <T> String successMessage(String message, int statusCode) {
-        return successMessage(message, statusCode, "");
+    public static String successMessage(String message, int statusCode) {
+        return successMessage(statusCode, message, "");
     }
 
     public static <T> String successMessage(String message, T data) {
-        return successMessage(message, 0, data);
+        return successMessage(JsonResult.SUCCESS, message, data);
     }
 
     public static <T> String successMessage(T data) {
-        return successMessage("操作成功", 0, data);
+        return successMessage(JsonResult.SUCCESS, "操作成功", data);
     }
 
-    public static <T> String successMessage(String message, int statusCode, T data) {
-        return gson.toJson(new JsonResult(true, message, data));
+    public static String successMessage(String message) {
+        return successMessage(JsonResult.SUCCESS, message, null, "", false);
     }
 
-    public static <T> String failMessage(String message) {
-        return gson.toJson(new JsonResult(false, message, ""));
+    public static <T> String successMessage(int statusCode, String message, T data) {
+        return successMessage(statusCode, message, data, "", false);
+    }
+
+    public static <T> String successMessage(int statusCode, String message, T data, String includesProperties, boolean isInclude) {
+        return message(true, statusCode, message, data, includesProperties, isInclude);
+    }
+
+    public static <T> String message(boolean isSuccess, int statusCode, String message, T data, String includesProperties, boolean isInclude) {
+        return getGson(includesProperties, isInclude).toJson(new JsonResult(isSuccess, statusCode, message, data));
+    }
+
+
+    public static String failMessage(String message) {
+        return failMessage(JsonResult.FAIL, message);
+    }
+
+    public static String failMessage(int statusCode, String message) {
+        return message(false, statusCode, message, null, null, false);
     }
 
 

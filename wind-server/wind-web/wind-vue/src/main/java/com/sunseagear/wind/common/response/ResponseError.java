@@ -24,6 +24,7 @@ public class ResponseError {
     public static final int INVALID_ACCESS_TOKEN = 100008; //ACCESS_TOKEN无效
     public static final int INVALID_REFRESH_TOKEN = 100009; //REFRESH_TOKEN无效
     public static final int AUTHORIZATION_FAILE = 100010; //授权失败
+    public static final int EXPIRED_FAIL = 100011; //授权失败
 
     public static final int TOKEN_IS_NULL = 200001; //TOKEN为空
     public static final int AUTHENTICATION_FAIL = 200002;//认证失败

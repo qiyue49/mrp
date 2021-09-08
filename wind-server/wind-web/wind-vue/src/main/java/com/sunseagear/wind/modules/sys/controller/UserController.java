@@ -177,7 +177,7 @@ public class UserController extends BaseBeanController<User> {
             userService.insertOrUpdate(oldUser);
             String currentUserId = UserUtils.getUser().getId();
             if (currentUserId.equals(user.getId())) {
-                UserUtils.clearCache();
+                UserUtils.clearCurrentUserCache();
             }
         } catch (Exception e) {
             e.printStackTrace();
