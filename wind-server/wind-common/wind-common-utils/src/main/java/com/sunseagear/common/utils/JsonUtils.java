@@ -1,10 +1,11 @@
 package com.sunseagear.common.utils;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.utils.entity.JsonResult;
-import com.sunseagear.common.utils.entity.ServerPageResult;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.sunseagear.common.utils.entity.PageResult;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
@@ -217,9 +218,20 @@ public class JsonUtils {
         return message(false, statusCode, message, null, null, false);
     }
 
+    public static <T extends Page> String successPageMessage(int statusCode, String message, T data) {
+        return pageMessage(true, statusCode, message, data, "", false);
+    }
 
-    public static <T> String serverPageMessage(boolean status, String message, int total, T data) {
-        return gson.toJson(new ServerPageResult(status, message, total, data));
+    public static <T extends Page> String successPageMessage(T data) {
+        return pageMessage(true, 0, "操作成功", data, "", false);
+    }
+
+    public static <T extends Page> String successPageMessage(T data, String includesProperties, boolean isInclude) {
+        return pageMessage(true, 0, "操作成功", data, includesProperties, isInclude);
+    }
+
+    public static <T extends Page> String pageMessage(boolean isSuccess, int statusCode, String message, T data, String includesProperties, boolean isInclude) {
+        return getGson(includesProperties, isInclude).toJson(new PageResult<T>(isSuccess, statusCode, message, data));
     }
 
     public static class ContextUrlAdapter implements JsonSerializer<String>, JsonDeserializer<String> {
