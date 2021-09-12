@@ -1,0 +1,237 @@
+<template>
+  <div>
+    <el-row>
+      <el-col :span="6">
+        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+                 label-position="left">
+
+          <div class="card">
+            <p class="title">{{ title }}</p>
+            <div class="input">
+              <p>用户名</p>
+              <el-form-item prop="username">
+                <el-input
+                  ref="username"
+                  v-model="loginForm.username"
+                  :placeholder="$t('login.username')"
+                  name="username"
+                  type="text"
+                  tabindex="1"
+                  autocomplete="on"
+                />
+              </el-form-item>
+            </div>
+            <div class="input">
+              <p>登陆密码</p>
+              <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
+                <el-form-item prop="password">
+                  <el-input
+                    :key="passwordType"
+                    ref="password"
+                    v-model="loginForm.password"
+                    :type="passwordType"
+                    :placeholder="$t('login.password')"
+                    name="password"
+                    tabindex="2"
+                    autocomplete="on"
+                    @keyup.native="checkCapslock"
+                    @blur="capsTooltip = false"
+                    @keyup.enter.native="handleLogin"
+                  />
+                  <span class="show-pwd" @click="showPwd">
+                    <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+                  </span>
+                </el-form-item>
+              </el-tooltip>
+              <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+                         @click.native.prevent="handleLogin">
+                {{ $t('login.logIn') }}
+              </el-button>
+            </div>
+          </div>
+        </el-form>
+      </el-col>
+      <el-col :span="18">
+        <!--        <div class="app" />-->
+        <el-image :src="require('@/assets/img/login/login1.png')" fit="fill" style="width: 100%;height: 100vh;" />
+      </el-col>
+    </el-row>
+
+  </div>
+</template>
+
+<script>
+import { configureWebpack } from '../../../vue.config'
+import { mapState } from 'vuex'
+import { Message } from 'element-ui'
+
+export default {
+  name: 'Login1',
+  data() {
+    const validatePassword = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('密码不能小于6位'))
+      } else {
+        callback()
+      }
+    }
+    return {
+      title: configureWebpack.name,
+      isLogin: false,
+      loginForm: {
+        username: process.env.NODE_ENV === 'development' ? 'admin' : undefined,
+        password: process.env.NODE_ENV === 'development' ? '123456' : undefined
+      },
+      loginRules: {
+        username: [{ required: true, trigger: 'blur' }],
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+      },
+      passwordType: 'password',
+      capsTooltip: false,
+      loading: false,
+      showDialog: false,
+      redirect: undefined,
+      otherQuery: {}
+    }
+  },
+  computed: {
+    ...mapState({
+      token: state => state.user.token
+    })
+  },
+  watch: {
+    $route: {
+      handler: function(route) {
+        const query = route.query
+        if (query) {
+          this.redirect = query.redirect
+          this.otherQuery = this.getOtherQuery(query)
+        }
+      },
+      immediate: true
+    }
+  },
+  created() {
+  },
+  mounted() {
+    if (this.loginForm.username === '') {
+      this.$refs.username.focus()
+    } else if (this.loginForm.password === '') {
+      this.$refs.password.focus()
+    }
+  },
+  destroyed() {
+    // window.removeEventListener('storage', this.afterQRScan)
+  },
+  methods: {
+    checkCapslock({ shiftKey, key } = {}) {
+      if (key && key.length === 1) {
+        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
+          this.capsTooltip = true
+        } else {
+          this.capsTooltip = false
+        }
+      }
+      if (key === 'CapsLock' && this.capsTooltip === true) {
+        this.capsTooltip = false
+      }
+    },
+    showPwd() {
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
+      } else {
+        this.passwordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password.focus()
+      })
+    },
+    handleLogin() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('user/login', this.loginForm)
+            .then((res) => {
+              this.loading = false
+              if (!this.$store.getters.token) {
+                Message.error(res.data.msg)
+                return
+              }
+
+              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+            })
+            .catch(() => {
+              this.loading = false
+            })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    getRandomArbitrary(min, max) {
+      return Math.floor(Math.random() * (max - min) + min)
+    },
+    getOtherQuery(query) {
+      return Object.keys(query).reduce((acc, cur) => {
+        if (cur !== 'redirect') {
+          acc[cur] = query[cur]
+        }
+        return acc
+      }, {})
+    }
+  }
+}
+</script>
+<style lang="scss" scoped>
+.app {
+  width: 100%;
+  height: 100%;
+  background: url("../../assets/img/login/login1.png") no-repeat;
+  background-position: top center;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+.login-form {
+  padding: 20px;
+  max-width: 100%;
+  margin: 10% 10% 10% 10%;
+  overflow: hidden;
+}
+
+.card {
+  .title {
+    font-size: 38px;
+    font-weight: 600;
+    color: #fd6905;
+  }
+
+  .show-pwd {
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    font-size: 16px;
+    color: #889aa4;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .el-button {
+    margin-top: 50px;
+    width: 90%;
+    background-color: #fd6e07;
+    border-color: #fd6e07;
+  }
+
+  .input {
+    margin: 50px 0;
+
+    p {
+      font-size: 16px;
+      color: #bbb7b7;
+    }
+
+  }
+}
+</style>
