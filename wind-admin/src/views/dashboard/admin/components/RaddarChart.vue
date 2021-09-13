@@ -7,7 +7,7 @@ const echarts = require('echarts')
 require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
 
-const animationDuration = 3000
+const animationDuration = 1600
 
 export default {
   props: {

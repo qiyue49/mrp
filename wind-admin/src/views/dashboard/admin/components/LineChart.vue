@@ -124,7 +124,7 @@ export default {
           smooth: true,
           type: 'line',
           data: expectedData,
-          animationDuration: 2800,
+          animationDuration: 1600,
           animationEasing: 'cubicInOut'
         },
         {
@@ -144,7 +144,7 @@ export default {
             }
           },
           data: actualData,
-          animationDuration: 2800,
+          animationDuration: 1600,
           animationEasing: 'quadraticOut'
         }]
       })
