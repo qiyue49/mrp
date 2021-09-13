@@ -64,7 +64,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
         }
         // 预处理
         Page pageBean = emailTemplateService.selectPage(getPage(), entityWrapper);
-        return Response.successPageJson(pageBean, "id,name,code,templateSubject,templateContent");
+        return Response.successPageJson(pageBean);
     }
 
     @PostMapping("add")

@@ -17,7 +17,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormMenuVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" @click="handleChangeMenus">设置权限</el-button>
+      <el-button type="primary" :loading="loading" @click="handleChangeMenus">设置权限</el-button>
     </div>
   </el-dialog>
 </template>
@@ -34,6 +34,7 @@ export default {
       selectCurentRoleId: '',
       selectMenuIds: [],
       type: undefined,
+      loading: false,
       menuTemp: {
         menuIds: ''
       },
@@ -78,7 +79,9 @@ export default {
       const menuIds = checkedKeys.join(',')
       const postData = { roleId: this.selectCurentRoleId, menuIds: menuIds }
       var postFun = this.type !== 1 ? setPermission : setMenu
+      this.loading = true
       postFun(postData).then(response => {
+        this.loading = false
         const data = response.data
         if (data.code === 0) {
           this.dialogFormMenuVisible = false

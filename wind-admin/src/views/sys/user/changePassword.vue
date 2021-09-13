@@ -11,7 +11,7 @@
         <el-input v-model.trim="userForm.passwordConfirm" :type="passwordType" placeholder="确认密码" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('userForm')">保存</el-button>
+        <el-button type="primary" :loading="loading" @click="submitForm('userForm')">保存</el-button>
         <el-button @click="resetForm('userForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -37,6 +37,7 @@ export default {
         oldPassword: '',
         passwordConfirm: ''
       },
+      loading: false,
       passwordType: 'password',
       rules: {
         passwordConfirm: [{ required: true, validator: validatePass, trigger: 'blur' }],
@@ -51,7 +52,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true
           myUpdateChangePassword(this.userForm).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.$message.success(response.data.msg)
               this.$store.dispatch('user/logout').then(() => {

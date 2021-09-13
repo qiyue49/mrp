@@ -4,7 +4,7 @@
       <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.sendCode" style="width: 200px;" class="filter-item" placeholder="请输入模板编码" @keyup.enter.native="handleFilter" />
 
-      <el-select v-model="listQuery.status" class="filter-item" placeholder="请选择发送状态">
+      <el-select v-model="listQuery.status" style="width: 200px;" class="filter-item" placeholder="请选择发送状态">
         <el-option label="全部状态" value="" />
         <el-option
           v-for="item in statusOptions"
@@ -15,7 +15,7 @@
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendMsg">短信重发</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleSendMsg">发送短信</el-button>
+      <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleSendMsg">发送短信</el-button>
     </div>
 
     <el-table
@@ -206,6 +206,7 @@ export default {
       row.status = status
     },
     resetTemp() {
+      this.sendMsgLoading = false
       this.temp = {
         phone: '',
         code: '',
@@ -222,7 +223,9 @@ export default {
     runSendMsg() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.sendMsgLoading = true
           sendMsg(this.temp).then(response => {
+            this.sendMsgLoading = false
             if (response.data.code === 0) {
               this.dialogFormVisible = false
               this.getList()

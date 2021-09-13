@@ -108,9 +108,10 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-      <el-button v-else type="primary" @click="updateData(true)">{{ $t('table.confirm') }}</el-button>
-      <el-button v-if="dialogStatus!='create'" type="primary" @click="updateData(false)">保存</el-button>
+      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData(true)">
+        {{ $t('table.confirm') }}
+      </el-button>
+      <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
     </div>
 
     <icon-selector ref="iconSelector" @iconSelect="addCreateData" />
@@ -142,6 +143,7 @@ export default {
         label: 'name'
       },
       externalLink: '0',
+      loading: false,
       dialogFormVisible: false,
       displayDisable: false,
       layoutDisable: false,
@@ -180,6 +182,7 @@ export default {
       }
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         name: '',
@@ -226,10 +229,12 @@ export default {
       }
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
             this.temp.parentIds.length = 0
           }
           createMenu(this.temp).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false
@@ -289,7 +294,9 @@ export default {
             this.temp.parent = undefined
           }
           const tempData = Object.assign({}, this.temp)
+          this.loading = true
           updateMenu(tempData).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code === 0) {
               if (refresh) {

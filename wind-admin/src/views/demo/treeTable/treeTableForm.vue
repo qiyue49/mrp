@@ -26,7 +26,7 @@
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
-      <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -67,6 +67,7 @@ export default {
         update: '编辑',
         create: '新建'
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: ''
     }
@@ -79,6 +80,7 @@ export default {
       this.$emit('refreshList')
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         name: undefined,
@@ -118,7 +120,9 @@ export default {
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
             this.temp.parentIds.length = 0
           }
+          this.loading = true
           createTreeTable(this.temp).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.getList()
               this.dialogFormVisible = false
@@ -174,11 +178,16 @@ export default {
             this.temp.parent = undefined
           }
           const tempData = Object.assign({}, this.temp)
-          console.log(tempData)
-          updateTreeTable(tempData).then(() => {
-            this.getList()
-            this.dialogFormVisible = false
-            this.$message.success('更新成功')
+          this.loading = true
+          updateTreeTable(tempData).then((response) => {
+            this.loading = true
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
           })
         }
       })

@@ -59,7 +59,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
         }
         // 预处理
         Page pageBean = smsTemplateService.selectPage(getPage(), entityWrapper);
-        return Response.successPageJson(pageBean, "id,name,code,businessType,templateContent");
+        return Response.successPageJson(pageBean);
     }
 
     @PostMapping("add")

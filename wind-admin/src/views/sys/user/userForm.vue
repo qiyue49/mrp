@@ -49,7 +49,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -75,6 +75,7 @@ export default {
       },
       organizationIds: undefined,
       temp: {},
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -105,6 +106,7 @@ export default {
       })
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         realname: undefined,
@@ -134,7 +136,9 @@ export default {
       }
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           createUser(this.temp).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.getList()
               this.dialogFormVisible = false
@@ -162,8 +166,10 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
           updateUser(tempData).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.dialogFormVisible = false
               this.getList()

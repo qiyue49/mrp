@@ -90,7 +90,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="dialogFormPasswordVisible = false">{{ $t('table.cancel') }}</el-button>
-            <el-button type="primary" @click="postModifyPassword">{{ $t('table.confirm') }}</el-button>
+            <el-button type="primary" :loading="loading" @click="postModifyPassword">{{ $t('table.confirm') }}</el-button>
           </div>
         </el-dialog>
 
@@ -167,6 +167,7 @@ export default {
         id: undefined,
         password: undefined
       },
+      loading: false,
       dialogFormPasswordVisible: false,
       modifyPasswordRules: {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
@@ -242,10 +243,13 @@ export default {
       })
     },
     postModifyPassword() {
+      this.loading = false
       this.$refs['dataModifyForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.modifyPassword)
           modifyPassword(tempData).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.dialogFormPasswordVisible = false
               this.$message.success(response.data.msg)

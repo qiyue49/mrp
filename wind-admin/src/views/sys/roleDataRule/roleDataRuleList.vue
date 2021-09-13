@@ -72,7 +72,7 @@
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
-      <el-button type="primary" @click="updateData">
+      <el-button type="primary" :loading="loading" @click="updateData">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -113,6 +113,7 @@ export default {
         update: '编辑',
         create: '新建'
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       multipleSelection: []
@@ -121,6 +122,7 @@ export default {
   methods: {
     handleRoleDataRuleUpdate(id) {
       this.dialogStatus = 'update'
+      this.loading = false
       this.dialogFormVisible = true
       this.listQuery.roleId = id
       this.temp.roleId = id
@@ -176,7 +178,9 @@ export default {
         ids.push(item.id)
       })
       this.temp.ids = ids.join(',')
+      this.loading = true
       updateRoleDataRules(this.temp).then(response => {
+        this.loading = false
         if (response.data.code === 0) {
           this.dialogFormVisible = false
           this.$message.success(response.data.msg)

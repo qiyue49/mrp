@@ -30,7 +30,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="generateButtonDialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" @click="generateButton">{{ $t('table.confirm') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="generateButton">{{ $t('table.confirm') }}</el-button>
     </div>
   </el-dialog>
 </template>
@@ -76,6 +76,7 @@ export default {
         parentPermission: '',
         additional: '1'
       },
+      loading: false,
       generateButtonDialogFormVisible: false,
       generateButtonRules: {
         parentPermission: [{ required: true, message: '父级权限必填', trigger: 'blur' }],
@@ -116,8 +117,9 @@ export default {
           })
           this.generateButtonTemp.permissionTitles = permissionTitle.join(',')
           this.generateButtonTemp.permissions = this.generateButtonTemp.permission.join(',')
-          console.log('generateButton', this.generateButtonTemp)
+          this.loading = true
           generateButton(this.generateButtonTemp).then((response) => {
+            this.loading = false
             if (response.data.code === 0) {
               this.getList()
               this.generateButtonDialogFormVisible = false

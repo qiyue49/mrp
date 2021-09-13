@@ -63,8 +63,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+        <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+          {{ $t('table.confirm') }}
+        </el-button>
       </div>
     </el-dialog>
 
@@ -113,6 +114,7 @@ export default {
         appId: ''
 
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -165,6 +167,7 @@ export default {
       row.status = status
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         name: '',
@@ -187,15 +190,22 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          createTemplate(this.temp).then(() => {
-            this.dialogFormVisible = false
-            this.$message.success('创建成功')
-            this.getList()
+          this.loading = true
+          createTemplate(this.temp).then((response) => {
+            this.loading = false
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
           })
         }
       })
     },
     handleUpdate(row) {
+      this.resetTemp()
       this.temp = Object.assign({}, row) // copy obj
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -206,11 +216,17 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
-          updateTemplate(tempData).then(() => {
-            this.dialogFormVisible = false
-            this.$message.success('更新成功')
-            this.getList()
+          updateTemplate(tempData).then((response) => {
+            this.loading = false
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
           })
         }
       })

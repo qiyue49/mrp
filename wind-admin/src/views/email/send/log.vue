@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-input v-model="listQuery.email" style="width: 200px;" class="filter-item" placeholder="请输入Email" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.subject" style="width: 200px;" class="filter-item" placeholder="请输入主题" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.status" class="filter-item" placeholder="请选择发送状态">
+      <el-select v-model="listQuery.status" style="width: 200px;" class="filter-item" placeholder="请选择发送状态">
         <el-option label="全部状态" value="" />
         <el-option
           v-for="item in statusOptions"
@@ -103,7 +103,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button type="primary" @click="runSendEmail">发送邮件</el-button>
+        <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
       </div>
     </el-dialog>
 
@@ -217,6 +217,7 @@ export default {
       row.status = status
     },
     resetTemp() {
+      this.sendEmailLoading = false
       this.temp = {
         phone: '',
         code: '',
@@ -233,7 +234,9 @@ export default {
     runSendEmail() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.sendEmailLoading = true
           sendEmail(this.temp).then(response => {
+            this.sendEmailLoading = false
             if (response.data.code === 0) {
               this.dialogFormVisible = false
               this.getList()

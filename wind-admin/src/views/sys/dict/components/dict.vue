@@ -66,8 +66,9 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-          <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-          <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+          <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+            {{ $t('table.confirm') }}
+          </el-button>
         </div>
       </el-dialog>
     </div>
@@ -107,6 +108,7 @@ export default {
         sort: 1,
         remarks: ''
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -150,6 +152,7 @@ export default {
       row.status = status
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         label: '',
@@ -181,7 +184,9 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           createDict(this.temp).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code === 0) {
               store.dispatch('dict/GetDicts').then(() => {
@@ -199,6 +204,7 @@ export default {
       })
     },
     handleUpdate(row) {
+      this.resetTemp()
       this.temp = Object.assign({}, row) // copy obj
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
@@ -209,8 +215,10 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
           updateDict(tempData).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code === 0) {
               store.dispatch('dict/GetDicts').then(() => {

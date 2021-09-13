@@ -22,7 +22,7 @@
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
-      <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -62,6 +62,7 @@ export default {
         update: '编辑',
         create: '新建'
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: ''
     }
@@ -71,6 +72,7 @@ export default {
       this.$emit('refreshList')
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         createBy: undefined,
@@ -98,7 +100,10 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           createTenant(this.temp).then(response => {
+            this.loading = false
+            this.loading = false
             if (response.data.code === 0) {
               this.getList()
               this.dialogFormVisible = false
@@ -129,8 +134,10 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
           updateTenant(tempData).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.dialogFormVisible = false
               this.getList()

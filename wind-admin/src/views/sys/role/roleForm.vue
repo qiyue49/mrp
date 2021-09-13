@@ -38,8 +38,9 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-      <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+        {{ $t('table.confirm') }}
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -53,6 +54,7 @@ export default {
     return {
       temp: {},
       tenantId: this.$store.getters.info.id,
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -78,6 +80,7 @@ export default {
       this.$emit('refreshList')
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         isSys: this.isDefaultTenant ? '1' : '0',
@@ -98,10 +101,16 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          addRole(this.temp).then(() => {
-            this.getList()
-            this.dialogFormVisible = false
-            this.$message.success('添加成功')
+          this.loading = true
+          addRole(this.temp).then((response) => {
+            this.loading = false
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
           })
         }
       })
@@ -117,11 +126,17 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
-          updateRole(tempData).then(() => {
-            this.getList()
-            this.dialogFormVisible = false
-            this.$message.success('更新成功')
+          updateRole(tempData).then((response) => {
+            this.loading = false
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
           })
         }
       })

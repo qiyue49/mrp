@@ -81,7 +81,7 @@
       />
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :fullscreen="true">
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
         <el-row :gutter="20">
           <el-col :span="12">
@@ -156,8 +156,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+        <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+          {{ $t('table.confirm') }}
+        </el-button>
       </div>
     </el-dialog>
 
@@ -204,6 +205,7 @@ export default {
         jobStatus: '',
         jobGroup: ''
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -257,6 +259,7 @@ export default {
       row.status = status
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         jobName: '',
@@ -283,7 +286,9 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           createSchedule(this.temp).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code !== 0) {
               this.$message({
@@ -311,9 +316,11 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
           updateSchedule(tempData).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code !== 0) {
               this.$message({

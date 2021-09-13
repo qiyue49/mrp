@@ -4,7 +4,7 @@
       <el-input v-model="listQuery.jobName" style="width: 200px;" class="filter-item" placeholder="请输入任务名称" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.executeClass" style="width: 200px;" class="filter-item" placeholder="请输入执行类" @keyup.enter.native="handleFilter" />
 
-      <el-select v-model="listQuery.status" class="filter-item" placeholder="请选择状态">
+      <el-select v-model="listQuery.status" style="width: 200px;" class="filter-item" placeholder="请选择状态">
         <el-option label="全部状态" value="" />
         <el-option
           v-for="item in statusOptions"
@@ -72,7 +72,7 @@
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="small" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>
       </el-table-column>

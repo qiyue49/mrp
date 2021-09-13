@@ -85,8 +85,9 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-        <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+        <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+          {{ $t('table.confirm') }}
+        </el-button>
       </div>
     </el-dialog>
 
@@ -132,6 +133,7 @@ export default {
         code: '',
         remark: ''
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -182,6 +184,7 @@ export default {
       row.status = status
     },
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         isSys: '1',
@@ -202,15 +205,22 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          createTemplate(this.temp).then(() => {
-            this.list.unshift(this.temp)
-            this.dialogFormVisible = false
-            this.$message.success('创建成功')
+          this.loading = true
+          createTemplate(this.temp).then((response) => {
+            this.loading = false
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.list.unshift(this.temp)
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
           })
         }
       })
     },
     handleUpdate(row) {
+      this.resetTemp()
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
       this.dialogStatus = 'update'
@@ -222,18 +232,24 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateTemplate(tempData).then(() => {
-            for (const v of this.list) {
-              if (v.id === this.temp.id) {
-                const index = this.list.indexOf(v)
-                this.list.splice(index, 1, this.temp)
-                break
+          updateTemplate(tempData).then((response) => {
+            this.loading = false
+            if (response.data.code === 0) {
+              for (const v of this.list) {
+                if (v.id === this.temp.id) {
+                  const index = this.list.indexOf(v)
+                  this.list.splice(index, 1, this.temp)
+                  break
+                }
               }
+              this.dialogFormVisible = false
+              this.$message.success('更新成功')
+            } else {
+              this.$message.error(response.data.msg)
             }
-            this.dialogFormVisible = false
-            this.$message.success('更新成功')
           })
         }
       })

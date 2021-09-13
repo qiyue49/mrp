@@ -17,7 +17,7 @@
         <upload-image v-model="userForm.portrait" dir="avatar" />
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="submitForm('userForm')">保存</el-button>
+        <el-button type="primary" :loading="loading" @click="submitForm('userForm')">保存</el-button>
         <el-button @click="resetForm('userForm')">重置</el-button>
       </el-form-item>
     </el-form>
@@ -46,7 +46,8 @@ export default {
         email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
         phone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
-      }
+      },
+      loading: false
     }
   },
   created() {
@@ -65,7 +66,9 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          this.loading = true
           myUpdateUser(this.userForm).then(response => {
+            this.loading = false
             if (response.data.code === 0) {
               this.$message.success(response.data.msg)
             } else {

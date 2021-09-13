@@ -13,8 +13,9 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button v-if="dialogStatus=='create'" type="primary" @click="createData">{{ $t('table.confirm') }}</el-button>
-      <el-button v-else type="primary" @click="updateData">{{ $t('table.confirm') }}</el-button>
+      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+        {{ $t('table.confirm') }}
+      </el-button>
     </div>
   </el-dialog>
 
@@ -33,6 +34,7 @@ export default {
         code: '',
         remarks: ''
       },
+      loading: false,
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -52,6 +54,7 @@ export default {
     },
 
     resetTemp() {
+      this.loading = false
       this.temp = {
         id: undefined,
         name: '',
@@ -70,7 +73,9 @@ export default {
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           createCar(this.temp).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false
@@ -102,8 +107,10 @@ export default {
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
+          this.loading = true
           const tempData = Object.assign({}, this.temp)
           updateCar(tempData).then((response) => {
+            this.loading = false
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false
