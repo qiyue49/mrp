@@ -31,10 +31,10 @@
                 <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="right" manual>
                   <el-form-item prop="password">
                     <el-input
-                      prefix-icon="el-icon-lock"
                       :key="passwordType"
                       ref="password"
                       v-model="loginForm.password"
+                      prefix-icon="el-icon-lock"
                       :type="passwordType"
                       :placeholder="$t('login.password')"
                       name="password"
