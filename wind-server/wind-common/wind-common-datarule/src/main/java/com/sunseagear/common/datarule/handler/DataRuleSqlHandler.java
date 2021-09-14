@@ -4,6 +4,7 @@ import com.sunseagear.common.datarule.model.DataRuleModel;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.text.StringEscapeUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
@@ -47,12 +48,13 @@ public class DataRuleSqlHandler {
         if (DataRuleModel.ALL == scopeRule) {
             return null;
         } else if (DataRuleModel.CUSTOM == scopeRule) {
-            Template template = groupTemplate.getTemplate(originalSql);
+            Template template = groupTemplate.getTemplate(StringEscapeUtils.unescapeHtml4(dataScope.getScopeValue()));
             if (template.program instanceof ErrorGrammarProgram){
                 logger.info(((ErrorGrammarProgram)template.program).getException().detailCode);
             }
             userMap.forEach(template::binding);
-            return template.render();
+            String whereSql =  template.render();
+            return String.format(" select %s from (%s) scope " + whereSql, dataScope.getScopeField(), originalSql);
         } else if (DataRuleModel.OWN == scopeRule) {
             String whereSql = "where scope.%s = '%s'";
             id = principal.getId();
