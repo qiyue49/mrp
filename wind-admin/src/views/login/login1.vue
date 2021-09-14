@@ -196,7 +196,7 @@ export default {
 .login-form {
   padding: 20px;
   max-width: 100%;
-  margin: 10% 10% 10% 10%;
+  margin: calc((100vh - 464px) / 2) 0 calc((100vh - 464px) / 2) 20%;
   overflow: hidden;
 }
 
