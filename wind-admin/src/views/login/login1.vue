@@ -13,6 +13,7 @@
                 <el-input
                   ref="username"
                   v-model="loginForm.username"
+                  prefix-icon="el-icon-user"
                   :placeholder="$t('login.username')"
                   name="username"
                   type="text"
@@ -29,6 +30,7 @@
                     :key="passwordType"
                     ref="password"
                     v-model="loginForm.password"
+                    prefix-icon="el-icon-lock"
                     :type="passwordType"
                     :placeholder="$t('login.password')"
                     name="password"
@@ -52,8 +54,7 @@
         </el-form>
       </el-col>
       <el-col :span="18">
-        <!--        <div class="app" />-->
-        <el-image :src="require('@/assets/img/login/login1.png')" fit="fill" style="width: 100%;height: 100vh;" />
+        <div class="app" />
       </el-col>
     </el-row>
 
@@ -185,18 +186,21 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app {
-  width: 100%;
-  height: 100%;
-  background: url("../../assets/img/login/login1.png") no-repeat;
+  width: 75%;
+  height: 100vh;
   background-position: top center;
   background-size: 100% 100%;
-  position: relative;
+  position: absolute;
+  background-image: url("~@/assets/img/login/login1.png");
+  justify-content: center;
+  align-items: center;
+
 }
 
 .login-form {
   padding: 20px;
   max-width: 100%;
-  margin: calc((100vh - 464px) / 2) 0 calc((100vh - 464px) / 2) 20%;
+  margin: calc((100vh - 464px) / 2) 0 20% 20%;
   overflow: hidden;
 }
 
