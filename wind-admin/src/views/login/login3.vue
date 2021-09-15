@@ -4,9 +4,9 @@
       <div class="top">
         <div class="title">{{ title }}</div>
         <div class="fuTitle">
-          <span />
+          <span></span>
           <p>提升中小企业影响力</p>
-          <span />
+          <span></span>
         </div>
       </div>
       <div class="bottom">
@@ -188,7 +188,7 @@ export default {
 .all {
   width: 100%;
   height: 100%;
-  background-image: url("~@/assets/img/login/login3.png");
+  background-image: url("~@/assets/img/login/login3/login3.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -256,7 +256,7 @@ export default {
         position: absolute;
         width: 98%;
         height: 57%;
-        background-image: url("~@/assets/img/login/login3-1.png");
+        background-image: url("~@/assets/img/login/login3/login3-1.png");
         background-size: 100% 100%;
         display: flex;
         justify-content: center;

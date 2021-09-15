@@ -3,7 +3,7 @@
     <el-input v-model="name" suffix-icon="el-icon-search" placeholder="请输入图标名称" @input.native="filterIcons" />
     <el-row>
       <el-col v-for="(item, index) in iconList" :key="index" v-model="temp.addIcon" :span="8" class="colBox" :class="{'active': item == isActive}" @click.native="activeFun($event)">
-        <i class="fas" :class="['fa-' + item]" />
+        <i class="fas" :class="['fa-' + item]"></i>
         <span class="col-span">{{ item }}</span>
       </el-col>
     </el-row>

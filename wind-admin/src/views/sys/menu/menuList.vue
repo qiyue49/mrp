@@ -25,7 +25,7 @@
       </el-table-column>
       <el-table-column width="150" label="图标">
         <template slot-scope="scope">
-          <i :class="scope.row.icon" />
+          <i :class="scope.row.icon"></i>
           <span>{{ scope.row.icon }}</span>
         </template>
       </el-table-column>

@@ -92,7 +92,7 @@
         <el-col :span="12">
           <el-form-item label="图标" prop="icon">
             <el-input v-model="temp.icon" clearable @focus="addIcon" @clear="clear1">
-              <i slot="prefix" :class="['fas', 'fa-' + temp.icon]" style="line-height: 36px;" />
+              <i slot="prefix" :class="['fas', 'fa-' + temp.icon]" style="line-height: 36px;"></i>
             </el-input>
           </el-form-item>
         </el-col>

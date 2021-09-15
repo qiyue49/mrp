@@ -4,7 +4,7 @@
     <template v-for="(item, index) in menu">
       <!-- 最后一级菜单 -->
       <el-menu-item v-if="!item.hidden && index < visibleNumber" :key="item.id" :index="item.id" @click="click(item)">
-        <i :class="item.meta.icon" />
+        <i :class="item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>
       </el-menu-item>
     </template>
@@ -14,7 +14,7 @@
       <template v-for="(item, index) in menu">
         <!-- 最后一级菜单 -->
         <el-menu-item v-if="!item.hidden && index >= visibleNumber" :key="item.id" :index="item.id" @click="click(item)">
-          <i :class="item.meta.icon" />
+          <i :class="item.meta.icon"></i>
           <span slot="title">{{ item.meta.title }}</span>
         </el-menu-item>
       </template>

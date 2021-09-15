@@ -6,9 +6,9 @@
         class="toggle"
         type="checkbox"
         @change="toggleTodo( todo)"
-      >
-      <label @dblclick="editing = true" v-text="todo.text" />
-      <button class="destroy" @click="deleteTodo( todo )" />
+      />
+      <label @dblclick="editing = true" v-text="todo.text"></label>
+      <button class="destroy" @click="deleteTodo( todo )"></button>
     </div>
     <input
       v-show="editing"
@@ -18,7 +18,7 @@
       @keyup.enter="doneEdit"
       @keyup.esc="cancelEdit"
       @blur="doneEdit"
-    >
+    />
   </li>
 </template>
 

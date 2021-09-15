@@ -4,7 +4,7 @@
       <div class="title">{{ title }}</div>
       <div class="content">
         <div class="left-img">
-          <img src="~@/assets/login6/left-img.png" alt="" />
+          <img src="~@/assets/img/login/login4/left-img.png" alt="" />
         </div>
         <div class="right-content">
           <h2 class="right-title">
@@ -12,19 +12,20 @@
           </h2>
           <div class="input">
             <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-                 label-position="left">
-            <el-form-item prop="username">
+                     label-position="left">
+              <el-form-item prop="username">
                 <el-input
                   ref="username"
                   v-model="loginForm.username"
                   :placeholder="$t('login.username')"
+                  prefix-icon="el-icon-user"
                   name="username"
                   type="text"
                   tabindex="1"
                   autocomplete="on"
                 />
               </el-form-item>
-            <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
+              <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
                 <el-form-item prop="password">
                   <el-input
                     :key="passwordType"
@@ -32,6 +33,7 @@
                     v-model="loginForm.password"
                     :type="passwordType"
                     :placeholder="$t('login.password')"
+                    prefix-icon="el-icon-lock"
                     name="password"
                     tabindex="2"
                     autocomplete="on"
@@ -45,10 +47,10 @@
                 </el-form-item>
               </el-tooltip>
 
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+              <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
                          @click.native.prevent="handleLogin">
                 {{ $t('login.logIn') }}
-            </el-button>
+              </el-button>
             </el-form>
           </div>
         </div>
@@ -62,7 +64,7 @@ import { mapState } from 'vuex'
 import { Message } from 'element-ui'
 
 export default {
-  name: 'Login1',
+  name: 'Login4',
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -183,7 +185,7 @@ export default {
 <style lang="scss" scoped>
 .app {
   height: 100%;
-  background: url("~@/assets/login6/operations-bgc.png") no-repeat;
+  background: url("~@/assets/img/login/login4/operations-bgc.png") no-repeat;
   background-position: top center;
   background-size: 100% 100%;
 }
@@ -237,11 +239,11 @@ export default {
   .show-pwd {
     position: absolute;
     right: 10px;
-    top: 0px;
     font-size: 16px;
     color: #889aa4;
     cursor: pointer;
     user-select: none;
+    margin: 20px 0px;
   }
 }
 </style>

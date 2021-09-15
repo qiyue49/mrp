@@ -63,10 +63,6 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/operations',
-    component: () => import('@/views/login/operations.vue')
-  },
-  {
     path: '/404',
     component: () => import('@/views/error-page/404'),
     hidden: true

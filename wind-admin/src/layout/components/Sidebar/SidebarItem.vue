@@ -3,21 +3,21 @@
     <template v-for="item in menu">
       <app-link v-if="isExternalUrl(item.path) && !item.children && !item.hidden" :key="item.id" :to="item.path">
         <el-menu-item index="">
-          <i :class="item.meta.icon" />
+          <i :class="item.meta.icon"></i>
           <span slot="title">{{ item.meta.title }}</span>
         </el-menu-item>
       </app-link>
 
       <!-- 最后一级菜单 -->
       <el-menu-item v-else-if="!item.children && !item.hidden" :key="item.id" :index="item.path">
-        <i :class="item.meta.icon" />
+        <i :class="item.meta.icon"></i>
         <span slot="title">{{ item.meta.title }}</span>
       </el-menu-item>
 
       <!-- 此菜单下还有子菜单 -->
       <el-submenu v-else-if="item.children && !item.hidden" :key="item.id" :index="item.id">
         <template slot="title">
-          <i :class="item.meta.icon" />
+          <i :class="item.meta.icon"></i>
           <span>{{ item.meta.title }}</span>
         </template>
         <!-- 递归 -->

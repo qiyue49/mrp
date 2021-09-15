@@ -72,9 +72,9 @@
 
     <el-dialog :title="$t('login.thirdparty')" :visible.sync="showDialog">
       {{ $t('login.thirdpartyTips') }}
-      <br>
-      <br>
-      <br>
+      <br />
+      <br />
+      <br />
       <social-sign />
     </el-dialog>
   </div>
@@ -101,7 +101,7 @@ export default {
     return {
       title: configureWebpack.name,
       isLogin: false,
-      coverImgUrl: require('@/assets/img/bg6.jpg'),
+      coverImgUrl: require('@/assets/img/login/login0/bg6.jpg'),
       loginForm: {
         username: process.env.NODE_ENV === 'development' ? 'admin' : undefined,
         password: process.env.NODE_ENV === 'development' ? '123456' : undefined
@@ -137,7 +137,7 @@ export default {
   },
   created() {
     // window.addEventListener('storage', this.afterQRScan)
-    this.coverImgUrl = require('@/assets/img/bg' + this.getRandomArbitrary(1, 7) + '.jpg')
+    this.coverImgUrl = require('@/assets/img/login/login0/bg' + this.getRandomArbitrary(1, 7) + '.jpg')
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -273,7 +273,7 @@ $cursor: #fff;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
-$bgImage: '~@/assets/img/bg5.jpg';
+$bgImage: '~@/assets/img/login/login0/bg5.jpg';
 .login-container {
 
   position:fixed;

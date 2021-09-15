@@ -14,7 +14,7 @@
       :before-upload="beforeUpload"
       class="uploader"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar">
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
       <i v-else class="el-icon-upload uploader-icon">
         {{ uploadLabel }}
       </i>

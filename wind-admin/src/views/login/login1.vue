@@ -54,7 +54,7 @@
         </el-form>
       </el-col>
       <el-col :span="18">
-        <div class="app" />
+        <div class="app"></div>
       </el-col>
     </el-row>
 
@@ -191,7 +191,7 @@ export default {
   background-position: top center;
   background-size: 100% 100%;
   position: absolute;
-  background-image: url("~@/assets/img/login/login1.png");
+  background-image: url("~@/assets/img/login/login1/login1.png");
   justify-content: center;
   align-items: center;
 

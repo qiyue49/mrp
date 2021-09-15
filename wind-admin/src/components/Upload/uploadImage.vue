@@ -17,7 +17,7 @@
           :before-upload="beforeAvatarUpload"
           class="avatar-uploader"
         >
-          <i class="el-icon-plus avatar-uploader-icon" />
+          <i class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-col>
     </el-row>

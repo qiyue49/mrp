@@ -25,7 +25,7 @@
           <el-table-column
             width="50" align="center" label="选择">
             <template slot-scope="scope">
-              <el-radio v-model="selectCurentUserId" :label="scope.row.id" @change="selectUser(scope.row)"><i /></el-radio>
+              <el-radio v-model="selectCurentUserId" :label="scope.row.id" @change="selectUser(scope.row)"><i></i></el-radio>
             </template>
           </el-table-column>
           <el-table-column min-width="120" align="center" label="姓名">
