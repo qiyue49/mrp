@@ -15,6 +15,28 @@
 
 联系作者，加QQ:553671691,或者微信: Dothegod，加人请注明“飞廉”
 
+### 系统截图
+登录页 (同时具备多种风格，总有一款适合你)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login1.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login3.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login4.png)
+首页
+![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/home.png)
+用户
+![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/user.png)
+菜单
+![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/menu.png)
+权限
+![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/permission.png)
+数据规则配置
+![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/dataruleForm.png)
+字典
+![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/dict.png)
+代码样例
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/expendTable.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/websocket.png)
+
 ### 全量代码生成平台开放注册了
 * 一个运行在云端的代码生成平台。代替人工完成基本的功能的编码，无封装，无隐藏，和手写代码一样的效果。
 * 能够自动生成单表，树表，展开表，级联表（主子表），左树右表等常见的后台系统页面。
@@ -146,27 +168,5 @@ npm run build
 ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/install/server/run.PNG)
 6. 系统运行成功<br>
 ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/install/server/start.PNG)
-
-
-### 系统截图
-登录页(同时具备多种风格，总有一款适合你)
-![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png)
-![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login1.png)
-![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login3.png)
-![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login4.png)
-首页
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/home.png)
-用户
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/user.png)
-菜单
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/menu.png)
-权限
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/permission.png)
-数据规则配置
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/dataruleForm.png)
-字典
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/dict.png)
-代码样例
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/demo.png)
 
 
