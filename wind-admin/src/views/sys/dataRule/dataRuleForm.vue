@@ -9,7 +9,6 @@
       </el-form-item>
       <el-form-item label="数据权限类型" prop="scopeType">
         <el-select v-model="temp.scopeType" class="filter-item" placeholder="请选择数据权限类型" style="width: 100%">
-          <el-option label="全部状态" value="" />
           <el-option
             v-for="item in dictList('dataRuleType')"
             :key="item.label + 'scopeType'"
@@ -18,16 +17,16 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="权限判定关联表" prop="tableName">
+      <el-form-item v-if="show('3,4')" label="权限判定关联表" prop="tableName">
         <el-input v-model="temp.tableName" />
       </el-form-item>
-      <el-form-item label="用户数据表关联字段" prop="userColumn">
+      <el-form-item v-if="show('3,4')" label="用户数据表关联字段" prop="userColumn">
         <el-input v-model="temp.userColumn" />
       </el-form-item>
-      <el-form-item label="用户实体类关联字段" prop="userEntityField">
+      <el-form-item v-if="show('3,4')" label="用户实体类关联字段" prop="userEntityField">
         <el-input v-model="temp.userEntityField" />
       </el-form-item>
-      <el-form-item label="权限判定字段" prop="scopeColumn">
+      <el-form-item v-if="show('2,3,4')" label="权限判定字段" prop="scopeColumn">
         <el-input v-model="temp.scopeColumn" />
       </el-form-item>
       <el-form-item label="数据展示字段" prop="scopeField">
@@ -36,7 +35,7 @@
       <el-form-item label="数据权限类名" prop="scopeClass">
         <el-input v-model="temp.scopeClass" />
       </el-form-item>
-      <el-form-item label="数据权限值域" prop="scopeValue">
+      <el-form-item v-if="show('5')" label="自定义SQL" prop="scopeValue">
         <el-input v-model="temp.scopeValue" type="textarea" />
       </el-form-item>
     </el-form>
@@ -60,10 +59,14 @@ export default {
     return {
       rules: {
         resourceCode: [{ required: true, message: '资源编号为必填项', trigger: 'blur' }],
+        userColumn: [{ required: true, message: '用户数据表关联字段为必填项', trigger: 'blur' }],
+        tableName: [{ required: true, message: '权限判定关联表为必填项', trigger: 'blur' }],
+        userEntityField: [{ required: true, message: '用户实体类关联字段为必填项', trigger: 'blur' }],
         scopeName: [{ required: true, message: '数据权限名称为必填项', trigger: 'blur' }],
         scopeField: [{ required: true, message: '数据展示字段为必填项', trigger: 'blur' }, { validator: this.validateScopeField, tigger: 'blur' }],
         scopeClass: [{ required: true, message: '数据权限类名为必填项', trigger: 'blur' }],
         scopeColumn: [{ required: true, message: '权限判定字段为必填项', trigger: 'blur' }],
+        scopeValue: [{ required: true, message: '自定义SQL为必填项', trigger: 'blur' }],
         scopeType: [{ required: true, message: '数据权限类型为必填项', trigger: 'blur' }]
       },
       temp: {
@@ -98,6 +101,15 @@ export default {
     }
   },
   methods: {
+    show(value) {
+      const array = value.split(',')
+      for (let i = 0; i < array.length; i++) {
+        if (array[i] === this.temp.scopeType) {
+          return true
+        }
+      }
+      return false
+    },
     getList() {
       this.$emit('refreshList')
     },
