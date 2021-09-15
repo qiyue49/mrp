@@ -14,6 +14,7 @@
             <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
                      label-position="left">
               <el-form-item prop="username">
+                <p>用户名</p>
                 <el-input
                   ref="username"
                   v-model="loginForm.username"
@@ -27,6 +28,7 @@
               </el-form-item>
               <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
                 <el-form-item prop="password">
+                  密码
                   <el-input
                     :key="passwordType"
                     ref="password"
@@ -227,9 +229,6 @@ export default {
     }
     .input {
       margin: 0 25px;
-      .el-input {
-        margin: 20px 0px;
-      }
       .el-button {
         margin-top: 50px;
         width: 100%;
@@ -243,7 +242,6 @@ export default {
     color: #889aa4;
     cursor: pointer;
     user-select: none;
-    margin: 20px 0px;
   }
 }
 </style>
