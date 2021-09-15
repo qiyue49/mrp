@@ -132,7 +132,7 @@ npm run build
 10. 出现如下提示的时候，说明项目启动项目<br>
 ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/install/run.PNG)
 11. 点击链接http://localhost:9527或者http://192.168.1.101:9527，自动打开浏览器，出现如下界面，说明系统启动成功<br>
-![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/install/home.PNG)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png)
 
 ### 后端运行
 1. 使用数据库工具导入数据脚本，可以使用自己的常用的数据库工具导入数据<br>
@@ -149,6 +149,11 @@ npm run build
 
 
 ### 系统截图
+登录页(同时具备多种风格，总有一款适合你)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login1.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login3.png)
+![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login4.png)
 首页
 ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/home.png)
 用户
