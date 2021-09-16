@@ -1,6 +1,10 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
+      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        {{ $t('table.search') }}
+      </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border>
@@ -39,7 +43,10 @@ export default {
       tableKey: 0,
       list: [],
       total: null,
-      listLoading: true
+      listLoading: true,
+      listQuery: {
+        name: undefined
+      }
     }
   },
   created() {
@@ -61,6 +68,9 @@ export default {
         this.$refs.form.setList(this.list)
         this.listLoading = false
       })
+    },
+    handleFilter() {
+      this.getList()
     },
     handleCreate() {
       this.$refs.form.handleCreate()

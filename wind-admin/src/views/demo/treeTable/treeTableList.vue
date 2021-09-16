@@ -1,12 +1,16 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
+      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+        {{ $t('table.search') }}
+      </el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>
     </div>
 
-    <el-table :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
+    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
       <el-table-column label="机构名称" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.name }}</span>
@@ -54,8 +58,7 @@ export default {
       list: [],
       listLoading: true,
       listQuery: {
-        page: 1,
-        limit: this.$store.getters.defaultPageSize
+        name: undefined
       }
     }
   },
@@ -78,6 +81,9 @@ export default {
     },
     load(tree, treeNode, resolve) {
       resolve(tree.children)
+    },
+    handleFilter() {
+      this.getList()
     },
     handleUpdate(row) {
       this.$refs.form.setList(this.list)

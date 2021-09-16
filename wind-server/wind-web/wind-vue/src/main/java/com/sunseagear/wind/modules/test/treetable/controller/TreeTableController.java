@@ -3,6 +3,7 @@ package com.sunseagear.wind.modules.test.treetable.controller;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.utils.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -54,6 +55,11 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
         //加入条件
         QueryWrapper<TreeTable> entityWrapper = new QueryWrapper<>();
         entityWrapper.orderByDesc( "create_date");
+        String name = request.getParameter("name");
+        if (!StringUtils.isEmpty(name)) {
+            entityWrapper.like("name", name);
+        }
+
         // 预处理
         List<TreeTable> treeNodeList = treeTableService.selectList(entityWrapper);
         List<TreeTable> vueTreeNodes = VueTreeHelper.create().sort(treeNodeList);

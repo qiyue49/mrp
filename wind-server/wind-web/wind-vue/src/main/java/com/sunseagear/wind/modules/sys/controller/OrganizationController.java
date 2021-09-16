@@ -48,9 +48,9 @@ public class OrganizationController extends BaseBeanController<Organization> {
         QueryWrapper<Organization> entityWrapper = new QueryWrapper<Organization>();
         entityWrapper.eq("tenant_id", UserUtils.getTenantId());
         //加入条件
-        String keyword = request.getParameter("keyword");
-        if (!StringUtils.isEmpty(keyword)) {
-            entityWrapper.like("name", keyword);
+        String name = request.getParameter("name");
+        if (!StringUtils.isEmpty(name)) {
+            entityWrapper.like("name", name);
         }
         List<Organization> treeNodeList = organizationService.selectList(entityWrapper);
         List<Organization> vueTreeNodes = VueTreeHelper.create().sort(treeNodeList);
