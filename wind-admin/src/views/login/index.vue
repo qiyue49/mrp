@@ -1,8 +1,9 @@
 <template>
-  <login0 v-if="index === 0" />
-  <login1 v-else-if="index === 1" />
-  <login3 v-else-if="index === 2" />
-  <login4 v-else-if="index === 3" />
+  <login4 />
+<!--  <login0 v-if="index === 0" />-->
+<!--  <login1 v-else-if="index === 1" />-->
+<!--  <login3 v-else-if="index === 2" />-->
+<!--  <login4 v-else-if="index === 3" />-->
 </template>
 
 <script>

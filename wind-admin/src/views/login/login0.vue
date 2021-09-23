@@ -102,7 +102,7 @@
 
 <script>
 import LangSelect from '@/components/LangSelect'
-import Indentify from '@/components/Indentify/indentify'
+import Indentify from '@/components/Identify/identify'
 import SocialSign from './components/SocialSignin'
 import { mapState } from 'vuex'
 import { Message } from 'element-ui'

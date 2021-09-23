@@ -89,7 +89,7 @@
 import { configureWebpack } from '../../../vue.config'
 import { mapState } from 'vuex'
 import { Message } from 'element-ui'
-import Indentify from '@/components/Indentify/indentify'
+import Indentify from '@/components/Identify/identify'
 import { makeCode } from '@/utils'
 
 export default {
