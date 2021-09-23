@@ -12,8 +12,8 @@
       <div class="bottom">
         <div>
           <el-form ref="loginForm" :model="loginForm" :rules="loginRules" autocomplete="on" label-position="left">
-            <el-row :gutter="40" style="padding-left: 40px; padding-right: 40px">
-              <el-col :span="12">
+            <el-row :gutter="20" style="padding-left: 40px; padding-right: 40px">
+              <el-col :span="errorTime >= 3 ? 8 : 12">
                 <el-form-item prop="username">
                   <el-input
                     ref="username"
@@ -27,7 +27,7 @@
                   />
                 </el-form-item>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="errorTime >= 3 ? 8 : 12">
                 <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="right" manual>
                   <el-form-item prop="password">
                     <el-input
@@ -50,6 +50,26 @@
                   </el-form-item>
                 </el-tooltip>
               </el-col>
+              <el-col v-if="errorTime >= 3" :span="8">
+                <el-form-item prop="identify">
+                  <el-row>
+                    <el-col :span="14">
+                      <el-input
+                        ref="username"
+                        v-model="loginForm.identify"
+                        prefix-icon="el-icon-postcard"
+                        :placeholder="$t('login.identify')"
+                        name="identify"
+                        type="text"
+                        tabindex="3" />
+                    </el-col>
+                    <el-col :span="10">
+                      <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click.native.prevent="makeCode" />
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+
+              </el-col>
             </el-row>
           </el-form>
         </div>
@@ -65,9 +85,12 @@
 import { configureWebpack } from '../../../vue.config'
 import { mapState } from 'vuex'
 import { Message } from 'element-ui'
+import Indentify from '@/components/Indentify/indentify'
+import { makeCode } from '@/utils'
 
 export default {
   name: 'Login3',
+  components: { Indentify },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -76,16 +99,28 @@ export default {
         callback()
       }
     }
+    const validateIdentify = (rule, value, callback) => {
+      if (value.toLowerCase() != this.identifyCode.toLowerCase()) {
+        this.makeCode()
+        callback(new Error('验证码错误'))
+      } else {
+        callback()
+      }
+    }
     return {
       title: configureWebpack.name,
+      identifyCode: undefined,
       isLogin: false,
+      errorTime: 0,
       loginForm: {
         username: process.env.NODE_ENV === 'development' ? 'admin' : undefined,
-        password: process.env.NODE_ENV === 'development' ? '123456' : undefined
+        password: process.env.NODE_ENV === 'development' ? '123456' : undefined,
+        identify: undefined
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        identify: [{ required: true, trigger: 'blur', validator: validateIdentify }]
       },
       passwordType: 'password',
       capsTooltip: false,
@@ -120,11 +155,16 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.makeCode()
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    makeCode() {
+      this.identifyCode = makeCode(4)
+      // console.log('identifyCode', this.identifyCode)
+    },
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
@@ -155,6 +195,8 @@ export default {
             .then((res) => {
               this.loading = false
               if (!this.$store.getters.token) {
+                this.errorTime++
+                this.makeCode()
                 Message.error(res.data.msg)
                 return
               }

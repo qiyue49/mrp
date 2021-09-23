@@ -121,7 +121,7 @@ export default {
       }
     }
     const validateIdentify = (rule, value, callback) => {
-      if (value.length != this.identifyCode) {
+      if (value.toLowerCase() != this.identifyCode.toLowerCase()) {
         this.makeCode()
         callback(new Error('验证码错误'))
       } else {
