@@ -45,11 +45,35 @@
                   </span>
                 </el-form-item>
               </el-tooltip>
-              <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                         @click.native.prevent="handleLogin">
-                {{ $t('login.logIn') }}
-              </el-button>
+
             </div>
+
+            <div v-if="errorTime >= 3" class="input">
+              <p>验证码</p>
+              <el-form-item prop="identify">
+                <el-row>
+                  <el-col :span="18">
+                    <el-input
+                      ref="username"
+                      v-model="loginForm.identify"
+                      prefix-icon="el-icon-postcard"
+                      :placeholder="$t('login.identify')"
+                      name="identify"
+                      type="text"
+                      tabindex="3" />
+                  </el-col>
+                  <el-col :span="6">
+                    <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click.native.prevent="makeCode" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+
+            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+                       @click.native.prevent="handleLogin">
+              {{ $t('login.logIn') }}
+            </el-button>
+
           </div>
         </el-form>
       </el-col>
@@ -65,9 +89,12 @@
 import { configureWebpack } from '../../../vue.config'
 import { mapState } from 'vuex'
 import { Message } from 'element-ui'
+import Indentify from '@/components/Indentify/indentify'
+import { makeCode } from '@/utils'
 
 export default {
   name: 'Login1',
+  components: { Indentify },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -76,16 +103,28 @@ export default {
         callback()
       }
     }
+    const validateIdentify = (rule, value, callback) => {
+      if (value.length != this.identifyCode) {
+        this.makeCode()
+        callback(new Error('验证码错误'))
+      } else {
+        callback()
+      }
+    }
     return {
       title: configureWebpack.name,
+      identifyCode: undefined,
       isLogin: false,
+      errorTime: 0,
       loginForm: {
         username: process.env.NODE_ENV === 'development' ? 'admin' : undefined,
-        password: process.env.NODE_ENV === 'development' ? '123456' : undefined
+        password: process.env.NODE_ENV === 'development' ? '123456' : undefined,
+        identify: undefined
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        identify: [{ required: true, trigger: 'blur', validator: validateIdentify }]
       },
       passwordType: 'password',
       capsTooltip: false,
@@ -120,11 +159,16 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.makeCode()
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    makeCode() {
+      this.identifyCode = makeCode(4)
+      console.log('identifyCode', this.identifyCode)
+    },
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
@@ -155,6 +199,8 @@ export default {
             .then((res) => {
               this.loading = false
               if (!this.$store.getters.token) {
+                this.errorTime++
+                this.makeCode()
                 Message.error(res.data.msg)
                 return
               }
@@ -229,7 +275,6 @@ export default {
   }
 
   .input {
-    margin: 50px 0;
 
     p {
       font-size: 16px;
