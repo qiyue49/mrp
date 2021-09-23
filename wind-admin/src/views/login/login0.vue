@@ -48,6 +48,26 @@
         </el-form-item>
       </el-tooltip>
 
+      <el-form-item v-if="errorTime >= 3" prop="identify">
+        <el-row>
+          <el-col :span="19">
+            <span class="svg-container">
+              <svg-icon icon-class="password" />
+            </span>
+            <el-input
+              ref="username"
+              v-model="loginForm.identify"
+              :placeholder="$t('login.identify')"
+              name="identify"
+              type="text"
+              tabindex="3" />
+          </el-col>
+          <el-col :span="5">
+            <indentify ref="identify" :identify-code="identifyCode" :content-width="100" :content-height="47" @click.native.prevent="makeCode" />
+          </el-col>
+        </el-row>
+      </el-form-item>
+
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
         {{ $t('login.logIn') }}
       </el-button>
@@ -82,14 +102,16 @@
 
 <script>
 import LangSelect from '@/components/LangSelect'
+import Indentify from '@/components/Indentify/indentify'
 import SocialSign from './components/SocialSignin'
 import { mapState } from 'vuex'
 import { Message } from 'element-ui'
 import { configureWebpack } from '../../../vue.config'
+import { makeCode } from '@/utils'
 
 export default {
   name: 'Login0',
-  components: { LangSelect, SocialSign },
+  components: { LangSelect, SocialSign, Indentify },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -98,17 +120,29 @@ export default {
         callback()
       }
     }
+    const validateIdentify = (rule, value, callback) => {
+      if (value.length != this.identifyCode) {
+        this.makeCode()
+        callback(new Error('验证码错误'))
+      } else {
+        callback()
+      }
+    }
     return {
       title: configureWebpack.name,
+      identifyCode: undefined,
       isLogin: false,
       coverImgUrl: require('@/assets/img/login/login0/bg6.jpg'),
+      errorTime: 0,
       loginForm: {
         username: process.env.NODE_ENV === 'development' ? 'admin' : undefined,
-        password: process.env.NODE_ENV === 'development' ? '123456' : undefined
+        password: process.env.NODE_ENV === 'development' ? '123456' : undefined,
+        identify: undefined
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur' }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        identify: [{ required: true, trigger: 'blur', validator: validateIdentify }]
       },
       passwordType: 'password',
       capsTooltip: false,
@@ -136,8 +170,6 @@ export default {
     }
   },
   created() {
-    // window.addEventListener('storage', this.afterQRScan)
-    this.coverImgUrl = require('@/assets/img/login/login0/bg' + this.getRandomArbitrary(1, 7) + '.jpg')
   },
   mounted() {
     if (this.loginForm.username === '') {
@@ -145,11 +177,16 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+    this.makeCode()
   },
   destroyed() {
     // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
+    makeCode() {
+      this.identifyCode = makeCode(4)
+      console.log('identifyCode', this.identifyCode)
+    },
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
         if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
@@ -180,6 +217,8 @@ export default {
             .then((res) => {
               this.loading = false
               if (!this.$store.getters.token) {
+                this.errorTime++
+                this.makeCode()
                 Message.error(res.data.msg)
                 return
               }
@@ -206,24 +245,6 @@ export default {
         return acc
       }, {})
     }
-    // afterQRScan() {
-    //   if (e.key === 'x-admin-oauth-code') {
-    //     const code = getQueryObject(e.newValue)
-    //     const codeMap = {
-    //       wechat: 'code',
-    //       tencent: 'code'
-    //     }
-    //     const type = codeMap[this.auth_type]
-    //     const codeName = code[type]
-    //     if (codeName) {
-    //       this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-    //         this.$router.push({ path: this.redirect || '/' })
-    //       })
-    //     } else {
-    //       alert('第三方登录失败')
-    //     }
-    //   }
-    // }
   }
 }
 </script>
@@ -239,7 +260,7 @@ $cursor: #fff;
 /* reset element-ui css */
 .login-container {
   .el-input {
-    display: inline-block;
+    //display: inline-block;
     height: 47px;
     width: 85%;
 
@@ -294,7 +315,7 @@ $bgImage: '~@/assets/img/login/login0/bg5.jpg';
   .login-form {
     padding: 20px;
     background: rgba(0,0,0,.3);
-    position: relative;
+    //position: relative;
     max-width: 100%;
     margin: calc((100vh - 425px) / 2) 35% 35%;
     overflow: hidden;
