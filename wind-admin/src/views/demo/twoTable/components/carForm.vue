@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { createCar, updateCar, getCar } from '@/api/demo/car'
+import { createCar, updateCar, getCar } from '@/api/demo/twoTable/car'
 
 export default {
   name: 'CarForm',

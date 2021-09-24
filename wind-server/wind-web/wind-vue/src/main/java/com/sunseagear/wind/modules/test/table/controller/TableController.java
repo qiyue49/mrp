@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
+import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -14,12 +15,15 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import com.sunseagear.wind.utils.excel.ExportExcel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -119,5 +123,44 @@ public class TableController extends BaseBeanController<Table> {
         List<Serializable> idList = Arrays.asList(ids);
         tableService.deleteBatchIds(idList);
         return Response.ok("删除成功");
+    }
+
+    @PostMapping("export")
+    @Log(logType = LogType.EXPORT)
+    @RequiresPermissions("test:table:table:export")
+    public String export(HttpServletRequest request, HttpServletResponse response){
+        try {
+            QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
+            entityWrapper.orderByDesc( "create_date");
+
+            String title = request.getParameter("title");
+            if (!StringUtils.isEmpty(title)) {
+                entityWrapper.eq("title", title);
+            }
+            String level = request.getParameter("level");
+            if (!StringUtils.isEmpty(title)) {
+                entityWrapper.eq("level", level);
+            }
+            String type = request.getParameter("type");
+            if (!StringUtils.isEmpty(type)) {
+                entityWrapper.eq("type", type);
+            }
+            List<Table> list = tableService.selectList(entityWrapper);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            new ExportExcel("综合表格", Table.class).setDataList(list).write(bos);
+            byte[] bytes = bos.toByteArray();
+            String bytesRes = StringUtils.bytesToHexString2(bytes);
+            String fileName = "综合表格"+ DateUtils.getDate("yyyyMMddHHmmss");
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("bytes", bytesRes);
+            result.put("title", fileName);
+
+            return Response.successJson(result);
+        } catch (Exception e) {
+//            e.printStackTrace();
+            logger.error("Exception",e);
+            return Response.failJson("导出关于我们记录失败！失败信息："+e.getMessage());
+        }
+
     }
 }

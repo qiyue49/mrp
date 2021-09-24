@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { fetchCarList, deleteCar } from '@/api/demo/car'
+import { fetchCarList, deleteCar } from '@/api/demo/twoTable/car'
 import waves from '@/directive/waves' // 水波纹指令
 import carForm from './carForm' // 水波纹指令
 

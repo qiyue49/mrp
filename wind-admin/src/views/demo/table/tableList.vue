@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import { deleteTable, fetchTableList } from '@/api/demo/table'
+import { deleteTable, fetchTableList, exportTable } from '@/api/demo/table/table'
 import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import tableForm from './tableForm'
@@ -157,16 +157,16 @@ export default {
 
     handleDownload() {
       this.downloadLoading = true
-      import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-        const data = this.formatJson(filterVal, this.list)
-        excel.export_json_to_excel({
-          header: tHeader,
-          data,
-          filename: 'table-list'
-        })
-        this.downloadLoading = false
+      exportTable(this.listQuery).then(response => {
+        this.downloadLoading = true
+        if (response.data.code === 0) {
+          import('@/vendor/Export2Excel').then(excel => {
+            excel.export_byte_to_excel(response.data.data.bytes, response.data.data.title)
+            this.downloadLoading = false
+          })
+        } else {
+          this.$message.error(response.data.msg)
+        }
       })
     },
     formatJson(filterVal, jsonData) {

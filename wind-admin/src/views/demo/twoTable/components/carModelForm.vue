@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { createCarModel, updateCarModel, getCarModel } from '@/api/demo/carModel'
+import { createCarModel, updateCarModel, getCarModel } from '@/api/demo/twoTable/carModel'
 
 export default {
   name: 'CarModelForm',

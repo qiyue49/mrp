@@ -38,10 +38,19 @@ export function deleteTable(id) {
   })
 }
 
-export function batchTable(ids) {
+export function batchDelete(ids) {
   return request({
     url: '/test/table/table/batch/delete',
     method: 'post',
     data: { ids }
   })
 }
+
+export function exportTable(data) {
+  return request({
+    url: '/test/table/table/export',
+    method: 'post',
+    data
+  })
+}
+
