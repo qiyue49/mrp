@@ -8,7 +8,10 @@
       <el-button v-permission="['test:table:table:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
         {{ $t('table.add') }}
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleImport">
+        {{ $t('table.import') }}
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleExport">
         {{ $t('table.export') }}
       </el-button>
     </div>
@@ -81,7 +84,7 @@
         </template>
       </el-table-column>
     </el-table>
-
+    <import ref="import" template-url="/test/table/table/template" import-url="/test/table/table/import" />
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
     <table-form ref="form" @refreshList="getList" />
@@ -97,10 +100,11 @@ import tableForm from './tableForm'
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
 import Sortable from 'sortablejs'
+import Import from '@/components/Import/import'
 
 export default {
   name: 'ComplexTable',
-  components: { tableForm, Pagination },
+  components: { Import, tableForm, Pagination },
   directives: { waves, permission },
   filters: {
     statusFilter(status) {
@@ -154,8 +158,10 @@ export default {
       })
       row.status = status
     },
-
-    handleDownload() {
+    handleImport() {
+      this.$refs.import.show()
+    },
+    handleExport() {
       this.downloadLoading = true
       exportTable(this.listQuery).then(response => {
         this.downloadLoading = true

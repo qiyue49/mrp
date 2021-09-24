@@ -53,4 +53,3 @@ export function exportTable(data) {
     data
   })
 }
-

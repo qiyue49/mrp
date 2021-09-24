@@ -34,6 +34,9 @@ import java.util.*;
  */
 public class ExportExcel {
 
+    public static final int DATA = 1;
+    public static final int TEMPLATE = 2;
+
     private static Logger log = LoggerFactory.getLogger(ExportExcel.class);
 
     /**

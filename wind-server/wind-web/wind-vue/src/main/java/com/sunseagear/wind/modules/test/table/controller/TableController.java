@@ -10,18 +10,22 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.test.table.entity.Table;
 import com.sunseagear.wind.modules.test.table.service.ITableService;
+import com.sunseagear.wind.utils.excel.ImportExcel;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import com.sunseagear.wind.utils.excel.ExportExcel;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.ConstraintViolationException;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +62,7 @@ public class TableController extends BaseBeanController<Table> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
 
         String title = request.getParameter("title");
         if (!StringUtils.isEmpty(title)) {
@@ -125,13 +129,49 @@ public class TableController extends BaseBeanController<Table> {
         return Response.ok("删除成功");
     }
 
+    @GetMapping("template")
+    @Log(logType = LogType.IMPORT)
+    @RequiresPermissions("test:table:table:import")
+    public String template() {
+        try {
+            List<Table> list = new ArrayList<>();
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            new ExportExcel("综合表格", Table.class, ExportExcel.TEMPLATE).setDataList(list).write(bos);
+            byte[] bytes = bos.toByteArray();
+            String bytesRes = StringUtils.bytesToHexString2(bytes);
+            String fileName = "综合表格数据模板" + DateUtils.getDate("yyyyMMddHHmmss");
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("bytes", bytesRes);
+            result.put("title", fileName);
+            return Response.successJson(result);
+        } catch (Exception e) {
+            logger.error("Template Exception", e);
+            return Response.failJson("导出模板失败！失败信息：" + e.getMessage());
+        }
+    }
+
+    @PostMapping("import")
+    @Log(logType = LogType.IMPORT)
+    @RequiresPermissions("test:table:table:import")
+    public String export(MultipartFile file) {
+        try {
+            ImportExcel ei = new ImportExcel(file, 1, 0);
+            List<Table> list = ei.getDataList(Table.class);
+            tableService.insertBatch(list);
+            return Response.successJson("导入成功");
+        } catch (Exception e) {
+            logger.error("Import Exception", e);
+            return Response.failJson("导出模板失败！失败信息：" + e.getMessage());
+        }
+    }
+
     @PostMapping("export")
     @Log(logType = LogType.EXPORT)
     @RequiresPermissions("test:table:table:export")
-    public String export(HttpServletRequest request, HttpServletResponse response){
+    public String export(HttpServletRequest request) {
         try {
             QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
-            entityWrapper.orderByDesc( "create_date");
+            entityWrapper.orderByDesc("create_date");
 
             String title = request.getParameter("title");
             if (!StringUtils.isEmpty(title)) {
@@ -150,16 +190,15 @@ public class TableController extends BaseBeanController<Table> {
             new ExportExcel("综合表格", Table.class).setDataList(list).write(bos);
             byte[] bytes = bos.toByteArray();
             String bytesRes = StringUtils.bytesToHexString2(bytes);
-            String fileName = "综合表格"+ DateUtils.getDate("yyyyMMddHHmmss");
+            String fileName = "综合表格" + DateUtils.getDate("yyyyMMddHHmmss");
             HashMap<String, Object> result = new HashMap<>();
             result.put("bytes", bytesRes);
             result.put("title", fileName);
 
             return Response.successJson(result);
         } catch (Exception e) {
-//            e.printStackTrace();
-            logger.error("Exception",e);
-            return Response.failJson("导出关于我们记录失败！失败信息："+e.getMessage());
+            logger.error("Export Exception", e);
+            return Response.failJson("导出记录失败！失败信息：" + e.getMessage());
         }
 
     }
