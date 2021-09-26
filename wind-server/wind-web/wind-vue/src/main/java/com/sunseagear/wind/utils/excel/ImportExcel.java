@@ -4,6 +4,7 @@
 package com.sunseagear.wind.utils.excel;
 
 import com.google.common.collect.Lists;
+import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.Reflections;
 import com.sunseagear.wind.modules.sys.entity.Organization;
 import com.sunseagear.wind.modules.sys.entity.User;
@@ -28,6 +29,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -216,6 +220,7 @@ public class ImportExcel {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return val;
 		}
 		return val;
@@ -331,8 +336,15 @@ public class ImportExcel {
 						}else if (valType == Float.class){
 							val = Float.valueOf(val.toString());
 						}else if (valType == Date.class){
-							SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-							val=sdf.parse(val.toString());
+							val= DateUtils.parseDate(val);
+						}else if (valType == LocalDate.class){
+							Date date = DateUtils.parseDate(val);
+							ZoneId zone = ZoneId.systemDefault();
+							val = date.toInstant().atZone(zone).toLocalDate();
+						}else if (valType == LocalDateTime.class){
+							Date date = DateUtils.parseDate(val);
+							ZoneId zone = ZoneId.systemDefault();
+							val = date.toInstant().atZone(zone).toLocalDateTime();
 						}else if (valType == User.class){
 							val = UserUtils.getByUserName(val.toString());
 						}else{
@@ -344,6 +356,7 @@ public class ImportExcel {
 							}
 						}
 					} catch (Exception ex) {
+						log.error("import Exception", ex);
 						log.info("Get cell value ["+i+","+column+"] error: " + ex.toString());
 						val = null;
 					}

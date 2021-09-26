@@ -7,6 +7,9 @@ import com.google.gson.*;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -73,10 +76,34 @@ public class Response {
                 return new JsonPrimitive(DateUtils.formatDateTime(src));
             }
         });
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new JsonSerializer<LocalDate>() {
+            public JsonElement serialize(LocalDate src, Type typeOfSrc, JsonSerializationContext context) {
+                return new JsonPrimitive(DateUtils.formatDateTime(src));
+            }
+        });
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
+            public JsonElement serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                return new JsonPrimitive(DateUtils.formatDateTime(src));
+            }
+        });
 
         gsonBuilder.registerTypeAdapter(Date.class, new JsonDeserializer() {
             public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
                 return DateUtils.parseDate(json.getAsJsonPrimitive().getAsString());
+            }
+        });
+        gsonBuilder.registerTypeAdapter(LocalDate.class, new JsonDeserializer() {
+            public LocalDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                Date date = DateUtils.parseDate(json.getAsJsonPrimitive().getAsString());
+                ZoneId zone = ZoneId.systemDefault();
+                return date.toInstant().atZone(zone).toLocalDate();
+            }
+        });
+        gsonBuilder.registerTypeAdapter(LocalDateTime.class, new JsonDeserializer() {
+            public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                Date date = DateUtils.parseDate(json.getAsJsonPrimitive().getAsString());
+                ZoneId zone = ZoneId.systemDefault();
+                return date.toInstant().atZone(zone).toLocalDateTime();
             }
         });
 

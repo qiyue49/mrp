@@ -7,6 +7,8 @@ import com.sunseagear.common.utils.ReflectionUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.convert.DateConvertEditor;
+import com.sunseagear.common.utils.convert.LocalDateConvertEditor;
+import com.sunseagear.common.utils.convert.LocalDateTimeConvertEditor;
 import com.sunseagear.common.utils.convert.StringConvertEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -48,6 +52,8 @@ public abstract class BaseBeanController<Entity extends Serializable> {
         binder.registerCustomEditor(String.class, new StringConvertEditor());
         // 日期格式
         binder.registerCustomEditor(Date.class, new DateConvertEditor());
+        binder.registerCustomEditor(LocalDate.class, new LocalDateConvertEditor());
+        binder.registerCustomEditor(LocalDateTime.class, new LocalDateTimeConvertEditor());
     }
 
     public Page getPage() {
