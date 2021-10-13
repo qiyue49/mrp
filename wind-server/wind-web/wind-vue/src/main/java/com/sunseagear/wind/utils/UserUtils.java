@@ -250,4 +250,26 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         });
         return permissionList;
     }
+
+    /**
+     * 判断是否为管理员
+     * 包含（总）系统管理员
+     * <p>
+     * 管理员拥有全部权限
+     */
+    public static boolean isAdmin() {
+        List<Role> roleList = getRoleList();
+        Boolean bool = false;
+        for (Role r : roleList
+        ) {
+            if (Integer.parseInt(r.getIsSys()) == 1
+                    || r.getCode().toLowerCase().contains("admin")
+                    || r.getName().contains("系统管理员")
+            ) {
+                bool = true;
+                break;
+            }
+        }
+        return bool;
+    }
 }
