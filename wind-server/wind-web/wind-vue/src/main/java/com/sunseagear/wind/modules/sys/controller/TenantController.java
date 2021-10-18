@@ -39,6 +39,7 @@ import java.util.List;
 @Log(title = "租户管理")
 public class TenantController extends BaseBeanController<Tenant> {
 
+
     @Autowired
     private ITenantService tenantService;
 

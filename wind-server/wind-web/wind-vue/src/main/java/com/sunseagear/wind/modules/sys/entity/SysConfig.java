@@ -12,7 +12,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class SysConfig extends DataEntity<String> {
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_UUID)
     private String id;
 
     @TableField(value = "name")
@@ -26,6 +26,9 @@ public class SysConfig extends DataEntity<String> {
 
     @TableField(value = "is_sys")
     private Boolean isSys;
+
+    @TableField(value = "type")
+    private String type;
 
     @TableField(value = "tenant_id")
     private String tenantId;

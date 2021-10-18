@@ -17,7 +17,9 @@
         from sys_tenant a
         <include refid="tableJoins"/>
         <if test="ew.sqlSegment != '' and ew.sqlSegment != null">
-            ${ew.sqlSegment}
+            <where>
+                ${ew.sqlSegment}
+            </where>
         </if>
     </select>
     <select
