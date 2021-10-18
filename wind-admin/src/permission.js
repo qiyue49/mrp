@@ -31,6 +31,7 @@ router.beforeEach(async(to, from, next) => {
           // next('/dashboard')
           // 加载数据字典
           store.dispatch('dict/GetDicts')
+          store.dispatch('sysConfig/getConfig')
           // 获取路由
           if (store.getters.fetchRoutes.length === 0) { // 判断是否获取路由
             store.dispatch('permission/GetRoutes').then(() => {

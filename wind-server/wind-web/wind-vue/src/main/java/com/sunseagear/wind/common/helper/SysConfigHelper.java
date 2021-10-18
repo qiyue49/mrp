@@ -39,6 +39,19 @@ public class SysConfigHelper {
         });
     }
 
+    public List<SysConfig> getSysConfigList(String tenantId){
+        HashMap<String ,SysConfig> sysConfigHashMap = new HashMap<>();
+        List<SysConfig> configList = sysConfigMap.get(tenantId);
+        List<SysConfig> defaultConfigList = sysConfigMap.get(TenantProperties.getInstance().getDefaultTenantId());
+        defaultConfigList.forEach(item -> {
+            sysConfigHashMap.put(item.getCode(), item);
+        });
+        configList.forEach(item -> {
+            sysConfigHashMap.put(item.getCode(), item);
+        });
+        return new ArrayList<>(sysConfigHashMap.values());
+    }
+
     public SysConfig getSysConfig(String code) {
         return getSysConfig(UserUtils.getTenantId(), code);
     }

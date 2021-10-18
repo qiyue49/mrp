@@ -46,3 +46,10 @@ export function batchConfig(ids) {
   })
 }
 
+export function configList() {
+  return request({
+    url: '/sys/config/config',
+    method: 'get'
+  })
+}
+

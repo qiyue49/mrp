@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 /**
@@ -115,6 +116,14 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
         SysConfig tenant = sysConfigService.selectById(id);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
         return Response.successJson(tenant);
+    }
+
+    @GetMapping("config")
+    @Log(logType = LogType.SELECT)
+    @RequiresPermissions("sys:config:list")
+    public String config() {
+        List<SysConfig> list = SysConfigHelper.getInstance().getSysConfigList(UserUtils.getTenantId());
+        return Response.successJson(list);
     }
 
 

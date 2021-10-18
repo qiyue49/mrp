@@ -21,6 +21,8 @@ const getters = {
   addRoutes: state => state.permission.addRoutes,
   fetchRoutes: state => state.permission.fetchRoutes,
   permissions: state => state.permission.permissions,
+  sysConfig: state => state.sysConfig.config,
+  sysConfigList: state => state.sysConfig.configList,
   errorLogs: state => state.errorLog.logs
 }
 export default getters
