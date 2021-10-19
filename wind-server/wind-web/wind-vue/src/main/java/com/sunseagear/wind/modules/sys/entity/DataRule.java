@@ -27,8 +27,6 @@ public class DataRule extends DataEntity<String> {
 
     @TableId(value = "id", type = IdType.UUID)
     private String id; //id
-    @TableField(value = "menu_id")
-    private String menuId;  //菜单主键
     @TableField(value = "resource_code")
     private String resourceCode;  //资源编号
     @TableField(value = "scope_name")
