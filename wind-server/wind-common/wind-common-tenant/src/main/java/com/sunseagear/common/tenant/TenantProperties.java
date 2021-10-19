@@ -34,7 +34,7 @@ public class TenantProperties {
         if (instance == null) {
             instance = new TenantProperties();
             instance.getIgnoreTables().addAll(Arrays.asList("sys_menu", "sys_config", "sys_dict", "sys_dict_group", "sys_role_data_rule",
-                    "sys_role_menu", "sys_sessions", "sys_tenant", "sys_user", "sys_role", "sys_organization", "sys_user_role", "task_schedule_job", "task_schedule_job_log"));
+                    "sys_role_menu", "sys_tenant", "sys_user", "sys_role", "sys_organization", "sys_user_role", "task_schedule_job", "task_schedule_job_log"));
         }
         return instance;
     }
