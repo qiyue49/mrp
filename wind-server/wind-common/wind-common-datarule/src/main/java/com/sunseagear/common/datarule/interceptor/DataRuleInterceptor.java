@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.handlers.AbstractSqlParserHandler;
 import com.sunseagear.common.datarule.handler.DataRuleHandler;
 import com.sunseagear.common.datarule.handler.DataRuleSqlHandler;
 import com.sunseagear.common.datarule.model.DataRuleModel;
+import com.sunseagear.common.utils.BeanUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.UserUtils;
 import com.sunseagear.common.utils.entity.Principal;
@@ -57,23 +58,17 @@ public class DataRuleInterceptor extends AbstractSqlParserHandler implements Int
 
         //注解为空并且数据权限方法名未匹配到,则放行
         String mapperId = mappedStatement.getId();
-        DataRuleModel dataScope = dataRuleHandler.getDataRuleModel(mapperId);
-        if (dataScope != null) {
-            dataScope = dataRuleHandler.getDataRule(mapperId, principal.getRoleId());
-
-//			String className = mapperId.substring(0, mapperId.lastIndexOf(StringPool.DOT));
-//			String mapperName = ClassUtil.getShortName(className);
-//			String methodName = mapperId.substring(mapperId.lastIndexOf(StringPool.DOT) + 1);
-//			boolean mapperSkip = dataScopeProperties.getMapperKey().stream().noneMatch(methodName::contains)
-//					|| dataScopeProperties.getMapperExclude().stream().anyMatch(mapperName::contains);
-//			//动态配置生效，以动态配置为准
-//			if (!mapperSkip) {
-//				dataScope = dataRuleHandler.getDataRule(mapperId, principal.getRoleId());
-//			}
-        }
+        mapperId = mapperId.replace("_mpCount","");
+        DataRuleModel dataScope = dataRuleHandler.getDataRule(mapperId, principal.getRoleId());;
         //如果还不行，那就只有不处理了
         if (dataScope == null) {
             return invocation.proceed();
+        }
+        // 如果包含_mpCount，说明是分页，也需要过滤
+        if (mappedStatement.getId().contains("_mpCount")){
+            dataScope = BeanUtils.clone(dataScope);
+            dataScope.setScopeField("COUNT(*)");
+            originalSql = originalSql.replace("COUNT(*)", "*");
         }
 
         //获取数据权限规则对应的筛选Sql

@@ -35,7 +35,7 @@ spring:
     #    SqlServer
     #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     #    Oracle
-    #driver-class-name: oracle.jdbc.driver.OracleDriver
+    #    driver-class-name: oracle.jdbc.driver.OracleDriver
     type: com.alibaba.druid.pool.DruidDataSource   #这里是配置druid连接池，以下都是druid的配置信息
     filters: config,stat,wall,slf4j
     maxActive: 20
