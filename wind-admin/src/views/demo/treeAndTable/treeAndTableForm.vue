@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { createTreeAndTable, updateTreeAndTable, getTreeAndTable } from '@/api/demo/treeandtable/treeAndTable'
+import { createTreeAndTable, updateTreeAndTable, getTreeAndTable } from '@/api/demo/treeAndTable/treeAndTable'
 
 export default {
   name: 'TreeAndTableForm',

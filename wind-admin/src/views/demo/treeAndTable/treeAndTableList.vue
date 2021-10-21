@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { deleteTreeAndTable, fetchTreeAndTableList } from '@/api/demo/treeandtable/treeAndTable'
+import { deleteTreeAndTable, fetchTreeAndTableList } from '@/api/demo/treeAndTable/treeAndTable'
 import { fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
 import waves from '@/directive/waves' // waves directive
 import treeAndTableForm from './treeAndTableForm'
