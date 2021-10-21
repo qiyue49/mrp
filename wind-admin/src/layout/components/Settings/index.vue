@@ -1,7 +1,7 @@
 <template>
   <div>
     <svg-icon icon-class="setting" @click="click" />
-    <el-drawer :visible.sync="show" size="400">
+    <el-drawer :visible.sync="show" size="500">
       <div class="drawer-container">
         <h3 class="drawer-title">{{ $t('settings.title') }}</h3>
 
@@ -20,7 +20,7 @@
           <el-switch v-model="topMenu" class="drawer-switch" />
         </div>
 
-        <div class="drawer-item">
+        <div v-if="false" class="drawer-item">
           <span>{{ $t('settings.fixedHeader') }}</span>
           <el-switch v-model="fixedHeader" class="drawer-switch" />
         </div>

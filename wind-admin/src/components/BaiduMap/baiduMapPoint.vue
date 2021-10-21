@@ -2,7 +2,7 @@
   <div>
     <el-input v-if="showText" v-model="location" />
     <el-button v-if="showText" type="primary" @click="addPath">数据画点</el-button>
-    <baidu-map :center="center" :scroll-wheel-zoom="true" :zoom="zoom" :style="{height:height,width:width}" @click="getClickInfo">
+    <baidu-map :center="centerPoint" :scroll-wheel-zoom="true" :zoom="zoom" :style="{height:height,width:width}" @click="getClickInfo">
       <bm-marker
         v-if="point.lng"
         :position="{lng:point.lng, lat: point.lat}"
@@ -51,21 +51,33 @@ export default {
   data() {
     return {
       location: undefined,
-      point: {}
+      emitting: false,
+      point: {},
+      centerPoint: {}
     }
   },
   watch: {
+    center: {
+      immediate: true,
+      handler(val) {
+        this.centerPoint = val
+      }
+    },
     value: {
       immediate: true,
       handler(val) {
+        if (this.emitting) {
+          return
+        }
         if (this.value) {
           this.point = JSON.parse(this.value)
           this.location = this.value
+          this.centerPoint = this.point
         } else {
           this.point = {}
           this.location = undefined
-          console.log('this.point = {}', this.point)
         }
+        console.log('this.point1', this.point)
       }
     }
   },
@@ -86,14 +98,15 @@ export default {
       }
     },
     getClickInfo(e) {
-      console.log(e.point.lng)
-      console.log(e.point.lat)
       this.point = e.point
       this.updateData()
     },
     updateData() {
       this.location = JSON.stringify(this.point)
-      this.$emit('input', this.location)
+      this.emitting = true
+      this.$emit('input', this.location).$nextTick(() => {
+        this.emitting = false
+      })
     }
 
   }
