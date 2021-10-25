@@ -119,6 +119,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
         roleDataRuleEntityWrapper.eq("role_id", roleId);
         roleDataRuleService.remove(roleDataRuleEntityWrapper);
         if (ids == null) {
+            dataRuleHandler.refreshRole();
             return Response.ok("更新成功");
         }
         List<String> idList = java.util.Arrays.asList(ids);

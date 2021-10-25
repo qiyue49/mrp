@@ -107,22 +107,25 @@ public class DataRuleHandler {
         }
     }
 
-    public DataRuleModel getDataRule(String mapperId, String roleId) {
-        DataRuleModel dataRuleModel = getDataRuleModel(mapperId);
-        if (dataRuleModel == null) {
-            return null;
-        }
-        if (!roleDataRuleModelHashMap.containsKey(roleId)) {
-            //如果找不到，刷新角色权限
-            refreshRole();
-            //如果还不找不到，返回null
-            if (!roleDataRuleModelHashMap.containsKey(roleId)) {
+    public DataRuleModel getDataRule(String mapperId, String roleIds) {
+        String[] ids = roleIds.split(",");
+        for (String roleId: ids){
+            DataRuleModel dataRuleModel = getDataRuleModel(mapperId);
+            if (dataRuleModel == null) {
                 return null;
             }
-        }
-        boolean isMatch = roleDataRuleModelHashMap.get(roleId).stream().anyMatch(dataRuleModel.getId()::contains);
-        if (isMatch) {
-            return dataRuleModel;
+            if (!roleDataRuleModelHashMap.containsKey(roleId)) {
+                //如果找不到，刷新角色权限
+                refreshRole();
+                //如果还不找不到，返回null
+                if (!roleDataRuleModelHashMap.containsKey(roleId)) {
+                    return null;
+                }
+            }
+            boolean isMatch = roleDataRuleModelHashMap.get(roleId).stream().anyMatch(dataRuleModel.getId()::contains);
+            if (isMatch) {
+                return dataRuleModel;
+            }
         }
         return null;
 

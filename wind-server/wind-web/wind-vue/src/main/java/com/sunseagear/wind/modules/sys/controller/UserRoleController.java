@@ -75,7 +75,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
             userRole.setRoleId(roleId);
             userRoleService.insertByRoleId(userId, roleId);
         }
-        UserUtils.clearCurrentUserCache();
+        UserUtils.clearCache(UserUtils.get(userId));
         return Response.ok("添加成功");
     }
 
@@ -94,7 +94,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
         entityWrapper.eq("user_id", userId);
         entityWrapper.in("role_id", roleIds);
         userRoleService.delete(entityWrapper);
-        UserUtils.clearCurrentUserCache();
+        UserUtils.clearCache(UserUtils.get(userId));
         return Response.ok("删除成功");
     }
 
