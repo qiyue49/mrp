@@ -22,7 +22,9 @@ public class DataRuleHandler {
 
 
     HashMap<String, List<String>> roleDataRuleModelHashMap = new HashMap<>();
+    HashMap<String, DataRuleModel> dataRuleModelIdHashMap = new HashMap<>();
     HashMap<String, DataRuleModel> dataRuleModelHashMap = new HashMap<>();
+    HashMap<String, HashMap<String, DataRuleModel>> roleDataRuleModelDataHashMap = new HashMap<>();
     HashMap<String, Map<String, Object>> userModelHashMap = new HashMap<>();
     HashMap<String, List<TreeEntityModel>> treeEntityModelMap = new HashMap<>();
 
@@ -32,6 +34,7 @@ public class DataRuleHandler {
         List<DataRuleModel> list = jdbcTemplate.query("select * from sys_data_rule where del_flag = ?", new Object[]{0}, new BeanPropertyRowMapper<>(DataRuleModel.class));
         list.forEach(item -> {
             dataRuleModelHashMap.put(item.getScopeClass(), item);
+            dataRuleModelIdHashMap.put(item.getId(), item);
             if (StringUtils.isEmpty(item.getTableName())) {
                 return;
             }
@@ -73,11 +76,19 @@ public class DataRuleHandler {
     public void refreshRole() {
         List<RoleDataRuleModel> roleDataRuleModelList = jdbcTemplate.query("select * from sys_role_data_rule", new Object[]{}, new BeanPropertyRowMapper<>(RoleDataRuleModel.class));
         roleDataRuleModelHashMap.clear();
+        roleDataRuleModelDataHashMap.clear();
         roleDataRuleModelList.forEach(item -> {
             if (!roleDataRuleModelHashMap.containsKey(item.getRoleId())) {
                 roleDataRuleModelHashMap.put(item.getRoleId(), new ArrayList<>());
             }
             roleDataRuleModelHashMap.get(item.getRoleId()).add(item.getDataRuleId());
+            if (!roleDataRuleModelDataHashMap.containsKey(item.getRoleId())) {
+                roleDataRuleModelDataHashMap.put(item.getRoleId(), new HashMap<>());
+            }
+            if (dataRuleModelIdHashMap.containsKey(item.getDataRuleId())){
+                DataRuleModel dataRuleModel = dataRuleModelIdHashMap.get(item.getDataRuleId());
+                roleDataRuleModelDataHashMap.get(item.getRoleId()).put(dataRuleModel.getScopeClass(),dataRuleModel);
+            }
         });
     }
 
@@ -89,6 +100,7 @@ public class DataRuleHandler {
                 break;
             }
         }
+        dataRuleModelIdHashMap.put(dataRuleModel.getId(),dataRuleModel);
         dataRuleModelHashMap.put(dataRuleModel.getScopeClass(), dataRuleModel);
         if (StringUtils.isEmpty(dataRuleModel.getTableName())) {
             return;
@@ -105,27 +117,21 @@ public class DataRuleHandler {
                 break;
             }
         }
+        dataRuleModelIdHashMap.remove(id);
+
     }
 
     public DataRuleModel getDataRule(String mapperId, String roleIds) {
         String[] ids = roleIds.split(",");
         for (String roleId: ids){
-            DataRuleModel dataRuleModel = getDataRuleModel(mapperId);
-            if (dataRuleModel == null) {
-                return null;
+            if (!roleDataRuleModelDataHashMap.containsKey(roleId)){
+               continue;
             }
-            if (!roleDataRuleModelHashMap.containsKey(roleId)) {
-                //如果找不到，刷新角色权限
-                refreshRole();
-                //如果还不找不到，返回null
-                if (!roleDataRuleModelHashMap.containsKey(roleId)) {
-                    return null;
-                }
+            HashMap<String,DataRuleModel> roleDataRuleMap =  roleDataRuleModelDataHashMap.get(roleId);
+            if (!roleDataRuleMap.containsKey(mapperId)) {
+               continue;
             }
-            boolean isMatch = roleDataRuleModelHashMap.get(roleId).stream().anyMatch(dataRuleModel.getId()::contains);
-            if (isMatch) {
-                return dataRuleModel;
-            }
+            return roleDataRuleMap.get(mapperId);
         }
         return null;
 
