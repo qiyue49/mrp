@@ -109,7 +109,7 @@
     </select>
 
     <delete id="deleteRoleMenu">
-        delete rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and m.type = 2 and rm.role_id = #{roleId}
+        delete rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and (m.type = 2 or m.type = 1)and rm.role_id = #{roleId}
     </delete>
     <delete id="deleteRolePermission">
         delete rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and m.type = 3 and rm.role_id = #{roleId}
