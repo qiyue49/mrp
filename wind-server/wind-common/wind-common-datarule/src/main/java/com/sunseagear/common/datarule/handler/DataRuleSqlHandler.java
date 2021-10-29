@@ -82,7 +82,7 @@ public class DataRuleSqlHandler {
             }
             userMap.forEach(template::binding);
             String whereSql = template.render();
-            result = String.format(" select %s from (%s) scope " + whereSql, dataScope.getScopeField(), tempSql);
+            result = String.format(" select %s from (%s) scope ", dataScope.getScopeField(), tempSql)+ whereSql;
         } else if (DataRuleModel.OWN == scopeRule) {
             String whereSql = "where scope.%s = '%s'";
             id = principal.getId();
