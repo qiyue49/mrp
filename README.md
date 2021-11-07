@@ -1,7 +1,10 @@
 # 飞廉
 
-这是一个经过无数商业项目千锤百炼的开发框架，供所有个人和组织免费使用。
-
+* 这是一个经过无数商业项目千锤百炼的开发框架，供所有个人和组织免费使用。
+* 集成了平时开发需要的大量模块和组件：百度地图，即时通信websocket，OSS云存储，短信，邮件，定时任务，各类日志，多租户，动态配置的数据权限。
+* 配套文鳐移动端开发框架<a href="https://gitee.com/sunseagear/wenyao" target="_blank">（点击这里）</a>，能够快速进行服务器端和移动端的开发。
+* 通过仓颉全量代码生成平台<a href="http://www.sunseagear.com/#/doc/cangjie/summary" target="_blank">（30秒了解仓颉）</a>，你能快速生成多种页面的功能模块；
+同时支持服务器端和移动端代码生成。<a href="http://sunseagear.com:8081/admin/" target="_blank">(立刻使用)</a>
 ### 介绍
 
 飞廉，山海经中神兽，身似鹿，头如雀，有角而蛇尾，虽不能飞，但身形敏捷，速度奇快。 擅长御风，是传说中的风神，秦人的先祖。
@@ -18,13 +21,16 @@
 
 ### 系统截图
 
-登录页 (同时具备多种风格，总有一款适合你)
-
-<img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png" width="45%"/>
-<img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login1.png" width="45%"/>
-<img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login3.png" width="45%"/>
-<img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login4.png" width="45%"/>
-<table style="border: transparent">
+<table border="0">
+   <tr>
+      <td colspan="2">
+      登录页 (同时具备多种风格，总有一款适合你)<br>
+      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png" width="49%"/>
+      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login1.png" width="49%"/>
+      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login3.png" width="49%"/>
+      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login4.png" width="49%"/>
+      </td>
+   </tr>
    <tr>
    <td>
    首页
