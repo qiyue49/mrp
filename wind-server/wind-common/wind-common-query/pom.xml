@@ -16,7 +16,6 @@
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-utils</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
     <build>

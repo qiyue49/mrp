@@ -15,16 +15,15 @@
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-utils</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>provided</scope>
         </dependency>
         <!-- mybatis-plus begin -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
-            <type>jar</type>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 </project>

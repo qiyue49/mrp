@@ -19,26 +19,18 @@
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-utils</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
-            <type>jar</type>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl-framework-starter</artifactId>
-            <version>${beetl.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

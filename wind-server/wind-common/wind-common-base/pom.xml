@@ -22,23 +22,18 @@
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-utils</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>1.9</version>
         </dependency>
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>${disruptor.version}</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
 

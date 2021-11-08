@@ -12,68 +12,6 @@
     <packaging>jar</packaging>
     <version>1.3.1.RELEASE</version>
     <properties>
-        <bitwalker.version>1.21</bitwalker.version>
-        <!--oauth认证-->
-        <org-apache-oltu-oauth2.version>1.0.2</org-apache-oltu-oauth2.version>
-        <!--jwt-->
-        <jwt.version>3.3.0</jwt.version>
-        <!--poi-->
-        <poi.version>4.4.0</poi.version>
-        <!--数据库连接-->
-        <druid.version>1.1.21</druid.version>
-        <!-- mysql -->
-        <mysql.version>8.0.17</mysql.version>
-
-        <disruptor.version>3.3.6</disruptor.version>
-
-        <aspect.version>1.7.4</aspect.version>
-
-        <dom4j.version>1.6.1</dom4j.version>
-        <!-- 阿里云SDK -->
-        <aliyun.oss.version>2.5.0</aliyun.oss.version>
-        <!-- 七牛云存储 -->
-        <qiniu.oss.version>[7.0.0, 7.1.99]</qiniu.oss.version>
-        <!-- 腾讯云COS -->
-        <qcloud.cos.version>3.3</qcloud.cos.version>
-        <!-- 文件上传 -->
-        <commons-fileupload.version>1.3.1</commons-fileupload.version>
-
-        <beetl.version>1.1.55.RELEASE</beetl.version>
-
-        <commons-text.version>1.9</commons-text.version>
-
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-
-        <commons-io.version>2.4</commons-io.version>
-
-        <commons-codec.version>1.10</commons-codec.version>
-
-        <jcaptcha.version>2.0-alpha-1</jcaptcha.version>
-
-
-        <!-- 工具包 -->
-        <guava.version>17.0</guava.version>
-        <fastjson.version>1.2.70</fastjson.version>
-        <commons-text.version>1.9</commons-text.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <commons-io.version>2.4</commons-io.version>
-        <freemarker.version>2.3.27-incubating</freemarker.version>
-        <!-- 验证码 -->
-        <jcaptcha.version>2.0-alpha-1</jcaptcha.version>
-
-        <!--itextpdf工具-->
-        <itextpdf.version>5.5.13.2</itextpdf.version>
-        <!--字体-->
-        <itext-asian.version>5.2.0</itext-asian.version>
-
-        <!-- aspose版本 -->
-        <aspose.version>14.9.0</aspose.version>
-
-        <!--easypoi 版本-->
-        <easypoi.version>3.2.0</easypoi.version>
-
-        <!--j2cache版本-->
-        <j2cache.version>2.7.0-release</j2cache.version>
 
     </properties>
     <dependencies>
@@ -81,54 +19,44 @@
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-datarule</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-query</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-base</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-oss</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-sms</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-email</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-quartz</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-tenant</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-utils</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
 
 
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
-            <version>${mybatis-plus-boot-starter.version}</version>
         </dependency>
 
         <dependency>
@@ -140,19 +68,16 @@
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qiniu-java-sdk</artifactId>
-            <version>${qiniu.oss.version}</version>
         </dependency>
         <!-- 阿里云OSS-->
         <dependency>
             <groupId>com.aliyun.oss</groupId>
             <artifactId>aliyun-sdk-oss</artifactId>
-            <version>${aliyun.oss.version}</version>
         </dependency>
         <!-- 腾讯云COS https://www.qcloud.com/document/product/430/5944#.E8.8E.B7.E5.8F.96.E7.9B.AE.E5.BD.95.E5.88.97.E8.A1.A8-->
         <dependency>
             <groupId>com.qcloud</groupId>
             <artifactId>cos_api</artifactId>
-            <version>${qcloud.cos.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
@@ -168,29 +93,16 @@
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>${commons-fileupload.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>p6spy</groupId>
-            <artifactId>p6spy</artifactId>
-            <version>3.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>13.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.ibeetl</groupId>
             <artifactId>beetl-framework-starter</artifactId>
-            <version>${beetl.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
@@ -199,61 +111,44 @@
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-core</artifactId>
-            <version>4.0.8</version>
         </dependency>
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-            <version>1.1.0</version>
         </dependency>
 
         <!--huyi-->
         <dependency>
             <groupId>dom4j</groupId>
             <artifactId>dom4j</artifactId>
-            <version>${dom4j.version}</version>
         </dependency>
         <!--腾讯短信-->
         <dependency>
             <groupId>com.github.qcloudsms</groupId>
             <artifactId>qcloudsms</artifactId>
-            <version>1.0.5</version>
         </dependency>
         <!--poi Excel开始-->
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-base</artifactId>
-            <version>${poi.version}</version>
         </dependency>
 
         <!-- shiro开始 -->
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-web</artifactId>
-            <version>${shiro.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
-            <version>${shiro.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-ehcache</artifactId>
-            <version>${shiro.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-spring</artifactId>
-            <version>${shiro.version}</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
 
         <!-- aspectj相关jar包 -->
@@ -276,32 +171,27 @@
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-annotation</artifactId>
-            <version>${poi.version}</version>
         </dependency>
         <!--poi Excel结束-->
         <!-- 解析客户端操作系统、浏览器等 -->
         <dependency>
             <groupId>eu.bitwalker</groupId>
             <artifactId>UserAgentUtils</artifactId>
-            <version>${bitwalker.version}</version>
         </dependency>
         <!--jwt-->
         <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
-            <version>${jwt.version}</version>
         </dependency>
         <!--oltu-->
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-            <version>${org-apache-oltu-oauth2.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.oltu.oauth2</groupId>
             <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-            <version>${org-apache-oltu-oauth2.version}</version>
         </dependency>
         <!--
                 <dependency>
@@ -331,18 +221,15 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
-            <version>${druid.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>${disruptor.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
-            <version>1.4</version>
         </dependency>
 
         <dependency>
@@ -384,17 +271,14 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-text</artifactId>
-            <version>${commons-text.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
-            <version>${commons-beanutils.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>${commons-io.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
@@ -412,7 +296,6 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>${guava.version}</version>
         </dependency>
 
 
@@ -436,7 +319,6 @@
         <dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
-            <version>2.4</version>
             <classifier>jdk15</classifier>
         </dependency>
 
@@ -450,12 +332,10 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>
-            <version>${itextpdf.version}</version>
         </dependency>
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itext-asian</artifactId>
-            <version>${itext-asian.version}</version>
         </dependency>
         <!--aspose
         <dependency>
@@ -469,12 +349,10 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-scratchpad</artifactId>
-            <version>5.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>ooxml-schemas</artifactId>
-            <version>1.4</version>
         </dependency>
         <!--项目添加easypoi导出Excel支持结束-->
         <dependency>
@@ -484,7 +362,6 @@
         <dependency>
             <groupId>com.belerweb</groupId>
             <artifactId>pinyin4j</artifactId>
-            <version>2.5.1</version>
         </dependency>
     </dependencies>
     <build>

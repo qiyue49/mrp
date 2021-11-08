@@ -13,21 +13,16 @@
     <url>http://www.sunseagear.com</url>
 
     <properties>
-        <!-- 并发框架Disruptor -->
-        <disruptor.version>3.3.6</disruptor.version>
-
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
-            <version>${disruptor.version}</version>
         </dependency>
         <dependency>
             <groupId>com.sunseagear</groupId>
             <artifactId>wind-common-utils</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
