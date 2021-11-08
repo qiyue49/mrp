@@ -1,5 +1,6 @@
 package com.sunseagear.common.utils;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     private static String matches = "[A-Za-z]:\\\\[^:?\"><*]*";
     boolean flag = false;
     File file;
+    private static final String[] IMAGES_SUFFIXES = {"bmp", "jpg", "jpeg", "gif", "png", "tiff"};
 
     /**
      * 传入路径，返回是否是绝对路径，是绝对路径返回true，反之
@@ -776,6 +778,17 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return base64;
     }
 
+    /**
+     * 是否是图片附件
+     *
+     * @param filename
+     * @return
+     */
+    public static boolean isImage(String filename) {
+        if (filename == null || filename.trim().length() == 0)
+            return false;
+        return ArrayUtils.contains(IMAGES_SUFFIXES, FilenameUtils.getExtension(filename).toLowerCase());
+    }
 
     public static void main(String[] args) {
         String dirName = "E:/createFile/";// 创建目录

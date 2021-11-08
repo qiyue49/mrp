@@ -1,8 +1,14 @@
 package com.sunseagear.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
+import okhttp3.Headers;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class IpUtils {
+    public static final String IP_URL = "http://ip.taobao.com/service/getIpInfo.php";
 
     public static String getIpAddr(HttpServletRequest request) {
         if (request == null) {
@@ -27,4 +33,28 @@ public class IpUtils {
         }
         return ip;
     }
+
+    public static String getRealAddressByIP(String ip) {
+        String address = "";
+        try {
+            Map<String, Object> params = new HashMap<>();
+            params.put("ip", ip);
+            Headers headers = new Headers.Builder().add("accept", "*/*").
+            add("connection", "Keep-Alive").
+            add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)").build();
+            String rspStr = HttpUtils.SyncGet(IP_URL + "?ip=" + ip, headers);
+            if (StringUtils.isEmpty(rspStr)) {
+                return address;
+            }
+            JSONObject obj = JSONObject.parseObject(rspStr);
+            JSONObject data = obj.getObject("data", JSONObject.class);
+            String region = data.getString("region");
+            String city = data.getString("city");
+            address = region + " " + city;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return address;
+    }
+
 }
