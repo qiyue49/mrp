@@ -1,9 +1,9 @@
 {
   "name": "wind-admin",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "wind-admin based on element-vue-admin",
   "author": "liangwei",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
