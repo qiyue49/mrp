@@ -25,74 +25,37 @@
         <java.version>1.8</java.version>
         <shiro.version>1.7.0</shiro.version>
         <bitwalker.version>1.21</bitwalker.version>
-        <!--oauth认证-->
         <org-apache-oltu-oauth2.version>1.0.2</org-apache-oltu-oauth2.version>
-        <!--jwt-->
         <jwt.version>3.3.0</jwt.version>
-        <!--poi-->
         <poi.version>4.4.0</poi.version>
-        <!--数据库连接-->
         <druid.version>1.1.21</druid.version>
-        <!-- mysql -->
         <mysql.version>8.0.17</mysql.version>
-
         <disruptor.version>3.3.6</disruptor.version>
-
         <aspect.version>1.7.4</aspect.version>
-
         <dom4j.version>1.6.1</dom4j.version>
-        <!-- 阿里云SDK -->
         <aliyun.oss.version>2.5.0</aliyun.oss.version>
-        <!-- 七牛云存储 -->
         <qiniu.oss.version>7.0.0</qiniu.oss.version>
-        <!-- 腾讯云COS -->
         <qcloud.cos.version>3.3</qcloud.cos.version>
-        <!-- 文件上传 -->
+        <aliyun.java.sdk.version>4.0.8</aliyun.java.sdk.version>
+        <aliyun.java.sdk.dysmsapi.version>1.1.0</aliyun.java.sdk.dysmsapi.version>
         <commons-fileupload.version>1.3.1</commons-fileupload.version>
-
         <beetl.version>1.1.55.RELEASE</beetl.version>
-
         <commons-text.version>1.9</commons-text.version>
-
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
-
         <commons-io.version>2.4</commons-io.version>
-
         <commons-codec.version>1.10</commons-codec.version>
-
-        <jcaptcha.version>2.0-alpha-1</jcaptcha.version>
-        <!-- 计划任务 -->
+        <json.lib.version>2.4</json.lib.version>
         <quartz.version>2.2.1</quartz.version>
-        <!--数据库连接-->
         <druid.version>1.1.21</druid.version>
-
         <qcloudsms.version>1.0.5</qcloudsms.version>
-
-
-        <!-- 工具包 -->
-        <guava.version>17.0</guava.version>
         <fastjson.version>1.2.70</fastjson.version>
         <commons-text.version>1.9</commons-text.version>
         <commons-beanutils.version>1.9.3</commons-beanutils.version>
         <commons-io.version>2.4</commons-io.version>
-        <freemarker.version>2.3.27-incubating</freemarker.version>
-        <!-- 验证码 -->
-        <jcaptcha.version>2.0-alpha-1</jcaptcha.version>
-
-        <!--itextpdf工具-->
-        <itextpdf.version>5.5.13.2</itextpdf.version>
-        <!--字体-->
-        <itext-asian.version>5.2.0</itext-asian.version>
-
-        <!-- aspose版本 -->
-        <aspose.version>14.9.0</aspose.version>
-
-        <!--easypoi 版本-->
         <easypoi.version>3.2.0</easypoi.version>
-
-        <!--j2cache版本-->
-        <j2cache.version>2.7.0-release</j2cache.version>
-
+        <poi.scratchpad.version>5.0.0</poi.scratchpad.version>
+        <poi.ooxml.schemas.version>1.4</poi.ooxml.schemas.version>
+        <pinyin4j.version>2.5.1</pinyin4j.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -209,19 +172,14 @@
                 <version>${beetl.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.8.5</version>
-            </dependency>
-            <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-core</artifactId>
-                <version>4.0.8</version>
+                <version>${aliyun.java.sdk.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
-                <version>1.1.0</version>
+                <version>${aliyun.java.sdk.dysmsapi.version}</version>
             </dependency>
 
             <!--huyi-->
@@ -322,7 +280,7 @@
             <dependency>
                 <groupId>net.sf.json-lib</groupId>
                 <artifactId>json-lib</artifactId>
-                <version>2.4</version>
+                <version>${json.lib.version}</version>
                 <classifier>jdk15</classifier>
             </dependency>
 
@@ -330,18 +288,18 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-scratchpad</artifactId>
-                <version>5.0.0</version>
+                <version>${poi.scratchpad.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>ooxml-schemas</artifactId>
-                <version>1.4</version>
+                <version>${poi.ooxml.schemas.version}</version>
             </dependency>
             <!--项目添加easypoi导出Excel支持结束-->
             <dependency>
                 <groupId>com.belerweb</groupId>
                 <artifactId>pinyin4j</artifactId>
-                <version>2.5.1</version>
+                <version>${pinyin4j.version}</version>
             </dependency>
 
         </dependencies>
@@ -397,50 +355,6 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
-            <!--提交中央仓库一些设置
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.3</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                        <configuration>
-                            <additionalparam>-Xdoclint:none</additionalparam>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar-no-fork</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <version>1.6</version>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
         </plugins>
     </build>
 </project>

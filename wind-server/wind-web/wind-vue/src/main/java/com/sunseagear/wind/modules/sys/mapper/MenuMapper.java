@@ -9,13 +9,6 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseTreeMapper<Menu> {
 
-    /**
-     * @param userId
-     * @return
-     * @title: findMenuByUserId
-     * @description: 通过用户查找菜单
-     * @return: List<Menu>
-     */
     List<Menu> findMenuAndPermissionByUserId(String userId);
 
     List<Menu> findMenuByUserId(String userId);
