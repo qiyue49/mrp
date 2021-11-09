@@ -236,27 +236,10 @@
                 <artifactId>qcloudsms</artifactId>
                 <version>${qcloudsms.version}</version>
             </dependency>
-            <!--poi Excel开始-->
-            <dependency>
-                <groupId>cn.afterturn</groupId>
-                <artifactId>easypoi-base</artifactId>
-                <version>${poi.version}</version>
-            </dependency>
 
-            <!-- shiro开始 -->
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-web</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
             <dependency>
                 <groupId>org.apache.shiro</groupId>
                 <artifactId>shiro-core</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-ehcache</artifactId>
                 <version>${shiro.version}</version>
             </dependency>
             <dependency>
@@ -271,12 +254,6 @@
                 <version>${poi.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>cn.afterturn</groupId>
-                <artifactId>easypoi-annotation</artifactId>
-                <version>${poi.version}</version>
-            </dependency>
-            <!--poi Excel结束-->
             <!-- 解析客户端操作系统、浏览器等 -->
             <dependency>
                 <groupId>eu.bitwalker</groupId>
@@ -308,19 +285,6 @@
                         <version>4.0</version>
                     </dependency>
             -->
-            <!-- 添加oracle jdbc driver -->
-            <!--        <dependency>
-                        <groupId>com.oracle</groupId>
-                        <artifactId>ojdbc11</artifactId>
-                        <version>21.1.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.oracle.database.nls</groupId>
-                        <artifactId>orai18n</artifactId>
-                        <version>19.7.0.0</version>
-                    </dependency>
-            -->
-
 
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -332,11 +296,6 @@
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
                 <version>${disruptor.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>commons-dbcp</groupId>
-                <artifactId>commons-dbcp</artifactId>
-                <version>1.4</version>
             </dependency>
 
             <dependency>
@@ -360,33 +319,11 @@
                 <version>${commons-codec.version}</version>
             </dependency>
 
-
-            <!-- google java lib -->
-            <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${guava.version}</version>
-            </dependency>
-
-
             <dependency>
                 <groupId>net.sf.json-lib</groupId>
                 <artifactId>json-lib</artifactId>
                 <version>2.4</version>
                 <classifier>jdk15</classifier>
-            </dependency>
-
-
-            <!--打水印-->
-            <dependency>
-                <groupId>com.itextpdf</groupId>
-                <artifactId>itextpdf</artifactId>
-                <version>${itextpdf.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.itextpdf</groupId>
-                <artifactId>itext-asian</artifactId>
-                <version>${itext-asian.version}</version>
             </dependency>
 
             <!--项目添加easypoi导出Excel支持开始-->
