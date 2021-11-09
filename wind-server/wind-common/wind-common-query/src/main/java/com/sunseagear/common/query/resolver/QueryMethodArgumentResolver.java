@@ -4,7 +4,6 @@ import com.sunseagear.common.query.annotation.QueryableDefaults;
 import com.sunseagear.common.query.data.Pageable;
 import com.sunseagear.common.query.data.QueryRequest;
 import com.sunseagear.common.query.data.Queryable;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.MethodParameter;
@@ -121,7 +120,7 @@ public class QueryMethodArgumentResolver extends BaseMethodArgumentResolver {
     }
 
     private String[] filterQueryValues(String[] values) {
-        List<String> result = Lists.newArrayList(values);
+        List<String> result = java.util.Arrays.asList(values);
         for (int i = 0; i < result.size(); i++) {
             if (StringUtils.isBlank(result.get(i))) {
                 result.remove(i);

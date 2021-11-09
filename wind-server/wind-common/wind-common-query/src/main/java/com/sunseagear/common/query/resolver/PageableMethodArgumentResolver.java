@@ -4,7 +4,6 @@ import com.sunseagear.common.query.annotation.PageableDefaults;
 import com.sunseagear.common.query.data.PageRequest;
 import com.sunseagear.common.query.data.Pageable;
 import com.sunseagear.common.query.data.Sort;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.MethodParameter;
 import org.springframework.util.StringUtils;
@@ -192,7 +191,7 @@ public class PageableMethodArgumentResolver extends BaseMethodArgumentResolver {
                          NativeWebRequest webRequest) {
         Sort sort = null;
         try {
-            List<OrderedSort> orderedSortList = Lists.newArrayList();
+            List<OrderedSort> orderedSortList = new ArrayList<>();
             for (String name : sortMap.keySet()) {
                 String value = sortMap.get(name)[0];
                 if (!StringUtils.isEmpty(value)) {

@@ -4,13 +4,13 @@ import com.sunseagear.common.query.data.Condition;
 import com.sunseagear.common.query.data.Queryable;
 import com.sunseagear.common.query.exception.QueryException;
 import com.sunseagear.common.utils.convert.DateConvertEditor;
-import com.google.common.collect.Lists;
 import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.InvalidPropertyException;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -87,11 +87,11 @@ public final class QueryableConvertUtils {
         boolean isCollection = value instanceof Collection;
         boolean isArray = value != null && value.getClass().isArray();
         if (isCollection || isArray) {
-            List<Object> list = Lists.newArrayList();
+            List<Object> list = new ArrayList<>();
             if (isCollection) {
                 list.addAll((Collection) value);
             } else {
-                list = Lists.newArrayList(CollectionUtils.arrayToList(value));
+                list = java.util.Arrays.asList(CollectionUtils.arrayToList(value));
             }
             int length = list.size();
             for (int i = 0; i < length; i++) {

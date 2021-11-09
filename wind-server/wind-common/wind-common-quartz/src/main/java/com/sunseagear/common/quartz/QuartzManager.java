@@ -7,7 +7,6 @@ import com.sunseagear.common.quartz.factory.QuartzJobFactory;
 import com.sunseagear.common.quartz.factory.QuartzJobFactoryDisallowConcurrentExecution;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.StringUtils;
-import com.google.common.collect.Lists;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
@@ -247,6 +246,6 @@ public class QuartzManager {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-        scheduler.deleteJobs(Lists.newArrayList(jobKeys));
+        scheduler.deleteJobs(java.util.Arrays.asList((JobKey[])jobKeys.toArray()));
     }
 }
