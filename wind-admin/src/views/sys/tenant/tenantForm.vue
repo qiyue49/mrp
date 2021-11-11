@@ -13,6 +13,7 @@
       <el-form-item label="用户名" prop="userName">
         <el-input v-if="dialogStatus==='create'" v-model="temp.userName" />
         <span v-else> {{ temp.userName }}</span>
+        默认密码为该租户创建后的租户标识
       </el-form-item>
       <el-form-item label="备注" prop="remarks">
         <el-input v-model="temp.remarks" type="textarea" />
