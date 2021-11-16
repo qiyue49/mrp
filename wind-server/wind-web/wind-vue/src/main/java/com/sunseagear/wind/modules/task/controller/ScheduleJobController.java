@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -53,7 +54,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("task:schedule:job:add")
-    public String add(ScheduleJob entity, BindingResult result,
+    public String add(@Valid ScheduleJob entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -67,7 +68,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("task:schedule:job:update")
-    public String update(ScheduleJob entity, BindingResult result,
+    public String update(@Valid ScheduleJob entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

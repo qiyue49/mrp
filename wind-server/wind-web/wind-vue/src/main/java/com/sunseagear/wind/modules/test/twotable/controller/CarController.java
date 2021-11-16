@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -61,7 +62,7 @@ public class CarController extends BaseBeanController<Car> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("add")
-    public String add(Car entity, BindingResult result,
+    public String add(@Valid Car entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -72,7 +73,7 @@ public class CarController extends BaseBeanController<Car> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:twotable:car:update")
-    public String update(Car entity, BindingResult result,
+    public String update(@Valid Car entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

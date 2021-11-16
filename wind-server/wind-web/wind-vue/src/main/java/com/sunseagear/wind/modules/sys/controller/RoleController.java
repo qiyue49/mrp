@@ -21,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    public String add(Role entity, BindingResult result) {
+    public String add(@Valid Role entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         entity.setTenantId(UserUtils.getTenantId());
@@ -112,7 +113,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    public String update(Role entity, BindingResult result) {
+    public String update(@Valid Role entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         roleService.insertOrUpdate(entity);

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:config:add")
-    public String add(SysConfig entity, BindingResult result,
+    public String add(@Valid SysConfig entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         int count = sysConfigService.selectCount(new QueryWrapper<SysConfig>().
                 nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
@@ -83,7 +84,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:config:update")
-    public String update(SysConfig entity, BindingResult result,
+    public String update(@Valid SysConfig entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         int count = sysConfigService.selectCount(new QueryWrapper<SysConfig>()
                 .nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))

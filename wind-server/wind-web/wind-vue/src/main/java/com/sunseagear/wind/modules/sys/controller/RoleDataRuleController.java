@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:datarule:add")
-    public String add(RoleDataRule entity, BindingResult result,
+    public String add(@Valid RoleDataRule entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -103,7 +104,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:datarule:update")
-    public String update(RoleDataRule entity, BindingResult result,
+    public String update(@Valid RoleDataRule entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -114,7 +115,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("updateRules")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:datarule:update")
-    public String update(String roleId, String[] ids) {
+    public String update(@Valid String roleId, String[] ids) {
         QueryWrapper<RoleDataRule> roleDataRuleEntityWrapper = new QueryWrapper<>();
         roleDataRuleEntityWrapper.eq("role_id", roleId);
         roleDataRuleService.remove(roleDataRuleEntityWrapper);

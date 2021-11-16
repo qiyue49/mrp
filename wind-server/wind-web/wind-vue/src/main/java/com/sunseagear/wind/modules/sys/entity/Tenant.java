@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * All rights Reserved, Designed By www.sunseagear.com
  *
@@ -27,14 +30,17 @@ public class Tenant extends DataEntity<String> {
 
     @TableId(value = "id", type = IdType.UUID)
     private String id; //id
+    @NotEmpty(message = "联系人不能为空")
     @TableField(value = "contact")
     private String contact;  //联系人
-    @TableField(value = "phone")
-    private String phone;  //电话
-    @TableField(value = "name")
-    private String name;  //租户名称
+    @NotEmpty(message = "电话不能为空")
     @TableField(value = "tenant_id")
     private String tenantId;
+    @TableField(value = "phone")
+    private String phone;  //电话
+    @NotEmpty(message = "租户名称不能为空")
+    @TableField(value = "name")
+    private String name;  //租户名称
     @TableField(value = "user_id")
     private String userId;
     @TableField(exist = false)

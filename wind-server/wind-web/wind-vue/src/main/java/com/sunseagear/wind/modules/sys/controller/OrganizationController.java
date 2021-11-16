@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -60,7 +61,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:organization:add")
-    public String add(Organization entity, BindingResult result,
+    public String add(@Valid Organization entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -73,7 +74,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:organization:update")
-    public String update(Organization entity, BindingResult result,
+    public String update(@Valid Organization entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

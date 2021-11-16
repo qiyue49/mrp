@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -62,7 +63,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("test:expandtable:expandtable:add")
-    public String add(ExpandTable entity, BindingResult result,
+    public String add(@Valid ExpandTable entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -73,7 +74,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:expandtable:expandtable:update")
-    public String update(ExpandTable entity, BindingResult result,
+    public String update(@Valid ExpandTable entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

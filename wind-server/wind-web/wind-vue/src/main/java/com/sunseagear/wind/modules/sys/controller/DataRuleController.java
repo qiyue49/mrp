@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -71,7 +72,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:datarule:add")
-    public String add(DataRule entity, BindingResult result,
+    public String add(@Valid DataRule entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -82,7 +83,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:datarule:update")
-    public String update(DataRule entity, BindingResult result,
+    public String update(@Valid DataRule entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

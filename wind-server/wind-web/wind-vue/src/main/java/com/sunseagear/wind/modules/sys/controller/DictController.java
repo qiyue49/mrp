@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -86,7 +87,7 @@ public class DictController extends BaseBeanController<Dict> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:dict:add")
-    public String add(Dict entity, BindingResult result,
+    public String add(@Valid Dict entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -98,7 +99,7 @@ public class DictController extends BaseBeanController<Dict> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:dict:add")
-    public String update(Dict entity, BindingResult result,
+    public String update(@Valid Dict entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -75,7 +76,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("test:treeandtable:treeandtable:add")
-    public String add(TreeAndTable entity, BindingResult result,
+    public String add(@Valid TreeAndTable entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -86,7 +87,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:treeandtable:treeandtable:update")
-    public String update(TreeAndTable entity, BindingResult result,
+    public String update(@Valid TreeAndTable entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

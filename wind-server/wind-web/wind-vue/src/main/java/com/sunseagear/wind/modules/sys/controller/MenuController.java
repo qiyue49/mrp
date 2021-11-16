@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:menu:add")
-    public String add(Menu entity, BindingResult result,
+    public String add(@Valid Menu entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -69,7 +70,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:menu:update")
-    public String update(Menu entity, BindingResult result,
+    public String update(@Valid Menu entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

@@ -104,7 +104,6 @@ export default {
           this.loading = true
           createTenant(this.temp).then(response => {
             this.loading = false
-            this.loading = false
             if (response.data.code === 0) {
               this.getList()
               this.dialogFormVisible = false

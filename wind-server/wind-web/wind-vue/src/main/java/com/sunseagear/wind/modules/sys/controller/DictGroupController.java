@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -54,7 +55,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:dict:group:add")
-    public String add(DictGroup entity, BindingResult result,
+    public String add(@Valid DictGroup entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -66,7 +67,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:dict:group:update")
-    public String update(DictGroup entity, BindingResult result,
+    public String update(@Valid DictGroup entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
@@ -70,7 +71,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("email:template:add")
-    public String add(EmailTemplate entity, BindingResult result,
+    public String add(@Valid EmailTemplate entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
@@ -84,7 +85,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PostMapping("update")
     @RequiresPermissions("email:template:update")
     @Log(logType = LogType.UPDATE)
-    public String update(EmailTemplate entity, BindingResult result,
+    public String update(@Valid EmailTemplate entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
         this.checkError(entity, result);
