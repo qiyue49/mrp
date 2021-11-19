@@ -81,7 +81,6 @@
         <dependency>
             <groupId>cn.afterturn</groupId>
             <artifactId>easypoi-web</artifactId>
-            <version>${poi.version}</version>
         </dependency>
         <!--poi Excel结束-->
 
