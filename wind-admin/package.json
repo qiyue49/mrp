@@ -2,7 +2,7 @@
   "name": "wind-admin",
   "version": "1.4.0",
   "description": "wind-admin based on element-vue-admin",
-  "author": "liangwei",
+  "author": "sunseagear",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
