@@ -49,6 +49,6 @@ public class EmailSendController {
             e.printStackTrace();
             return Response.error("邮件发送失败");
         }
-        return Response.ok("删除成功");
+        return Response.ok("发送成功");
     }
 }
