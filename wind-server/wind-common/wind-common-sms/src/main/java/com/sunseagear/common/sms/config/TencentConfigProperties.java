@@ -18,6 +18,10 @@ public class TencentConfigProperties {
     private Integer appId = 0;
     // 短信应用SDK AppKey
     private String appKey = "";
+    // 授权用户的SecretId
+    private String secretId = "";
+    // 授权用户的SecretKey
+    private String secretKey = "";
 
     public static SmsConfigProperties buildConfigProperties() {
         return buildConfigProperties(DEFAULT_CONFIG_FILE);
@@ -31,6 +35,8 @@ public class TencentConfigProperties {
         TencentConfigProperties tencentConfig = new TencentConfigProperties();
         tencentConfig.setAppId(p.getInt("sms.tencent.app-id"));
         tencentConfig.setAppKey(p.getString("sms.tencent.app-key"));
+        tencentConfig.setSecretId(p.getString("sms.tencent.SecretId"));
+        tencentConfig.setSecretKey(p.getString("sms.tencent.SecretKey"));
         smsConfigProperties.setTencent(tencentConfig);
         return smsConfigProperties;
     }
@@ -49,5 +55,21 @@ public class TencentConfigProperties {
 
     public void setAppKey(String appKey) {
         this.appKey = appKey;
+    }
+
+    public String getSecretId() {
+        return secretId;
+    }
+
+    public void setSecretId(String secretId) {
+        this.secretId = secretId;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
     }
 }
