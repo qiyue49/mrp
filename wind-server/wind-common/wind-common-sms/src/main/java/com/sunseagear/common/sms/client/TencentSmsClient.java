@@ -97,7 +97,6 @@ public class TencentSmsClient implements ISmsClient {
         }
         return smsResult;
     }
-
     public ArrayList<String> mapToList(Map<String, Object> datas) {
         ArrayList<String> dataList = new ArrayList<>();
         for (Object object : datas.entrySet()) {
