@@ -149,10 +149,8 @@ public class TencentSmsClient implements ISmsClient {
          * 短信控制台: https://console.cloud.tencent.com/smsv2
          * sms helper: https://cloud.tencent.com/document/product/382/3773 */
         /* 短信应用ID: 短信SdkAppId在 [短信控制台] 添加应用后生成的实际SdkAppId，示例如1400006666 */
-        String sdkAppId = "1400603579";
         req.setSmsSdkAppId(String.valueOf(appId));
         /* 短信签名内容: 使用 UTF-8 编码，必须填写已审核通过的签名，签名信息可登录 [短信控制台] 查看 */
-        //String signName = "时光相册个人网";
         req.setSignName(this.signName);
         /* 国际/港澳台短信 SenderId: 国内短信填空，默认未开通，如需开通请联系 [sms helper] */
         String senderid = "";
@@ -164,7 +162,6 @@ public class TencentSmsClient implements ISmsClient {
         String extendCode = "";
         req.setExtendCode(extendCode);
         /* 模板 ID: 必须填写已审核通过的模板 ID。模板ID可登录 [短信控制台] 查看 */
-        //String templateId = "1218140";
         req.setTemplateId(templateId);
         /* 下发手机号码，采用 E.164 标准，+[国家或地区码][手机号]
          * 示例如：+8613711112222， 其中前面有一个+号 ，86为国家码，13711112222为手机号，最多不要超过200个手机号 */
@@ -176,6 +173,6 @@ public class TencentSmsClient implements ISmsClient {
         /* 通过 client 对象调用 SendSms 方法发起请求。注意请求方法名与请求对象是对应的
          * 返回的 res 是一个 SendSmsResponse 类的实例，与请求对象对应 */
         SendSmsResponse res = client.SendSms(req);
-        return res;
+        return client.SendSms(req);
     }
 }
