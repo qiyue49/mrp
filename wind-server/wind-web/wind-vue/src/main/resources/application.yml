@@ -99,9 +99,9 @@ beetlsql:
 #文件上传配置
 #使用的上传存储空间,local本地,aliyun:阿里云
 oss:
-  client-type: aliyun
+  client-type: local
   #默认上传目录
-  base_dir: wind/userFace
+  base_dir: userfiles
   #允许的文件扩展名
   allowed_extension: mp4,bmp, gif, jpg, jpeg, png,doc, docx, xls, xlsx, ppt, pptx,html,htm,txt,rar, zip, gz, bz2,pdf
   #最大文件大小 50M

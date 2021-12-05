@@ -43,6 +43,7 @@ public class TencentSmsClient implements ISmsClient {
     private String secretId = "";
     // 授权用户的SecretKey
     private String secretKey = "";
+
     @Override
     public void init(SmsConfigProperties smsConfigProperties) {
         this.smsConfigProperties = smsConfigProperties;
@@ -53,11 +54,13 @@ public class TencentSmsClient implements ISmsClient {
         secretId = this.smsConfigProperties.getTencent().getSecretId();
         secretKey = this.smsConfigProperties.getTencent().getSecretKey();
     }
+
     @Override
     public SmsResult send(String phone, String template) {
         Map<String, Object> datas = new HashMap<>();
         return send(phone, template, datas);
     }
+
     @Override
     public SmsResult send(String phone, String template, Map<String, Object> datas) {
         if (!isOpen) {
@@ -68,10 +71,10 @@ public class TencentSmsClient implements ISmsClient {
         SmsResult smsResult = new SmsResult();
         try {
             // 发送短信
-            SendSmsResponse res = send(template,phone,templateParam);
+            SendSmsResponse res = send(template, phone, templateParam);
             // 获取响应结果
             SendStatus sendStatus = res.getSendStatusSet()[0];
-            if(sendStatus.getFee() == 0){
+            if (sendStatus.getFee() == 0) {
                 smsResult = SmsResult.fail(sendStatus.getMessage());
             } else {
                 smsResult = SmsResult.success(sendStatus.getMessage());
@@ -97,6 +100,7 @@ public class TencentSmsClient implements ISmsClient {
         }
         return smsResult;
     }
+
     public ArrayList<String> mapToList(Map<String, Object> datas) {
         ArrayList<String> dataList = new ArrayList<>();
         for (Object object : datas.entrySet()) {
@@ -105,7 +109,7 @@ public class TencentSmsClient implements ISmsClient {
         return dataList;
     }
 
-    private SendSmsResponse send(String templateId,String phone,String[] templateParam) throws TencentCloudSDKException {
+    private SendSmsResponse send(String templateId, String phone, String[] templateParam) throws TencentCloudSDKException {
         /* 必要步骤：
          * 实例化一个认证对象，入参需要传入腾讯云账户密钥对secretId，secretKey。
          * 这里采用的是从环境变量读取的方式，需要在环境变量中先设置这两个值。
@@ -136,7 +140,7 @@ public class TencentSmsClient implements ISmsClient {
         clientProfile.setHttpProfile(httpProfile);
         /* 实例化要请求产品(以sms为例)的client对象
          * 第二个参数是地域信息，可以直接填写字符串ap-guangzhou，或者引用预设的常量 */
-        SmsClient client = new SmsClient(cred, "ap-guangzhou",clientProfile);
+        SmsClient client = new SmsClient(cred, "ap-guangzhou", clientProfile);
         /* 实例化一个请求对象，根据调用的接口和实际情况，可以进一步设置请求参数
          * 你可以直接查询SDK源码确定接口有哪些属性可以设置
          * 属性可能是基本类型，也可能引用了另一个数据结构

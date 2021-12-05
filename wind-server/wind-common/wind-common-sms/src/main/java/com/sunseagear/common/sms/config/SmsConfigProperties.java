@@ -14,7 +14,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "sms")
 public class SmsConfigProperties {
 
-    //使用的上传存储空间,aliyun:阿里云
+    //使用的短信网关,aliyun:阿里云
     String smsType = "tencent";
     //签名
     String signName = "";

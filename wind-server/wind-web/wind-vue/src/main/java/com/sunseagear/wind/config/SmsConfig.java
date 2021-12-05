@@ -2,6 +2,7 @@ package com.sunseagear.wind.config;
 
 import com.sunseagear.common.sms.client.AliyunSmsClient;
 import com.sunseagear.common.sms.client.ISmsClient;
+import com.sunseagear.common.sms.client.SmsClientFactory;
 import com.sunseagear.common.sms.config.SmsConfigProperties;
 import com.sunseagear.common.sms.disruptor.SmsDao;
 import com.sunseagear.common.sms.disruptor.SmsHelper;
@@ -34,7 +35,7 @@ public class SmsConfig {
 
     @Bean
     public ISmsClient smsClient() {
-        ISmsClient smsClient = new AliyunSmsClient();
+        ISmsClient smsClient = SmsClientFactory.build(smsConfigProperties.getSmsType());
         smsClient.init(smsConfigProperties);
         return smsClient;
     }
