@@ -76,16 +76,6 @@ public class TencentSmsClient implements ISmsClient {
             } else {
                 smsResult = SmsResult.success(sendStatus.getMessage());
             }
-//            SmsSingleSender msender = new SmsSingleSender(appId, appKey);
-//            SmsSingleSenderResult result = new SmsSingleSenderResult();
-//            // 签名参数未提供或者为空时，会使用默认签名发送短信
-//            SmsSingleSenderResult result = msender.sendWithParam("86", phone,
-//                    Integer.parseInt(template), mapToList(datas), signName, "", "");
-//            if (result.result == 0) {
-//                smsResult = SmsResult.success(result.errMsg);
-//            } else {
-//                smsResult = SmsResult.fail(result.errMsg);
-//            }
             smsResult.setSmsid(res.getRequestId());
             //smsResult.setReponseData(JSON.toJSONString(result));
         } catch (Exception e) {
