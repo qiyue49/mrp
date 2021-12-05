@@ -1,11 +1,7 @@
 package com.sunseagear.common.sms.client;
 
-import com.alibaba.fastjson.JSON;
 import com.sunseagear.common.sms.config.SmsConfigProperties;
 import com.sunseagear.common.sms.data.SmsResult;
-import com.github.qcloudsms.SmsSingleSender;
-import com.github.qcloudsms.SmsSingleSenderResult;
-import com.github.qcloudsms.httpclient.HTTPException;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.common.profile.ClientProfile;
@@ -14,10 +10,11 @@ import com.tencentcloudapi.sms.v20210111.SmsClient;
 import com.tencentcloudapi.sms.v20210111.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
 import com.tencentcloudapi.sms.v20210111.models.SendStatus;
-import org.json.JSONException;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * All rights Reserved, Designed By kjt.gzst.gov.cn
@@ -91,10 +88,6 @@ public class TencentSmsClient implements ISmsClient {
 //            }
             smsResult.setSmsid(res.getRequestId());
             //smsResult.setReponseData(JSON.toJSONString(result));
-        } catch (JSONException e) {
-            // json解析错误
-            e.printStackTrace();
-            smsResult = SmsResult.fail("json解析错误");
         } catch (Exception e) {
             smsResult = SmsResult.fail(e.getMessage());
         }

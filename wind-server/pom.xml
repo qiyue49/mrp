@@ -47,7 +47,6 @@
         <json.lib.version>2.4</json.lib.version>
         <quartz.version>2.2.1</quartz.version>
         <druid.version>1.1.21</druid.version>
-        <qcloudsms.version>1.0.5</qcloudsms.version>
         <tencentcloud.sdk.java.version>3.1.410</tencentcloud.sdk.java.version>
         <fastjson.version>1.2.70</fastjson.version>
         <commons-text.version>1.9</commons-text.version>
@@ -191,15 +190,8 @@
             </dependency>
             <!--腾讯短信-->
             <dependency>
-                <groupId>com.github.qcloudsms</groupId>
-                <artifactId>qcloudsms</artifactId>
-                <version>${qcloudsms.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>com.tencentcloudapi</groupId>
                 <artifactId>tencentcloud-sdk-java</artifactId>
-                <!-- go to https://search.maven.org/search?q=tencentcloud-sdk-java and get the latest version. -->
-                <!-- 请到https://search.maven.org/search?q=tencentcloud-sdk-java查询所有版本，最新版本如下 -->
                 <version>${tencentcloud.sdk.java.version}</version>
             </dependency>
             <dependency>
