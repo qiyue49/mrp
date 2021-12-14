@@ -80,11 +80,12 @@ export default {
     handleSuccess(response) {
       if (response.code === 0) {
         this.uploadLoading = false
+        this.$emit('refreshList')
         this.$message.success(response.msg)
-        this.dialogFormVisible = false
       } else {
         this.$message.error(response.msg)
       }
+      this.dialogFormVisible = false
     },
     handleError(response) {
       this.uploadLoading = false
