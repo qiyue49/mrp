@@ -2,7 +2,6 @@
   <el-autocomplete
     v-model="attrValue"
     :fetch-suggestions="querySearch"
-    class="inline-input"
     :placeholder="placeholder"
     @select="handleSelect"
   />
