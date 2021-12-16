@@ -4,6 +4,7 @@
 package com.sunseagear.wind.utils.excel;
 
 import com.google.common.collect.Lists;
+import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.Reflections;
 import com.sunseagear.wind.utils.DictUtils;
 import com.sunseagear.wind.utils.excel.annotation.ExcelField;
@@ -24,6 +25,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -339,9 +343,16 @@ public class ExportExcel {
             } else if (val instanceof Float) {
                 cell.setCellValue((Float) val);
             } else if (val instanceof Date) {
-                DataFormat format = wb.createDataFormat();
-                style.setDataFormat(format.getFormat("yyyy-MM-dd"));
-                cell.setCellValue((Date) val);
+                String date = DateUtils.formatDate((Date) val, "yyyy-MM-dd");
+                cell.setCellValue(date);
+            } else if (val instanceof LocalDate) {
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                String localTime = df.format((LocalDate)val);
+                cell.setCellValue(localTime);
+            } else if (val instanceof LocalDateTime) {
+                DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                String localTime = df.format((LocalDateTime)val);
+                cell.setCellValue(localTime);
             } else {
                 if (fieldType != Class.class) {
                     cell.setCellValue((String) fieldType.getMethod("setValue", Object.class).invoke(null, val));
