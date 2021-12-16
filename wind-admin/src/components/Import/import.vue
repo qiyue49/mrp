@@ -58,6 +58,14 @@ export default {
       waringLabel: '只能上传' + this.extension + '文件，且不超过' + this.limit + 'M'
     }
   },
+  watch: {
+    importUrl: {
+      immediate: true,
+      handler(val) {
+        this.uploadImageUrl = 'http://' + process.env.VUE_APP_BASE_API + val
+      }
+    }
+  },
   methods: {
     show() {
       this.dialogFormVisible = true

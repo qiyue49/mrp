@@ -65,17 +65,12 @@ public class MenuTreeHelper implements Serializable {
             put("redirect", menu.getRedirect());
             put("component", menu.getComponent());
             put("type", menu.getType());
-            if (menu.getCacheable() == null) {
-                menu.setCacheable(true);
-            }
             put("hidden", !menu.isEnable());
 
             //设置meta
             Map<String, Object> meta = new HashMap<>();
             meta.put("title", menu.getName());
             meta.put("icon", menu.getIcon());
-            meta.put("noCache", !menu.getCacheable());
-            meta.put("requireAuth", menu.getRequireAuth());
             meta.put("permission", menu.getPermission());
             put("meta", meta);
             return this;

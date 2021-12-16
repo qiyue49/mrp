@@ -134,9 +134,7 @@ export default {
         type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
         name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
         enabled: [{ required: true, message: '是否可用必选', trigger: 'change' }],
-        sort: [{ required: true, message: '排序必填', trigger: 'blur' }],
-        cacheable: [{ required: true, message: '是否缓存必选', trigger: 'change' }],
-        requireAuth: [{ required: true, message: '是否需要认证必选', trigger: 'change' }]
+        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
       },
       treeProps: {
         value: 'id',
@@ -193,8 +191,6 @@ export default {
         sort: '0',
         icon: '',
         edirect: '',
-        cacheable: 'true',
-        requireAuth: 'true',
         component: '',
         remark: ''
       }

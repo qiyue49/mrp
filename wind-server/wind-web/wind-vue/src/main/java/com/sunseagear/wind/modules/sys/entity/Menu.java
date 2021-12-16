@@ -52,16 +52,7 @@ public class Menu extends TreeEntity<String> {
      */
     @TableField(value = "redirect")
     private String redirect;
-    /**
-     * 是否缓存
-     */
-    @TableField(value = "cacheable")
-    private Boolean cacheable;
-    /**
-     * 是否需要认证
-     */
-    @TableField(value = "require_auth")
-    private Boolean requireAuth;
+
     /**
      * 前端资源路径
      */

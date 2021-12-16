@@ -113,8 +113,6 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Str
             menu.setSort(i + count);
             menu.setType("3");
             menu.setEnabled((short) 1);
-            menu.setCacheable(true);
-            menu.setRequireAuth(true);
             menuList.add(menu);
         }
         insertBatch(menuList);
