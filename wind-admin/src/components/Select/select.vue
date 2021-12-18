@@ -5,6 +5,7 @@
       :key="item.label + 'scopeType'"
       :label="item[props.label]"
       :value="item[props.value]"
+      @change="change"
     />
   </el-select>
 </template>
