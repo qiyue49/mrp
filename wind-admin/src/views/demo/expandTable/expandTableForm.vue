@@ -21,6 +21,7 @@
       </el-form-item>
       <el-form-item label="图片" prop="image">
         <upload-image v-model="temp.image" />
+        <upload-file-multi v-model="temp.image"/>
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -37,10 +38,12 @@
 <script>
 import { createExpandTable, updateExpandTable, getExpandTable } from '@/api/demo/expandTable/expandTable'
 import UploadImage from '@/components/Upload/uploadImage'
+import UploadFile from '../../../components/Upload/uploadFile'
+import UploadFileMulti from '../../../components/Upload/uploadFileMulti'
 
 export default {
   name: 'ExpandTableForm',
-  components: { UploadImage },
+  components: { UploadFileMulti, UploadFile, UploadImage },
   data() {
     return {
       rules: {

@@ -1,28 +1,35 @@
 <template>
-  <el-upload
-    ref="upload"
-    class="upload-demo"
-    :data="uploadData"
-    :headers="myHeaders"
-    :action="uploadImageUrl"
-    :on-preview="handlePreview"
-    :on-remove="handleRemove"
-    :on-success="handleSuccess"
-    :on-error="handleError"
-    :before-upload="beforeUpload"
-    :file-list="fileList"
-    :auto-upload="false">
-    <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-    <div slot="tip" class="el-upload__tip">{{ waringLabel }}</div>
-  </el-upload>
+  <div class="upload-container">
+    <div v-if="resultUrl">
+      <el-link target="_blank" :href="resultUrl" :underline="false">
+        <el-button size="mini" type="primary">点击下载</el-button>
+      </el-link>
+    </div>
+    <el-upload
+      v-loading="uploadLoading"
+      :data="uploadData"
+      :action="uploadImageUrl"
+      :show-file-list="false"
+      :headers="myHeaders"
+      :on-success="handleSuccess"
+      :on-error="handleError"
+      :before-upload="beforeUpload"
+      class="uploader"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+      <i v-else class="el-icon-upload uploader-icon">
+        {{ uploadLabel }}
+      </i>
+      <div v-if="!imageUrl&&showWaringLabel" slot="tip" class="waring-label">{{ waringLabel }}</div>
+    </el-upload>
+  </div>
 </template>
 
 <script>
 import { getToken } from '@/utils/auth'
 import defaultImg from '@/assets/img/default_img.jpg' // 水波纹指令
 export default {
-  name: 'UploadFile',
+  name: 'UploadFileSimple',
   props: {
     value: {
       type: String,
@@ -61,10 +68,9 @@ export default {
       myHeaders: { access_token: getToken() },
       imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       extensions: [],
-      fileList: [],
       uploadLoading: false,
       resultUrl: undefined,
-      waringLabel: undefined
+      waringLabel: '只能上传' + this.extension + '文件，且不超过' + this.limit + 'M'
     }
   },
   computed: {
@@ -88,56 +94,27 @@ export default {
     }
   },
   created() {
-    if (!this.isNull(this.extension)) {
-      var extension = this.extension.replace(/(^\s+)|(\s+$)/g, '')
-      extension = extension.replace(/\s/g, '')
-      this.extensions = extension.split(',')
-    }
+    var extension = this.extension.replace(/(^\s+)|(\s+$)/g, '')
+    extension = extension.replace(/\s/g, '')
+    this.extensions = extension.split(',')
     if (this.dir !== '') {
       this.uploadImageUrl += '?dir=' + this.dir
     }
-    if (this.extensions.length === 0) {
-      this.waringLabel = '只能上传不超过' + this.limit + 'M的文件'
-    } else {
-      this.waringLabel = '只能上传' + this.extension + '文件，且不超过' + this.limit + 'M'
-    }
   },
   methods: {
-    submitUpload() {
-      this.$refs.upload.submit()
-    },
-    handleRemove(file, fileList) {
-      this.emitList(fileList)
-    },
-    handlePreview(file) {
-      if (file.status !== 'success') {
-        this.$message.warning('该文件还未成功上传')
-        return
-      }
-      window.open(file.response.data)
-    },
     emitInput(val) {
       this.$emit('input', val)
     },
-    emitList(fileList) {
-      const urlArray = []
-      fileList.forEach(item => {
-        if (item.status === 'success') {
-          urlArray.push(item.response.data)
-        }
-      })
-      const str = urlArray.join(',')
-      this.emitInput(str)
-    },
-    handleSuccess(response, file, fileList) {
+    handleSuccess(response, file) {
       if (response.code === 0) {
         this.uploadLoading = false
-        this.emitList(fileList)
+        this.resultUrl = response.data
+        this.emitInput(this.resultUrl)
       } else {
         this.$message.error(response.msg)
       }
     },
-    handleError(response, file, fileList) {
+    handleError(response) {
       this.uploadLoading = false
       if (response.msg) {
         this.$message.error(response.msg)
