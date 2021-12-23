@@ -37,8 +37,6 @@
 <script>
 import { createExpandTable, updateExpandTable, getExpandTable } from '@/api/demo/expandTable/expandTable'
 import UploadImage from '@/components/Upload/uploadImage'
-import UploadFile from '../../../components/Upload/uploadFile'
-import UploadFileMulti from '../../../components/Upload/uploadFileMulti'
 
 export default {
   name: 'ExpandTableForm',
