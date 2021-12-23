@@ -78,8 +78,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
     @PostMapping("add")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("add")
-    public String add(@Valid CarModel entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid CarModel entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         carModelService.insert(entity);
@@ -89,8 +88,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:twotable:carmodel:update")
-    public String update(@Valid CarModel entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid CarModel entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         carModelService.insertOrUpdate(entity);

@@ -63,8 +63,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("test:expandtable:expandtable:add")
-    public String add(@Valid ExpandTable entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid ExpandTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         expandTableService.insert(entity);
@@ -74,8 +73,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:expandtable:expandtable:update")
-    public String update(@Valid ExpandTable entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid ExpandTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         expandTableService.insertOrUpdate(entity);

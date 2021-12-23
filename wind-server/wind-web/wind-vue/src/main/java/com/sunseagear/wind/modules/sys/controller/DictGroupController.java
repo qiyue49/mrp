@@ -55,8 +55,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:dict:group:add")
-    public String add(@Valid DictGroup entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid DictGroup entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         dictGroupService.insert(entity);
@@ -67,8 +66,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:dict:group:update")
-    public String update(@Valid DictGroup entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid DictGroup entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         dictGroupService.insertOrUpdate(entity);

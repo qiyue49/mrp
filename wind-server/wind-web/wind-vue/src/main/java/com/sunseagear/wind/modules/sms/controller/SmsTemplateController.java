@@ -66,8 +66,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sms:template:add")
-    public String add(@Valid SmsTemplate entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid SmsTemplate entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         String templateCode = StringUtils.randomString(10);
@@ -79,8 +78,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sms:template:update")
-    public String update(@Valid SmsTemplate entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid SmsTemplate entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         smsTemplateService.insertOrUpdate(entity);

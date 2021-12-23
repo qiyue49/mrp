@@ -87,8 +87,7 @@ public class DictController extends BaseBeanController<Dict> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:dict:add")
-    public String add(@Valid Dict entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid Dict entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         dictService.insert(entity);
@@ -99,8 +98,7 @@ public class DictController extends BaseBeanController<Dict> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:dict:add")
-    public String update(@Valid Dict entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid Dict entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         dictService.insertOrUpdate(entity);

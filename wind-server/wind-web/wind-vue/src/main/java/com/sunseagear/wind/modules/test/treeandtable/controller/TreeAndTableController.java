@@ -76,8 +76,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("test:treeandtable:treeandtable:add")
-    public String add(@Valid TreeAndTable entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid TreeAndTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         treeAndTableService.insert(entity);
@@ -87,8 +86,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:treeandtable:treeandtable:update")
-    public String update(@Valid TreeAndTable entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid TreeAndTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         treeAndTableService.insertOrUpdate(entity);

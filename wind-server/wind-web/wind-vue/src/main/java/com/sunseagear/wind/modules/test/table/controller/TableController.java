@@ -85,8 +85,7 @@ public class TableController extends BaseBeanController<Table> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("test:table:table:add")
-    public String add(@Valid Table entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid Table entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         tableService.insert(entity);
@@ -96,8 +95,7 @@ public class TableController extends BaseBeanController<Table> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("test:table:table:update")
-    public String update(@Valid Table entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid Table entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         tableService.insertOrUpdate(entity);

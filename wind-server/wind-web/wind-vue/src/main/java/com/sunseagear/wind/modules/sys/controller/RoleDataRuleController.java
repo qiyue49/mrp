@@ -93,8 +93,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:datarule:add")
-    public String add(@Valid RoleDataRule entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid RoleDataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         roleDataRuleService.insert(entity);
@@ -104,8 +103,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:datarule:update")
-    public String update(@Valid RoleDataRule entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid RoleDataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         roleDataRuleService.insertOrUpdate(entity);

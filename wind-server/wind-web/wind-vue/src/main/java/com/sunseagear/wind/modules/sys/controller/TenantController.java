@@ -81,8 +81,7 @@ public class TenantController extends BaseBeanController<Tenant> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:tenant:add")
-    public String add(@Valid Tenant entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid Tenant entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         entity.setTenantId(StringUtils.randomNumber(8));
@@ -93,8 +92,7 @@ public class TenantController extends BaseBeanController<Tenant> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:tenant:update")
-    public String update(@Valid Tenant entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid Tenant entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         tenantService.insertOrUpdate(entity);

@@ -54,8 +54,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("task:schedule:job:add")
-    public String add(@Valid ScheduleJob entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid ScheduleJob entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         if (!CronExpression.isValidExpression(entity.getCronExpression())) {
@@ -68,8 +67,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("task:schedule:job:update")
-    public String update(@Valid ScheduleJob entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid ScheduleJob entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         if (!CronExpression.isValidExpression(entity.getCronExpression())) {

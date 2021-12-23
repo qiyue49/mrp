@@ -72,8 +72,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:datarule:add")
-    public String add(@Valid DataRule entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid DataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         dataRuleService.insert(entity);
@@ -83,8 +82,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:datarule:update")
-    public String update(@Valid DataRule entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid DataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         dataRuleService.insertOrUpdate(entity);

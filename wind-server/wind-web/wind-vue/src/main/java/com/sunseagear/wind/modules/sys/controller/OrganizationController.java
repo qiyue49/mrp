@@ -61,8 +61,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:organization:add")
-    public String add(@Valid Organization entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid Organization entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         entity.setTenantId(UserUtils.getTenantId());
@@ -74,8 +73,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:organization:update")
-    public String update(@Valid Organization entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid Organization entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         organizationService.insertOrUpdate(entity);

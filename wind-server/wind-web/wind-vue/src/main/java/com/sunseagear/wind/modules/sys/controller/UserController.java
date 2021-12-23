@@ -102,7 +102,7 @@ public class UserController extends BaseBeanController<User> {
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:user:add")
     public String add(@Valid User entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+                      HttpServletRequest request) {
         // 验证错误
         this.checkError(entity, result);
         //账号重复
@@ -120,7 +120,7 @@ public class UserController extends BaseBeanController<User> {
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:user:update")
     public String update(@Valid User entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+                         HttpServletRequest request) {
         // 验证错误
         this.checkError(entity, result);
         //账号重复

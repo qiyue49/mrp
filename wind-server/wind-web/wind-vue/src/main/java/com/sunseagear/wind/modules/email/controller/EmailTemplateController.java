@@ -71,8 +71,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("email:template:add")
-    public String add(@Valid EmailTemplate entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid EmailTemplate entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         String templateCode = StringUtils.randomString(10);
@@ -85,8 +84,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PostMapping("update")
     @RequiresPermissions("email:template:update")
     @Log(logType = LogType.UPDATE)
-    public String update(@Valid EmailTemplate entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid EmailTemplate entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         emailTemplateService.insertOrUpdate(entity);

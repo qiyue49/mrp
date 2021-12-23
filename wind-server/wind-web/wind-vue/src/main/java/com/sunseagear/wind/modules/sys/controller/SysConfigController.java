@@ -65,8 +65,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:config:add")
-    public String add(@Valid SysConfig entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid SysConfig entity, BindingResult result) {
         int count = sysConfigService.selectCount(new QueryWrapper<SysConfig>().
                 nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
                 .eq("tenant_id",UserUtils.getTenantId()));
@@ -84,8 +83,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:config:update")
-    public String update(@Valid SysConfig entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid SysConfig entity, BindingResult result) {
         int count = sysConfigService.selectCount(new QueryWrapper<SysConfig>()
                 .nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
                 .eq("tenant_id",UserUtils.getTenantId())

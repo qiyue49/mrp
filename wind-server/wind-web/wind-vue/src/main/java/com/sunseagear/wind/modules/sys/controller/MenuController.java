@@ -59,8 +59,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:menu:add")
-    public String add(@Valid Menu entity, BindingResult result,
-                      HttpServletRequest request, HttpServletResponse response) {
+    public String add(@Valid Menu entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         menuService.insert(entity);
@@ -70,8 +69,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:menu:update")
-    public String update(@Valid Menu entity, BindingResult result,
-                         HttpServletRequest request, HttpServletResponse response) {
+    public String update(@Valid Menu entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
         menuService.insertOrUpdate(entity);
