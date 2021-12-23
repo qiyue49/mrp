@@ -12,6 +12,15 @@ export function filterAsyncRoutes(routes) {
     if (tmp.children) {
       res = res.concat(filterAsyncRoutes(tmp.children))
     } else {
+      const attr = tmp.path.split('?')
+      const query = []
+      if (attr.length > 1) {
+        tmp.path = attr[0]
+        attr[1].split('&').forEach(item => {
+          const pair = item.split('=')
+          query[pair[0]] = pair[1]
+        })
+      }
       const item = {
         path: tmp.path,
         component: Layout,
@@ -20,7 +29,7 @@ export function filterAsyncRoutes(routes) {
           {
             path: '/',
             name: tmp.path,
-            meta: { title: tmp.meta.title, affix: tmp.meta.affix }
+            meta: { title: tmp.meta.title, affix: tmp.meta.affix, query: query }
           }
         ]
       }

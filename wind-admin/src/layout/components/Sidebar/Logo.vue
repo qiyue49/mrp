@@ -15,6 +15,7 @@
 
 <script>
 import { configureWebpack } from '../../../../vue.config'
+import logo from '@/assets/img/logo.png'
 
 export default {
   name: 'SidebarLogo',
@@ -27,7 +28,7 @@ export default {
   data() {
     return {
       title: configureWebpack.name,
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo: logo
     }
   }
 }
