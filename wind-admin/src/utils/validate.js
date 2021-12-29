@@ -69,3 +69,16 @@ export function isArray(arg) {
 export function isInteger(val) {
   return Number.isInteger(val)
 }
+
+export function isJSON(str) {
+  if (typeof str == 'string') {
+    try {
+      JSON.parse(str)
+      return true
+    } catch (e) {
+      console.log(e)
+      return false
+    }
+  }
+  console.log('It is not a string!')
+}

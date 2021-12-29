@@ -61,6 +61,7 @@ export default {
       imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       extensions: [],
       fileList: [],
+      flag: false,
       uploadLoading: false,
       resultUrl: undefined,
       waringLabel: undefined
@@ -70,7 +71,32 @@ export default {
     value: {
       immediate: true,
       handler(val) {
-        this.resultUrl = val
+        if (this.isNull(val)) {
+          this.fileList = []
+          return
+        }
+        if (this.flag) {
+          return
+        }
+        try {
+          const array = JSON.parse(val)
+          array.forEach(item => {
+            const file = {}
+            file.name = item.name
+            file.status = 'success'
+            file.response = { data: item.url }
+            this.fileList.push(file)
+          })
+        } catch (e) {
+          const array = val.split(',')
+          array.forEach(item => {
+            const file = {}
+            file.name = item
+            file.status = 'success'
+            file.response = { data: item }
+            this.fileList.push(file)
+          })
+        }
       }
     }
   },
@@ -89,6 +115,9 @@ export default {
       this.waringLabel = '只能上传' + this.extension + '文件，且不超过' + this.limit + 'M'
     }
   },
+  beforeMount() {
+    this.fileList = []
+  },
   methods: {
     submitUpload() {
       this.$refs.upload.submit()
@@ -104,16 +133,20 @@ export default {
       window.open(file.response.data)
     },
     emitInput(val) {
+      this.flag = true
       this.$emit('input', val)
+      this.$nextTick(() => {
+        this.flag = false
+      })
     },
     emitList(fileList) {
       const urlArray = []
       fileList.forEach(item => {
         if (item.status === 'success') {
-          urlArray.push(item.response.data)
+          urlArray.push({ name: item.name, url: item.response.data })
         }
       })
-      const str = urlArray.join(',')
+      const str = JSON.stringify(urlArray)
       this.emitInput(str)
     },
     handleSuccess(response, file, fileList) {
@@ -168,31 +201,31 @@ export default {
 </script>
 
 <style>
-  .uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  .waring-label {
-    font-size: 14px;
-    color: #9b9d07;
-  }
+.uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+.waring-label {
+  font-size: 14px;
+  color: #9b9d07;
+}
 </style>

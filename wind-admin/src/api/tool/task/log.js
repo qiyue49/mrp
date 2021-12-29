@@ -14,3 +14,10 @@ export function deleteScheduleJobLog(id) {
     method: 'post'
   })
 }
+export function batchDeleteScheduleJobLog(ids) {
+  return request({
+    url: '/task/schedule/job/log/batch/delete',
+    method: 'post',
+    data: { ids }
+  })
+}

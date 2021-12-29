@@ -7,6 +7,7 @@
     label="name"
     change-on-select
     :style="{width: width}"
+    :clearable="clearable"
     @change="select"
   />
 </template>
@@ -23,6 +24,10 @@ export default {
     width: {
       type: String,
       default: '100%'
+    },
+    clearable: {
+      type: Boolean,
+      default: true
     }
   },
   data() {

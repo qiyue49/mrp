@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input v-model="name" :style="{width: width}" readonly @focus="show">
+    <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
       <el-button slot="append" icon="el-icon-search" @click="show" />
     </el-input>
     <el-dialog title="选择用户" :visible.sync="dialogFormVisible" destroy-on-close append-to-body>
@@ -22,8 +22,7 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column
-            width="50" align="center" label="选择">
+          <el-table-column width="50" align="center" label="选择">
             <template slot-scope="scope">
               <el-radio v-model="selectCurentUserId" :label="scope.row.id" @change="selectUser(scope.row)"><i></i></el-radio>
             </template>
@@ -84,6 +83,10 @@ export default {
     width: {
       type: String,
       default: '100%'
+    },
+    clearable: {
+      type: Boolean,
+      default: true
     },
     query: {
       type: Object,

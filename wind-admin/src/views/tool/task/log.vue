@@ -14,6 +14,7 @@
         />
       </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="handleBathDelete">{{ $t('table.delete') }}</el-button>
     </div>
 
     <el-table
@@ -78,27 +79,18 @@
       </el-table-column>
     </el-table>
 
-    <div class="pagination-container">
-      <el-pagination
-        :current-page.sync="listQuery.page"
-        :page-sizes="pageArray"
-        :page-size="listQuery.limit"
-        :total="total"
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
   </div>
 </template>
 
 <script>
-import { fetchScheduleJobLogList, deleteScheduleJobLog } from '@/api/tool/task/log'
-import waves from '@/directive/waves' // 水波纹指令
+import { fetchScheduleJobLogList, deleteScheduleJobLog, batchDeleteScheduleJobLog } from '@/api/tool/task/log'
+import waves from '@/directive/waves'
+import Pagination from '../../../components/Pagination' // 水波纹指令
 
 export default {
   name: 'ScheduleJobLogList',
+  components: { Pagination },
   directives: {
     waves
   },
@@ -123,9 +115,10 @@ export default {
   data() {
     return {
       tableKey: 0,
-      list: null,
-      total: null,
+      list: [],
+      total: 0,
       listLoading: true,
+      ids: undefined,
       pageArray: this.$store.getters.pageArray,
       listQuery: {
         page: 1,
@@ -134,8 +127,6 @@ export default {
         title: undefined,
         type: undefined
       },
-      showReviewer: false,
-      dialogFormVisible: false,
       statusOptions: [
         { label: '失败', value: '-1' },
         { label: '普通', value: '0' },
@@ -159,26 +150,31 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
-    handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
+    handleSelectionChange(selection) {
+      const array = []
+      selection.forEach(item => {
+        array.push(item.id)
       })
-      row.status = status
+      this.ids = array.join(',')
+    },
+    handleBathDelete() {
+      batchDeleteScheduleJobLog(this.ids).then((response) => {
+        if (response.data.code === 0) {
+          this.getList()
+          this.$message.success(response.data.msg)
+        } else {
+          this.$message.error(response.data.msg)
+        }
+      })
     },
     handleDelete(row) {
-      deleteScheduleJobLog(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
+      deleteScheduleJobLog(row.id).then((response) => {
+        if (response.data.code === 0) {
+          this.getList()
+          this.$message.success(response.data.msg)
+        } else {
+          this.$message.error(response.data.msg)
+        }
       })
     }
   }

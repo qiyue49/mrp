@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'Select',
+  name: 'SelectList',
   props: {
     value: {
       type: String,

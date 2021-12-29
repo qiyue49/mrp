@@ -3,13 +3,14 @@
     v-model="attrValue"
     :fetch-suggestions="querySearch"
     :placeholder="placeholder"
+    style="width: 100%"
     @select="handleSelect"
   />
 </template>
 
 <script>
 export default {
-  name: 'AutoComplete',
+  name: 'AutocompleteList',
   props: {
     value: {
       type: String,
@@ -28,21 +29,21 @@ export default {
     props: {
       type: Object,
       default() {
-        return { value: 'value' }
+        return { value: 'value', id: 'id' }
       }
     }
   },
   data() {
     return {
       attrValue: undefined,
-      attrList: undefined
+      attrList: []
     }
   },
   watch: {
     value: {
       immediate: true,
       handler(val) {
-        this.attrValue = val
+        this.refreshListValue()
       }
     },
     list: {
@@ -52,11 +53,19 @@ export default {
         this.attrList.forEach(item => {
           item.value = item[this.props.value]
         })
+        this.refreshListValue()
       }
     }
 
   },
   methods: {
+    refreshListValue() {
+      this.attrList.forEach(item => {
+        if (this.value === item[this.props.id]) {
+          this.attrValue = item[this.props.value]
+        }
+      })
+    },
     querySearch(queryString, cb) {
       var list = this.attrList
       var results = queryString ? list.filter(this.createFilter(queryString)) : list
@@ -69,7 +78,7 @@ export default {
       }
     },
     handleSelect(val) {
-      this.$emit('input', this.attrValue)
+      this.$emit('input', val[this.props.id])
     }
 
   }

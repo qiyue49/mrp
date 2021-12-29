@@ -135,10 +135,10 @@ export default {
       })
     },
     refreshSelectedTag(view) {
-      console.log('refreshSelectedTag', view)
+      // console.log('refreshSelectedTag', view)
       this.$store.dispatch('tagsView/reload', false).then(() => {
         this.$nextTick(() => {
-          console.log('refreshSelectedTag')
+          // console.log('refreshSelectedTag')
           this.$store.dispatch('tagsView/reload', true)
         })
       })
