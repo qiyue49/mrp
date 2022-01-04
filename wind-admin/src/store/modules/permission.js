@@ -4,6 +4,7 @@ import store from '../index'
 
 const _import = require('@/router/_import_vue')
 import Layout from '@/layout'
+import { isNull } from '../../utils'
 
 export function filterAsyncRoutes(routes) {
   var res = []
@@ -12,6 +13,10 @@ export function filterAsyncRoutes(routes) {
     if (tmp.children) {
       res = res.concat(filterAsyncRoutes(tmp.children))
     } else {
+      if (isNull(tmp.path)) {
+        console.log('tmp', tmp)
+        return res
+      }
       const attr = tmp.path.split('?')
       const query = []
       if (attr.length > 1) {
