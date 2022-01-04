@@ -12,6 +12,10 @@ export function filterAsyncRoutes(routes) {
     if (tmp.children) {
       res = res.concat(filterAsyncRoutes(tmp.children))
     } else {
+      if (isNull(tmp.path)) {
+        console.log('tmp', tmp)
+        return res
+      }
       const attr = tmp.path.split('?')
       const query = []
       if (attr.length > 1) {
