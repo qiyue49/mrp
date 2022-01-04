@@ -76,6 +76,9 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
     @Override
     public boolean deleteById(Serializable id) {
+        if (isDemo){
+            return true;
+        }
         T entity = selectById(id);
         baseMapper.deleteSunTree(entity.makeSelfAsNewParentIds());
         return super.deleteById(id);
