@@ -23,14 +23,12 @@
               :key="'enabled' + item.label"
               v-model="temp.enabled"
               :label="item.value"
-              :disabled="displayDisable"
+              :disabled="temp.type === '3'"
             >
               {{ item.label }}
             </el-radio>
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row>
         <el-col :span="12">
           <el-form-item label="是否外链">
             <el-radio
@@ -38,16 +36,12 @@
               :key="'enabled' + item.label"
               v-model="externalLink"
               :label="item.value"
-              :disabled="layoutDisable"
-              @change="onChangeExternalLink"
+              :disabled="!(temp.type === '2')"
             >
               {{ item.label }}
             </el-radio>
           </el-form-item>
         </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="上级菜单" prop="parentIds">
             <el-cascader
@@ -66,32 +60,24 @@
             <el-input v-model="temp.name" />
           </el-form-item>
         </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="权限值" prop="permission">
-            <el-input v-model="temp.permission" />
+            <el-input v-model="temp.permission" :disabled="!(temp.type === '3')" />
           </el-form-item>
         </el-col>
-      </el-row>
-
-      <el-row :gutter="20">
         <el-col :span="12">
-          <el-form-item label="前端地址" prop="path">
-            <el-input v-model="temp.path" :disabled="layoutDisable" />
+          <el-form-item :label="externalLink==='1'?'外链地址':'前端地址'" prop="path">
+            <el-input v-model="temp.path" :disabled="!(temp.type === '2')" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="前端组件" prop="component">
-            <el-input v-model="temp.component" :disabled="layoutDisable || externalLinkDisable" />
+            <el-input v-model="temp.component" :disabled="!(temp.type === '2') || (externalLink === '1')" />
           </el-form-item>
         </el-col>
-      </el-row>
-      <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="图标" prop="icon">
-            <el-input v-model="temp.icon" clearable @focus="addIcon" @clear="clear1">
+            <el-input v-model="temp.icon" clearable :disabled="temp.type === '3'" @focus="addIcon" @clear="clear1" >
               <i slot="prefix" :class="['fas', 'fa-' + temp.icon]" style="line-height: 36px;"></i>
             </el-input>
           </el-form-item>
@@ -144,8 +130,6 @@ export default {
       loading: false,
       dialogFormVisible: false,
       displayDisable: false,
-      layoutDisable: false,
-      externalLinkDisable: false,
       iconFormVisible: false,
       dialogStatus: '',
       iconStatus: '',
@@ -165,18 +149,6 @@ export default {
     clear1() {
       if (this.temp.icon) {
         this.temp.icon = ''
-      }
-    },
-    onChangeType(value) {
-      if (value === '1') {
-        this.layoutDisable = true
-        this.displayDisable = false
-      } else if (value === '2') {
-        this.layoutDisable = false
-        this.displayDisable = false
-      } else if (value === '3') {
-        this.displayDisable = true
-        this.layoutDisable = true
       }
     },
     resetTemp() {
@@ -206,13 +178,6 @@ export default {
     },
     addIcon() {
       this.$refs.iconSelector.addIcon()
-    },
-    onChangeExternalLink(value) {
-      if (value === '1') {
-        this.externalLinkDisable = true
-      } else if (value === '0') {
-        this.externalLinkDisable = false
-      }
     },
     createData() {
       // 预处理提交的数据
