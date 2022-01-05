@@ -119,7 +119,8 @@ export default {
       rules: {
         type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
         name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
-        enabled: [{ required: true, message: '是否可用必选', trigger: 'change' }],
+        path: [{ required: true, message: '路径可用必选', trigger: 'change' }],
+        component: [{ required: true, message: '前端组件必填', trigger: 'change' }],
         sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
       },
       treeProps: {
