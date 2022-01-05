@@ -10,7 +10,6 @@
               :key="'type' + item.label"
               v-model="temp.type"
               :label="item.value"
-              @change="onChangeType"
             >
               {{ item.label }}
             </el-radio>
@@ -116,11 +115,25 @@ export default {
     return {
       list: [],
       temp: {},
-      rules: {
+      rules1: {
         type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
         name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
         sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
       },
+      rules2: {
+        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
+        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
+        path: [{ required: true, message: '前端路径必填', trigger: 'change' }],
+        component: [{ required: true, message: '前端组件必填', trigger: 'change' }],
+        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+      },
+      rules3: {
+        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
+        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
+        permission: [{ required: true, message: '权限必填', trigger: 'change' }],
+        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+      },
+      ruleList: [],
       treeProps: {
         value: 'id',
         label: 'name'
@@ -137,6 +150,14 @@ export default {
         create: '添加菜单'
       }
     }
+  },
+  computed: {
+    rules() {
+      return this.ruleList[parseInt(this.temp.type) - 1]
+    }
+  },
+  created() {
+    this.ruleList = [this.rules1, this.rules2, this.rules3]
   },
   methods: {
     getList() {
@@ -229,8 +250,6 @@ export default {
       this.externalLink = isExternal(this.temp.path) ? '1' : '0'
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
-      this.onChangeType(this.temp.type)
-      this.onChangeExternalLink(this.externalLink)
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })

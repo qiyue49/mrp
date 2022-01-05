@@ -30,6 +30,7 @@
         <poi.version>4.4.0</poi.version>
         <druid.version>1.1.21</druid.version>
         <mysql.version>8.0.17</mysql.version>
+        <sqlserver.version>4.0</sqlserver.version>
         <disruptor.version>3.3.6</disruptor.version>
         <aspect.version>1.7.4</aspect.version>
         <dom4j.version>1.6.1</dom4j.version>
@@ -236,13 +237,11 @@
                 <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
                 <version>${org-apache-oltu-oauth2.version}</version>
             </dependency>
-            <!--
-                    <dependency>
-                        <groupId>com.microsoft.sqlserver</groupId>
-                        <artifactId>sqljdbc4</artifactId>
-                        <version>4.0</version>
-                    </dependency>
-            -->
+            <dependency>
+                <groupId>com.microsoft.sqlserver</groupId>
+                <artifactId>sqljdbc4</artifactId>
+                <version>${sqlserver.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.alibaba</groupId>
