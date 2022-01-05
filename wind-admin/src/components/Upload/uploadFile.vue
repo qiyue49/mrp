@@ -89,7 +89,12 @@ export default {
     value: {
       immediate: true,
       handler(val) {
-        this.resultUrl = val
+        try {
+          const array = JSON.parse(val)
+          this.resultUrl = array[0].url
+        } catch (e) {
+          this.resultUrl = val
+        }
       }
     }
   },
