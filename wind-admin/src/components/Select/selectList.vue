@@ -1,11 +1,10 @@
 <template>
-  <el-select v-model="attrValue" :filterable="filterable" :placeholder="placeholder">
+  <el-select v-model="attrValue" :filterable="filterable" :placeholder="placeholder" @change="change">
     <el-option
       v-for="item in attrList"
       :key="item.label + 'scopeType'"
       :label="item[props.label]"
       :value="item[props.value]"
-      @change="change"
     />
   </el-select>
 </template>
