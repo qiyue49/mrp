@@ -56,6 +56,18 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
             setFieldValByName(CREATE_DATE, new Date(), metaObject);
         }
 
+        // 更新用户
+        Object updateBy = getFieldValByName(UPDATE_BY, metaObject);
+        if (updateBy == null) {
+            setFieldValByName(UPDATE_BY, UserUtils.getUser().getId(), metaObject);
+        }
+
+        // 更新时间
+        Object updateDate = getFieldValByName(UPDATE_DATE, metaObject);
+        if (updateDate == null) {
+            setFieldValByName(UPDATE_DATE, new Date(), metaObject);
+        }
+
         // 删除标记
         Object delFlag = getFieldValByName(DEL_FLAG, metaObject);
         if (delFlag == null) {
@@ -74,15 +86,9 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         // 更新用户
-        Object updateBy = getFieldValByName(UPDATE_BY, metaObject);
-        if (updateBy == null) {
-            setFieldValByName(UPDATE_BY, UserUtils.getUser().getId(), metaObject);
-        }
+        setFieldValByName(UPDATE_BY, UserUtils.getUser().getId(), metaObject);
 
-        // 更新用户
-        Object updateDate = getFieldValByName(UPDATE_DATE, metaObject);
-        if (updateDate == null) {
-            setFieldValByName(UPDATE_DATE, new Date(), metaObject);
-        }
+        // 更新时间
+        setFieldValByName(UPDATE_DATE, new Date(), metaObject);
     }
 }
