@@ -13,7 +13,7 @@
 
 <script>
 export default {
-  name: 'Cascader',
+  name: 'CascaderList',
   props: {
     value: {
       type: String,
