@@ -7,7 +7,7 @@
 <script>
 
 export default {
-  name: 'Screenfull',
+  name: 'FullScreen',
   data() {
     return {
     }
@@ -25,24 +25,12 @@ export default {
       }
     }
   },
-  mounted() {
-    this.init()
-  },
-  beforeDestroy() {
-    this.destroy()
-  },
   methods: {
     click() {
       this.$store.dispatch('settings/changeSetting', {
         key: 'fullScreen',
         value: true
       })
-    },
-    change() {
-    },
-    init() {
-    },
-    destroy() {
     }
   }
 }

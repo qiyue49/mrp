@@ -25,6 +25,9 @@ import * as filters from './filters' // global filters
 
 import CustomComponents from '@/components/Icons/index.js'
 import BaiduMap from 'vue-baidu-map'
+import fullscreen from 'vue-fullscreen'
+Vue.use(fullscreen)
+
 // fontawesome图标
 Object.keys(CustomComponents).forEach(key => Vue.use(CustomComponents[key]))
 

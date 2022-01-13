@@ -1,16 +1,35 @@
 <template>
-  <div :style="'height:' + height">
-    <iframe id="template-iframe" ref="iframe" :src="src" style="width: 100%; height: 100%" frameborder="no" scrolling="auto"></iframe>
+  <div>
+    <full-screen class="right-menu-item hover-effect" />
+    点击全屏
+    <fullscreen :fullscreen.sync="fullscreen">
+      <iframe id="template-iframe" ref="iframe" :src="src" style="width: 100%; height: 100%" frameborder="no" scrolling="auto" :style="'height:' + height"></iframe>
+    </fullscreen>
   </div>
 </template>
 
 <script>
+import FullScreen from '@/components/Screenfull/fullScreen'
 export default {
   name: 'FramePage',
+  components: { FullScreen },
   data() {
     return {
       height: document.documentElement.clientHeight - 94.5 + 'px;',
       src: undefined
+    }
+  },
+  computed: {
+    fullscreen: {
+      get() {
+        return this.$store.state.settings.fullScreen
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'fullScreen',
+          value: val
+        })
+      }
     }
   },
   mounted() {
@@ -27,6 +46,23 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.right-menu-item {
+  display: inline-block;
+  padding: 0 8px;
+  height: 100%;
+  font-size: 28px;
+  color: #5a5e66;
+  vertical-align: text-bottom;
+
+  &.hover-effect {
+     cursor: pointer;
+     transition: background .3s;
+
+  &:hover {
+     background: rgba(0, 0, 0, .025)
+   }
+  }
+}
 
 </style>
