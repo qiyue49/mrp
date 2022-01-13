@@ -11921,6 +11921,13 @@ vue-eslint-parser@^7.10.0:
     lodash "^4.17.21"
     semver "^6.3.0"
 
+vue-fullscreen@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.npmmirror.com/vue-fullscreen/download/vue-fullscreen-2.6.1.tgz#447ed7e3a848cffe5870ecbea2c240d8ffacc5f4"
+  integrity sha512-bbMJDKj2ZhsAwLcsvh8oV8WJeqAr2zxTHysvf7H8wSqaJTn5CnHXMSMbP9Tz4L/54I7jNQIdyA7VZ+EKAG+svg==
+  dependencies:
+    screenfull "^5.1.0"
+
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
   resolved "https://registry.nlark.com/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
