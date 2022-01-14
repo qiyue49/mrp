@@ -62,7 +62,7 @@ public class EmailTask implements ApplicationListener<ContextRefreshedEvent> {
                 //找到未发送成功的邮件
                 List<EmailSendLog> emailEmailSendLogList = emailSendLogService
                         .selectList(new QueryWrapper<EmailSendLog>()
-                                .eq("status", EmailSendLog.EMAIL_SEND_STATUS_FAIL).lt("tryNum", 3)
+                                .eq("status", EmailSendLog.EMAIL_SEND_STATUS_FAIL).lt("try_num", 3)
                         );
                 //恢复处理
                 for (EmailSendLog emailEmailSendLog : emailEmailSendLogList) {
