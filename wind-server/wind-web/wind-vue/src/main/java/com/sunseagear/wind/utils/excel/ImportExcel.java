@@ -298,7 +298,7 @@ public class ImportExcel {
 			StringBuilder sb = new StringBuilder();
 			for (Object[] os : annotationList){
 				Object val = this.getCellValue(row, column++);
-				if (val != null){
+				if (val != null && !StringUtils.isEmpty(val.toString())){
 					ExcelField ef = (ExcelField)os[0];
 					// If is dict type, get dict value
 					if (StringUtils.isNotBlank(ef.dictType())){
@@ -370,6 +370,8 @@ public class ImportExcel {
 						}
 						Reflections.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
 					}
+				}else{
+					val = null;
 				}
 				sb.append(val+", ");
 			}
