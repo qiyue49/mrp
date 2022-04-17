@@ -36,19 +36,4 @@ import java.util.List;
 @Service("attachmentService")
 public class AttachmentServiceImpl extends CommonServiceImpl<AttachmentMapper, Attachment> implements IAttachmentService {
 
-    @Autowired
-    private AttachmentHelper attachmentHelper;
-
-    public String upload(HttpServletRequest request, MultipartFile[] file, String dir) throws InvalidExtensionException, FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
-        List<String> attachmentList = new ArrayList<>();
-
-        for (MultipartFile item : file) {
-            Attachment attachment = attachmentHelper.upload(request, item, dir);
-            attachmentList.add(attachment.getFilePath());
-        }
-
-        return ArrayUtils.join(attachmentList, ",");
-    }
-
-
 }

@@ -4,12 +4,14 @@ import com.sunseagear.common.oss.OSSUploadHelper;
 import com.sunseagear.common.oss.config.OssConfig;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
+import com.sunseagear.common.utils.ArrayUtils;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.utils.JWTHelper;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -47,6 +51,18 @@ public class AttachmentHelper {
     public void initHelper() {
         uploadHelper = new OSSUploadHelper();
         uploadHelper.init(ossConfig);
+    }
+
+
+    public String upload(HttpServletRequest request, MultipartFile[] file, String dir) throws InvalidExtensionException, FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException {
+        List<String> attachmentList = new ArrayList<>();
+
+        for (MultipartFile item : file) {
+            Attachment attachment = upload(request, item, dir);
+            attachmentList.add(attachment.getFilePath());
+        }
+
+        return ArrayUtils.join(attachmentList, ",");
     }
 
 

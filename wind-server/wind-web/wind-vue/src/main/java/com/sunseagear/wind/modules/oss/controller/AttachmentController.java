@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.MessageUtils;
+import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.common.response.ResponseError;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -41,6 +42,9 @@ public class AttachmentController extends BaseBeanController<Attachment> {
 
     @Autowired
     private IAttachmentService attachmentService;
+
+    @Autowired
+    private AttachmentHelper attachmentHelper;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
@@ -91,7 +95,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public String upload(HttpServletRequest request, MultipartFile[] file, @RequestParam(required = false, defaultValue = "") String dir) {
         try {
-            return Response.successJson((Object) attachmentService.upload(request, file, dir));
+            return Response.successJson((Object) attachmentHelper.upload(request, file, dir));
         } catch (IOException e) {
             return Response.error(ResponseError.NORMAL_ERROR, MessageUtils.getMessage("upload.server.error"));
         } catch (InvalidExtensionException e) {

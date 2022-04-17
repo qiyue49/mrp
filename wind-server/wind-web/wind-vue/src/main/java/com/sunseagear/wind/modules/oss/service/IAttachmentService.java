@@ -20,5 +20,5 @@ import java.io.IOException;
  * @copyright: 2018 www.sunseagear.com Inc. All rights reserved.
  */
 public interface IAttachmentService extends ICommonService<Attachment> {
-    String upload(HttpServletRequest request, MultipartFile[] file, String dir) throws InvalidExtensionException, FileUploadBase.FileSizeLimitExceededException, FileNameLengthLimitExceededException, IOException;
+
 }

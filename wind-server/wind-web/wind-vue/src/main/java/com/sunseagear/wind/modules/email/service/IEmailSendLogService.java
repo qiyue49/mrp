@@ -17,13 +17,4 @@ import java.util.List;
  */
 public interface IEmailSendLogService extends ICommonService<EmailSendLog> {
 
-    /**
-     * <p>
-     * 邮件重发
-     * </p>
-     *
-     * @param idList 主键ID列表
-     * @return boolean
-     */
-    boolean retrySend(List<? extends Serializable> idList);
 }

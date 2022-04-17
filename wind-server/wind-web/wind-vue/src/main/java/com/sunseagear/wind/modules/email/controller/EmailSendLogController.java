@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.wind.modules.email.service.IEmailSendService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -37,6 +38,8 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
     @Autowired
     private IEmailSendLogService emailSendLogService;
+    @Autowired
+    private IEmailSendService emailSendService;
 
 
     @GetMapping(value = "list")
@@ -86,7 +89,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
     public String retrySend(@RequestParam(value = "ids", required = false) String[] ids) {
         try {
             List<Serializable> idList = java.util.Arrays.asList(ids);
-            emailSendLogService.retrySend(idList);
+            emailSendService.retrySend(idList);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.error("重发队列添加失败");

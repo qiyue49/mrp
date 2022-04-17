@@ -29,18 +29,4 @@ import java.util.Map;
 @Service("emailSendLogService")
 public class EmailSendLogServiceImpl extends CommonServiceImpl<EmailSendLogMapper, EmailSendLog> implements IEmailSendLogService {
 
-
-    @Autowired
-    IEmailSendService emailSendService;
-
-    @Override
-    public boolean retrySend(List<? extends Serializable> idList) {
-        for (Serializable id : idList) {
-            EmailSendLog sendLog = selectById(id);
-            Map<String, Object> datas = JSON.parseObject(StringEscapeUtils.unescapeHtml4(sendLog.getSendData()), Map.class);
-            emailSendService.send(id.toString(), sendLog.getEmail().split(","), sendLog.getSendCode(), datas);
-        }
-        return true;
-    }
-
 }

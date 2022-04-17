@@ -6,6 +6,7 @@ import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.FileUtils;
 import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.MessageUtils;
+import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import org.apache.commons.fileupload.FileUploadBase;
@@ -36,6 +37,9 @@ public class OSSUploadJsonController {
     @Autowired
     private IAttachmentService attachmentService;
 
+    @Autowired
+    private AttachmentHelper attachmentHelper;
+
     /**
      * @param request,file,directory
      * @return
@@ -46,7 +50,7 @@ public class OSSUploadJsonController {
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public String upload(HttpServletRequest request, MultipartFile[] file, @RequestParam(required = false, defaultValue = "") String dir) {
         try {
-            return JsonUtils.successMessage((Object) attachmentService.upload(request, file, dir));
+            return JsonUtils.successMessage((Object) attachmentHelper.upload(request, file, dir));
         } catch (IOException e) {
             return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
         } catch (InvalidExtensionException e) {

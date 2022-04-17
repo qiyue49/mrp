@@ -1,5 +1,6 @@
 package com.sunseagear.wind.modules.email.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.sunseagear.common.email.disruptor.EmailHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.sms.exception.SmsException;
@@ -20,8 +21,10 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -139,5 +142,15 @@ public class EmailSendServiceImpl implements IEmailSendService {
             // 发送邮件
             sendEmail(eventId, email, subject, content);
         }
+    }
+
+    @Override
+    public boolean retrySend(List<? extends Serializable> idList) {
+        for (Serializable id : idList) {
+            EmailSendLog sendLog = emailSendLogService.selectById(id);
+            Map<String, Object> datas = JSON.parseObject(StringEscapeUtils.unescapeHtml4(sendLog.getSendData()), Map.class);
+            send(id.toString(), sendLog.getEmail().split(","), sendLog.getSendCode(), datas);
+        }
+        return true;
     }
 }
