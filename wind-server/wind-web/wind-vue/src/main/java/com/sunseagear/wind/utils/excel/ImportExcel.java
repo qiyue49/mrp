@@ -302,7 +302,7 @@ public class ImportExcel {
 					ExcelField ef = (ExcelField)os[0];
 					// If is dict type, get dict value
 					if (StringUtils.isNotBlank(ef.dictType())){
-						val = DictUtils.getDictValue(val.toString(), ef.dictType(), "");
+						val = DictUtils.getDictValue(ef.dictType(), val.toString(),  "");
 						//log.debug("Dictionary type value: ["+i+","+colunm+"] " + val);
 					}
 					// Get param type and type cast
