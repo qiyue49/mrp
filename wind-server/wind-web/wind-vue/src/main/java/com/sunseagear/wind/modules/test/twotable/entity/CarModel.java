@@ -10,7 +10,7 @@ import com.sunseagear.common.mvc.entity.DataEntity;
 @SuppressWarnings("serial")
 public class CarModel extends DataEntity<String> {
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     @TableField(value = "car_id")
     private String carId;

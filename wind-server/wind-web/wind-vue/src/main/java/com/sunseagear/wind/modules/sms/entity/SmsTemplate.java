@@ -23,7 +23,7 @@ public class SmsTemplate extends DataEntity<String> {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 模版名称

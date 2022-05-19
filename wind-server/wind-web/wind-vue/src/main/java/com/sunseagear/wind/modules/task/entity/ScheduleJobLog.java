@@ -31,7 +31,7 @@ public class ScheduleJobLog extends AbstractEntity<String> {
     /**
      * 任务日志ID
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 任务名称

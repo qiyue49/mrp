@@ -18,7 +18,7 @@ public class RoleMenu implements java.io.Serializable {
     /**
      * 编号
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 菜单编号

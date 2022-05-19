@@ -30,7 +30,7 @@ public class EmailSendLog extends AbstractEntity<String> {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 联系电话

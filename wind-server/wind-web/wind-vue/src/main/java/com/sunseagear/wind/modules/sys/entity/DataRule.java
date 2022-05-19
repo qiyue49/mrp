@@ -25,7 +25,7 @@ import lombok.Data;
 public class DataRule extends DataEntity<String> {
 
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id; //id
     @TableField(value = "resource_code")
     private String resourceCode;  //资源编号

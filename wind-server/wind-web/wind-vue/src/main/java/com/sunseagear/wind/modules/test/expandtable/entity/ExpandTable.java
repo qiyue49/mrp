@@ -25,7 +25,7 @@ import lombok.Data;
 public class ExpandTable extends DataEntity<String> {
 
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id; //id
     @TableField(value = "name")
     private String name;  //商品名称

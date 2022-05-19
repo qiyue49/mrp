@@ -13,7 +13,7 @@ import java.util.List;
  * 树抽象实体基类
  */
 public abstract class TreeEntity<T> extends AbstractEntity<T> implements TreeNode<T>, java.io.Serializable {
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     protected T id; // 编号
     @TableField(value = "name")
     protected String name; // 资源名称

@@ -21,7 +21,7 @@ public class ScheduleJob extends AbstractEntity<String> {
     /**
      * 任务主键
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 任务名

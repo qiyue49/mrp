@@ -30,7 +30,7 @@ public class LoginLog extends AbstractEntity<String> {
     /**
      * 访问ID
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 登录账号

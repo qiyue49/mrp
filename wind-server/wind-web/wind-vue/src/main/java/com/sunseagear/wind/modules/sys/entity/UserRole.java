@@ -11,7 +11,7 @@ public class UserRole extends AbstractEntity<String> {
     /**
      * 编号
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 用户编号

@@ -13,7 +13,7 @@ public class DictGroup extends DataEntity<String> {
     /**
      * 主键
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     /**
      * 分组名称

@@ -28,7 +28,7 @@ import javax.validation.constraints.NotNull;
 public class Tenant extends DataEntity<String> {
 
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id; //id
     @NotEmpty(message = "联系人不能为空")
     @TableField(value = "contact")

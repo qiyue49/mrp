@@ -35,7 +35,7 @@ public class User extends DataEntity<String> {
     /**
      * id
      */
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
     // 姓名
     @Excel(name = "用户名", orderNum = "1")

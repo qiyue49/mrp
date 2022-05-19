@@ -26,7 +26,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class Table extends DataEntity<String> {
 
-    @TableId(value = "id", type = IdType.UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id; //id
 
     @ExcelField(title = "标题",sort = 10)
