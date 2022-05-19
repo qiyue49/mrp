@@ -6,6 +6,7 @@
 * 通过仓颉全量代码生成平台<a href="http://www.sunseagear.com/#/doc/cangjie/summary" target="_blank">（30秒了解仓颉）</a>，你能快速生成多种页面的功能模块；
 同时支持服务器端和移动端代码生成。<a href="http://sunseagear.com:8081/admin/" target="_blank">(立刻使用)</a>
 * QQ群：759017839
+* 确定不先点个star再下载吗？
 ### 介绍
 
 飞廉，山海经中神兽，身似鹿，头如雀，有角而蛇尾，虽不能飞，但身形敏捷，速度奇快。 擅长御风，是传说中的风神，秦人的先祖。
