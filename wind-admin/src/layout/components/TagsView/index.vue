@@ -102,12 +102,12 @@ export default {
     },
     initTags() {
       const affixTags = this.affixTags = this.filterAffixTags(this.routes)
-      for (const tag of affixTags) {
+      affixTags.forEach(tag => {
         // Must have tag name
         if (tag.name) {
           this.$store.dispatch('tagsView/addVisitedView', tag)
         }
-      }
+      })
     },
     addTags() {
       const { name } = this.$route
@@ -122,7 +122,8 @@ export default {
         return
       }
       this.$nextTick(() => {
-        for (const tag of tags) {
+        for (let i = 0; i < tags.length; i++) {
+          const tag = tags[i]
           if (tag.to.path === this.$route.path) {
             this.$refs.scrollPane.moveToTarget(tag)
             // when query is different then update

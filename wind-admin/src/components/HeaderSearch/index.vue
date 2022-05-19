@@ -106,9 +106,9 @@ export default {
     generateRoutes(routes, basePath = '/', prefixTitle = []) {
       let res = []
 
-      for (const router of routes) {
+      routes.forEach(router => {
         // skip hidden router
-        if (router.hidden) { continue }
+        if (router.hidden) { return }
 
         const data = {
           path: path.resolve(basePath, router.path),
@@ -142,7 +142,7 @@ export default {
             res = [...res, ...tempRoutes]
           }
         }
-      }
+      })
       return res
     },
     querySearch(query) {

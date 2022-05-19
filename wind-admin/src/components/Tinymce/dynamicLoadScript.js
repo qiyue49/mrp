@@ -33,9 +33,9 @@ const dynamicLoadScript = (src, callback) => {
       // this.onload = null here is necessary
       // because even IE9 works not like others
       this.onerror = this.onload = null
-      for (const cb of callbacks) {
+      callbacks.forEach(cb => {
         cb(null, script)
-      }
+      })
       callbacks = null
     }
     script.onerror = function() {
@@ -48,9 +48,9 @@ const dynamicLoadScript = (src, callback) => {
     script.onreadystatechange = function() {
       if (this.readyState !== 'complete' && this.readyState !== 'loaded') return
       this.onreadystatechange = null
-      for (const cb of callbacks) {
+      callbacks.forEach(cb => {
         cb(null, script) // there is no way to catch loading errors in IE8
-      }
+      })
       callbacks = null
     }
   }
