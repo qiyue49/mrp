@@ -33,7 +33,6 @@ public class Tenant extends DataEntity<String> {
     @NotEmpty(message = "联系人不能为空")
     @TableField(value = "contact")
     private String contact;  //联系人
-    @NotEmpty(message = "电话不能为空")
     @TableField(value = "tenant_id")
     private String tenantId;
     @TableField(value = "phone")
