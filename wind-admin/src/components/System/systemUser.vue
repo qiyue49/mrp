@@ -66,6 +66,7 @@
 <script>
 import { fetchList, fetchUser } from '@/api/sys/user'
 import { objectMerge } from '@/utils/index'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import Pagination from '@/components/Pagination'
 
@@ -73,7 +74,7 @@ export default {
   name: 'SystemUser',
   components: { Pagination },
   directives: {
-    waves
+    waves, permission
   },
   props: {
     value: {

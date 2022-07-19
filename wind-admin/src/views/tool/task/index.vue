@@ -2,10 +2,10 @@
   <div class="app-container calendar-list-container">
     <div class="filter-container">
       <el-input v-model="listQuery.jobName" type="primary" class="filter-item" style="width: 200px;" placeholder="请输入任务名称" @keyup.enter.native="handleFilter" />
-      <el-button v-waves type="primary" class="filter-item" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button type="primary" class="filter-item" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-      <el-button :loading="batchDeleteLoading" type="danger" class="filter-item" icon="el-icon-delete" @click="handleBatchDelete">{{ $t('table.delete') }}</el-button>
-      <el-button :loading="refreshTaskLoading" type="primary" class="filter-item" icon="el-icon-refresh" @click="handleRefreshTask">刷新任务</el-button>
+      <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="el-icon-delete" @click="handleBatchDelete">{{ $t('table.delete') }}</el-button>
+      <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="el-icon-refresh" @click="handleRefreshTask">刷新任务</el-button>
     </div>
 
     <el-table
@@ -58,12 +58,12 @@
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button v-if="scope.row.jobStatus==0" type="text" size="small" icon="el-icon-video-play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
-          <el-button v-if="scope.row.jobStatus==1" type="text" size="small" icon="el-icon-video-pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
-          <el-button size="small" type="text" icon="el-icon-refresh" @click="handleRefresh(scope.row)">刷新</el-button>
-          <el-button size="small" type="text" icon="el-icon-arrow-right" @click="runAJobNow(scope.row)">执行一次</el-button>
-          <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
+          <el-button v-if="scope.row.jobStatus==0" v-permission="['task:schedule:job:change:job:status']" type="text" size="small" icon="el-icon-video-play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
+          <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="text" size="small" icon="el-icon-video-pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
+          <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="text" icon="el-icon-refresh" @click="handleRefresh(scope.row)">刷新</el-button>
+          <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="text" icon="el-icon-arrow-right" @click="runAJobNow(scope.row)">执行一次</el-button>
+          <el-button v-permission="['task:schedule:job:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-permission="['task:schedule:job:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -167,12 +167,13 @@
 
 <script>
 import { fetchScheduleList, createSchedule, deleteSchedule, batchDeleteSchedule, updateSchedule, refreshTask, refreshSchedule, changeJobStatus, runAJobNow } from '@/api/tool/task/schedule'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
   name: 'SysScheduleList',
   directives: {
-    waves
+    waves, permission
   },
   data() {
     return {

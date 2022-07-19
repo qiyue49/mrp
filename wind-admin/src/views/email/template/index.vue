@@ -29,8 +29,8 @@
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" width="160" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button v-permission="['email:template:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-permission="['email:template:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -74,13 +74,14 @@
 
 <script>
 import { fetchTemplateList, createTemplate, deleteTemplate, updateTemplate } from '@/api/email/template'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import { getDictLabel, getDictList } from '@/utils/dict'
 
 export default {
   name: 'TemplateList',
   directives: {
-    waves
+    waves, permission
   },
   filters: {
     businessTypeFilter(value) {

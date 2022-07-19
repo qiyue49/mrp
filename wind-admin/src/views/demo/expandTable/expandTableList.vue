@@ -55,10 +55,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template #default="{row}">
-          <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
+          <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
+          <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
             {{ $t('table.delete') }}
           </el-button>
         </template>
@@ -74,6 +74,7 @@
 
 <script>
 import { deleteExpandTable, fetchExpandTableList } from '@/api/demo/expandTable/expandTable'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import expandTableForm from './expandTableForm'
 import Pagination from '@/components/Pagination'
@@ -81,7 +82,7 @@ import Pagination from '@/components/Pagination'
 export default {
   name: 'ExpandTableList',
   components: { expandTableForm, Pagination },
-  directives: { waves },
+  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

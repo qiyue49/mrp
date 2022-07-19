@@ -85,27 +85,6 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
         return Response.ok("删除成功");
     }
 
-    @PostMapping(value = "/saveScheduleJob")
-    public String saveScheduleJob(ScheduleJob scheduleJob, HttpServletRequest request, HttpServletResponse response) {
-        if (!CronExpression.isValidExpression(scheduleJob.getCronExpression())) {
-            return Response.error("cron表达式格式不对");
-        }
-        try {
-            if (ObjectUtils.isNullOrEmpty(scheduleJob.getId())) {
-                scheduleJobService.insert(scheduleJob);
-            } else {
-                // FORM NULL不更新
-                ScheduleJob oldEntity = scheduleJobService.selectById(scheduleJob.getId());
-                BeanUtils.copyProperties(scheduleJob, oldEntity);
-                scheduleJobService.insertOrUpdate(oldEntity);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.error("保存失败" + e.getMessage());
-        }
-        return Response.ok("保存成功");
-    }
-
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
     @RequiresPermissions("task:schedule:job:delete")
@@ -138,7 +117,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
 
     @PostMapping(value = "{id}/updateCron")
     @Log(logType = LogType.OTHER, title = "任务更新")
-    @RequiresPermissions("task:schedule:job:update:cron")
+    @RequiresPermissions("task:schedule:job:refresh:job")
     public String updateCron(@PathVariable("id") String id) {
         scheduleJobService.updateCron(id);
         return Response.ok("任务更新成功");

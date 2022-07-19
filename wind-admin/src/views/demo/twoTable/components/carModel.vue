@@ -29,8 +29,8 @@
         />
         <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+            <el-button v-permission="['test:car:carModel:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+            <el-button v-permission="['test:car:carModel:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
             </el-button>
           </template>
         </el-table-column>
@@ -55,13 +55,14 @@
 
 <script>
 import { fetchCarModelList, deleteCarModel } from '@/api/demo/twoTable/carModel'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import carModelForm from './carModelForm' // 水波纹指令
 
 export default {
   name: 'CarModel',
   directives: {
-    waves
+    waves, permission
   },
   components: { carModelForm },
   data() {

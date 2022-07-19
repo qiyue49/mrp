@@ -28,10 +28,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template #default="{row}">
-          <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
+          <el-button v-permission="['test:treetable:treetable:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
-          <el-button v-if="row.status!='deleted'" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
+          <el-button v-permission="['test:treetable:treetable:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
             {{ $t('table.delete') }}
           </el-button>
         </template>
@@ -45,13 +45,14 @@
 
 <script>
 import { deleteTreeTable, fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import treeTableForm from './treeTableForm'
 
 export default {
   name: 'TreeTable',
   components: { treeTableForm },
-  directives: { waves },
+  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

@@ -3,8 +3,8 @@
     <div>
       <div class="filter-container">
         <el-input v-model="listQuery.keyword" style="width: 200px;" class="filter-item" placeholder="请输入分组名称或编码" @keyup.enter.native="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+        <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+        <el-button v-permission="['sys:dict:group:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
       </div>
 
       <el-table
@@ -30,8 +30,8 @@
         />
         <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+            <el-button v-permission="['sys:dict:group:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+            <el-button v-permission="['sys:dict:group:update']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
             </el-button>
           </template>
         </el-table-column>
@@ -75,12 +75,13 @@
 
 <script>
 import { fetchDictGroupList, createDictGroup, deleteDictGroup, updateDictGroup } from '@/api/sys/dictGroup'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 
 export default {
   name: 'SysDictGroupComponent',
   directives: {
-    waves
+    waves, permission
   },
   data() {
     return {
