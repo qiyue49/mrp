@@ -76,8 +76,6 @@
 
 gitee:https://gitee.com/sunseagear/wind
 
-github:https://github.com/sunseagear/wind
-
 ### 在线预览
 
 http://www.sunseagear.com/dist/
