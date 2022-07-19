@@ -49,7 +49,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:user:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -62,9 +62,11 @@ import { fetchOrganizationList } from '@/api/sys/organization'
 import SystemOrganization from '@/components/System/systemOrganization'
 import { fetchUser } from '@/api/sys/user'
 import UploadImage from '@/components/Upload/uploadImage'
+import permission from '@/directive/permission/permission'
 
 export default {
   name: 'UserForm',
+  directives: { permission },
   components: { UploadImage, SystemOrganization },
   data() {
     return {

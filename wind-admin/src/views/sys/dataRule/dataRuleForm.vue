@@ -43,7 +43,7 @@
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:datarule:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -52,9 +52,11 @@
 
 <script>
 import { createDataRule, updateDataRule, getDataRule } from '@/api/sys/dataRule/dataRule'
+import permission from '@/directive/permission/permission'
 
 export default {
   name: 'DataRuleForm',
+  directives: { permission },
   data() {
     return {
       rules: {

@@ -93,7 +93,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData(true)">
+      <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData(true)">
         {{ $t('table.confirm') }}
       </el-button>
       <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>

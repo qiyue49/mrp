@@ -38,7 +38,7 @@
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:role:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -47,9 +47,11 @@
 
 <script>
 import { addRole, updateRole } from '@/api/sys/role'
+import permission from '@/directive/permission/permission'
 
 export default {
   name: 'RoleForm',
+  directives: { permission },
   data() {
     return {
       temp: {},

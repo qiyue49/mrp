@@ -41,7 +41,7 @@
 
     </appender>
 
-    <logger name="net.sf.ehcache" level="INFO"/>
+    <logger name="org.quartz.core.QuartzSchedulerThread" level="INFO"/>
     <logger name="druid.sql" level="INFO"/>
 
 

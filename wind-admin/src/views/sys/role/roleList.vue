@@ -36,8 +36,8 @@
         <template v-if="scope.row.tenantId === tenantId" slot-scope="scope">
           <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
           <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-s-operation" @click="toSetPermission(scope.row)">设置权限</el-button>
-          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
-          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-permission="['sys:datarule:update']" size="small" type="text" icon="el-icon-finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
+          <el-button v-permission="['sys:role:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-permission="['sys:role:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>

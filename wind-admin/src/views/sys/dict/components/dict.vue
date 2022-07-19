@@ -66,7 +66,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-          <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+          <el-button v-permission="['sys:dict:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
             {{ $t('table.confirm') }}
           </el-button>
         </div>

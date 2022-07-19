@@ -54,7 +54,7 @@
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:config:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -63,6 +63,7 @@
 
 <script>
 import { updateConfig, createConfig } from '@/api/sys/config'
+import permission from '@/directive/permission/permission'
 import UploadFile from '@/components/Upload/uploadFile'
 import UploadImage from '@/components/Upload/uploadImage'
 import BaiduMapPoint from '@/components/BaiduMap/baiduMapPoint'
@@ -71,6 +72,7 @@ const statusOptions = [{ label: '文本框', value: '1' }, { label: '图片上�
 export default {
   name: 'ConfigForm',
   components: { BaiduMapPoint, UploadImage, UploadFile },
+  directives: { permission },
   data() {
     return {
       statusOptions,

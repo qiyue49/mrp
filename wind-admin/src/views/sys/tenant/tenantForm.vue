@@ -23,7 +23,7 @@
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:tenant:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
     </div>
@@ -32,10 +32,12 @@
 
 <script>
 import { createTenant, updateTenant, getTenant } from '@/api/sys/tenant/tenant'
+import permission from '@/directive/permission/permission'
 import { validatePhoneRule } from '@/utils/validate'
 
 export default {
   name: 'TenantForm',
+  directives: { permission },
   data() {
     return {
       rules: {
