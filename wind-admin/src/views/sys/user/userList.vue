@@ -15,9 +15,9 @@
           <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
           <el-input v-model="listQuery.username" style="width: 200px;" class="filter-item" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
           <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
+          <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+          <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
         </div>
 
         <el-table
@@ -59,10 +59,10 @@
           </el-table-column>
           <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
             <template slot-scope="scope">
-              <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-              <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
-              <el-button size="small" type="text" icon="el-icon-user" @click="toAssignRoles(scope.row)">设置角色</el-button>
-              <el-button size="small" type="text" icon="el-icon-refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
+              <el-button v-permission="['sys:user:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+              <el-button v-permission="['sys:user:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
+              <el-button v-permission="['sys:user:role']" size="small" type="text" icon="el-icon-user" @click="toAssignRoles(scope.row)">设置角色</el-button>
+              <el-button v-permission="['sys:user:change:password']" size="small" type="text" icon="el-icon-refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -122,7 +122,7 @@ import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
 
 export default {
-  name: 'SysUserList',
+  name: 'UserList',
   components: { userForm },
   directives: {
     waves
