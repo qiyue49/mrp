@@ -12,22 +12,22 @@
 
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
       <el-table-column label="机构名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="地理编码" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.geocoding }}</span>
         </template>
       </el-table-column>
       <el-table-column label="邮政编码" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.postalCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>

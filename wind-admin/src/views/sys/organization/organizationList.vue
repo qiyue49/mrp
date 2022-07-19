@@ -10,12 +10,12 @@
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border>
       <el-table-column prop="name" label="名称" width="180" />
       <el-table-column label="备注">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span style="color:sandybrown">{{ scope.row.remarks }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button v-permission="['sys:organization:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button v-permission="['sys:organization:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
         </template>
@@ -29,6 +29,7 @@
 
 <script>
 import { fetchOrganizationList, deleteOrganization } from '@/api/sys/organization'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import OrganizationForm from './organizationForm' // 水波纹指令
 
@@ -36,7 +37,7 @@ export default {
   name: 'OrganizationList',
   components: { OrganizationForm },
   directives: {
-    waves
+    waves, permission
   },
   data() {
     return {

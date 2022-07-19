@@ -3,8 +3,8 @@
     <div class="filter-container">
       <el-input v-model="listQuery.name" style="width: 200px;" class="filter-item" placeholder="请输入角色名称" @keyup.enter.native="handleFilter" />
       <el-input v-model="listQuery.code" style="width: 200px;" class="filter-item" placeholder="请输入角色编码" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-permission="['sys:role:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table
@@ -34,11 +34,11 @@
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
         <template v-if="scope.row.tenantId === tenantId" slot-scope="scope">
-          <el-button size="small" type="text" icon="el-icon-setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
-          <el-button size="small" type="text" icon="el-icon-s-operation" @click="toSetPermission(scope.row)">设置权限</el-button>
-          <el-button size="small" type="text" icon="el-icon-finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
-          <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
+          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-s-operation" @click="toSetPermission(scope.row)">设置权限</el-button>
+          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
+          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-permission="['sys:role:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -69,14 +69,15 @@
 import { fetchList, deleteRole } from '@/api/sys/role'
 import roleDataRuleList from '../roleDataRule/roleDataRuleList'
 import waves from '@/directive/waves'
+import permission from '@/directive/permission/permission'
 import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm' // 水波纹指令
 
 export default {
-  name: 'SysRoleList',
+  name: 'RoleList',
   components: { RoleSettingForm, RoleForm, roleDataRuleList },
   directives: {
-    waves
+    waves, permission
   },
   data() {
     return {

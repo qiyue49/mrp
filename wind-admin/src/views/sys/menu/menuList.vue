@@ -2,43 +2,43 @@
   <div class="app-container calendar-list-container">
     <div class="filter-container">
       <el-input v-model="listQuery.keyword" style="width: 200px;" class="filter-item" placeholder="请输入菜单名称" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-permission="['sys:menu:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
       <el-table-column prop="name" label="名称" width="180" />
       <el-table-column width="150" label="前端地址">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.path }}</span>
         </template>
       </el-table-column>
       <el-table-column width="150" label="前端组件">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.component }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="排序">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-input v-model="scope.row.sort" size="mini" @change="handleChangeSort(scope.row.id, scope.row.sort)" />
         </template>
       </el-table-column>
       <el-table-column width="150" label="图标">
-        <template slot-scope="scope">
+        <template #default="scope">
           <i :class="scope.row.icon"></i>
           <span>{{ scope.row.icon }}</span>
         </template>
       </el-table-column>
       <el-table-column width="100" align="center" label="是否可用">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.enabled | dictLabel('sf') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
-        <template slot-scope="scope">
-          <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
-          <el-button v-if="scope.row.type == '2'" size="small" type="text" icon="el-icon-coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
+        <template #default="scope">
+          <el-button v-permission="['sys:menu:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+          <el-button v-permission="['sys:menu:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
+          <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="text" icon="el-icon-coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -52,13 +52,14 @@
 <script>
 import { fetchMenuList, deleteMenu, changeSort } from '@/api/sys/menu'
 import waves from '@/directive/waves' // 水波纹指令
+import permission from '@/directive/permission/permission'
 import MenuForm from './menuForm'
 import MenuGenButton from './menuGenButton'
 
 export default {
   name: 'MenuComponent',
   directives: {
-    waves
+    waves, permission
   },
   components: { MenuGenButton, MenuForm },
   data() {

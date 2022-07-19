@@ -25,27 +25,27 @@
       style="width: 100%;"
     >
       <el-table-column label="配置名称" class-name="status-col" width="350px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.name }}
         </template>
       </el-table-column>
       <el-table-column label="配置编码" class-name="status-col" width="350px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.code }}
         </template>
       </el-table-column>
       <el-table-column label="参数值" class-name="status-col">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.value }}
         </template>
       </el-table-column>
       <el-table-column label="备注" class-name="status-col">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           {{ row.remarks }}
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['sys:tenant:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>

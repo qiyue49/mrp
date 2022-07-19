@@ -37,22 +37,22 @@
           highlight-current-row
           style="width: 100%;">
           <el-table-column label="部门名称" min-width="150px">
-            <template slot-scope="{row}">
+            <template #default="{row}">
               <span>{{ row.name }}</span>
             </template>
           </el-table-column>
           <el-table-column label="类型" min-width="150px">
-            <template slot-scope="{row}">
+            <template #default="{row}">
               <span>{{ row.type }}</span>
             </template>
           </el-table-column>
           <el-table-column label="标签" min-width="150px">
-            <template slot-scope="{row}">
+            <template #default="{row}">
               <span>{{ row.tag }}</span>
             </template>
           </el-table-column>
           <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-            <template slot-scope="{row}">
+            <template #default="{row}">
               <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
                 {{ $t('table.edit') }}
               </el-button>

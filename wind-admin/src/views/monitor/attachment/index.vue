@@ -20,38 +20,38 @@
     >
       <el-table-column type="selection" align="center" />
       <el-table-column width="200" align="center" label="文件名称">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.fileName }}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="文件路径">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span><a :href="scope.row.filePath" target="_blank">{{ scope.row.filePath }}</a></span>
         </template>
       </el-table-column>
       <el-table-column width="90" align="center" label="文件大小">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.fileSize }} K</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="扩展名">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.fileExtension }}</span>
         </template>
       </el-table-column>
       <el-table-column width="160" align="center" label="上传时间">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.uploadTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="上传的IP">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.uploadIp }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('table.actions')" width="80" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>

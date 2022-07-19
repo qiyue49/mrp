@@ -34,32 +34,32 @@
       highlight-current-row
       style="width: 100%;">
       <el-table-column label="租户标识" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.tenantId }}</span>
         </template>
       </el-table-column>
       <el-table-column label="联系人" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.contact }}</span>
         </template>
       </el-table-column>
       <el-table-column label="电话" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.phone }}</span>
         </template>
       </el-table-column>
       <el-table-column label="租户名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="登录名" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.userName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['sys:tenant:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>

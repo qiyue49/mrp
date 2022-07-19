@@ -32,48 +32,48 @@
     >
       <el-table-column type="selection" align="center" />
       <el-table-column width="120" align="center" label="联系电话">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
       <el-table-column width="200" align="center" label="模版名称">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.templateName }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="模版编码">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.sendCode }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="发送状态">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.status|statusFilter }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="响应消息ID">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.smsid }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="重试次数">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.tryNum }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="返回消息">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.msg }}</span>
         </template>
       </el-table-column>
       <el-table-column width="160" align="center" label="响应时间">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.responseDate }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>

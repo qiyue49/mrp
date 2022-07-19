@@ -24,37 +24,37 @@
       tyle="width: 100%"
     >
       <el-table-column min-width="120" align="center" label="用户名">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.realname }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" align="center" label="账号">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.username }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" align="center" label="登陆IP">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.loginIp }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" align="center" label="登录地点">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.loginLocation }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" align="center" label="浏览器">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.browser }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" align="center" label="操作系统">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.os }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="160" align="center" label="登陆时间">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.startTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>

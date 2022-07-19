@@ -15,7 +15,7 @@
       highlight-current-row
       style="width: 100%;">
       <el-table-column type="expand">
-        <template slot-scope="props">
+        <template #default="props">
           <el-form label-position="left" inline class="table-expand">
             <el-form-item label="商品名称">
               <span>{{ props.row.name }}</span>
@@ -39,22 +39,22 @@
         </template>
       </el-table-column>
       <el-table-column label="商品名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="所属店铺" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.shop }}</span>
         </template>
       </el-table-column>
       <el-table-column label="标签" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.tag }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>

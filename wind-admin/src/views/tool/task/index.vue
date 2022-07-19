@@ -21,43 +21,43 @@
     >
       <el-table-column type="selection" align="center" />
       <el-table-column width="250" align="center" label="任务名称">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="任务分组">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.jobGroup }}</span>
         </template>
       </el-table-column>
       <el-table-column width="100" align="center" label="执行类">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.executeClass }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="方法名">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.methodName }}</span>
         </template>
       </el-table-column>
       <el-table-column width="100" align="center" label="执行表达式">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.cronExpression }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="任务状态">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.jobStatus| dictLabel('sf') }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="是否同步">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.isConcurrent | dictLabel('sf') }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button v-if="scope.row.jobStatus==0" type="text" size="small" icon="el-icon-video-play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
           <el-button v-if="scope.row.jobStatus==1" type="text" size="small" icon="el-icon-video-pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
           <el-button size="small" type="text" icon="el-icon-refresh" @click="handleRefresh(scope.row)">刷新</el-button>

@@ -31,48 +31,48 @@
     >
       <el-table-column type="selection" align="center" />
       <el-table-column width="120" align="center" label="任务名称">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="任务分组">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.jobGroup }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="执行类">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.executeClass }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="方法名">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.methodName }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="方法参数">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.methodParams }}</span>
         </template>
       </el-table-column>
       <el-table-column width="200" align="center" label="日志信息">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.jobMessage }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="状态">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | statusFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="160" align="center" label="操作时间">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>

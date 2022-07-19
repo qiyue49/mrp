@@ -26,27 +26,27 @@
       highlight-current-row
       style="width: 100%;">
       <el-table-column label="资源编号" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.resourceCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="数据权限名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.scopeName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="数据权限字段" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.scopeField }}</span>
         </template>
       </el-table-column>
       <el-table-column label="数据权限类型" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.scopeType | dictLabel('dataRuleType') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['sys:datarule:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>

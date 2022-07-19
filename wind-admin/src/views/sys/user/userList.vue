@@ -31,34 +31,34 @@
           style="width: 100%"
         >
           <el-table-column width="150" align="center" label="姓名">
-            <template slot-scope="scope">
+            <template #default="scope">
               <span>{{ scope.row.realname }}</span>
             </template>
           </el-table-column>
           <el-table-column width="120" label="用户名">
-            <template slot-scope="scope">
+            <template #default="scope">
               <span>{{ scope.row.username }}</span>
             </template>
           </el-table-column>
           <el-table-column width="120" align="center" label="联系电话">
-            <template slot-scope="scope">
+            <template #default="scope">
               <span>{{ scope.row.phone }}</span>
             </template>
           </el-table-column>
           <el-table-column width="160" align="center" label="可否登录">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-tag :type="scope.row.status | statusFilter">
                 {{ scope.row.status | dictLabel('sf') }}
               </el-tag>
             </template>
           </el-table-column>
           <el-table-column width="160" align="center" label="部门">
-            <template slot-scope="scope">
+            <template #default="scope">
               <span>{{ scope.row.organization.name }}</span>
             </template>
           </el-table-column>
           <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
-            <template slot-scope="scope">
+            <template #default="scope">
               <el-button v-permission="['sys:user:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
               <el-button v-permission="['sys:user:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
               <el-button v-permission="['sys:user:role']" size="small" type="text" icon="el-icon-user" @click="toAssignRoles(scope.row)">设置角色</el-button>
@@ -118,6 +118,7 @@ import { fetchList, deleteUser, modifyPassword, exportUser } from '@/api/sys/use
 import { fetchOrganizationList } from '@/api/sys/organization'
 import { fetchUsableRoleList } from '@/api/sys/role'
 import { fetchUserRoleIds, insertByUserId, deleteByUserId } from '@/api/sys/userRole'
+import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
 
@@ -125,7 +126,7 @@ export default {
   name: 'UserList',
   components: { userForm },
   directives: {
-    waves
+    waves, permission
   },
   filters: {
     statusFilter(status) {

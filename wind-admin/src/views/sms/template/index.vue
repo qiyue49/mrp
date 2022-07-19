@@ -18,27 +18,27 @@
       style="width: 100%"
     >
       <el-table-column width="200" align="center" label="模版名称">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="模版编码">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.code }}</span>
         </template>
       </el-table-column>
       <el-table-column width="100" align="center" label="业务类型">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.businessType | businessTypeFilter }}</span>
         </template>
       </el-table-column>
       <el-table-column width="200" align="center" label="模版内容">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.templateContent }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
           <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>

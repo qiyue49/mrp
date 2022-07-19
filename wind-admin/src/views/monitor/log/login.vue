@@ -29,48 +29,48 @@
     >
       <el-table-column type="selection" align="center" />
       <el-table-column width="120" align="center" label="登陆用户">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.loginName }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="登陆IP">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.loginIp }}</span>
         </template>
       </el-table-column>
       <el-table-column width="120" align="center" label="登录地点">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.loginLocation }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="浏览器">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.browser }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="操作系统">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.os }}</span>
         </template>
       </el-table-column>
       <el-table-column width="80" align="center" label="登陆状态">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | dictLabel('loginstatus') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="200" align="center" label="操作信息">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.msg }}</span>
         </template>
       </el-table-column>
       <el-table-column width="160" align="center" label="操作时间">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.loginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
-        <template slot-scope="scope">
+        <template #default="scope">
           <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>

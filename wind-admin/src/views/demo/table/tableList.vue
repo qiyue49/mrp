@@ -27,45 +27,45 @@
       style="width: 100%;"
     >
       <el-table-column align="center" label="拖拽" width="80">
-        <template slot-scope="{}">
+        <template #default="{}">
           <svg-icon class="drag-handler" icon-class="drag" />
         </template>
       </el-table-column>
       <el-table-column label="标题" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column label="作者" width="110px" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.user.realname }}</span>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" width="150px" align="center">
-        <template slot-scope="scope">
+        <template #default="scope">
           <span>{{ scope.row.publishDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="重要程度" width="80px">
-        <template slot-scope="scope">
+        <template #default="scope">
           <svg-icon v-for="n in +scope.row.level" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
       <el-table-column label="阅读数" align="center" width="95">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span v-if="row.readings" class="link-type" @click="handleFetchPv(row.readings)">{{ row.readings }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
       <el-table-column label="状态" class-name="status-col" width="100">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['test:table:table:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
