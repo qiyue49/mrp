@@ -95,7 +95,7 @@ public class User extends DataEntity<String> {
         this.status = STATUS_NORMAL;
     }
 
-    public String getRoleIds() {
+    public String findRoleIds() {
         List<String> roleIds = new ArrayList<>();
         roles.forEach(item -> {
             roleIds.add(item.getId());

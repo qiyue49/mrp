@@ -42,6 +42,8 @@ public class Principal implements Serializable {
      */
     private String os;
 
+    public Principal() {
+    }
 
     public Principal(String id, String username, String realname, String tenantId, String roleId) {
         this.id = id;

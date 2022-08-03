@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -116,6 +117,30 @@ public class CacheUtils {
 
     public static void clear() {
         clear(SYS_CACHE);
+    }
+
+    /**
+     * 缓存基本的对象，Integer、String、实体类等
+     *
+     * @param key 缓存的键值
+     * @param value 缓存的值
+     */
+    public static  <T> void setCacheObject(final String key, final T value)
+    {
+        redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * 缓存Map
+     *
+     * @param key
+     * @param dataMap
+     */
+    public static <T> void setCacheMap(final String key, final Map<String, T> dataMap)
+    {
+        if (dataMap != null) {
+            redisTemplate.opsForHash().putAll(key, dataMap);
+        }
     }
 
     /**

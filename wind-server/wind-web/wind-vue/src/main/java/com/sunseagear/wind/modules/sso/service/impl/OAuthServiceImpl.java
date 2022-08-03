@@ -37,10 +37,10 @@ public class OAuthServiceImpl implements IOAuthService {
     @Autowired
     private ShiroConfigProperties shiroConfigProperties;
 
-    private final String ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
-    private final String AUTH_CODE_PRE = "AUTH_CODE_PRE_";
-    private final String ACCESS_TOKEN_PRE = "ACCESS_TOKEN_PRE_";
-    private final String REFRESH_TOKEN_PRE = "REFRESH_TOKEN_PRE";
+    private final String ACCESS_TOKEN_KEY = "access_token_key";
+    private final String AUTH_CODE_PRE = "auth_code_pre:";
+    private final String ACCESS_TOKEN_PRE = "access_token_pre:";
+    private final String REFRESH_TOKEN_PRE = "refresh_token_pre:";
 
     @Override
     public void addAuthCode(String authCode, Principal principal) {

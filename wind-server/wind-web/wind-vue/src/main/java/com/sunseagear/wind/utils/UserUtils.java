@@ -41,11 +41,11 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     private static IUserService userService = SpringContextHolder.getBean(UserServiceImpl.class);
     private static IRoleService roleService = SpringContextHolder.getBean(RoleServiceImpl.class);
     private static IMenuService menuService = SpringContextHolder.getBean(MenuServiceImpl.class);
-    public static final String USER_CACHE = "userCache";
-    public static final String USER_CACHE_ID_ = "id_";
-    public static final String USER_CACHE_USER_NAME_ = "username_";
-    public static final String CACHE_ROLE_LIST_ = "roleList_";
-    public static final String CACHE_PERMISSION_LIST_ = "permission_List_";
+    public static final String USER_CACHE = "sys_user";
+    public static final String USER_CACHE_ID_ = "sys_user:id:";
+    public static final String USER_CACHE_USER_NAME_ = "sys_user:username:";
+    public static final String CACHE_ROLE_LIST_ = "role_list:";
+    public static final String CACHE_PERMISSION_LIST_ = "permission_list:";
 
     /**
      * 获取当前用户
@@ -106,8 +106,10 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
             if (user == null) {
                 return null;
             }
-            CacheUtils.putJson(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
-            CacheUtils.putJson(USER_CACHE, USER_CACHE_USER_NAME_ + user.getUsername(), user);
+            // CacheUtils.putJson(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
+            CacheUtils.setCacheObject(USER_CACHE_ID_ + user.getId(), user);
+            // CacheUtils.putJson(USER_CACHE, USER_CACHE_USER_NAME_ + user.getUsername(), user);
+            CacheUtils.setCacheObject(USER_CACHE_USER_NAME_ + user.getUsername(), user);
         }
         return user;
     }

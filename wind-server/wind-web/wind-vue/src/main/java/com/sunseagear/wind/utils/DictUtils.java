@@ -25,7 +25,7 @@ import java.util.Map;
 public class DictUtils {
 
     public static String DICT_CACHE_KEY = "DICT_CACHE_KEY";
-    protected final static String DICT_CACHE_NAME = "dictCache";
+    protected final static String DICT_CACHE_NAME = "sys_dict";
 
     public static Map<String, List<Dict>> getDict() {
         //数据字典
@@ -75,7 +75,8 @@ public class DictUtils {
      * @param dictMap
      */
     public static void putDict(Map<String, List<Dict>> dictMap) {
-        CacheUtils.put(DICT_CACHE_NAME, DICT_CACHE_KEY, dictMap);
+        // CacheUtils.put(DICT_CACHE_NAME, DICT_CACHE_KEY, dictMap);
+        CacheUtils.setCacheMap(DICT_CACHE_NAME, dictMap);
     }
 
     public static String getDictLabel(String code, String value, String defaultValue) {
