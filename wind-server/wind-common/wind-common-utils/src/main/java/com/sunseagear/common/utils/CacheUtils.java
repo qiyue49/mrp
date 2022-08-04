@@ -3,6 +3,7 @@ package com.sunseagear.common.utils;
 import com.google.gson.Gson;
 import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.List;
 import java.util.Map;
@@ -111,14 +112,6 @@ public class CacheUtils {
         getCache(cacheName).delete(key);
     }
 
-    public static void clear(String cacheName) {
-        redisTemplate.delete(cacheName);
-    }
-
-    public static void clear() {
-        clear(SYS_CACHE);
-    }
-
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -128,6 +121,29 @@ public class CacheUtils {
     public static  <T> void setCacheObject(final String key, final T value)
     {
         redisTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * 获得缓存的基本对象。
+     *
+     * @param key 缓存键值
+     * @return 缓存键值对应的数据
+     */
+    public static <T> T getCacheObject(final String key)
+    {
+        ValueOperations<String, T> operation = redisTemplate.opsForValue();
+        return operation.get(key);
+    }
+
+
+    /**
+     *
+     * 删除对象
+     * @param cacheName
+     * @return
+     */
+    public static boolean clear(final String cacheName) {
+        return redisTemplate.delete(cacheName);
     }
 
     /**
@@ -141,6 +157,17 @@ public class CacheUtils {
         if (dataMap != null) {
             redisTemplate.opsForHash().putAll(key, dataMap);
         }
+    }
+
+    /**
+     * 获得缓存的Map
+     *
+     * @param key
+     * @return
+     */
+    public static  <T> Map<String, T> getCacheMap(final String key)
+    {
+        return redisTemplate.opsForHash().entries(key);
     }
 
     /**

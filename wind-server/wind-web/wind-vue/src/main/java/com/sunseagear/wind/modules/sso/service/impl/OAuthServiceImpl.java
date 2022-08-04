@@ -37,9 +37,9 @@ public class OAuthServiceImpl implements IOAuthService {
     @Autowired
     private ShiroConfigProperties shiroConfigProperties;
 
-    private final String ACCESS_TOKEN_KEY = "access_token_key";
+    private final String ACCESS_TOKEN_KEY = "access_token:key";
     private final String AUTH_CODE_PRE = "auth_code_pre:";
-    private final String ACCESS_TOKEN_PRE = "access_token_pre:";
+    private final String ACCESS_TOKEN_PRE = "access_token:pre:";
     private final String REFRESH_TOKEN_PRE = "refresh_token_pre:";
 
     @Override

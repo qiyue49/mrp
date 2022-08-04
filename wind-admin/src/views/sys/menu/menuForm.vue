@@ -6,7 +6,7 @@
         <el-col :span="12">
           <el-form-item label="权限类型" prop="type">
             <el-radio
-              v-for="item in dictList('menutype')"
+              v-for="item in dictList('menu_type')"
               :key="'type' + item.label"
               v-model="temp.type"
               :label="item.value"

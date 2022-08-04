@@ -10,7 +10,7 @@
       <el-form-item label="数据权限类型" prop="scopeType">
         <el-select v-model="temp.scopeType" class="filter-item" placeholder="请选择数据权限类型" style="width: 100%">
           <el-option
-            v-for="item in dictList('dataRuleType')"
+            v-for="item in dictList('data_rule_type')"
             :key="item.label + 'scopeType'"
             :label="item.label"
             :value="item.value"

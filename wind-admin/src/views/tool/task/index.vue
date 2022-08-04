@@ -99,7 +99,7 @@
           <el-col :span="12">
             <el-form-item label="加载方式" prop="loadWay">
               <el-radio
-                v-for="item in dictList('loadway')"
+                v-for="item in dictList('load_way')"
                 :key="'type' + item.label"
                 v-model="temp.loadWay"
                 :label="item.value"

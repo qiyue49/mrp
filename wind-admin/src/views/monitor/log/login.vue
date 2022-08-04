@@ -4,7 +4,7 @@
       <el-select v-model="listQuery.status" class="filter-item" placeholder="请选择登陆状态">
         <el-option label="全部状态" value="" />
         <el-option
-          v-for="item in dictList('loginstatus')"
+          v-for="item in dictList('login_status')"
           :key="item.label + 'loginstatus'"
           :label="item.label"
           :value="item.value"
@@ -55,7 +55,7 @@
       </el-table-column>
       <el-table-column width="80" align="center" label="登陆状态">
         <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | dictLabel('loginstatus') }}</el-tag>
+          <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | dictLabel('login_status') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="200" align="center" label="操作信息">

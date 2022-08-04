@@ -6,6 +6,7 @@ import com.sunseagear.wind.modules.sys.service.IDictService;
 import com.google.common.collect.Lists;
 import com.sunseagear.wind.modules.sys.service.impl.DictServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.cache.RedisCache;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,10 +30,10 @@ public class DictUtils {
 
     public static Map<String, List<Dict>> getDict() {
         //数据字典
-        if (CacheUtils.get(DICT_CACHE_NAME, DICT_CACHE_KEY) == null) {
+        if (CacheUtils.getCacheMap(DICT_CACHE_NAME) == null) {
             initDict();
         }
-        return (Map<String, List<Dict>>) CacheUtils.get(DICT_CACHE_NAME, DICT_CACHE_KEY);
+        return CacheUtils.getCacheMap(DICT_CACHE_NAME);
     }
 
     /**
