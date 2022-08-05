@@ -104,7 +104,7 @@
         from sys_menu t
         <include refid="parentJoins"/>
         LEFT JOIN sys_role_menu rm on t.id=rm.menu_id
-        WHERE rm.role_id= #{roleId} and t.enabled = 1 and t.type = '3'
+        WHERE rm.role_id= #{roleId} and t.enabled = 1
     </select>
 
     <delete id="deleteRoleMenu">

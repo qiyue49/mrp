@@ -1,5 +1,7 @@
 package com.sunseagear.wind.utils;
 
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Sets;
 import com.sunseagear.common.utils.CacheUtils;
 import com.sunseagear.common.utils.ObjectUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
@@ -11,9 +13,6 @@ import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Sets;
 import com.sunseagear.wind.modules.sys.service.impl.MenuServiceImpl;
 import com.sunseagear.wind.modules.sys.service.impl.RoleServiceImpl;
 import com.sunseagear.wind.modules.sys.service.impl.UserServiceImpl;
@@ -100,28 +99,16 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      * @return 取不到返回null
      */
     public static User get(String id) {
-        // User user = CacheUtils.getJson(USER_CACHE, USER_CACHE_ID + id, User.class);
         User user = CacheUtils.getCacheObject(USER_CACHE_ID + id);
         if (user == null) {
             user = userService.selectById(id);
             if (user == null) {
                 return null;
             }
-            // CacheUtils.putJson(USER_CACHE, USER_CACHE_ID_ + user.getId(), user);
             CacheUtils.setCacheObject(USER_CACHE_ID + user.getId(), user);
-            // CacheUtils.putJson(USER_CACHE, USER_CACHE_USER_NAME_ + user.getUsername(), user);
             CacheUtils.setCacheObject(USER_CACHE_USER_NAME + user.getUsername(), user);
         }
         return user;
-    }
-
-    public static void update(String id) {
-        User user = userService.selectById(id);
-        if (user == null) {
-            return;
-        }
-        CacheUtils.setCacheObject(USER_CACHE_ID + user.getId(), user);
-        CacheUtils.setCacheObject(USER_CACHE_USER_NAME + user.getUsername(), user);
     }
 
     /**
@@ -131,7 +118,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      * @return
      */
     public static User getByUserName(String username) {
-        // User user = CacheUtils.getJson(USER_CACHE, USER_CACHE_USER_NAME + username, User.class);
         User user = CacheUtils.getCacheObject(USER_CACHE_USER_NAME + username);
         if (user == null) {
             user = userService.findByUsername(username);
@@ -145,62 +131,34 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     }
 
     /**
-     * 清除当前用户缓存
-     */
-    public static void clearCurrentUserCache() {
-        UserUtils.clearCache(getUser());
-    }
-
-    /**
-     * 清除指定用户缓存
-     *
-     * @param user
-     */
-    public static void clearCache(User user) {
-        // CacheUtils.remove(USER_CACHE, USER_CACHE_ID + user.getId());
-        // CacheUtils.remove(USER_CACHE, USER_CACHE_USER_NAME + user.getUsername());
-        // CacheUtils.remove(USER_CACHE, CACHE_ROLE_LIST + user.getId());
-        CacheUtils.clear(USER_CACHE_ID + user.getId());
-        CacheUtils.clear(USER_CACHE_USER_NAME + user.getUsername());
-        CacheUtils.clear(CACHE_ROLE_LIST + user.getId());
-    }
-
-    public static void clearPermissionCache(String roleId) {
-        // CacheUtils.remove(USER_CACHE, CACHE_PERMISSION_LIST + roleId);
-        CacheUtils.clear(CACHE_PERMISSION_LIST + roleId);
-    }
-
-    public static void clearAllUserCache() {
-        CacheUtils.clear(USER_CACHE);
-    }
-
-    /**
      * 获取当前用户角色列表
      *
      * @return
      */
     public static List<Role> getRoleList() {
         User user = getUser();
-        List<Role> roleList = CacheUtils.getJsonListBean(USER_CACHE, CACHE_ROLE_LIST + user.getId(), Role.class);
+        List<Role> roleList = CacheUtils.getCacheObject(CACHE_ROLE_LIST + user.getId());
         if (ObjectUtils.isNullOrEmpty(roleList)) {
             roleList = roleService.findListByUserId(user.getId());
-            // 不加入缓存
-            // CacheUtils.putJson(USER_CACHE, CACHE_ROLE_LIST_ + user.getId(), roleList);
             CacheUtils.setCacheObject(CACHE_ROLE_LIST + user.getId(), roleList);
         }
         return roleList;
     }
 
+    /**
+     * 获取角色列表
+     * @return
+     */
     public static Set<String> getRoleStringList() {
         Set<Role> roles = Sets.newConcurrentHashSet(getRoleList());
-        return Sets.newHashSet(Collections2.transform(roles, new Function<Role, String>() {
-            @Override
-            public String apply(Role role) {
-                return role.getCode();
-            }
-        }));
+        return Sets.newHashSet(Collections2.transform(roles, role -> role.getCode()));
     }
 
+    /**
+     * 是否有特定的角色
+     * @param roleCode
+     * @return
+     */
     public static boolean hasRole(String roleCode) {
         Set<String> roleCodeList = getRoleStringList();
         for (String roleCodeItem : roleCodeList) {
@@ -211,6 +169,10 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         return Boolean.FALSE;
     }
 
+    /**
+     * 获取权限列表
+     * @return
+     */
     public static Set<String> getPermissionsList() {
         List<String> permissionList = UserUtils.getPermissionList();
         Set<String> permissionsList = Sets.newConcurrentHashSet();
@@ -245,7 +207,8 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     public static List<String> getPermissionList() {
         final List<String> permissionList = new ArrayList<>();
         getRoleList().forEach(item -> {
-            permissionList.addAll(CacheUtils.getJsonListBean(USER_CACHE, CACHE_PERMISSION_LIST + item.getId(), String.class));
+            ArrayList<String> cachePermissions = CacheUtils.getCacheObject(CACHE_PERMISSION_LIST + item.getId());
+            permissionList.addAll(ObjectUtils.isNullOrEmpty(cachePermissions) ? new ArrayList<>() : cachePermissions);
             if (ObjectUtils.isNullOrEmpty(permissionList)) {
                 List<Menu> permissionValueList = menuService.findPermissionByRoleId(item.getId());
                 List<String> menuIdList = new ArrayList<>();
@@ -254,7 +217,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
                 }
                 permissionList.addAll(menuIdList);
                 // 不加入缓存
-                // CacheUtils.putJson(USER_CACHE, CACHE_PERMISSION_LIST_ + item.getId(), permissionList);
                 CacheUtils.setCacheObject(CACHE_PERMISSION_LIST + item.getId(), permissionList);
             }
         });
@@ -279,5 +241,51 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
             }
         }
         return bool;
+    }
+
+    /**
+     * 更新用户
+     * @param id
+     */
+    public static void update(String id) {
+        User user = userService.selectById(id);
+        if (user == null) {
+            return;
+        }
+        CacheUtils.setCacheObject(USER_CACHE_ID + user.getId(), user);
+        CacheUtils.setCacheObject(USER_CACHE_USER_NAME + user.getUsername(), user);
+    }
+
+    /**
+     * 清除当前用户缓存
+     */
+    public static void clearCurrentUserCache() {
+        UserUtils.clearCache(getUser());
+    }
+
+    /**
+     * 清除指定用户缓存
+     *
+     * @param user
+     */
+    public static void clearCache(User user) {
+        CacheUtils.clear(USER_CACHE_ID + user.getId());
+        CacheUtils.clear(USER_CACHE_USER_NAME + user.getUsername());
+        CacheUtils.clear(CACHE_ROLE_LIST + user.getId());
+    }
+
+    /**
+     * 清除权限缓存
+     * @param roleId
+     */
+    public static void clearPermissionCache(String roleId) {
+        CacheUtils.clear(CACHE_PERMISSION_LIST + roleId);
+    }
+
+    /**
+     * 清除所有用户的缓存
+     */
+    public static void clearAllUserCache() {
+        CacheUtils.clear(USER_CACHE);
     }
 }
