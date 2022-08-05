@@ -110,11 +110,9 @@ public class DataRuleSqlHandler {
             List<String> deptIdList = dataRuleHandler.getChildren(dataScope.getTableName(), id);
             ids.addAll(deptIdList);
             id = StringUtils.join(ids, "','");
-            result = String.format("select %s from (%s) scope, %s a, sys_user sysu where a.id = sysu.%s" +
-                            " and sysu.id = scope.%s and a.id in ('%s')",
+            result = String.format("select %s from (%s) scope, %s a where a.id in ('%s')",
                     dataScope.getScopeField(), tempSql,
                     dataScope.getTableName(),
-                    dataScope.getUserColumn(), dataScope.getScopeColumn(),
                     id);
         }
         SQLSelectStatement selectStmtResult = (SQLSelectStatement) SQLUtils.parseSingleStatement(result, getDataSourceType());
