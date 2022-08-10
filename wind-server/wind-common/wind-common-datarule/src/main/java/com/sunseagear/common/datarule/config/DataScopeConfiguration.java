@@ -1,10 +1,7 @@
 package com.sunseagear.common.datarule.config;
 
 import com.sunseagear.common.datarule.handler.DataRuleHandler;
-import com.sunseagear.common.datarule.handler.DataRuleSqlHandler;
-import com.sunseagear.common.datarule.interceptor.DataRuleInterceptor;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,21 +20,6 @@ public class DataScopeConfiguration {
         DataRuleHandler dataRuleHandler = new DataRuleHandler(jdbcTemplate);
         dataRuleHandler.init();
         return dataRuleHandler;
-    }
-
-
-    @Bean
-    @ConditionalOnBean(DataRuleHandler.class)
-    @ConditionalOnMissingBean(DataRuleSqlHandler.class)
-    public DataRuleSqlHandler dataScopeHandler(DataRuleHandler dataRuleHandler) {
-        return new DataRuleSqlHandler(dataRuleHandler);
-    }
-
-    @Bean
-    @ConditionalOnBean({DataRuleSqlHandler.class, DataRuleHandler.class})
-    @ConditionalOnMissingBean(DataRuleInterceptor.class)
-    public DataRuleInterceptor interceptor(DataRuleSqlHandler dataRuleSqlHandler, DataRuleHandler dataRuleHandler) {
-        return new DataRuleInterceptor(dataRuleSqlHandler, dataRuleHandler);
     }
 
 }

@@ -6,8 +6,11 @@ import com.baomidou.mybatisplus.core.incrementer.IKeyGenerator;
 import com.baomidou.mybatisplus.extension.incrementer.H2KeyGenerator;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
+import com.baomidou.mybatisplus.extension.plugins.inner.DataPermissionInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerInterceptor;
+import com.sunseagear.common.datarule.handler.DataRuleHandler;
+import com.sunseagear.common.datarule.handler.MyDataPermissionHandler;
 import com.sunseagear.wind.common.handler.BaseMetaObjectHandler;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
@@ -26,32 +29,14 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.sunseagear.wind.modules.*")
 public class MybatisPlusConfig {
 
-    /**
-     * mybatis-plus SQL执行效率插件【生产环境可以关闭】
-     */
-//    @Bean
-//    public PerformanceInterceptor performanceInterceptor() {
-//        return new PerformanceInterceptor();
-//    }
-
-    /**
-     * mybatis-plus分页插件<br>
-     * 文档：http://mp.baomidou.com<br>
-     */
-//    @Bean
-//    @ConditionalOnMissingBean(PaginationInterceptor.class)
-//    public PaginationInterceptor paginationInterceptor() {
-//        PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-//        return paginationInterceptor;
-//    }
-
     @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor(TenantLineHandler tenantHandler) {
+    public MybatisPlusInterceptor mybatisPlusInterceptor(TenantLineHandler tenantHandler, DataRuleHandler dataRuleHandler) {
         MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
         interceptor.addInnerInterceptor(new TenantLineInnerInterceptor(tenantHandler));
         // 如果用了分页插件注意先 add TenantLineInnerInterceptor 再 add PaginationInnerInterceptor
         // 用了分页插件必须设置 MybatisConfiguration#useDeprecatedExecutor = false
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor());
+        interceptor.addInnerInterceptor(new DataPermissionInterceptor(new MyDataPermissionHandler(dataRuleHandler)));
         return interceptor;
     }
 
