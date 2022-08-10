@@ -1,8 +1,14 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" style="width: 200px;" class="filter-item" placeholder="请输入模版名称" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.code" style="width: 200px;" class="filter-item" placeholder="请输入模版编码" @keyup.enter.native="handleFilter" />
+      <div class="filter-item">
+        <span>模版名称:</span>
+        <el-input v-model="listQuery.name" style="width: 200px;" placeholder="请输入模版名称" @keyup.enter.native="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>模版编码:</span>
+        <el-input v-model="listQuery.code" style="width: 200px;" placeholder="请输入模版编码" @keyup.enter.native="handleFilter" />
+      </div>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
@@ -40,7 +46,7 @@
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button v-permission="['sms:template:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-permission="['sms:template:delete']" email:template:updatesize="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button v-permission="['sms:template:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
           </el-button>
         </template>
       </el-table-column>
@@ -98,17 +104,11 @@
 import { fetchList, createTemplate, deleteTemplate, updateTemplate } from '@/api/sms/template'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import { getDictLabel, getDictList } from '@/utils/dict'
 
 export default {
   name: 'SysTemplateList',
   directives: {
     waves, permission
-  },
-  filters: {
-    businessTypeFilter(value) {
-      return getDictLabel('business_type', value)
-    }
   },
   data() {
     return {
@@ -124,7 +124,6 @@ export default {
         title: undefined,
         type: undefined
       },
-      businessTypeOptions: getDictList('business_type'),
       showReviewer: false,
       temp: {
         id: undefined,

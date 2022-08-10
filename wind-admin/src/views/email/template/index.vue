@@ -1,8 +1,14 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" style="width: 200px;" class="filter-item" placeholder="请输入模版名称" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.code" style="width: 200px;" class="filter-item" placeholder="请输入模版编码" @keyup.enter.native="handleFilter" />
+      <div class="filter-item">
+        <span>模版名称:</span>
+        <el-input v-model="listQuery.name" style="width: 200px;" class="filter-item" placeholder="请输入模版名称" @keyup.enter.native="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>模版编码:</span>
+        <el-input v-model="listQuery.code" style="width: 200px;" class="filter-item" placeholder="请输入模版编码" @keyup.enter.native="handleFilter" />
+      </div>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>

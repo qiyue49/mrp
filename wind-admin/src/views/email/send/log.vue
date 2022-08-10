@@ -1,17 +1,26 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.email" style="width: 200px;" class="filter-item" placeholder="请输入Email" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.subject" style="width: 200px;" class="filter-item" placeholder="请输入主题" @keyup.enter.native="handleFilter" />
-      <el-select v-model="listQuery.status" style="width: 200px;" class="filter-item" placeholder="请选择发送状态">
-        <el-option label="全部状态" value="" />
-        <el-option
-          v-for="item in statusOptions"
-          :key="'filter_status'+ item.label "
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
+      <div class="filter-item">
+        <span>Email:</span>
+        <el-input v-model="listQuery.email" style="width: 200px;" placeholder="请输入Email" @keyup.enter.native="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>主题:</span>
+        <el-input v-model="listQuery.subject" style="width: 200px;" placeholder="请输入主题" @keyup.enter.native="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>发送状态:</span>
+        <el-select v-model="listQuery.status" style="width: 200px;" placeholder="请选择发送状态">
+          <el-option label="全部状态" value="" />
+          <el-option
+            v-for="item in statusOptions"
+            :key="'filter_status'+ item.label "
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendEmail">邮件重发</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleSendEmail">发送邮件</el-button>

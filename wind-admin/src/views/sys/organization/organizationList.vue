@@ -1,7 +1,10 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <div class="filter-item">
+        <span>名称:</span>
+        <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px;" @keyup.enter.native="handleFilter" />
+      </div>
       <el-button v-permission="['sys:organization:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>

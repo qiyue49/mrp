@@ -3,11 +3,11 @@
     <div class="filter-container">
       <div class="filter-item">
         <span>URI:</span>
-        <el-input v-model="listQuery.requestUri" style="width: 200px" />
+        <el-input v-model="listQuery.requestUri" placeholder="请输入URI" style="width: 200px" />
       </div>
       <div class="filter-item">
         <span>操作IP:</span>
-        <el-input v-model="listQuery.operationIp" style="width: 200px" />
+        <el-input v-model="listQuery.operationIp" placeholder="请输入操作IP" style="width: 200px" />
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button class="filter-item" type="danger" icon="el-icon-document" @click="handleBatchDelete">删除</el-button>

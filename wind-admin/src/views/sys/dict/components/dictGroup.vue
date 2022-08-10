@@ -2,7 +2,10 @@
   <div id="dictGroupComponent">
     <div>
       <div class="filter-container">
-        <el-input v-model="listQuery.keyword" style="width: 200px;" class="filter-item" placeholder="请输入分组名称或编码" @keyup.enter.native="handleFilter" />
+        <div class="filter-item">
+          <span>分组名称或编码:</span>
+          <el-input v-model="listQuery.keyword" style="width: 200px;" placeholder="请输入分组名称或编码" @keyup.enter.native="handleFilter" />
+        </div>
         <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
         <el-button v-permission="['sys:dict:group:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
       </div>

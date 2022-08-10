@@ -12,9 +12,18 @@
     <el-col :span="18">
       <div class="app-container calendar-list-container">
         <div class="filter-container">
-          <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
-          <el-input v-model="listQuery.username" style="width: 200px;" class="filter-item" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
-          <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
+          <div class="filter-item">
+            <span>姓名:</span>
+            <el-input v-model="listQuery.realname" style="width: 200px;" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
+          </div>
+          <div class="filter-item">
+            <span>用户名:</span>
+            <el-input v-model="listQuery.username" style="width: 200px;" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
+          </div>
+          <div class="filter-item">
+            <span>手机号码:</span>
+            <el-input v-model="listQuery.phone" style="width: 200px;" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
+          </div>
           <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
           <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
           <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>

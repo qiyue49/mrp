@@ -1,18 +1,27 @@
 <template>
   <div class="app-container calendar-list-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
-      <el-input v-model="listQuery.sendCode" style="width: 200px;" class="filter-item" placeholder="请输入模板编码" @keyup.enter.native="handleFilter" />
+      <div class="filter-item">
+        <span>手机号码:</span>
+        <el-input v-model="listQuery.phone" style="width: 200px;" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>模板编码:</span>
+        <el-input v-model="listQuery.code" style="width: 200px;" placeholder="请输入模板编码" @keyup.enter.native="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>发送状态:</span>
+        <el-select v-model="listQuery.status" style="width: 200px;" placeholder="请选择发送状态">
+          <el-option label="全部状态" value="" />
+          <el-option
+            v-for="item in statusOptions"
+            :key="item.label + 'filter_status'"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
 
-      <el-select v-model="listQuery.status" style="width: 200px;" class="filter-item" placeholder="请选择发送状态">
-        <el-option label="全部状态" value="" />
-        <el-option
-          v-for="item in statusOptions"
-          :key="item.label + 'filter_status'"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendMsg">短信重发</el-button>
       <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleSendMsg">发送短信</el-button>

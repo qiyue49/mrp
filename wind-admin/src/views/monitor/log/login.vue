@@ -1,15 +1,19 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div class="app-container">
     <div class="filter-container">
-      <el-select v-model="listQuery.status" class="filter-item" placeholder="请选择登陆状态">
-        <el-option label="全部状态" value="" />
-        <el-option
-          v-for="item in dictList('login_status')"
-          :key="item.label + 'loginstatus'"
-          :label="item.label"
-          :value="item.value"
-        />
-      </el-select>
+      <div class="filter-item">
+        <span>登陆状态:</span>
+        <el-select v-model="listQuery.status" placeholder="请选择登陆状态" style="width: 200px">
+          <el-option label="全部状态" value="" />
+          <el-option
+            v-for="item in dictList('login_status')"
+            :key="item.label + 'loginstatus'"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
       <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
       <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="el-icon-delete" @click="handleBatchDelete">删除</el-button>
