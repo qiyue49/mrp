@@ -28,7 +28,7 @@ spring:
   #DATABASE CONFIG
   datasource:
     username: root
-    password: root
+    password: 123456
     url: jdbc:mysql://localhost:3306/wind?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 
 

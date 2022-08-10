@@ -85,7 +85,7 @@ export default {
   },
   filters: {
     businessTypeFilter(value) {
-      return getDictLabel('businesstype', value)
+      return getDictLabel('business_type', value)
     }
   },
   data() {
@@ -102,7 +102,7 @@ export default {
         title: undefined,
         type: undefined
       },
-      businessTypeOptions: getDictList('businesstype'),
+      businessTypeOptions: getDictList('business_type'),
       showReviewer: false,
       temp: {
         id: undefined,

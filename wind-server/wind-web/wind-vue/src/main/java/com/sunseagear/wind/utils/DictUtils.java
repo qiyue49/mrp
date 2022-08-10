@@ -6,6 +6,7 @@ import com.sunseagear.wind.modules.sys.service.IDictService;
 import com.google.common.collect.Lists;
 import com.sunseagear.wind.modules.sys.service.impl.DictServiceImpl;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.redis.cache.RedisCache;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,14 +26,14 @@ import java.util.Map;
 public class DictUtils {
 
     public static String DICT_CACHE_KEY = "DICT_CACHE_KEY";
-    protected final static String DICT_CACHE_NAME = "dictCache";
+    protected final static String DICT_CACHE_NAME = "sys_dict";
 
     public static Map<String, List<Dict>> getDict() {
         //数据字典
-        if (CacheUtils.get(DICT_CACHE_NAME, DICT_CACHE_KEY) == null) {
+        if (CacheUtils.getCacheMap(DICT_CACHE_NAME) == null) {
             initDict();
         }
-        return (Map<String, List<Dict>>) CacheUtils.get(DICT_CACHE_NAME, DICT_CACHE_KEY);
+        return CacheUtils.getCacheMap(DICT_CACHE_NAME);
     }
 
     /**
@@ -75,7 +76,8 @@ public class DictUtils {
      * @param dictMap
      */
     public static void putDict(Map<String, List<Dict>> dictMap) {
-        CacheUtils.put(DICT_CACHE_NAME, DICT_CACHE_KEY, dictMap);
+        // CacheUtils.put(DICT_CACHE_NAME, DICT_CACHE_KEY, dictMap);
+        CacheUtils.setCacheMap(DICT_CACHE_NAME, dictMap);
     }
 
     public static String getDictLabel(String code, String value, String defaultValue) {

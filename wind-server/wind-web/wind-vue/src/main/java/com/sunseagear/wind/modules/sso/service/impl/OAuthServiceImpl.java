@@ -1,12 +1,12 @@
 package com.sunseagear.wind.modules.sso.service.impl;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sunseagear.common.utils.CacheUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.config.autoconfigure.ShiroConfigProperties;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,58 +27,51 @@ import java.util.concurrent.TimeUnit;
 @Service("oAuthService")
 public class OAuthServiceImpl implements IOAuthService {
 
-
-    //@Autowired
-    //private AppFeign appFeign;
-
-    @Autowired
-    private RedisTemplate redisTemplate;
-
     @Autowired
     private ShiroConfigProperties shiroConfigProperties;
 
-    private final String ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY";
-    private final String AUTH_CODE_PRE = "AUTH_CODE_PRE_";
-    private final String ACCESS_TOKEN_PRE = "ACCESS_TOKEN_PRE_";
-    private final String REFRESH_TOKEN_PRE = "REFRESH_TOKEN_PRE";
+    private final String ACCESS_TOKEN_KEY = "access_token:key";
+    private final String AUTH_CODE_PRE = "auth_code_pre:";
+    private final String ACCESS_TOKEN_PRE = "access_token:pre:";
+    private final String REFRESH_TOKEN_PRE = "refresh_token_pre:";
 
     @Override
     public void addAuthCode(String authCode, Principal principal) {
-        redisTemplate.opsForValue().set(AUTH_CODE_PRE + authCode, principal, shiroConfigProperties.getCodeExpiresIn(), TimeUnit.SECONDS);
+        CacheUtils.setCacheObject(AUTH_CODE_PRE + authCode, principal, shiroConfigProperties.getCodeExpiresIn(), TimeUnit.SECONDS);
     }
 
     @Override
     public void addAccessToken(String accessToken, Principal principal) {
-        redisTemplate.opsForValue().set(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.SECONDS);
-        redisTemplate.opsForSet().add(ACCESS_TOKEN_KEY, accessToken);
-        redisTemplate.expire(ACCESS_TOKEN_KEY, getExpireIn(), TimeUnit.SECONDS);//设置过期时间
+        CacheUtils.setCacheObject(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.SECONDS);
+        CacheUtils.put(ACCESS_TOKEN_KEY, accessToken);
+        CacheUtils.expire(ACCESS_TOKEN_KEY, getExpireIn());//设置过期时间
 
     }
 
     @Override
     public void addRefreshToken(String refreshToken, Principal principal) {
-        redisTemplate.opsForValue().set(REFRESH_TOKEN_PRE + refreshToken, principal, shiroConfigProperties.getRefreshTokenExpiresIn(), TimeUnit.SECONDS);
+        CacheUtils.setCacheObject(REFRESH_TOKEN_PRE + refreshToken, principal, shiroConfigProperties.getRefreshTokenExpiresIn(), TimeUnit.SECONDS);
     }
 
     @Override
     public Principal getPrincipalByAuthCode(String authCode) {
-        return (Principal) redisTemplate.opsForValue().get(AUTH_CODE_PRE + authCode);
+        return CacheUtils.getCacheObject(AUTH_CODE_PRE + authCode);
     }
 
     @Override
     public Principal getPrincipalByAccessToken(String accessToken) {
-        return (Principal) redisTemplate.opsForValue().get(ACCESS_TOKEN_PRE + accessToken);
+        return CacheUtils.getCacheObject(ACCESS_TOKEN_PRE + accessToken);
     }
 
     @Override
     public Principal getPrincipalByRefreshToken(String refreshToken) {
-        return (Principal) redisTemplate.opsForValue().get(REFRESH_TOKEN_PRE + refreshToken);
+        return CacheUtils.getCacheObject(REFRESH_TOKEN_PRE + refreshToken);
     }
 
     @Override
     public boolean checkAuthCode(String authCode) {
         try {
-            return redisTemplate.opsForValue().get(AUTH_CODE_PRE + authCode) != null;
+            return CacheUtils.getCacheObject(AUTH_CODE_PRE + authCode) != null;
         } catch (Exception e) {
             return Boolean.FALSE;
         }
@@ -87,7 +80,7 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public boolean checkAccessToken(String accessToken) {
         try {
-            return redisTemplate.opsForValue().get(ACCESS_TOKEN_PRE + accessToken) != null;
+            return CacheUtils.getCacheObject(ACCESS_TOKEN_PRE + accessToken) != null;
         } catch (Exception e) {
             return Boolean.FALSE;
         }
@@ -96,7 +89,7 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public boolean checkRefreshToken(String refreshToken) {
         try {
-            return redisTemplate.opsForValue().get(REFRESH_TOKEN_PRE + refreshToken) != null;
+            return CacheUtils.getCacheObject(REFRESH_TOKEN_PRE + refreshToken) != null;
         } catch (Exception e) {
             return Boolean.FALSE;
         }
@@ -104,8 +97,8 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void revokeToken(String accessToken) {
-        redisTemplate.delete(ACCESS_TOKEN_PRE + accessToken);
-        redisTemplate.opsForSet().add(ACCESS_TOKEN_KEY, accessToken);
+        CacheUtils.getCacheObject(ACCESS_TOKEN_PRE + accessToken);
+        CacheUtils.put(ACCESS_TOKEN_KEY, accessToken);
     }
 
     @Override
@@ -128,7 +121,7 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public List<Principal> activePrincipal() {
         List<Principal> principalList = new ArrayList<>();
-        Set<String> accessTokenList = redisTemplate.opsForSet().members(ACCESS_TOKEN_KEY);
+        Set<String> accessTokenList = CacheUtils.getCacheSet(ACCESS_TOKEN_KEY);
         for (String accessToken : accessTokenList) {
             Principal principal = getPrincipalByAccessToken(accessToken);
             if (principal != null) {

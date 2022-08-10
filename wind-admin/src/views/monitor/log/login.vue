@@ -4,7 +4,7 @@
       <el-select v-model="listQuery.status" class="filter-item" placeholder="请选择登陆状态">
         <el-option label="全部状态" value="" />
         <el-option
-          v-for="item in dictList('loginstatus')"
+          v-for="item in dictList('login_status')"
           :key="item.label + 'loginstatus'"
           :label="item.label"
           :value="item.value"
