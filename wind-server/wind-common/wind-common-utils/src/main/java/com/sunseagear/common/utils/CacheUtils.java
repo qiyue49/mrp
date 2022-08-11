@@ -85,7 +85,9 @@ public class CacheUtils {
      * @return
      */
     public static boolean clear(final String cacheName) {
-        return redisTemplate.delete(cacheName);
+        Set<String> keys = redisTemplate.keys(cacheName + "*");
+        long count = redisTemplate.delete(keys);
+        return keys.size() == count;
     }
 
     /**
