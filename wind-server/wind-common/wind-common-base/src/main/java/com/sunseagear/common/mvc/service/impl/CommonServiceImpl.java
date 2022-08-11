@@ -63,7 +63,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public int selectCount(Wrapper<T> wrapper) {
+    public long selectCount(Wrapper<T> wrapper) {
         return count(wrapper);
     }
 
@@ -93,7 +93,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
+    public boolean removeByIds(Collection<?> idList) {
         if (isDemo) {
             return true;
         }
@@ -150,7 +150,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     private Boolean validTable(DuplicateValid duplicateValid, QueryWrapper<T> wrapper) {
-        Integer num = null;
+        Long num = null;
         String extendName = duplicateValid.getExtendName();
         String extendParam = duplicateValid.getExtendParam();
         if (!StringUtils.isEmpty(extendParam)) {

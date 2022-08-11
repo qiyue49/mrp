@@ -66,7 +66,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @Log(logType = LogType.INSERT)
     @RequiresPermissions("sys:config:add")
     public String add(@Valid SysConfig entity, BindingResult result) {
-        int count = sysConfigService.selectCount(new QueryWrapper<SysConfig>().
+        long count = sysConfigService.selectCount(new QueryWrapper<SysConfig>().
                 nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
                 .eq("tenant_id",UserUtils.getTenantId()));
         if (count > 0) {
@@ -84,7 +84,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @Log(logType = LogType.UPDATE)
     @RequiresPermissions("sys:config:update")
     public String update(@Valid SysConfig entity, BindingResult result) {
-        int count = sysConfigService.selectCount(new QueryWrapper<SysConfig>()
+        long count = sysConfigService.selectCount(new QueryWrapper<SysConfig>()
                 .nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
                 .eq("tenant_id",UserUtils.getTenantId())
                 .ne("id", entity.getId()));

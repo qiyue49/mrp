@@ -36,7 +36,7 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", uid);
         entityWrapper.eq("role_id", roleId);
-        int count = selectCount(entityWrapper);
+        long count = selectCount(entityWrapper);
         if (count == 0) {
             UserRole userRole = new UserRole();
             userRole.setUserId(uid);
@@ -51,7 +51,7 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", uid);
         entityWrapper.eq("role_id", roleId);
-        int count = selectCount(entityWrapper);
+        long count = selectCount(entityWrapper);
         if (count > 0) {
             delete(entityWrapper);
         }

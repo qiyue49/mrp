@@ -34,7 +34,7 @@ public interface ICommonService<T> extends IService<T> {
 
     Page<T> selectPage(Page<T> page, Wrapper<T> wrapper);
 
-    int selectCount(Wrapper<T> wrapper);
+    long selectCount(Wrapper<T> wrapper);
 
     List<T> selectList(Wrapper<T> wrapper);
 

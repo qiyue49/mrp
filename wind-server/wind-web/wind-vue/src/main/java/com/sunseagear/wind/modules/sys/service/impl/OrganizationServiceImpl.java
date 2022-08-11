@@ -97,7 +97,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
     }
 
     @Override
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
+    public boolean removeByIds(Collection<?> idList) {
         boolean result = super.removeByIds(idList);
         dataRuleHandler.refreshTreeEntity("sys_organization");
         return result;

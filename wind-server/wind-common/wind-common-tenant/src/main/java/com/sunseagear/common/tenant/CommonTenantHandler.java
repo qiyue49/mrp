@@ -19,7 +19,11 @@ public class CommonTenantHandler implements TenantLineHandler {
      */
     @Override
     public Expression getTenantId() {
-        return new StringValue(UserUtils.getTenantId());
+        String tenantId = UserUtils.getTenantId();
+        if (StringUtils.isEmpty(tenantId)){
+            return null;
+        }
+        return new StringValue(tenantId);
     }
 
     /**

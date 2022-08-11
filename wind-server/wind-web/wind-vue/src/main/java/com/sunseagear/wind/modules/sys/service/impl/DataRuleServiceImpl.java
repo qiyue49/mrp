@@ -67,7 +67,7 @@ public class DataRuleServiceImpl extends CommonServiceImpl<DataRuleMapper, DataR
     }
 
     @Override
-    public boolean removeByIds(Collection<? extends Serializable> idList) {
+    public boolean removeByIds(Collection<?> idList) {
         boolean result = super.removeByIds(idList);
         idList.forEach(id -> {
             roleDataRuleMapper.delete(new QueryWrapper<RoleDataRule>().eq("role_id", id));
