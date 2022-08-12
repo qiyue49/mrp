@@ -21,7 +21,7 @@ public class CommonTenantHandler implements TenantLineHandler {
     public Expression getTenantId() {
         String tenantId = UserUtils.getTenantId();
         if (StringUtils.isEmpty(tenantId)){
-            return null;
+            return new StringValue(TenantProperties.getInstance().getDefaultTenantId());
         }
         return new StringValue(tenantId);
     }
