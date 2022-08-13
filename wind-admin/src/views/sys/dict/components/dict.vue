@@ -32,8 +32,8 @@
         />
         <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-button v-permission="['sys:dict:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button v-permission="['sys:dict:update']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+            <el-button v-permission="['sys:dict:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
+            <el-button v-permission="['sys:dict:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
             </el-button>
           </template>
         </el-table-column>
