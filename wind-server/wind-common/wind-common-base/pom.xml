@@ -12,10 +12,7 @@
 
     <name>${project.artifactId}</name>
     <url>http://www.sunseagear.com</url>
-    <properties>
-        <hibernate.validator.version>5.1.1.Final</hibernate.validator.version>
-        <disruptor.version>3.3.6</disruptor.version>
-    </properties>
+
 
     <dependencies>
 

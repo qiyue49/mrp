@@ -127,6 +127,7 @@ public class JsonUtils {
         if (StringUtils.isEmpty(jsonString)) {
             return new ArrayList();
         }
+        jsonString = StringEscapeUtils.unescapeHtml4(jsonString);
         JsonParser parser = new JsonParser();
         JsonElement el = parser.parse(jsonString);
         JsonArray jsonArray = null;

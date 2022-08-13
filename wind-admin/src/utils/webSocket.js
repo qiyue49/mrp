@@ -3,12 +3,18 @@ import store from '@/store'
 var webSocket
 
 export function webSocketConnect(onMessage) {
-  console.log('process.env.VUE_APP_BASE_API', process.env.VUE_APP_BASE_API)
+  // console.log('process.env.VUE_APP_BASE_API', process.env.VUE_APP_BASE_API)
   webSocket = new WebSocket(('ws://' + process.env.VUE_APP_BASE_API + '/json/web/server/' + store.getters.info.id).replace('//', '/'))
-  initWebSocket(onMessage)
+  initWebSocket(onOpen, onMessage)
 }
 
-export function initWebSocket(onMessage) {
+export function webSocketConnectWithCallback(onOpen, onMessage) {
+  // console.log('process.env.VUE_APP_BASE_API', process.env.VUE_APP_BASE_API)
+  webSocket = new WebSocket(('ws://' + process.env.VUE_APP_BASE_API + '/json/web/server/' + store.getters.info.id).replace('//', '/'))
+  initWebSocket(onOpen, onMessage)
+}
+
+export function initWebSocket(onOpen, onMessage) {
   webSocket.onerror = onError // 通讯异常
   webSocket.onopen = onOpen // 连接成功
   webSocket.onclose = onClose // 连接关闭时回调

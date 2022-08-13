@@ -12,7 +12,7 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class SysConfig extends DataEntity<String> {
 
-    @TableId(value = "id", type = IdType.ASSIGN_UUID)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
     @TableField(value = "name")
