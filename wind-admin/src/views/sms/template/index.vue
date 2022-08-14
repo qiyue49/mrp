@@ -9,8 +9,8 @@
         <span>模版编码:</span>
         <el-input v-model="listQuery.code" style="width: 200px;" placeholder="请输入模版编码" @keyup.enter.native="handleFilter" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-permission="['sms:template:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
     </div>
 
     <el-table

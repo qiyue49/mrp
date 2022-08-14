@@ -43,7 +43,7 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public void addAccessToken(String accessToken, Principal principal) {
         CacheUtils.setCacheObject(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.SECONDS);
-        CacheUtils.put(ACCESS_TOKEN_KEY, accessToken);
+        CacheUtils.addCacheSet(ACCESS_TOKEN_KEY, accessToken);
         CacheUtils.expire(ACCESS_TOKEN_KEY, getExpireIn());//设置过期时间
 
     }
@@ -97,19 +97,17 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void revokeToken(String accessToken) {
-        CacheUtils.getCacheObject(ACCESS_TOKEN_PRE + accessToken);
-        CacheUtils.put(ACCESS_TOKEN_KEY, accessToken);
+        CacheUtils.deleteCacheObject(ACCESS_TOKEN_PRE + accessToken);
+        CacheUtils.removeCacheSet(ACCESS_TOKEN_KEY, accessToken);
     }
 
     @Override
     public boolean checkClientId(String clientId) {
-        //return   appFeign.checkClientId(clientId);
         return Boolean.TRUE;
     }
 
     @Override
     public boolean checkClientSecret(String clientSecret) {
-        //return appFeign.checkClientSecret(clientSecret);
         return Boolean.TRUE;
     }
 

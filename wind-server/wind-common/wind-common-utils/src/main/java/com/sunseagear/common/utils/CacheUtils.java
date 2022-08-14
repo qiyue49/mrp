@@ -33,6 +33,15 @@ public class CacheUtils {
     }
 
     /**
+     * 删除基本的对象，Integer、String、实体类等
+     *
+     * @param key   缓存的键值
+     */
+    public static void deleteCacheObject(final String key) {
+        redisTemplate.delete(key);
+    }
+
+    /**
      * 缓存基本的对象，Integer、String、实体类等
      *
      * @param key      缓存的键值
@@ -43,6 +52,27 @@ public class CacheUtils {
     public static <T> void setCacheObject(final String key, final T value, final Integer timeout, final TimeUnit timeUnit) {
         redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
     }
+
+
+    /**
+     * 缓存基本的对象到数据集，Integer、String、实体类等
+     *
+     * @param key      缓存的键值
+     * @param value    缓存的值
+     */
+    public static <T> void addCacheSet(final String key, final T value) {
+        redisTemplate.opsForSet().add(key, value);
+    }
+
+    /**
+     * 从数据集删除基本的对象，Integer、String、实体类等
+     *
+     * @param key      缓存的键值
+     */
+    public static void removeCacheSet(final String key, String value) {
+        redisTemplate.opsForSet().remove(key, value);
+    }
+
 
     /**
      * 设置有效时间，默认单位为秒
