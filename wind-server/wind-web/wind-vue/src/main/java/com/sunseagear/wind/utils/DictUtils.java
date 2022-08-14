@@ -25,7 +25,6 @@ import java.util.Map;
  */
 public class DictUtils {
 
-    public static String DICT_CACHE_KEY = "DICT_CACHE_KEY";
     protected final static String DICT_CACHE_NAME = "sys_dict";
 
     public static Map<String, List<Dict>> getDict() {
@@ -59,10 +58,10 @@ public class DictUtils {
 
     public static List<Dict> getDictList(String code) {
         //数据字典
-        if (CacheUtils.get(DICT_CACHE_NAME, DICT_CACHE_KEY) == null) {
+        if (CacheUtils.getCacheMap(DICT_CACHE_NAME) == null) {
             initDict();
         }
-        Map<String, List<Dict>> dictMap = (Map<String, List<Dict>>) CacheUtils.get(DICT_CACHE_NAME, DICT_CACHE_KEY);
+        Map<String, List<Dict>> dictMap = CacheUtils.getCacheMap(DICT_CACHE_NAME);
         List<Dict> dictList = dictMap.get(code);
         if (dictList == null) {
             dictList = new ArrayList<Dict>();
@@ -76,7 +75,6 @@ public class DictUtils {
      * @param dictMap
      */
     public static void putDict(Map<String, List<Dict>> dictMap) {
-        // CacheUtils.put(DICT_CACHE_NAME, DICT_CACHE_KEY, dictMap);
         CacheUtils.setCacheMap(DICT_CACHE_NAME, dictMap);
     }
 
@@ -117,7 +115,7 @@ public class DictUtils {
      * 清除换成
      */
     public static void clear() {
-        CacheUtils.remove(DICT_CACHE_NAME, DICT_CACHE_KEY);
+        CacheUtils.clear(DICT_CACHE_NAME);
     }
 
     /**

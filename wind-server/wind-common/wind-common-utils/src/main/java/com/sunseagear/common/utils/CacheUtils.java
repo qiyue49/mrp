@@ -22,6 +22,10 @@ public class CacheUtils {
     private static RedisTemplate redisTemplate;
     private static final String SYS_CACHE = "sys_cache";
 
+    static {
+        redisTemplate = SpringContextHolder.getBean("redisTemplate");
+    }
+
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -221,9 +225,6 @@ public class CacheUtils {
      * @return
      */
     public static BoundHashOperations getCache(String cacheName) {
-        if (redisTemplate == null) {
-            redisTemplate = SpringContextHolder.getBean("redisTemplate");
-        }
         return redisTemplate.boundHashOps(cacheName);
     }
 
