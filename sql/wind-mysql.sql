@@ -76,7 +76,7 @@ CREATE TABLE `oss_attachment` (
   `upload_time` datetime NOT NULL COMMENT '上传时间',
   `upload_ip` varchar(30) NOT NULL COMMENT '上传的ID',
   `file_extension` varchar(10) NOT NULL COMMENT '文件扩展名',
-  `file_path` varchar(200) NOT NULL COMMENT '文件路径',
+  `file_path` text NOT NULL COMMENT '文件路径',
   `file_size` int(10) NOT NULL DEFAULT '0' COMMENT '文件大小',
   `content_type` varchar(100) DEFAULT NULL,
   `status` varchar(1) NOT NULL DEFAULT '0' COMMENT '状态',
