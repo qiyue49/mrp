@@ -21,7 +21,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: './',
+  publicPath: process.env.VUE_APP_ENV === 'tomcat' ? './' : '/',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -31,19 +31,27 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: {
+      // http代理
+      [process.env.VUE_APP_BASE_API]: {
+        target: `http://localhost:8082`,
+        // secure: false, // 如果是https接口，需要配置这个参数为true
+        changeOrigin: true, // 如果接口跨域，需要进行这个参数配置为true
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      },
+      // websocket 代理
+      [process.env.VUE_APP_BASE_WEBSOCKET]: {
+        target: 'ws://localhost:8082',
+        ws: true, // 开启ws, 如果是http代理此处可以不用设置
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_WEBSOCKET]: ''
+        }
+      }
     }
-    // proxy: {
-    //   // change xxx-api/login => mock/login
-    //   // detail: https://cli.vuejs.org/config/#devserver-proxy
-    //   [process.env.VUE_APP_BASE_API]: {
-    //     target: `http://127.0.0.1:${port}/mock`,
-    //     changeOrigin: true,
-    //     pathRewrite: {
-    //       ['^' + process.env.VUE_APP_BASE_API]: ''
-    //     }
-    //   }
-    // },
-    // after: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

@@ -2,16 +2,31 @@ import store from '@/store'
 
 var webSocket
 
+function getURL() {
+  const userId = store.getters.info.id
+  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+  console.log('process.env.VUE_APP_BASE_WEBSOCKET', process.env.VUE_APP_BASE_WEBSOCKET)
+  console.log('process.env.VUE_APP_ENV', process.env.VUE_APP_ENV)
+
+  if (process.env.VUE_APP_ENV === 'proxy') {
+    return `ws://${location.host}${process.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
+  }
+  if (process.env.VUE_APP_ENV === 'tomcat') {
+    return `${process.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
+  }
+  if (process.env.VUE_APP_ENV === 'nginx') {
+    return `ws://${location.host}${process.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
+  }
+}
 export function webSocketConnect(onMessage) {
-  // console.log('process.env.VUE_APP_BASE_API', process.env.VUE_APP_BASE_API)
-  webSocket = new WebSocket(('ws://' + process.env.VUE_APP_BASE_API + '/json/web/server/' + store.getters.info.id).replace('//', '/'))
+  console.log('getURL', getURL())
+  webSocket = new WebSocket(getURL())
   initWebSocket(onOpen, onMessage)
 }
 
-export function webSocketConnectWithCallback(onOpen, onMessage) {
-  // console.log('process.env.VUE_APP_BASE_API', process.env.VUE_APP_BASE_API)
-  webSocket = new WebSocket(('ws://' + process.env.VUE_APP_BASE_API + '/json/web/server/' + store.getters.info.id).replace('//', '/'))
-  initWebSocket(onOpen, onMessage)
+export function webSocketConnectWithCallback(onOpenCallBack, onMessage) {
+  webSocket = new WebSocket(getURL())
+  initWebSocket(onOpenCallBack, onMessage)
 }
 
 export function initWebSocket(onOpen, onMessage) {
@@ -19,7 +34,6 @@ export function initWebSocket(onOpen, onMessage) {
   webSocket.onopen = onOpen // 连接成功
   webSocket.onclose = onClose // 连接关闭时回调
   webSocket.onmessage = (event) => {
-    console.log('onMessage', event)
     onMessage(event)
   } // 收到消息时回调
 }

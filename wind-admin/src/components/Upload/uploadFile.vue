@@ -63,7 +63,7 @@ export default {
   },
   data() {
     return {
-      uploadImageUrl: 'http://' + process.env.VUE_APP_BASE_API + '/oss/attachment/upload',
+      uploadImageUrl: process.env.VUE_APP_BASE_API + '/oss/attachment/upload',
       uploadData: { 'base_path': this.basePath },
       myHeaders: { access_token: getToken() },
       imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],

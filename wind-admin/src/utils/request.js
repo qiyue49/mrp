@@ -11,7 +11,7 @@ axios.defaults.transformRequest = [function(data) {
 }]
 // create an axios instance
 const service = axios.create({
-  baseURL: 'http://' + process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: process.env.VUE_APP_BASE_API,
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 60000 // request timeout
 })

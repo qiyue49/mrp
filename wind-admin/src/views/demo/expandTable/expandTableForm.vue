@@ -62,7 +62,6 @@ export default {
         createBy: undefined,
         remark: ''
       },
-      uploadUrl: 'http://' + process.env.VUE_APP_BASE_API + '/oss/attachment/upload?dir=test',
       textMap: {
         update: '编辑',
         create: '新建'
@@ -73,22 +72,6 @@ export default {
     }
   },
   methods: {
-    handleUploadSuccess(res, file) {
-      console.log(res)
-      if (res.code === 0) {
-        this.temp.image = res.data
-      } else {
-        this.$message.error(res.msg)
-      }
-    },
-    beforeUpload(file) {
-      this.$refs.uploader.action = this.uploadUrl
-      const isLt2M = file.size / 1024 < 300
-      if (!isLt2M) {
-        this.$message.error('上传图片大小不能超过 300KB!')
-      }
-      return isLt2M
-    },
     getList() {
       this.$emit('refreshList')
     },

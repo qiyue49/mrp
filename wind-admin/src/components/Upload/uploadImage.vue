@@ -56,7 +56,7 @@ export default {
       imageList: [],
       resultUrl: undefined,
       myHeaders: { access_token: getToken() },
-      uploadImageUrl: 'http://' + process.env.VUE_APP_BASE_API + '/oss/attachment/upload',
+      uploadImageUrl: process.env.VUE_APP_BASE_API + '/oss/attachment/upload',
       uploadData: { 'base_path': this.basePath }
     }
   },
