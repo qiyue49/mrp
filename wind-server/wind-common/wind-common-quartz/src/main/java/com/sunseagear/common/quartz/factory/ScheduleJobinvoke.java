@@ -3,7 +3,7 @@ package com.sunseagear.common.quartz.factory;
 import com.sunseagear.common.quartz.data.ScheduleJob;
 import com.sunseagear.common.quartz.exception.QuartzException;
 import com.sunseagear.common.utils.SpringContextHolder;
-import org.apache.commons.lang.StringUtils;
+import com.sunseagear.common.utils.StringUtils;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.InvocationTargetException;
