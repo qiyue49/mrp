@@ -4,27 +4,27 @@ package com.sunseagear.common.utils.entity;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 
-public class PageResult<T extends Page> extends JsonResult<T> {
+public class PageResult<T extends Page> extends JsonResult {
 
     private long total;
     private long current;
 
 
     public PageResult(T data) {
-        super(data);
+        super(data.getRecords());
         this.total = data.getTotal();
         this.current = data.getCurrent();
     }
 
     public PageResult(boolean success, String message, T data) {
-        super(success, message, data);
+        super(success, message, data.getRecords());
         this.total = data.getTotal();
         this.current = data.getCurrent();
 
     }
 
     public PageResult(boolean success, int statusCode, String message, T data) {
-        super(success, statusCode, message, data);
+        super(success, statusCode, message, data.getRecords());
         this.total = data.getTotal();
         this.current = data.getCurrent();
 
