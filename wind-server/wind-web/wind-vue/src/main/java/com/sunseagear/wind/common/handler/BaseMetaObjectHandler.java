@@ -86,14 +86,12 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         // 更新用户
-        Object updateBy = getFieldValByName(UPDATE_BY, metaObject);
-        if (updateBy == null) {
+        if (metaObject.hasSetter(UPDATE_BY)) {
             setFieldValByName(UPDATE_BY, UserUtils.getUser().getId(), metaObject);
         }
 
-        // 更新用户
-        Object updateDate = getFieldValByName(UPDATE_DATE, metaObject);
-        if (updateDate == null) {
+        // 更新时间
+        if (metaObject.hasGetter(UPDATE_DATE)) {
             setFieldValByName(UPDATE_DATE, new Date(), metaObject);
         }
     }
