@@ -1,12 +1,12 @@
 <template>
   <div>
     <template v-for="item in menu">
-      <app-link v-if="isExternalUrl(item.path) && !item.children && !item.hidden" :key="item.id" :to="item.path">
+      <a v-if="isExternalUrl(item.path) && !item.children && !item.hidden" :key="item.id" :href="item.path" target="_blank" rel="noopener">
         <el-menu-item index="">
           <i :class="item.meta.icon"></i>
           <span slot="title">{{ item.meta.title }}</span>
         </el-menu-item>
-      </app-link>
+      </a>
 
       <!-- 最后一级菜单 -->
       <el-menu-item v-else-if="!item.children && !item.hidden" :key="item.id" :index="item.path">
@@ -31,12 +31,10 @@
 </template>
 
 <script>
-import AppLink from './Link'
 import { isExternal } from '@/utils/validate'
 
 export default {
   name: 'SidebarItem',
-  components: { AppLink },
   props: {
     menu: {
       type: Array,

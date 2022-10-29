@@ -5,6 +5,7 @@ import store from '../index'
 const _import = require('@/router/_import_vue')
 import Layout from '@/layout'
 import { isNull } from '../../utils'
+import { isExternal } from '@/utils/validate'
 
 export function filterAsyncRoutes(routes) {
   var res = []
@@ -17,6 +18,9 @@ export function filterAsyncRoutes(routes) {
         console.log('tmp', tmp)
         return res
       }
+      if (isExternal(tmp.path)) {
+        return
+      }
       const attr = tmp.path.split('?')
       const query = []
       if (attr.length > 1) {
@@ -27,7 +31,6 @@ export function filterAsyncRoutes(routes) {
         })
       }
       const item = {
-        path: tmp.path,
         component: Layout,
         // meta: { title: tmp.meta.title, affix: tmp.meta.affix },
         children: [
@@ -41,7 +44,6 @@ export function filterAsyncRoutes(routes) {
 
       const component = tmp.component
       try {
-        // tmp.name = tmp.path
         if (component) {
           item.children[0].component = _import(component)
         } else {

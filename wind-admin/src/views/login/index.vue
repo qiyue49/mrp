@@ -20,7 +20,7 @@ export default {
   },
   created() {
     this.index = this.getRandomArbitrary(0, 4)
-    console.log('index', this.index)
+    // console.log('index', this.index)
   },
   methods: {
     getRandomArbitrary(min, max) {
