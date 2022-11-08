@@ -32,11 +32,12 @@ export function filterAsyncRoutes(routes) {
       }
       const item = {
         component: Layout,
+        path: '/',
         // meta: { title: tmp.meta.title, affix: tmp.meta.affix },
         children: [
           {
-            path: '/',
-            name: tmp.path,
+            path: tmp.path,
+            name: tmp.name,
             meta: { title: tmp.meta.title, affix: tmp.meta.affix, query: query }
           }
         ]
