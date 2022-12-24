@@ -30,6 +30,7 @@ router.beforeEach(async(to, from, next) => {
         store.dispatch('user/getInfo').then(res => { // 拉取user_info
           // 加载数据字典
           store.dispatch('dict/GetDicts')
+          // 获取系统配置
           store.dispatch('sysConfig/getConfig')
           // 获取路由
           if (store.getters.fetchRoutes.length === 0) { // 判断是否获取路由

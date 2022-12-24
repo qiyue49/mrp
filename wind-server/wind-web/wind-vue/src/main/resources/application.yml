@@ -89,6 +89,7 @@ logging:
 
 #shiro
 shiro:
+  # 接口过滤，过滤的接口不需要进行shiro权限验证
   filter-chain-definitions: /json/oss/**=anon;/json/**=anon;/jcaptcha*=anon;/sso/oauth2/revoke_token=authc;/sso/oauth2/**=anon;/**=authc
 
 #beetl配置
@@ -107,7 +108,9 @@ oss:
   #最大文件大小 50M
   max_size: 52428800
   #是否需要按照日期存放文件
-  needDatePath: true
+  needDatePath: false
+  #是否保留原有文件名
+  originalName: true
 
 #短信配置
 sms:
