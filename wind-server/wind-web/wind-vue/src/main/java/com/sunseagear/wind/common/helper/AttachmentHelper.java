@@ -7,10 +7,10 @@ import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.ArrayUtils;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.StringUtils;
+import com.sunseagear.common.utils.UserUtils;
+import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
-import com.sunseagear.wind.modules.sys.entity.User;
-import com.sunseagear.wind.utils.JWTHelper;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -90,57 +88,11 @@ public class AttachmentHelper {
         attachment.setStatus("1");
         attachment.setUploadIp(IpUtils.getIpAddr(request));
         attachment.setUploadTime(new Date());
-        attachment.setUserId(getUser(request).getId());
+        Principal principal = UserUtils.getPrincipal();
+        attachment.setUserId(principal == null ? null : principal.getId());
         attachment.setBasePath(directory);
         attachmentService.insert(attachment);
         return attachment;
-    }
-
-    public Attachment remote(HttpServletRequest request, String remoteUrl) throws FileSizeLimitExceededException,
-            IOException, FileNameLengthLimitExceededException, InvalidExtensionException {
-        String basePath = request.getParameter("base_path");
-        String url = uploadHelper.remote(request, remoteUrl, basePath);
-        String filename = remoteUrl.substring(remoteUrl.lastIndexOf('/') + 1);
-        URL remoteUri = new URL(remoteUrl);
-        HttpURLConnection conn = (HttpURLConnection) remoteUri.openConnection();
-        conn.setConnectTimeout(10 * 1000);
-        long size = Integer.parseInt(conn.getHeaderField("Content-Length"));
-        String contentType = conn.getHeaderField("Content-Type");
-        String realFileName = StringUtils.getFileNameNoEx(filename);
-        String fileExtension = StringUtils.getExtensionName(filename);
-        // 保存上传的信息
-        Attachment attachment = new Attachment();
-        attachment.setFileExtension(fileExtension);
-        attachment.setFileName(realFileName);
-        attachment.setFilePath(url);
-        attachment.setFileSize(size);
-        attachment.setStatus("1");
-        attachment.setUploadIp(IpUtils.getIpAddr(request));
-        attachment.setUploadTime(new Date());
-        attachment.setContentType(contentType);
-        attachment.setUserId(getUser(request).getId());
-        attachment.setBasePath(basePath);
-        attachmentService.insert(attachment);
-        return attachment;
-    }
-
-    private User getUser(HttpServletRequest request) {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader("access_token");
-        if (StringUtils.isEmpty(token)) {
-            token = httpServletRequest.getParameter("access_token");
-        }
-        if (!StringUtils.isEmpty(token)) {
-            String id = JWTHelper.getClaims(token, "id");
-            String username = JWTHelper.getClaims(token, "username");
-            String realname = JWTHelper.getClaims(token, "realname");
-            User user = new User();
-            user.setId(id);
-            user.setUsername(username);
-            user.setRealname(realname);
-            return user;
-        }
-        return new User();
     }
 
 }

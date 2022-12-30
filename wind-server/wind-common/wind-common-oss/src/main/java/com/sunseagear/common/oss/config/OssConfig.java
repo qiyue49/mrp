@@ -1,5 +1,6 @@
 package com.sunseagear.common.oss.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @description: OSS配置 * @date: 2018/4/26 9:43
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
+@Data
 @ConfigurationProperties(prefix = "oss")
 public class OssConfig {
 
@@ -24,65 +26,9 @@ public class OssConfig {
     long maxSize = 52428800;
     //是否需要按照日期存放文件
     boolean needDatePath = false;
-    ;
+    boolean originalName = false;
 
     private AliyunConfig aliyun;
 
     private LocalConfig local;
-
-    public AliyunConfig getAliyun() {
-        return aliyun;
-    }
-
-    public void setAliyun(AliyunConfig aliyun) {
-        this.aliyun = aliyun;
-    }
-
-    public LocalConfig getLocal() {
-        return local;
-    }
-
-    public void setLocal(LocalConfig local) {
-        this.local = local;
-    }
-
-    public String getClientType() {
-        return clientType;
-    }
-
-    public void setClientType(String clientType) {
-        this.clientType = clientType;
-    }
-
-    public String getBaseDir() {
-        return baseDir;
-    }
-
-    public void setBaseDir(String baseDir) {
-        this.baseDir = baseDir;
-    }
-
-    public String getAllowedExtension() {
-        return allowedExtension;
-    }
-
-    public void setAllowedExtension(String allowedExtension) {
-        this.allowedExtension = allowedExtension;
-    }
-
-    public long getMaxSize() {
-        return maxSize;
-    }
-
-    public void setMaxSize(long maxSize) {
-        this.maxSize = maxSize;
-    }
-
-    public boolean isNeedDatePath() {
-        return needDatePath;
-    }
-
-    public void setNeedDatePath(boolean needDatePath) {
-        this.needDatePath = needDatePath;
-    }
 }

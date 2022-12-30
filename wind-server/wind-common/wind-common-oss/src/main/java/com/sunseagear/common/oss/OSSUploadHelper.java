@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.util.Date;
 
 /**
@@ -44,6 +43,7 @@ public class OSSUploadHelper {
     public static final long DEFAULT_MAX_SIZE = 52428800;
     private long maxSize = DEFAULT_MAX_SIZE;
     private boolean needDatePath = false;
+    private boolean originalName = false;
     //允许扩展名
     public static final String[] DEFAULT_ALLOWED_EXTENSION = {
             // 图片
@@ -78,6 +78,7 @@ public class OSSUploadHelper {
         maxSize = ossConfig.getMaxSize();
         ossBaseDir = ossConfig.getBaseDir();
         needDatePath = ossConfig.isNeedDatePath();
+        originalName = ossConfig.isOriginalName();
         String extension = ossConfig.getAllowedExtension();
         allowedExtension = extension.split(",");
         clientType = ossConfig.getClientType();
@@ -154,94 +155,6 @@ public class OSSUploadHelper {
 
 
     /**
-     * 以默认配置进行文件上传
-     *
-     * @param request   当前请求
-     * @param remoteUrl 上传的文件
-     *                  添加出错信息
-     * @return
-     * @throws IOException
-     * @throws FileNameLengthLimitExceededException
-     * @throws InvalidExtensionException
-     * @throws FileSizeLimitExceededException
-     */
-    public String remote(HttpServletRequest request, String remoteUrl, String baseDir)
-            throws FileSizeLimitExceededException, InvalidExtensionException, FileNameLengthLimitExceededException,
-            IOException {
-        return remote(request, remoteUrl, baseDir, allowedExtension);
-    }
-
-    /**
-     * 以默认配置进行文件上传
-     *
-     * @param request          当前请求
-     * @param remoteUrl        上传的文件
-     *                         添加出错信息
-     * @param allowedExtension 允许上传的文件类型
-     * @return
-     * @throws IOException
-     * @throws FileNameLengthLimitExceededException
-     * @throws InvalidExtensionException
-     * @throws FileSizeLimitExceededException
-     */
-    public String remote(HttpServletRequest request, String remoteUrl, String baseDir, String[] allowedExtension)
-            throws FileSizeLimitExceededException, InvalidExtensionException, FileNameLengthLimitExceededException,
-            IOException {
-        return remote(request, remoteUrl, baseDir, allowedExtension, maxSize, true);
-    }
-
-    /**
-     * 文件上传
-     *
-     * @param request                   当前请求 从请求中提取 应用上下文根
-     * @param baseDir                   相对应用的基目录
-     * @param remoteUrl                 上传的文件
-     * @param allowedExtension          允许的文件类型 null 表示允许所有
-     * @param maxSize                   最大上传的大小 -1 表示不限制
-     * @param needDatePathAndRandomName 是否需要日期目录和随机文件名前缀
-     * @return 返回上传成功的文件名
-     * @throws InvalidExtensionException            如果MIME类型不允许
-     * @throws FileSizeLimitExceededException       如果超出最大大小
-     * @throws FileNameLengthLimitExceededException 文件名太长
-     * @throws IOException                          比如读写文件出错时
-     */
-    public String remote(HttpServletRequest request, String remoteUrl, String baseDir,
-                         String[] allowedExtension, long maxSize, boolean needDatePathAndRandomName)
-            throws InvalidExtensionException, FileSizeLimitExceededException, IOException,
-            FileNameLengthLimitExceededException {
-        URL url = new URL(remoteUrl);
-        assertAllowed(remoteUrl, allowedExtension, maxSize);
-        String filename = extractFilename(remoteUrl, baseDir, needDatePathAndRandomName);
-        filename = StringUtils.trimDiagonal(filename);
-        return ossClient.upload(url.openStream(), filename);
-    }
-
-    public String extractFilename(String remoteUrl, String baseDir, boolean needDatePathAndRandomName)
-            throws UnsupportedEncodingException {
-        //字符串处理
-        if (!StringUtils.isEmpty(this.ossBaseDir)) {
-            if (!StringUtils.isEmpty(baseDir)) {
-                baseDir = this.ossBaseDir + "/" + baseDir;
-            } else {
-                baseDir = this.ossBaseDir;
-            }
-        }
-        String filename = remoteUrl;
-        int slashIndex = filename.indexOf("/");
-        if (slashIndex >= 0) {
-            filename = filename.substring(slashIndex + 1);
-        }
-        if (needDatePathAndRandomName) {
-            filename = datePath() + "/" + System.currentTimeMillis() + "."
-                    + StringUtils.getExtensionName(filename);
-        }
-        if (!StringUtils.isEmpty(baseDir)) {
-            filename = baseDir + "/" + filename;
-        }
-        return filename;
-    }
-
-    /**
      * 是否允许文件上传
      *
      * @param remoteUrl        上传的文件
@@ -271,7 +184,7 @@ public class OSSUploadHelper {
         }
     }
 
-    public String extractFilename(MultipartFile file, String baseDir, boolean needDatePathAndRandomName)
+    public String extractFilename(MultipartFile file, String baseDir, boolean needDatePath)
             throws UnsupportedEncodingException {
         if (!StringUtils.isEmpty(this.ossBaseDir)) {
             if (!StringUtils.isEmpty(baseDir)) {
@@ -281,10 +194,11 @@ public class OSSUploadHelper {
             }
         }
         String filename = file.getOriginalFilename();
-        //文件名必须重新命名，以时间精确到毫秒命名
-        filename = DateUtils.long2DateTime(System.currentTimeMillis(), "yyyyMMddHHmmssSSS") + "."
-                + StringUtils.getExtensionName(filename);
-        if (needDatePathAndRandomName) {
+        if (!originalName){
+            filename = DateUtils.long2DateTime(System.currentTimeMillis(), "yyyyMMddHHmmssSSS") + "."
+                    + StringUtils.getExtensionName(filename);
+        }
+        if (needDatePath) {
             filename = datePath() + "/" + filename;
         }
         if (!StringUtils.isEmpty(baseDir)) {

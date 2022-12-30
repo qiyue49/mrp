@@ -19,13 +19,13 @@ export function removeToken() {
 const RefreshTokenKey = 'Admin-REFRESH_TOKEN'
 
 export function getRefreshToken() {
-  return useSession ? sessionStorage.getItem(RefreshTokenKey) : Cookies.get(TokenKey)
+  return useSession ? sessionStorage.getItem(RefreshTokenKey) : Cookies.get(RefreshTokenKey)
 }
 
 export function setRefreshToken(token) {
-  return useSession ? sessionStorage.setItem(RefreshTokenKey, token) : Cookies.set(TokenKey, token)
+  return useSession ? sessionStorage.setItem(RefreshTokenKey, token) : Cookies.set(RefreshTokenKey, token)
 }
 
 export function removeRefreshToken() {
-  return useSession ? sessionStorage.removeItem(RefreshTokenKey) : Cookies.remove(TokenKey)
+  return useSession ? sessionStorage.removeItem(RefreshTokenKey) : Cookies.remove(RefreshTokenKey)
 }
