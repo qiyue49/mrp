@@ -32,7 +32,7 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         authorizationInfo.setRoles(UserUtils.getRoleStringList());
-        authorizationInfo.setStringPermissions(UserUtils.getPermissionsList());
+        authorizationInfo.setStringPermissions(UserUtils.getPermissionSet());
         return authorizationInfo;
     }
 
