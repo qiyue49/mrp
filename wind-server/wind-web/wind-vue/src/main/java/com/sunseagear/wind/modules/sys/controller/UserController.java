@@ -130,6 +130,7 @@ public class UserController extends BaseBeanController<User> {
         userService.insertOrUpdate(entity);
         //保存之后
         afterSave(entity, request);
+        UserUtils.update(entity.getId());
         return Response.ok("更新成功");
     }
 
@@ -293,6 +294,7 @@ public class UserController extends BaseBeanController<User> {
         // 验证错误
         BeanUtils.copyProperties(user, oldUser);
         userService.insertOrUpdate(oldUser);
+        UserUtils.update(userId);
         return Response.ok("更新成功");
     }
 
