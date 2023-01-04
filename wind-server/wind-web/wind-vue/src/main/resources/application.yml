@@ -37,6 +37,7 @@ spring:
     #    Oracle
     #    driver-class-name: oracle.jdbc.driver.OracleDriver
     type: com.alibaba.druid.pool.DruidDataSource   #这里是配置druid连接池，以下都是druid的配置信息
+    #以下配置参见Dbconfig类
     filters: config,stat,wall,slf4j
     maxActive: 20
     initialSize: 1
@@ -62,26 +63,31 @@ mybatis-plus:
   mapper-locations: classpath*:com/sunseagear/wind/modules/**/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
   type-aliases-package: com.sunseagear.wind.modules.*.entity
-  #typeEnumsPackage: com.baomidou.springboot.entity.enums
   global-config:
     db-config:
       #主键类型 com.baomidou.mybatisplus.annotation.IdType";
       id-type: ASSIGN_ID
       #字段策略 com.baomidou.mybatisplus.annotation.FieldStrategy"
-      select-strategy: NOT_EMPTY
+      where-strategy: NOT_EMPTY
       insert-strategy: NOT_EMPTY
       update-strategy: IGNORED
       #逻辑删除配置（下面3个配置）
-      logic-delete-value: 0
-      logic-not-delete-value: 1
+      #删除值
+      logic-delete-value: 1
+      #不删除值
+      logic-not-delete-value: 0
+      # 打开此选项，全局逻辑删除
+      logic-delete-field: del_flag
   configuration:
     jdbc-type-for-null: 'null'
     #数据库大写下划线转换
     map-underscore-to-camel-case: true
     cache-enabled: false
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl #开启sql日志
+    #开启sql日志
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
   configuration-properties:
-    dbType: mysql #设置全局属性用于控制数据库的类型
+    #设置全局属性用于控制数据库的类型
+    dbType: mysql
 
 #  logging
 logging:

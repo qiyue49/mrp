@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.2</version>
+        <version>2.7.7</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -21,7 +21,7 @@
         <artifactId.root>wind-server</artifactId.root>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mybatis-plus-boot-starter.version>3.5.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.3</mybatis-plus-boot-starter.version>
         <java.version>1.8</java.version>
         <shiro.version>1.7.0</shiro.version>
         <bitwalker.version>1.21</bitwalker.version>

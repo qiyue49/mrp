@@ -31,8 +31,8 @@
         SELECT
         <include refid="Base_Column_List"/>
         FROM sys_role r
-        LEFT JOIN sys_user_role ur on r.id=ur.role_id
-        WHERE ur.user_id= #{userId}
+        LEFT JOIN sys_user_role a on r.id=a.role_id
+        WHERE a.user_id= #{userId}
     </select>
 
 
