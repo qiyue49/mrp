@@ -16,10 +16,6 @@ import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.modules.sys.service.impl.MenuServiceImpl;
 import com.sunseagear.wind.modules.sys.service.impl.RoleServiceImpl;
 import com.sunseagear.wind.modules.sys.service.impl.UserServiceImpl;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.UnavailableSecurityManagerException;
-import org.apache.shiro.session.InvalidSessionException;
-import org.apache.shiro.subject.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,32 +60,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         User user = new User();
         user.setDefault();
         return user;
-    }
-
-    /**
-     * 获取授权主要对象
-     */
-    public static Subject getSubject() {
-        return SecurityUtils.getSubject();
-    }
-
-    /**
-     * 获取当前登录者对象
-     */
-    public static Principal getPrincipal() {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            Principal principal = (Principal) subject.getPrincipal();
-            if (principal != null) {
-                return principal;
-            }
-            // subject.logout();
-        } catch (UnavailableSecurityManagerException e) {
-
-        } catch (InvalidSessionException e) {
-
-        }
-        return null;
     }
 
     /**
@@ -173,7 +143,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      * 获取权限列表
      * @return
      */
-    public static Set<String> getPermissionsList() {
+    public static Set<String> getPermissionSet() {
         List<String> permissionList = UserUtils.getPermissionList();
         Set<String> permissionsList = Sets.newConcurrentHashSet();
         for (String permission : permissionList) {
@@ -252,8 +222,10 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         if (user == null) {
             return;
         }
+        clearCache(user);
         CacheUtils.setCacheObject(USER_CACHE_ID + user.getId(), user);
         CacheUtils.setCacheObject(USER_CACHE_USER_NAME + user.getUsername(), user);
+        getRoleList();
     }
 
     /**
