@@ -76,7 +76,7 @@ mybatis-plus:
       logic-delete-value: 1
       #不删除值
       logic-not-delete-value: 0
-      # 打开此选项，全局逻辑删除
+      # 逻辑删除字段
       logic-delete-field: del_flag
   configuration:
     jdbc-type-for-null: 'null'

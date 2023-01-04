@@ -62,8 +62,6 @@ public class UserController extends BaseBeanController<User> {
 
     @Autowired
     private IRoleService roleService;
-    @Autowired
-    private IOrganizationService organizationService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
@@ -127,7 +125,7 @@ public class UserController extends BaseBeanController<User> {
         if (userService.selectCount(new QueryWrapper<User>().ne("id", entity.getId()).eq("username", entity.getUsername())) > 0) {
             return Response.failJson("账号重复");
         }
-        userService.insertOrUpdate(entity);
+        userService.update(entity);
         //保存之后
         afterSave(entity, request);
         return Response.ok("更新成功");
@@ -166,25 +164,6 @@ public class UserController extends BaseBeanController<User> {
     public String detail(@PathVariable("id") String id) {
         User user = userService.selectById(id);
         return Response.successJson(user);
-    }
-
-    @PostMapping(value = "{id}/avatar")
-    @Log(logType = LogType.OTHER, title = "修改头像")
-    @RequiresPermissions("sys:user:avatar")
-    public String avatar(User user, HttpServletRequest request, HttpServletResponse response) {
-        try {
-            User oldUser = userService.selectById(user.getId());
-            BeanUtils.copyProperties(user, oldUser);
-            userService.insertOrUpdate(oldUser);
-            String currentUserId = UserUtils.getUser().getId();
-            if (currentUserId.equals(user.getId())) {
-                UserUtils.clearCurrentUserCache();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Response.error("头像修改失败");
-        }
-        return Response.ok("头像修改成功");
     }
 
     public void afterSave(User entity, HttpServletRequest request) {
@@ -237,31 +216,6 @@ public class UserController extends BaseBeanController<User> {
         return Response.toJson(response, "导出成功");
     }
 
-    @PostMapping(value = "validate")
-    public ValidResponse validate(DuplicateValid duplicateValid, HttpServletRequest request) {
-        ValidResponse validResponse = new ValidResponse();
-        Boolean valid = Boolean.FALSE;
-        try {
-            QueryWrapper<User> entityWrapper = new QueryWrapper<>();
-            valid = userService.doValid(duplicateValid, entityWrapper);
-            if (valid) {
-                validResponse.setStatus("y");
-                validResponse.setInfo("验证通过!");
-            } else {
-                validResponse.setStatus("n");
-                if (!StringUtils.isEmpty(duplicateValid.getErrorMsg())) {
-                    validResponse.setInfo(duplicateValid.getErrorMsg());
-                } else {
-                    validResponse.setInfo("当前信息重复!");
-                }
-            }
-        } catch (Exception e) {
-            validResponse.setStatus("n");
-            validResponse.setInfo("验证异常，请检查字段是否正确!");
-        }
-        return validResponse;
-    }
-
     /**
      * 获取用户信息
      *
@@ -293,6 +247,7 @@ public class UserController extends BaseBeanController<User> {
         // 验证错误
         BeanUtils.copyProperties(user, oldUser);
         userService.insertOrUpdate(oldUser);
+        UserUtils.update(userId);
         return Response.ok("更新成功");
     }
 

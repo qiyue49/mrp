@@ -88,8 +88,8 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     }
 
     public boolean deleteBatchIds(Collection<? extends Serializable> idList) {
-        for (Object id : idList) {
-            this.deleteById((Serializable) id);
+        for (Serializable id : idList) {
+            this.deleteById(id);
         }
         return true;
     }
@@ -118,19 +118,10 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     }
 
     @Override
-    public boolean insertOrUpdate(User user) {
-        //账号重复
+    public boolean update(User user) {
         if (selectCount(new QueryWrapper<User>().ne("id", user.getId()).eq("username", user.getUsername())) > 0) {
             throw new RuntimeException("账号重复");
         }
-        if (!StringUtils.isEmpty(user.getId())){
-            UserUtils.update(user.getId());
-        }
-        return super.insertOrUpdate(user);
-    }
-
-    @Override
-    public boolean update(User user) {
         if (!StringUtils.isEmpty(user.getId())){
             UserUtils.update(user.getId());
         }
