@@ -2,7 +2,8 @@
 SQLyog Professional v12.09 (64 bit)
 MySQL - 5.7.35-log : Database - wind
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -255,7 +256,7 @@ CREATE TABLE `sys_login_log` (
   `browser` varchar(50) DEFAULT '' COMMENT '浏览器类型',
   `os` varchar(50) DEFAULT '' COMMENT '操作系统',
   `status` char(2) DEFAULT '0' COMMENT '登录状态（0成功 1失败）',
-  `msg` varchar(255) DEFAULT '' COMMENT '提示消息',
+  `msg` longtext COMMENT '提示消息',
   `login_time` datetime DEFAULT NULL COMMENT '访问时间',
   `tenant_id` varchar(64) NOT NULL DEFAULT '00000000' COMMENT '租户ID',
   PRIMARY KEY (`id`)
