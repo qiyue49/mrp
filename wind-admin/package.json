@@ -1,19 +1,13 @@
 {
   "name": "wind-admin",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "wind-admin based on element-vue-admin",
   "author": "sunseagear",
   "license": "MIT",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
-    "build:tomcat": "vue-cli-service build --mode tomcat",
-    "preview": "node build/index.js --preview",
-    "lint": "eslint --ext .js,.vue src",
-    "test:unit": "jest --clearCache && vue-cli-service test:unit",
-    "test:ci": "npm run lint && npm run test:unit",
-    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
-    "new": "plop"
+    "build:tomcat": "vue-cli-service build --mode tomcat"
   },
   "husky": {
     "hooks": {
