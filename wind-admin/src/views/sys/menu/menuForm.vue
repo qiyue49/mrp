@@ -133,6 +133,12 @@ export default {
         permission: [{ required: true, message: '权限必填', trigger: 'change' }],
         sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
       },
+      rules4: {
+        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
+        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
+        path: [{ required: true, message: '前端路径必填', trigger: 'change' }],
+        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+      },
       ruleList: [],
       treeProps: {
         value: 'id',
@@ -153,6 +159,9 @@ export default {
   },
   computed: {
     rules() {
+      if (this.externalLink === '1') {
+        return this.rules4
+      }
       return this.ruleList[parseInt(this.temp.type) - 1]
     }
   },

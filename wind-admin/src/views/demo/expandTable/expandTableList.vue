@@ -16,7 +16,7 @@
       style="width: 100%;">
       <el-table-column type="expand">
         <template #default="props">
-          <el-form label-position="left" inline class="table-expand">
+          <el-form label-position="left" inline class="table-expand" label-width="120px" style="width: 90%; margin-left:50px;">
             <el-form-item label="商品名称">
               <span>{{ props.row.name }}</span>
             </el-form-item>
