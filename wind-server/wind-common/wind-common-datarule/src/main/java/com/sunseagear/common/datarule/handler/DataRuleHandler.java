@@ -4,7 +4,7 @@ import com.sunseagear.common.datarule.model.DataRuleModel;
 import com.sunseagear.common.datarule.model.RoleDataRuleModel;
 import com.sunseagear.common.datarule.model.TreeEntityModel;
 import com.sunseagear.common.datarule.model.UserModel;
-import com.sunseagear.common.utils.MapBeanUtil;
+import com.sunseagear.common.utils.BeanUtils;
 import com.sunseagear.common.utils.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -140,7 +140,7 @@ public class DataRuleHandler {
     public void refreshUser(String id) {
         UserModel userModel = jdbcTemplate.queryForObject("select * from sys_user where id = ?", new Object[]{id}, new BeanPropertyRowMapper<>(UserModel.class));
         try {
-            Map<String, Object> map = MapBeanUtil.convertBean(userModel);
+            Map<String, Object> map = BeanUtils.convertBean(userModel);
             userModelHashMap.put(id, map);
         } catch (IntrospectionException e) {
             e.printStackTrace();

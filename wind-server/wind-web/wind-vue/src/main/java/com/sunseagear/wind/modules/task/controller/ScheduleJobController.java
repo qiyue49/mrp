@@ -1,17 +1,15 @@
 package com.sunseagear.wind.modules.task.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import com.sunseagear.common.utils.BeanUtils;
-import com.sunseagear.common.utils.ObjectUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.task.entity.ScheduleJob;
 import com.sunseagear.wind.modules.task.service.IScheduleJobService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.quartz.CronExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;

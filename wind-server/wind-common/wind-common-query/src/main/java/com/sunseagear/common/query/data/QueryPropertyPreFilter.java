@@ -1,7 +1,7 @@
 package com.sunseagear.common.query.data;
 
 import com.alibaba.fastjson.serializer.SerializeFilter;
-import com.sunseagear.common.utils.ComplexPropertyPreFilter;
+import com.sunseagear.common.query.utils.ComplexPropertyPreFilter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;

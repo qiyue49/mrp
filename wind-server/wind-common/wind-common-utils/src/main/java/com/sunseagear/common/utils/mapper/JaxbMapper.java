@@ -1,8 +1,8 @@
 package com.sunseagear.common.utils.mapper;
 
-import com.sunseagear.common.utils.Exceptions;
+import com.sunseagear.common.utils.ExceptionUtils;
 import com.sunseagear.common.utils.FileUtils;
-import com.sunseagear.common.utils.Reflections;
+import com.sunseagear.common.utils.ReflectionUtils;
 import com.sunseagear.common.utils.StringUtils;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.util.Assert;
@@ -31,7 +31,7 @@ public class JaxbMapper {
      * Java Object->Xml without encoding.
      */
     public static String toXml(Object root) {
-        Class clazz = Reflections.getUserClass(root);
+        Class clazz = ReflectionUtils.getUserClass(root);
         return toXml(root, clazz, null);
     }
 
@@ -39,7 +39,7 @@ public class JaxbMapper {
      * Java Object->Xml with encoding.
      */
     public static String toXml(Object root, String encoding) {
-        Class clazz = Reflections.getUserClass(root);
+        Class clazz = ReflectionUtils.getUserClass(root);
         return toXml(root, clazz, encoding);
     }
 
@@ -52,7 +52,7 @@ public class JaxbMapper {
             createMarshaller(clazz, encoding).marshal(root, writer);
             return writer.toString();
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -79,7 +79,7 @@ public class JaxbMapper {
 
             return writer.toString();
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -94,7 +94,7 @@ public class JaxbMapper {
             StreamSource xml = new StreamSource(xmlLocation);
             return (T) createUnmarshaller(clazz).unmarshal(xml);
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -104,7 +104,7 @@ public class JaxbMapper {
             StringReader reader = new StringReader(xml);
             return (T) createUnmarshaller(clazz).unmarshal(reader);
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -125,7 +125,7 @@ public class JaxbMapper {
 
             return marshaller;
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 
@@ -137,7 +137,7 @@ public class JaxbMapper {
             JAXBContext jaxbContext = getJaxbContext(clazz);
             return jaxbContext.createUnmarshaller();
         } catch (JAXBException e) {
-            throw Exceptions.unchecked(e);
+            throw ExceptionUtils.unchecked(e);
         }
     }
 

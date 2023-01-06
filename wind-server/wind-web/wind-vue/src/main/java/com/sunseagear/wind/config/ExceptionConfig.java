@@ -1,7 +1,7 @@
 package com.sunseagear.wind.config;
 
 import com.sunseagear.common.http.Response;
-import com.sunseagear.common.utils.Exceptions;
+import com.sunseagear.common.utils.ExceptionUtils;
 import org.apache.shiro.ShiroException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +59,7 @@ public class ExceptionConfig {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Object globalException(HttpServletRequest request, Throwable ex) {
-        logger.error(Exceptions.getStackTraceAsString(ex));
+        logger.error(ExceptionUtils.getStackTraceAsString(ex));
         return Response.error(getStatus(request).value(), ex.getMessage());
     }
 

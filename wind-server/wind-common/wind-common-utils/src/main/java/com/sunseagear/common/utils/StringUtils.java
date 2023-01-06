@@ -1,10 +1,7 @@
 package com.sunseagear.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.text.StringEscapeUtils;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -69,33 +66,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return true;
     }
 
-    public static void printJson(HttpServletResponse response, Object content) {
-        try {
-            //response.reset();
-            response.setContentType("application/json");
-            //response.setHeader("Cache-Control", "no-store");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter pw = response.getWriter();
-            String json = JSONObject.toJSONString(content);
-            pw.print(json);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void printJson(HttpServletResponse response, String content) {
-        try {
-            //response.reset();
-            response.setContentType("application/json");
-            //response.setHeader("Cache-Control", "no-store");
-            response.setCharacterEncoding("UTF-8");
-            PrintWriter pw = response.getWriter();
-            pw.write(content);
-            pw.flush();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * 判断是否为数字
@@ -406,8 +376,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             if (!StringUtils.isEmpty(formaterValues)) {
                 formaterValues += ";";
             }
-            String labelValue = Reflections.getFieldValue(data, label) + "";
-            String valueValue = Reflections.getFieldValue(data, value) + "";
+            String labelValue = ReflectionUtils.getFieldValue(data, label) + "";
+            String valueValue = ReflectionUtils.getFieldValue(data, value) + "";
             String formaterValue = valueValue + ":" + labelValue;
             formaterValues += formaterValue;
         }

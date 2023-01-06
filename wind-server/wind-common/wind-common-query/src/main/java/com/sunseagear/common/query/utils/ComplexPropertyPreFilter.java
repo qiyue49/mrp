@@ -1,4 +1,4 @@
-package com.sunseagear.common.utils;
+package com.sunseagear.common.query.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.JSONSerializer;

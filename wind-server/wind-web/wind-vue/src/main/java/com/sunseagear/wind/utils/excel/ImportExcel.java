@@ -5,8 +5,7 @@ package com.sunseagear.wind.utils.excel;
 
 import com.google.common.collect.Lists;
 import com.sunseagear.common.utils.DateUtils;
-import com.sunseagear.common.utils.Reflections;
-import com.sunseagear.wind.modules.sys.entity.Organization;
+import com.sunseagear.common.utils.ReflectionUtils;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.utils.DictUtils;
 import com.sunseagear.wind.utils.UserUtils;
@@ -362,13 +361,13 @@ public class ImportExcel {
 					}
 					// set entity value
 					if (os[1] instanceof Field){
-						Reflections.invokeSetter(e, ((Field)os[1]).getName(), val);
+						ReflectionUtils.invokeSetter(e, ((Field)os[1]).getName(), val);
 					}else if (os[1] instanceof Method){
 						String mthodName = ((Method)os[1]).getName();
 						if ("get".equals(mthodName.substring(0, 3))){
 							mthodName = "set"+StringUtils.substringAfter(mthodName, "get");
 						}
-						Reflections.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
+						ReflectionUtils.invokeMethod(e, mthodName, new Class[] {valType}, new Object[] {val});
 					}
 				}else{
 					val = null;

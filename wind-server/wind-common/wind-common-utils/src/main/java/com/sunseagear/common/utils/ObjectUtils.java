@@ -80,8 +80,8 @@ public final class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
      */
     public static boolean isEquals(Object object1, Object object2, String[] fields) {
         for (String fieldName : fields) {
-            Object object1FieldVal = Reflections.getFieldValue(object1, fieldName);
-            Object object2FieldVal = Reflections.getFieldValue(object2, fieldName);
+            Object object1FieldVal = ReflectionUtils.getFieldValue(object1, fieldName);
+            Object object2FieldVal = ReflectionUtils.getFieldValue(object2, fieldName);
             if (object1FieldVal == null || !object1FieldVal.equals(object2FieldVal)) {
                 return Boolean.FALSE;
             }

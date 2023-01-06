@@ -5,7 +5,7 @@ package com.sunseagear.wind.utils.excel;
 
 import com.google.common.collect.Lists;
 import com.sunseagear.common.utils.DateUtils;
-import com.sunseagear.common.utils.Reflections;
+import com.sunseagear.common.utils.ReflectionUtils;
 import com.sunseagear.wind.utils.DictUtils;
 import com.sunseagear.wind.utils.excel.annotation.ExcelField;
 import org.apache.commons.lang3.StringUtils;
@@ -385,12 +385,12 @@ public class ExportExcel {
                 // Get entity value
                 try {
                     if (StringUtils.isNotBlank(ef.value())) {
-                        val = Reflections.invokeGetter(e, ef.value());
+                        val = ReflectionUtils.invokeGetter(e, ef.value());
                     } else {
                         if (os[1] instanceof Field) {
-                            val = Reflections.invokeGetter(e, ((Field) os[1]).getName());
+                            val = ReflectionUtils.invokeGetter(e, ((Field) os[1]).getName());
                         } else if (os[1] instanceof Method) {
-                            val = Reflections.invokeMethod(e, ((Method) os[1]).getName(), new Class[]{}, new Object[]{});
+                            val = ReflectionUtils.invokeMethod(e, ((Method) os[1]).getName(), new Class[]{}, new Object[]{});
                         }
                     }
                     // If is dict, get dict label

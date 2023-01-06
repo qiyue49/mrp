@@ -1,5 +1,6 @@
 package com.sunseagear.common.utils;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 

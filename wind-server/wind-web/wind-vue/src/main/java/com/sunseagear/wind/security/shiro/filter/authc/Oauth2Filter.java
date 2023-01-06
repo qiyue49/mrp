@@ -5,6 +5,7 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.utils.MessageUtils;
+import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.utils.JWTHelper;
@@ -83,7 +84,7 @@ public class Oauth2Filter extends AccessControlFilter {
         } catch (Exception e) {
             responseResult = Response.error(ResponseError.UNKNOWN_ERROR, e.getMessage());
         }
-        StringUtils.printJson((HttpServletResponse) response, responseResult);
+        ServletUtils.printJson((HttpServletResponse) response, responseResult);
         return Boolean.FALSE;
     }
 
