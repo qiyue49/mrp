@@ -24,9 +24,14 @@
         biz_newscontent a LEFT JOIN biz_newsType b
         ON a.newsType_id = b.id
         <if test="ew.sqlSegment != '' and ew.sqlSegment != null">
-            <where>
+            <if test="!ew.isEmptyOfWhere">
+                <where>
+                    ${ew.sqlSegment}
+                </where>
+            </if>
+            <if test="ew.isEmptyOfWhere">
                 ${ew.sqlSegment}
-            </where>
+            </if>
         </if>
     </select>
 
@@ -45,9 +50,14 @@
         LEFT JOIN biz_newsType b ON a.newsType_id = b.id
         LEFT JOIN biz_news_collection c ON a.id = c.news_id
         <if test="ew.sqlSegment != '' and ew.sqlSegment != null">
-            <where>
+            <if test="!ew.isEmptyOfWhere">
+                <where>
+                    ${ew.sqlSegment}
+                </where>
+            </if>
+            <if test="ew.isEmptyOfWhere">
                 ${ew.sqlSegment}
-            </where>
+            </if>
         </if>
 
     </select>

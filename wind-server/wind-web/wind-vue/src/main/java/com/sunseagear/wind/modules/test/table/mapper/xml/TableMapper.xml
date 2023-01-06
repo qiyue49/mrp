@@ -18,7 +18,14 @@
         from test_table a
         <include refid="tableJoins"/>
         <if test="ew.sqlSegment != '' and ew.sqlSegment != null">
+            <if test="!ew.isEmptyOfWhere">
+                <where>
+                    ${ew.sqlSegment}
+                </where>
+            </if>
+            <if test="ew.isEmptyOfWhere">
                 ${ew.sqlSegment}
+            </if>
         </if>
     </select>
 </mapper>
