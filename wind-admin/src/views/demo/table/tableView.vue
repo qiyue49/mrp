@@ -1,6 +1,9 @@
 <template>
   <div style="margin: 50px">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="temp.title" />
+      </el-form-item>
       <el-form-item label="类型" prop="type">
         <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
           <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
@@ -8,9 +11,6 @@
       </el-form-item>
       <el-form-item label="发布时间" prop="publishDate">
         <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
-      </el-form-item>
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="temp.title" />
       </el-form-item>
       <el-form-item label="作者" prop="author">
         <system-user v-model="temp.author" />
@@ -29,7 +29,7 @@
       </el-form-item>
     </el-form>
     <div>
-      <el-button @click="dialogFormVisible = false">
+      <el-button @click="getList">
         {{ $t('table.cancel') }}
       </el-button>
       <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
@@ -80,9 +80,8 @@ export default {
         update: '编辑',
         create: '新建'
       },
-      loading: false,
-      dialogFormVisible: false,
-      dialogStatus: ''
+      dialogStatus: undefined,
+      loading: false
     }
   },
   created() {
@@ -96,7 +95,10 @@ export default {
       setTagsViewTitle(this.$route, '综合表单-' + this.title)
     },
     getList() {
-      // this.$emit('refreshList')
+      const view = { path: this.$route.path }
+      this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+        this.$router.go(-1)
+      })
     },
     resetTemp() {
       this.loading = false
@@ -114,7 +116,6 @@ export default {
     handleCreate() {
       this.resetTemp()
       this.dialogStatus = 'create'
-      this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
@@ -127,7 +128,6 @@ export default {
             this.loading = false
             if (response.data.code === 0) {
               this.getList()
-              this.dialogFormVisible = false
               this.$message.success(response.data.msg)
             } else {
               this.$message.error(response.data.msg)
@@ -139,7 +139,6 @@ export default {
     handleUpdate(id) {
       this.resetTemp()
       this.dialogStatus = 'update'
-      this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
@@ -147,7 +146,6 @@ export default {
         if (response.data.code === 0) {
           this.temp = response.data.data
         } else {
-          this.dialogFormVisible = false
           this.$message.error(response.data.msg)
         }
       })
@@ -160,7 +158,6 @@ export default {
           updateTable(tempData).then(response => {
             this.loading = false
             if (response.data.code === 0) {
-              this.dialogFormVisible = false
               this.getList()
               this.$message.success(response.data.msg)
             } else {

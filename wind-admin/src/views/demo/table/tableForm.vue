@@ -1,6 +1,9 @@
 <template>
   <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" destroy-on-close>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
+      <el-form-item label="标题" prop="title">
+        <el-input v-model="temp.title" />
+      </el-form-item>
       <el-form-item label="类型" prop="type">
         <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
           <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
@@ -8,9 +11,6 @@
       </el-form-item>
       <el-form-item label="发布时间" prop="publishDate">
         <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
-      </el-form-item>
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="temp.title" />
       </el-form-item>
       <el-form-item label="作者" prop="author">
         <system-user v-model="temp.author" />

@@ -36,28 +36,28 @@
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="作者" width="110px" align="center">
+      <el-table-column label="作者" min-width="110px" align="center">
         <template #default="scope">
           <span>{{ scope.row.user.realname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" width="150px" align="center">
+      <el-table-column label="创建时间" min-width="150px" align="center">
         <template #default="scope">
           <span>{{ scope.row.publishDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="重要程度" width="80px">
+      <el-table-column label="重要程度" min-width="80px">
         <template #default="scope">
           <svg-icon v-for="n in +scope.row.level" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
-      <el-table-column label="阅读数" align="center" width="95">
+      <el-table-column label="阅读数" align="center" min-width="95">
         <template #default="{row}">
           <span v-if="row.readings" class="link-type" @click="handleFetchPv(row.readings)">{{ row.readings }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
-      <el-table-column label="状态" class-name="status-col" width="100">
+      <el-table-column label="状态" class-name="status-col" min-width="100">
         <template #default="{row}">
           <el-tag :type="row.status | statusFilter">
             {{ row.status }}
