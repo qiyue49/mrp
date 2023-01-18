@@ -118,7 +118,6 @@ module.exports = {
       }
     ],
     'new-parens': 2,
-    eqeqeq: 'off',
     'no-array-constructor': 2,
     'no-caller': 2,
     'no-console': 'off',
@@ -247,7 +246,6 @@ module.exports = {
       }
     ],
     'space-before-blocks': [2, 'always'],
-    'space-before-function-paren': [2, 'never'],
     'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [
