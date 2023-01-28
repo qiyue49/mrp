@@ -4,7 +4,7 @@ import com.sunseagear.common.sms.config.SmsConfigProperties;
 import com.sunseagear.common.sms.data.SmsResult;
 import com.sunseagear.common.sms.exception.SmsException;
 import com.sunseagear.common.sms.utils.huyi.HuyiRestSDK;
-import com.sunseagear.common.utils.mapper.JsonMapper;
+import com.sunseagear.common.utils.JsonUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
@@ -74,7 +74,7 @@ public class HuyiSmsClient implements ISmsClient {
                 // 异常返回输出错误码和错误信息
                 smsResult = SmsResult.fail(result.get("msg") + "");
             }
-            smsResult.setReponseData(JsonMapper.toJsonString(result));
+            smsResult.setReponseData(JsonUtils.objectToJsonString(result));
         } catch (IllegalArgumentException e) {
             smsResult = SmsResult.fail("发送短信提交的参数不对");
         } catch (Exception e) {

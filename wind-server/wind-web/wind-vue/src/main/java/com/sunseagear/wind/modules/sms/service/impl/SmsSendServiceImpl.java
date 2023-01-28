@@ -2,6 +2,7 @@ package com.sunseagear.wind.modules.sms.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.sms.disruptor.SmsHelper;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.mapper.JsonMapper;
 import com.sunseagear.wind.modules.sms.entity.SmsSendLog;
 import com.sunseagear.wind.modules.sms.entity.SmsTemplate;
@@ -56,7 +57,7 @@ public class SmsSendServiceImpl implements ISmsSendService {
             smsSendLog.setMsg("发送成功");
             smsSendLog.setSendCode(code);
             smsSendLog.setResponseDate(new Date());
-            smsSendLog.setSendData(JsonMapper.toJsonString(datas));
+            smsSendLog.setSendData(JsonUtils.objectToJsonString(datas));
             smsSendLog.setStatus(SmsSendLog.SMS_SEND_STATUS_IN);
             smsSendLog.setTryNum(0);
             smsSendLog.setDelFlag("0");

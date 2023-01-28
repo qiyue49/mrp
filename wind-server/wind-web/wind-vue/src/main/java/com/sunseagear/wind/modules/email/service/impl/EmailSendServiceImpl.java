@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.sunseagear.common.email.disruptor.EmailHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.sms.exception.SmsException;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.mapper.JsonMapper;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.entity.EmailTemplate;
@@ -75,7 +76,7 @@ public class EmailSendServiceImpl implements IEmailSendService {
             emailSendLog.setMsg("发送成功");
             emailSendLog.setSendCode(code);
             emailSendLog.setResponseDate(new Date());
-            emailSendLog.setSendData(JsonMapper.toJsonString(datas));
+            emailSendLog.setSendData(JsonUtils.objectToJsonString(datas));
             emailSendLog.setStatus(EmailSendLog.EMAIL_SEND_STATUS_IN);
             emailSendLog.setTryNum(0);
             emailSendLog.setDelFlag("0");
