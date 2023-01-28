@@ -1,19 +1,18 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside"></div>
-    <sidebar class="sidebar-container" />
-    <div :class="{hasTagsView:needTagsView}" class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
-        <tags-view v-if="needTagsView" />
-      </div>
-      <app-main />
-    </div>
+  <div class="common-layout">
+    <el-container>
+      <el-aside width="200px">Aside</el-aside>
+      <el-container>
+        <el-header>Header</el-header>
+        <el-main>Main</el-main>
+        <el-footer>Footer</el-footer>
+      </el-container>
+    </el-container>
   </div>
 </template>
 
 <script>
-import { AppMain, Navbar, Sidebar, TagsView } from './components'
+// import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'pinia'
 import { appStore } from '@/stores/modules/app'
@@ -21,12 +20,12 @@ import { settingStore } from '@/stores/modules/settings'
 
 export default {
   name: 'Layout',
-  components: {
-    AppMain,
-    Navbar,
-    Sidebar,
-    TagsView
-  },
+  // components: {
+  //   AppMain,
+  //   Navbar,
+  //   Sidebar,
+  //   TagsView
+  // },
   mixins: [ResizeMixin],
   computed: {
     ...mapState(appStore, ['sidebar', 'device']),

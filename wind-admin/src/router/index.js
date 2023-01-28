@@ -1,11 +1,8 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
 import { getToken } from '@/utils/auth'
 import store from '@/stores'
 import { ElMessage } from 'element-plus'
-
-Vue.use(Router)
 
 export const constantMenus = [
   {
@@ -108,22 +105,17 @@ export const constantRoutes = [
       }
     ]
   },
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '/:path(.*)', redirect: '/404' }
 ]
 
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- */
-export const asyncRoutes = []
-
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+// Nginx打包路由模式可以使hash也可以是history，但是tomcat打包只能是hash
+const createFun = createWebHistory
+// const createFun = createWebHashHistory
+const router = createRouter({
+  history: import.meta.env.MODE === 'tomcat' ? createWebHashHistory(import.meta.env.BASE_URL) : createFun(import.meta.env.BASE_URL),
+  routes: constantRoutes,
+  scrollBehavior: () => ({ left: 0, top: 0 })
 })
-
-const router = createRouter()
 
 const whiteList = ['/login', '/auth-redirect', '/whiteList'] // no redirect whitelist
 
@@ -194,24 +186,6 @@ router.beforeEach(async(to, from, next) => {
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
-}
-
-// 防止路由重复点击报错
-const originalPush = Router.prototype.push
-const originalReplace = Router.prototype.replace
-// push
-Router.prototype.push = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) {
-    return originalPush.call(this, location, onResolve, onReject)
-  }
-  return originalPush.call(this, location).catch((err) => err)
-}
-// replace
-Router.prototype.replace = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) {
-    return originalReplace.call(this, location, onResolve, onReject)
-  }
-  return originalReplace.call(this, location).catch((err) => err)
 }
 
 export default router

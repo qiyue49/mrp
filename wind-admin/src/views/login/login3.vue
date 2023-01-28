@@ -18,8 +18,8 @@
                   <el-input
                     ref="username"
                     v-model="loginForm.username"
-                    prefix-icon="el-icon-user"
-                    :placeholder="$t('login.username')"
+                    prefix-icon="User"
+                    placeholder="请输入用户名"
                     name="username"
                     type="text"
                     tabindex="1"
@@ -34,15 +34,15 @@
                       :key="passwordType"
                       ref="password"
                       v-model="loginForm.password"
-                      prefix-icon="el-icon-lock"
+                      prefix-icon="Lock"
                       :type="passwordType"
-                      :placeholder="$t('login.password')"
+                      placeholder="请输入密码"
                       name="password"
                       tabindex="2"
                       autocomplete="on"
-                      @keyup.native="checkCapslock"
+                      @keyup="checkCapslock"
                       @blur="capsTooltip = false"
-                      @keyup.enter.native="handleLogin"
+                      @keyup.enter="handleLogin"
                     />
                     <span class="show-pwd" @click="showPwd">
                       <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -64,7 +64,7 @@
                         tabindex="3" />
                     </el-col>
                     <el-col :span="10">
-                      <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click.native.prevent="makeCode" />
+                      <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -73,8 +73,8 @@
             </el-row>
           </el-form>
         </div>
-        <el-button :loading="loading" @click.native.prevent="handleLogin">
-          {{ $t('login.logIn') }}
+        <el-button :loading="loading" @click="handleLogin">
+          登录
         </el-button>
 
       </div>
@@ -82,15 +82,14 @@
   </div>
 </template>
 <script>
-import { configureWebpack } from '../../../vue.config'
-import { mapState } from 'pinia'
-import { Message } from 'element-ui'
+import { ElMessage } from 'element-plus'
 import Indentify from '@/components/Identify/identify'
 import { makeCode } from '@/utils'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
   name: 'Login3',
-  components: { Indentify },
+  components: { SvgIcon, Indentify },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -108,7 +107,7 @@ export default {
       }
     }
     return {
-      title: configureWebpack.name,
+      title: this.$store.settingStore.title,
       identifyCode: undefined,
       isLogin: false,
       errorTime: 0,
@@ -129,11 +128,6 @@ export default {
       redirect: undefined,
       otherQuery: {}
     }
-  },
-  computed: {
-    ...mapState({
-      token: state => state.user.token
-    })
   },
   watch: {
     $route: {
@@ -156,9 +150,6 @@ export default {
       this.$refs.password.focus()
     }
     this.makeCode()
-  },
-  destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
     makeCode() {
@@ -194,10 +185,10 @@ export default {
           this.$store.userStore.login(this.loginForm)
             .then((res) => {
               this.loading = false
-              if (!this.$store.getters.token) {
+              if (!this.$store.userStore.token) {
                 this.errorTime++
                 this.makeCode()
-                Message.error(res.data.msg)
+                ElMessage.error(res.data.msg)
                 return
               }
 
@@ -230,7 +221,7 @@ export default {
 .all {
   width: 100%;
   height: 100%;
-  background-image: url("~@/assets/img/login/login3/login3.png");
+  background-image: url("@/assets/img/login/login3/login3.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
@@ -298,7 +289,7 @@ export default {
         position: absolute;
         width: 98%;
         height: 57%;
-        background-image: url("~@/assets/img/login/login3/login3-1.png");
+        background-image: url("@/assets/img/login/login3/login3-1.png");
         background-size: 100% 100%;
         display: flex;
         justify-content: center;

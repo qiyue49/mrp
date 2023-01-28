@@ -1,4 +1,5 @@
-import { login as userLogin, getInfo as getUserInfo, logout as userLogout } from '@/api/sys/oauth2'
+import { login as userLogin, logout as userLogout } from '@/api/sys/oauth2'
+import { getInfo as getUserInfo } from '@/api/sys/user'
 import {
   getRefreshToken,
   getToken,

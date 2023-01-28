@@ -2,8 +2,9 @@
   <div>
     <el-row>
       <el-col :span="6">
-        <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-                 label-position="left">
+        <el-form
+          ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+          label-position="left">
 
           <div class="card">
             <p class="title">{{ title }}</p>
@@ -13,8 +14,8 @@
                 <el-input
                   ref="username"
                   v-model="loginForm.username"
-                  prefix-icon="el-icon-user"
-                  :placeholder="$t('login.username')"
+                  prefix-icon="User"
+                  placeholder="请输入用户名"
                   name="username"
                   type="text"
                   tabindex="1"
@@ -30,15 +31,15 @@
                     :key="passwordType"
                     ref="password"
                     v-model="loginForm.password"
-                    prefix-icon="el-icon-lock"
+                    prefix-icon="Lock"
                     :type="passwordType"
-                    :placeholder="$t('login.password')"
+                    placeholder="请输入密码"
                     name="password"
                     tabindex="2"
                     autocomplete="on"
-                    @keyup.native="checkCapslock"
+                    @keyup="checkCapslock"
                     @blur="capsTooltip = false"
-                    @keyup.enter.native="handleLogin"
+                    @keyup.enter="handleLogin"
                   />
                   <span class="show-pwd" @click="showPwd">
                     <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
@@ -63,15 +64,14 @@
                       tabindex="3" />
                   </el-col>
                   <el-col :span="6">
-                    <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click.native.prevent="makeCode" />
+                    <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
                   </el-col>
                 </el-row>
               </el-form-item>
             </div>
 
-            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                       @click.native.prevent="handleLogin">
-              {{ $t('login.logIn') }}
+            <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click="handleLogin">
+              登录
             </el-button>
 
           </div>
@@ -86,15 +86,14 @@
 </template>
 
 <script>
-import { configureWebpack } from '../../../vue.config'
-import { mapState } from 'pinia'
-import { Message } from 'element-ui'
+import { ElMessage } from 'element-plus'
 import Indentify from '@/components/Identify/identify'
 import { makeCode } from '@/utils'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
   name: 'Login1',
-  components: { Indentify },
+  components: { SvgIcon, Indentify },
   data() {
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
@@ -112,7 +111,7 @@ export default {
       }
     }
     return {
-      title: configureWebpack.name,
+      title: this.$store.settingStore.title,
       identifyCode: undefined,
       isLogin: false,
       errorTime: 0,
@@ -133,11 +132,6 @@ export default {
       redirect: undefined,
       otherQuery: {}
     }
-  },
-  computed: {
-    ...mapState({
-      token: state => state.user.token
-    })
   },
   watch: {
     $route: {
@@ -160,9 +154,6 @@ export default {
       this.$refs.password.focus()
     }
     this.makeCode()
-  },
-  destroyed() {
-    // window.removeEventListener('storage', this.afterQRScan)
   },
   methods: {
     makeCode() {
@@ -201,7 +192,7 @@ export default {
               if (!this.$store.userStore.token) {
                 this.errorTime++
                 this.makeCode()
-                Message.error(res.data.msg)
+                ElMessage.error(res.data.msg)
                 return
               }
 
@@ -232,12 +223,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app {
-  width: 75%;
+  width: 100%;
   height: 100vh;
   background-position: top center;
   background-size: 100% 100%;
   position: absolute;
-  background-image: url("~@/assets/img/login/login1/login1.png");
+  background-image: url("@/assets/img/login/login1/login1.png");
   justify-content: center;
   align-items: center;
 

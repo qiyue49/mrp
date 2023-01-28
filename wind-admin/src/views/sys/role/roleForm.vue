@@ -55,7 +55,7 @@ export default {
   data() {
     return {
       temp: {},
-      tenantId: this.$store.getters.info.id,
+      tenantId: this.$store.userStore.userInfo.id,
       loading: false,
       dialogFormVisible: false,
       dialogStatus: '',

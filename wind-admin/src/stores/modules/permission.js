@@ -6,8 +6,6 @@ import { isNull } from '@/utils'
 import { isExternal } from '@/utils/validate'
 import { defineStore } from 'pinia'
 
-const _import = require('@/router/_import_vue')
-
 export const permissionStore = defineStore('permission', () => {
   let routes = []
   let menus = []

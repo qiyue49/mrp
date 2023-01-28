@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       tableKey: 0,
-      tenantId: this.$store.getters.info.tenantId,
+      tenantId: this.$store.userStore.userInfo.tenantId,
       list: null,
       total: null,
       listLoading: true,
