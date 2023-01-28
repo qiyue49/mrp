@@ -25,7 +25,7 @@
 
 <script>
 import { deepClone } from '@/utils'
-import { mapState } from 'vuex'
+import { mapState } from 'pinia'
 import { isExternal } from '@/utils/validate'
 
 export default {
@@ -92,7 +92,7 @@ export default {
       } else if (!menu.hasChildren) {
         this.$router.push({ path: menu.path })
       } else {
-        this.$store.dispatch('permission/updateMenu', menu)
+        this.$store.permissionStore.updateMenu(menu)
       }
     },
     updateActiveIndex() {

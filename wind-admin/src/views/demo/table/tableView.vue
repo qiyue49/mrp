@@ -96,7 +96,7 @@ export default {
     },
     getList() {
       const view = { path: this.$route.path }
-      this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+      this.$store.tagsViewStore.delView(view).then(({ visitedViews }) => {
         this.$router.go(-1)
       })
     },

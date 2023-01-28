@@ -25,7 +25,7 @@ export default {
         return this.$store.state.settings.fullScreen
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
+        this.$store.settingStore.changeSetting({
           key: 'fullScreen',
           value: val
         })

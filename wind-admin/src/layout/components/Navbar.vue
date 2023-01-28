@@ -1,22 +1,15 @@
 <template>
   <div class="navbar">
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <breadcrumb v-if="!topMenu" id="breadcrumb-container" class="breadcrumb-container" />
-    <top-menu v-else class="topmenu-container" />
+    <top-menu v-if="topMenu" class="topmenu-container" />
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
-        <error-log class="errLog-container right-menu-item hover-effect" />
-
-        <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
         <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
-
-        <lang-select class="right-menu-item hover-effect" />
 
         <setting class="right-menu-item hover-effect" />
       </template>
@@ -52,39 +45,29 @@
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapState } from 'pinia'
 import Hamburger from '@/components/Hamburger'
-import Breadcrumb from '@/components/Breadcrumb'
-import ErrorLog from '@/components/ErrorLog'
-import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
-import LangSelect from '@/components/LangSelect'
 import Search from '@/components/HeaderSearch'
 import defaultAvatar from '@/assets/img/avatar.png'
 import Setting from './Settings'
 import TopMenu from '@/layout/components/TopMenu/topMenu'
+import { appStore } from '@/stores/modules/app'
+import { userStore } from '@/stores/modules/user'
+import { settingStore } from '@/stores/modules/settings'
 
 export default {
   components: {
     TopMenu,
     Setting,
     Hamburger,
-    Breadcrumb,
-    ErrorLog,
-    Screenfull,
     SizeSelect,
-    LangSelect,
     Search
   },
   computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar',
-      'device'
-    ]),
-    ...mapState({
-      topMenu: state => state.settings.topMenu
-    }),
+    ...mapState(appStore, ['sidebar', 'device']),
+    ...mapState(userStore, ['avatar']),
+    ...mapState(settingStore, ['topMenu']),
     avatarUrl() {
       if (this.avatar === undefined) {
         return defaultAvatar
@@ -94,10 +77,10 @@ export default {
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.$store.appStore.toggleSideBar()
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
+      await this.$store.userStore.logout()
       this.$router.push(`/login`)
     }
   }

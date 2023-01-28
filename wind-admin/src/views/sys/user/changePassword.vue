@@ -57,7 +57,7 @@ export default {
             this.loading = false
             if (response.data.code === 0) {
               this.$message.success(response.data.msg)
-              this.$store.dispatch('user/logout').then(() => {
+              this.$store.userStore.logout().then(() => {
                 location.reload()// In order to re-instantiate the vue-router object to avoid bugs
               })
             } else {

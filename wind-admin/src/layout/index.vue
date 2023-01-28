@@ -15,7 +15,9 @@
 <script>
 import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
-import { mapState } from 'vuex'
+import { mapState } from 'pinia'
+import { appStore } from '@/stores/modules/app'
+import { settingStore } from '@/stores/modules/settings'
 
 export default {
   name: 'Layout',
@@ -27,13 +29,8 @@ export default {
   },
   mixins: [ResizeMixin],
   computed: {
-    ...mapState({
-      sidebar: state => state.app.sidebar,
-      device: state => state.app.device,
-      showSettings: state => state.settings.showSettings,
-      needTagsView: state => state.settings.tagsView,
-      fixedHeader: state => state.settings.fixedHeader
-    }),
+    ...mapState(appStore, ['sidebar', 'device']),
+    ...mapState(settingStore, ['showSettings', 'needTagsView', 'fixedHeader']),
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
@@ -45,7 +42,7 @@ export default {
   },
   methods: {
     handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      this.$store.appStore.closeSideBar({ withoutAnimation: false })
     }
   }
 }
@@ -82,7 +79,7 @@ export default {
     top: 0;
     right: 0;
     z-index: 9;
-    width: calc(100% - #{$sideBarWidth});
+    width: calc(100% - 210px);
     transition: width 0.28s;
   }
 

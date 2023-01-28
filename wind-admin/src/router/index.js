@@ -1,37 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Layout from '@/layout/index.vue'
+import { getToken } from '@/utils/auth'
+import store from '@/stores'
+import { ElMessage } from 'element-plus'
 
 Vue.use(Router)
 
-/* Layout */
-import Layout from '@/layout'
-
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
-
-/**
- * constantRoutes
- * a base page that does not have permission requirements
- * all roles can be accessed
- */
 export const constantMenus = [
   {
     path: '/dashboard',
@@ -150,6 +125,71 @@ const createRouter = () => new Router({
 
 const router = createRouter()
 
+const whiteList = ['/login', '/auth-redirect', '/whiteList'] // no redirect whitelist
+
+router.beforeEach(async(to, from, next) => {
+  // set page title
+  document.title = to.meta.title
+
+  // determine whether the user has logged in
+  const hasToken = getToken()
+
+  if (hasToken && whiteList.indexOf(to.path) === -1) {
+    if (to.path === '/login') {
+      // if is logged in, redirect to the home page
+      // next({ path: '/' })
+    } else {
+      if (store.permissionStore.permissions.length === 0) { // 判断当前用户是否已拉取完user_info信息
+        store.userStore.getInfo().then(res => { // 拉取user_info
+          // 加载数据字典
+          store.dictStore.initDict()
+          // 获取系统配置
+          store.sysConfigStore.getConfig()
+          // 获取路由
+          if (store.permissionStore.fetchRoutes.length === 0) { // 判断是否获取路由
+            store.permissionStore.getRoutes().then(() => {
+              if (store.permissionStore.fetchRoutes.length === 0) {
+                ElMessage.error('你的账号权限存在问题')
+                next('/login') // 否则全部重定向到登录页
+                return
+              }
+              store.permissionStore.addRoutes.forEach(item => {
+                router.addRoute(item) // 动态添加可访问路由表
+              })
+              // 获取权限
+              store.permissionStore.getPermissions().then(() => { // 获取权限
+                if (store.permissionStore.permissions.length === 0) {
+                  ElMessage.error('你的账号权限存在问题')
+                  next('/login') // 否则全部重定向到登录页
+                } else {
+                  next('/dashboard')
+                }
+              })
+            })
+          }
+        }).catch(() => {
+          store.userStore.logout().then(() => {
+            ElMessage.error('你的账号权限存在问题')
+            next('/login') // 否则全部重定向到登录页
+          })
+        })
+      } else {
+        next()
+      }
+    }
+  } else {
+    /* has no token*/
+
+    if (whiteList.indexOf(to.path) !== -1) {
+      // in the free login whitelist, go directly
+      next()
+    } else {
+      // other pages that do not have permission to access are redirected to the login page.
+      next(`/login`)
+    }
+  }
+})
+
 // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
   const newRouter = createRouter()
@@ -161,12 +201,16 @@ const originalPush = Router.prototype.push
 const originalReplace = Router.prototype.replace
 // push
 Router.prototype.push = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) { return originalPush.call(this, location, onResolve, onReject) }
+  if (onResolve || onReject) {
+    return originalPush.call(this, location, onResolve, onReject)
+  }
   return originalPush.call(this, location).catch((err) => err)
 }
 // replace
 Router.prototype.replace = function push(location, onResolve, onReject) {
-  if (onResolve || onReject) { return originalReplace.call(this, location, onResolve, onReject) }
+  if (onResolve || onReject) {
+    return originalReplace.call(this, location, onResolve, onReject)
+  }
   return originalReplace.call(this, location).catch((err) => err)
 }
 

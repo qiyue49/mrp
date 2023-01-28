@@ -56,7 +56,7 @@ export default {
       listLoading: true,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize
+        limit: this.$store.dictStore.defaultPageSize
       }
     }
   },

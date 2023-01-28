@@ -79,9 +79,9 @@ export default {
         name: undefined,
         code: undefined,
         page: 1,
-        limit: this.$store.getters.defaultPageSize
+        limit: this.$store.dictStore.defaultPageSize
       },
-      pageArray: this.$store.getters.pageArray
+      pageArray: this.$store.dictStore.pageArray
     }
   },
   created() {

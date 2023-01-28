@@ -22,7 +22,6 @@
 // make search results more in line with expectations
 import Fuse from 'fuse.js'
 import path from 'path'
-import i18n from '@/lang'
 
 export default {
   name: 'HeaderSearch',
@@ -37,10 +36,7 @@ export default {
   },
   computed: {
     routes() {
-      return this.$store.getters.permission_routes
-    },
-    lang() {
-      return this.$store.getters.language
+      return this.$store.permissionStore.permission_routes
     }
   },
   watch: {

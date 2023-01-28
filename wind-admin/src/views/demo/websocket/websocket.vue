@@ -48,7 +48,7 @@ export default {
       this.message.code = 101001
       this.message.success = true
       this.message.message = ''
-      this.message.userId = this.$store.getters.info.id
+      this.message.userId = this.$store.userStore.userInfo.id
       this.message.data = this.temp
       this.loading = true
       webSocketSend(this.message)

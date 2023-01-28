@@ -13,10 +13,10 @@ export default {
   name: 'AppMain',
   computed: {
     cachedViews() {
-      return this.$store.state.tagsView.cachedViews
+      return this.$store.tagsViewStore.cachedViews
     },
     reload() {
-      return this.$store.state.tagsView.isReload
+      return this.$store.tagsViewStore.isReload
     },
     key() {
       return this.$route.path

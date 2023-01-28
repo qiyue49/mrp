@@ -1,9 +1,11 @@
-import { refreshToken } from '@/api/sys/oauth2'
-import { getToken, setToken, getRefreshToken } from '@/utils/auth'
-import { Message, MessageBox } from 'element-ui'
-import store from '@/store'
 import axios from 'axios'
 import qs from 'qs'
+import { refreshToken } from '@/api/sys/oauth2'
+import { getToken, getRefreshToken } from '@/utils/auth'
+
+import pinia from '@/stores'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { isNull } from './index'
 
 // 转换请求方式
 axios.defaults.transformRequest = [function(data) {
@@ -11,7 +13,7 @@ axios.defaults.transformRequest = [function(data) {
 }]
 // create an axios instance
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: import.meta.env.VITE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
   timeout: 60000 // request timeout
 })
@@ -20,9 +22,9 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // Do something before request is sent
-    if (store.getters.token) {
+    if (!isNull(pinia.userStore.userInfo)) {
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      config.headers['access_token'] = getToken()
+      config.headers.access_token = getToken()
     }
     return config
   },
@@ -50,24 +52,23 @@ service.interceptors.response.use(
         const refreshTokenData = getRefreshToken()
         const tokenResponse = await refreshToken(refreshTokenData)
         const data = tokenResponse.data
-        store.commit('user/SET_TOKEN', data.access_token)
-        setToken(tokenResponse.data.access_token)
-        var originalRequest = response.config
+        pinia.userStore.setToken(data.access_token)
+        const originalRequest = response.config
         originalRequest._retry = true
         // Do something before request is sent
-        if (store.getters.token) {
+        if (pinia.userStore.token) {
           // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-          originalRequest.headers['access_token'] = getToken()
+          originalRequest.headers.access_token = getToken()
         }
         return axios.request(originalRequest)
       } else if (res.code === 100008 || res.code === 100009) {
         // 请自行在引入 MessageBox
-        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+        ElMessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          store.dispatch('user/logout').then(() => {
+          pinia.userStore.logout().then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
         })
@@ -76,11 +77,7 @@ service.interceptors.response.use(
     return Promise.resolve(response)
   },
   error => {
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    ElMessage.error(error.message)
     return Promise.reject(error)
   }
 )

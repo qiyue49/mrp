@@ -90,10 +90,10 @@ export default {
       list: null,
       total: null,
       listLoading: true,
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: this.$store.dictStore.defaultPageSize,
         realname: undefined,
         username: undefined,
         loginIp: undefined,

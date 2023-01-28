@@ -1,67 +1,43 @@
-import Vue from 'vue'
-
-import Cookies from 'js-cookie'
-
-import 'normalize.css/normalize.css' // a modern alternative to CSS resets
-
-import Element from 'element-ui'
-import moment from 'moment'
-import './styles/element-variables.scss'
-import '@fortawesome/fontawesome-free/css/all.min.css'
-import '@/styles/index.scss' // global css
-
-import App from './App'
-import store from './store'
+import { createApp } from 'vue'
+import pinia from '@/stores'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import App from './App.vue'
 import router from './router'
 
-import i18n from './lang' // internationalization
-import './icons' // icon
-import './permission' // permission control
-import './utils/error-log' // error log
-import formValidate from './utils/formValidate' // 表单验证
-import { isNull } from './utils/index' // 判空
+import { isNull } from './utils'
+import formValidate from './utils/formValidate'
+import 'virtual:svg-icons-register'
+import '@/styles/index.scss'
 
-import * as filters from './filters' // global filters
+// 如果您正在使用CDN引入，请删除下面一行。
+import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 
-import CustomComponents from '@/components/Icons/index.js'
-import BaiduMap from 'vue-baidu-map'
-import fullscreen from 'vue-fullscreen'
-Vue.use(fullscreen)
+const app = createApp(App)
 
-// fontawesome图标
-Object.keys(CustomComponents).forEach(key => Vue.use(CustomComponents[key]))
+app.use(pinia)
+app.use(router)
+pinia.init()
+app.use(ElementPlus)
 
-Vue.use(BaiduMap, {
-  // ak 是在百度地图开发者平台申请的密钥 详见 http://lbsyun.baidu.com/apiconsole/key */
-  ak: ''
-})
-Vue.use(Element, {
-  size: Cookies.get('size') || 'medium', // set element-ui default size
-  i18n: (key, value) => i18n.t(key, value)
-})
-
-// 时间转化
-Vue.filter('dateformat', function(dataStr, pattern = 'YYYY-MM-DD HH:mm:ss') {
-  return moment(dataStr).format(pattern)
-})
-
-// register global utility filters
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
-// 定义字典全局方法
-Vue.prototype.dictList = function(code) {
-  return store.getters.dicts[code]
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  app.component(key, component)
 }
-Vue.prototype.formValidate = formValidate
 
-Vue.config.productionTip = false
-Vue.prototype.isNull = isNull
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
+pinia.dictStore.initDict().then(() => {
+  console.log('数据字典加载成功...')
 })
+
+// 定义字典全局方法
+app.config.globalProperties.dictList = function (code) {
+  return pinia.dictStore.dicts[code]
+}
+
+// 表单校验
+app.config.globalProperties.formValidate = formValidate
+// pinia
+app.config.globalProperties.$store = pinia
+// 判空函数
+app.config.globalProperties.isNull = isNull
+
+app.mount('#app')

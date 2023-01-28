@@ -151,10 +151,10 @@ export default {
       listLoading: true,
       templateList: undefined,
       template: {},
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: this.$store.dictStore.defaultPageSize,
         subject: undefined,
         email: undefined,
         status: undefined

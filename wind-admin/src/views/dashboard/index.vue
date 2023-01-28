@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'pinia'
 import adminDashboard from './admin'
+import { userStore } from '@/stores/modules/user'
 
 export default {
   name: 'Dashboard',
@@ -17,7 +18,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapState(userStore, [
       'roles'
     ])
   },

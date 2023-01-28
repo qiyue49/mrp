@@ -104,7 +104,7 @@
 import LangSelect from '@/components/LangSelect'
 import Indentify from '@/components/Identify/identify'
 import SocialSign from './components/SocialSignin'
-import { mapState } from 'vuex'
+import { mapState } from 'pinia'
 import { Message } from 'element-ui'
 import { configureWebpack } from '../../../vue.config'
 import { makeCode } from '@/utils'
@@ -213,7 +213,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store.userStore.login(this.loginForm)
             .then((res) => {
               this.loading = false
               if (!this.$store.getters.token) {

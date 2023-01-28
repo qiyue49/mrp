@@ -103,10 +103,10 @@ export default {
       total: 0,
       listLoading: true,
       name: undefined,
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize
+        limit: this.$store.dictStore.defaultPageSize
       },
       dialogFormVisible: false,
       selectCurentUserId: undefined

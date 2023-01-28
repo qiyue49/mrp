@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import UserCard from './components/UserCard'
 import Activity from './components/Activity'
 import Timeline from './components/Timeline'
@@ -45,24 +44,17 @@ export default {
       activeTab: 'activity'
     }
   },
-  computed: {
-    ...mapGetters([
-      'info',
-      'name',
-      'avatar',
-      'roles'
-    ])
-  },
   created() {
     this.getUser()
   },
   methods: {
     getUser() {
+      const userInfo = this.$store.userStore.userInfo
       this.user = {
-        name: this.name,
-        role: this.roles,
-        email: this.info.email,
-        avatar: this.avatar === undefined ? defaultAvatar : this.avatar
+        name: userInfo.realname,
+        role: this.$store.userStore.roles,
+        email: userInfo.email,
+        avatar: userInfo.avatar === undefined ? defaultAvatar : this.avatar
       }
     }
   }

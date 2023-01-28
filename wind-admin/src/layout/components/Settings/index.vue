@@ -1,7 +1,7 @@
 <template>
   <div>
     <svg-icon icon-class="setting" @click="click" />
-    <el-drawer :visible.sync="show" size="500">
+    <el-drawer v-model:visible="show" size="500">
       <div class="drawer-container">
         <h3 class="drawer-title">{{ $t('settings.title') }}</h3>
 
@@ -52,7 +52,7 @@ export default {
         return this.$store.state.settings.fixedHeader
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
+        this.$store.settingStore.changeSetting({
           key: 'fixedHeader',
           value: val
         })
@@ -63,11 +63,11 @@ export default {
         return this.$store.state.settings.topMenu
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
+        this.$store.settingStore.changeSetting({
           key: 'topMenu',
           value: val
         })
-        this.$store.dispatch('permission/toggleMenu')
+        this.$store.permissionStore.toggleMenu()
       }
     },
     tagsView: {
@@ -75,7 +75,7 @@ export default {
         return this.$store.state.settings.tagsView
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
+        this.$store.settingStore.changeSetting({
           key: 'tagsView',
           value: val
         })
@@ -86,7 +86,7 @@ export default {
         return this.$store.state.settings.sidebarLogo
       },
       set(val) {
-        this.$store.dispatch('settings/changeSetting', {
+        this.$store.settingStore.changeSetting({
           key: 'sidebarLogo',
           value: val
         })
@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     themeChange(val) {
-      this.$store.dispatch('settings/changeSetting', {
+      this.$store.settingStore.changeSetting({
         key: 'theme',
         value: val
       })

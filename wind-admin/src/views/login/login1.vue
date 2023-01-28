@@ -87,7 +87,7 @@
 
 <script>
 import { configureWebpack } from '../../../vue.config'
-import { mapState } from 'vuex'
+import { mapState } from 'pinia'
 import { Message } from 'element-ui'
 import Indentify from '@/components/Identify/identify'
 import { makeCode } from '@/utils'
@@ -195,10 +195,10 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
+          this.$store.userStore.login(this.loginForm)
             .then((res) => {
               this.loading = false
-              if (!this.$store.getters.token) {
+              if (!this.$store.userStore.token) {
                 this.errorTime++
                 this.makeCode()
                 Message.error(res.data.msg)

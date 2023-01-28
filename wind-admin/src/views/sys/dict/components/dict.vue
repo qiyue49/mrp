@@ -82,7 +82,7 @@
 import { fetchDictList, createDict, deleteDict, updateDict } from '@/api/sys/dict'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import store from '@/store'
+import store from '@/stores'
 
 export default {
   name: 'SysDictComponent',
@@ -96,10 +96,10 @@ export default {
       list: null,
       total: null,
       listLoading: false,
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: this.$store.dictStore.defaultPageSize,
         importance: undefined,
         title: undefined,
         type: undefined

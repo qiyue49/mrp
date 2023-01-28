@@ -66,10 +66,10 @@ export default {
       list: null,
       total: 0,
       listLoading: false,
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize
+        limit: this.$store.dictStore.defaultPageSize
       }
     }
   },

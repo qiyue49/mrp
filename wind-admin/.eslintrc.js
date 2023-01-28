@@ -1,30 +1,26 @@
+/* eslint-env node */
 module.exports = {
-  root: true,
-  parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
-  },
-
   env: {
     browser: true,
-    node: true,
-    es6: true
+    es2021: true
   },
-  extends: ['plugin:vue/recommended', 'eslint:recommended'],
-
-  // add your custom rules here
-  // it is base on https://github.com/vuejs/eslint-config-vue
+  extends: [
+    'standard',
+    'plugin:vue/vue3-recommended',
+    'eslint:recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  plugins: [
+    'vue'
+  ],
   rules: {
-    'vue/max-attributes-per-line': [
-      2,
-      {
-        singleline: 20,
-        multiline: {
-          max: 10,
-          allowFirstLine: true
-        }
-      }
-    ],
+    'vue/max-attributes-per-line': ['error', {
+      singleline: { max: 5 },
+      multiline: { max: 5 }
+    }],
     'vue/html-self-closing': [
       'error',
       {
@@ -38,11 +34,11 @@ module.exports = {
       }
     ],
     'space-before-function-paren': 0,
+    'vue/multi-word-component-names': 'off',
     'vue/html-closing-bracket-spacing': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'vue/singleline-html-element-content-newline': 'off',
     'vue/multiline-html-element-content-newline': 'off',
-    'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
     'arrow-spacing': [

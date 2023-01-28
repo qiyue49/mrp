@@ -130,7 +130,7 @@ export default {
             this.loading = false
             if (response.data.code === 0) {
               this.getList()
-              this.$store.dispatch('sysConfig/getConfig')
+              this.$store.sysConfigStore.getConfig()
               this.dialogFormVisible = false
               this.$message.success(response.data.msg)
             } else {
@@ -158,7 +158,7 @@ export default {
             if (response.data.code === 0) {
               this.dialogFormVisible = false
               this.getList()
-              this.$store.dispatch('sysConfig/getConfig')
+              this.$store.sysConfigStore.getConfig()
               this.$message.success(response.data.msg)
             } else {
               this.$message.error(response.data.msg)

@@ -20,18 +20,18 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'pinia'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
+import { permissionStore } from '@/stores/modules/permission'
+import { appStore } from '@/stores/modules/app'
 
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters([
-      'permission_menus',
-      'sidebar'
-    ]),
+    ...mapState(permissionStore, ['permission_menus']),
+    ...mapState(appStore, ['sidebar']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

@@ -14,7 +14,7 @@
     </p>
     <h3>白名单页面需要注意什么</h3>
     <p>因为白名单页面不需要登录就可以使用，所以白名单页面是没有加载任何系统数据的，例如数据字典。</p>
-    <p>如果需要加载字典，可以调用vuex的相关action。当然你也可以自己写网络请求。请参考init方法。</p>
+    <p>如果需要加载字典，可以调用pinia的相关action。当然你也可以自己写网络请求。请参考init方法。</p>
     <p>如果你的页面是需要开放给三方系统使用。并且需要获取用户信息，可以将用户标识符作为参数传入进来。请参考created。</p>
     <p>白名单页面同样可以作为一个普通页面展示，菜单和权限的配置方式和其他页面没区别。</p>
     <el-divider>
@@ -52,11 +52,11 @@ export default {
       this.token = this.$route.query.token
       if (!this.isNull(this.token)) {
         // 一定要设置完token才能发起网络请求，否则会被拒绝
-        this.$store.dispatch('user/setToken', this.token)
+        this.$store.userStore.setToken(this.token)
         // 加载字典
-        this.$store.dispatch('dict/GetDicts')
+        this.$store.dictStore.initDict()
         // 加载系统配置
-        this.$store.dispatch('sysConfig/getConfig')
+        this.$store.sysConfigStore.getConfig()
       }
     }
 

@@ -72,10 +72,10 @@ export default {
       list: null,
       total: null,
       listLoading: false,
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: this.$store.dictStore.defaultPageSize,
         title: undefined,
         type: undefined,
         carId: undefined

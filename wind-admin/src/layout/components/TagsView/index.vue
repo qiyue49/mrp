@@ -12,7 +12,7 @@
         @click.middle.native="closeSelectedTag(tag)"
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
-        {{ generateTitle(tag.meta.title) }}
+        {{ tag.meta.title }}
         <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"></span>
       </router-link>
     </scroll-pane>
@@ -34,8 +34,7 @@
 </template>
 
 <script>
-import ScrollPane from './ScrollPane'
-import { generateTitle } from '@/utils/i18n'
+import ScrollPane from './ScrollPane.vue'
 import path from 'path'
 
 export default {
@@ -51,10 +50,10 @@ export default {
   },
   computed: {
     visitedViews() {
-      return this.$store.state.tagsView.visitedViews
+      return this.$store.tagsViewStore.visitedViews
     },
     routes() {
-      return this.$store.state.permission.routes
+      return this.$store.permissionStore.routes
     }
   },
   watch: {
@@ -75,7 +74,6 @@ export default {
     this.addTags()
   },
   methods: {
-    generateTitle, // generateTitle by vue-i18n
     isActive(route) {
       return route.path === this.$route.path
     },
@@ -105,14 +103,14 @@ export default {
       affixTags.forEach(tag => {
         // Must have tag name
         if (tag.name) {
-          this.$store.dispatch('tagsView/addVisitedView', tag)
+          this.$store.tagsViewStore.addVisitedView(tag)
         }
       })
     },
     addTags() {
       const { name } = this.$route
       if (name) {
-        this.$store.dispatch('tagsView/addView', this.$route)
+        this.$store.tagsViewStore.addView(this.$route)
       }
       return false
     },
@@ -128,7 +126,7 @@ export default {
             this.$refs.scrollPane.moveToTarget(tag)
             // when query is different then update
             if (tag.to.fullPath !== this.$route.fullPath) {
-              this.$store.dispatch('tagsView/updateVisitedView', this.$route)
+              this.$store.tagsViewStore.updateVisitedView(this.$route)
             }
             break
           }
@@ -137,15 +135,15 @@ export default {
     },
     refreshSelectedTag(view) {
       // console.log('refreshSelectedTag', view)
-      this.$store.dispatch('tagsView/reload', false).then(() => {
+      this.$store.tagsViewStore.reload(false).then(() => {
         this.$nextTick(() => {
           // console.log('refreshSelectedTag')
-          this.$store.dispatch('tagsView/reload', true)
+          this.$store.tagsViewStore.reload(true)
         })
       })
     },
     closeSelectedTag(view) {
-      this.$store.dispatch('tagsView/delView', view).then(({ visitedViews }) => {
+      this.$store.tagsViewStore.delView(view).then(({ visitedViews }) => {
         if (this.isActive(view)) {
           this.toLastView(visitedViews, view)
         }
@@ -153,12 +151,12 @@ export default {
     },
     closeOthersTags() {
       this.$router.push(this.selectedTag)
-      this.$store.dispatch('tagsView/delOthersViews', this.selectedTag).then(() => {
+      this.$store.tagsViewStore.delOthersViews(this.selectedTag).then(() => {
         this.moveToCurrentTag()
       })
     },
     closeAllTags(view) {
-      this.$store.dispatch('tagsView/delAllViews').then(({ visitedViews }) => {
+      this.$store.tagsViewStore.delAllViews().then(({ visitedViews }) => {
         if (this.affixTags.some(tag => tag.path === view.path)) {
           return
         }

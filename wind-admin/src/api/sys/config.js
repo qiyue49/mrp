@@ -46,7 +46,7 @@ export function batchConfig(ids) {
   })
 }
 
-export function configList() {
+export function getUserConfigList() {
   return request({
     url: '/sys/config/config',
     method: 'get'

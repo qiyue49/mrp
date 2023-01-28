@@ -186,10 +186,10 @@ export default {
       listLoading: true,
       refreshTaskLoading: false,
       batchDeleteLoading: false,
-      pageArray: this.$store.getters.pageArray,
+      pageArray: this.$store.dictStore.pageArray,
       listQuery: {
         page: 1,
-        limit: this.$store.getters.defaultPageSize,
+        limit: this.$store.dictStore.defaultPageSize,
         importance: undefined,
         title: undefined,
         type: undefined

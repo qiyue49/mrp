@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import { configureWebpack } from '../../../../vue.config'
 import logo from '@/assets/img/logo.png'
 
 export default {
@@ -27,7 +26,7 @@ export default {
   },
   data() {
     return {
-      title: configureWebpack.name,
+      title: '1111',
       logo: logo
     }
   }
