@@ -132,40 +132,32 @@ router.beforeEach(async(to, from, next) => {
       // if is logged in, redirect to the home page
       // next({ path: '/' })
     } else {
-      if (store.permissionStore.permissions.length === 0) { // 判断当前用户是否已拉取完user_info信息
-        store.userStore.getInfo().then(res => { // 拉取user_info
-          // 加载数据字典
-          store.dictStore.initDict()
-          // 获取系统配置
-          store.sysConfigStore.getConfig()
-          // 获取路由
-          if (store.permissionStore.fetchRoutes.length === 0) { // 判断是否获取路由
-            store.permissionStore.getRoutes().then(() => {
-              if (store.permissionStore.fetchRoutes.length === 0) {
-                ElMessage.error('你的账号权限存在问题')
-                next('/login') // 否则全部重定向到登录页
-                return
-              }
-              store.permissionStore.addRoutes.forEach(item => {
-                router.addRoute(item) // 动态添加可访问路由表
-              })
-              // 获取权限
-              store.permissionStore.getPermissions().then(() => { // 获取权限
-                if (store.permissionStore.permissions.length === 0) {
-                  ElMessage.error('你的账号权限存在问题')
-                  next('/login') // 否则全部重定向到登录页
-                } else {
-                  next('/dashboard')
-                }
-              })
-            })
-          }
-        }).catch(() => {
-          store.userStore.logout().then(() => {
+      if (store.userStore.userInfo === undefined) { // 判断当前用户是否已拉取完user_info信息
+        await store.userStore.getInfo()
+        // 加载数据字典
+        store.dictStore.initDict()
+        // 获取系统配置
+        store.sysConfigStore.getConfig()
+        // 获取路由
+        if (store.permissionStore.fetchRoutes.length === 0) { // 判断是否获取路由
+          await store.permissionStore.getRoutes()
+          if (store.permissionStore.fetchRoutes.length === 0) {
             ElMessage.error('你的账号权限存在问题')
             next('/login') // 否则全部重定向到登录页
+            return
+          }
+          store.permissionStore.addRoutes.forEach(item => {
+            router.addRoute(item) // 动态添加可访问路由表
           })
-        })
+          // 获取权限
+          await store.permissionStore.getPermissions()
+          if (store.permissionStore.permissions.length === 0) {
+            ElMessage.error('你的账号权限存在问题')
+            next('/login') // 否则全部重定向到登录页
+          } else {
+            next('/dashboard')
+          }
+        }
       } else {
         next()
       }
