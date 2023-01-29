@@ -27,9 +27,10 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState } from 'pinia'
 import PanThumb from '@/components/PanThumb'
 import Mallki from '@/components/TextHoverEffect/Mallki'
+import { userStore } from '@/stores/modules/user'
 
 export default {
   components: { PanThumb, Mallki },
@@ -52,7 +53,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapState(userStore, [
       'name',
       'avatar',
       'roles'

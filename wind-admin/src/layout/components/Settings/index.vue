@@ -49,7 +49,7 @@ export default {
   computed: {
     fixedHeader: {
       get() {
-        return this.$store.state.settings.fixedHeader
+        return this.$store.settingStore.fixedHeader
       },
       set(val) {
         this.$store.settingStore.changeSetting({
@@ -60,7 +60,7 @@ export default {
     },
     topMenu: {
       get() {
-        return this.$store.state.settings.topMenu
+        return this.$store.settingStore.topMenu
       },
       set(val) {
         this.$store.settingStore.changeSetting({
@@ -72,7 +72,7 @@ export default {
     },
     tagsView: {
       get() {
-        return this.$store.state.settings.tagsView
+        return this.$store.settingStore.tagsView
       },
       set(val) {
         this.$store.settingStore.changeSetting({
@@ -83,7 +83,7 @@ export default {
     },
     sidebarLogo: {
       get() {
-        return this.$store.state.settings.sidebarLogo
+        return this.$store.settingStore.sidebarLogo
       },
       set(val) {
         this.$store.settingStore.changeSetting({

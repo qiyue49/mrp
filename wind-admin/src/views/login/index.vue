@@ -18,7 +18,7 @@ export default {
     }
   },
   created() {
-    this.index = this.getRandomArbitrary(1, 4)
+    this.index = 1
     // console.log('index', this.index)
   },
   methods: {

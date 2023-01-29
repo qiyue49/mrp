@@ -42,7 +42,7 @@ export default {
       return path
     },
     showLogo() {
-      return this.$store.state.settings.sidebarLogo
+      return this.$store.settingStore.sidebarLogo
     },
     variables() {
       return variables

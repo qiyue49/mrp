@@ -3,8 +3,8 @@
 </template>
 
 <script>
-const echarts = require('echarts')
-require('echarts/theme/macarons') // echarts theme
+import * as echarts from 'echarts'
+// require('echarts/theme/macarons') // echarts theme
 import { debounce } from '@/utils'
 
 const animationDuration = 1600

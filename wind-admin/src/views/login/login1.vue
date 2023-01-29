@@ -195,8 +195,9 @@ export default {
                 ElMessage.error(res.data.msg)
                 return
               }
-
-              this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+              const path = { path: this.redirect || '/', query: this.otherQuery }
+              console.log(path)
+              this.$router.push('/')
             })
             .catch(() => {
               this.loading = false
