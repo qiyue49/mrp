@@ -128,48 +128,45 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
 
   if (hasToken && whiteList.indexOf(to.path) === -1) {
-    if (to.path === '/login') {
-      // if is logged in, redirect to the home page
-      // next({ path: '/' })
-    } else {
-      if (store.userStore.userInfo === undefined) { // 判断当前用户是否已拉取完user_info信息
-        await store.userStore.getInfo()
-        // 加载数据字典
-        store.dictStore.initDict()
-        // 获取系统配置
-        store.sysConfigStore.getConfig()
-        // 获取路由
-        if (store.permissionStore.fetchRoutes.length === 0) { // 判断是否获取路由
-          await store.permissionStore.getRoutes()
-          if (store.permissionStore.fetchRoutes.length === 0) {
-            ElMessage.error('你的账号权限存在问题')
-            next('/login') // 否则全部重定向到登录页
-            return
-          }
-          store.permissionStore.addRoutes.forEach(item => {
-            router.addRoute(item) // 动态添加可访问路由表
-          })
-          // 获取权限
-          await store.permissionStore.getPermissions()
-          if (store.permissionStore.permissions.length === 0) {
-            ElMessage.error('你的账号权限存在问题')
-            next('/login') // 否则全部重定向到登录页
-          } else {
-            next('/dashboard')
-          }
-        }
-      } else {
-        next()
+    // 如果不是登录页并且没有缓存用户信息则需要拉取信息
+    if (to.path !== '/login' && store.userStore.userInfo === undefined) {
+      await store.userStore.getInfo()
+      if (store.userStore.userInfo === undefined) {
+        ElMessage.error('你的账号无法登陆')
+        next('/login') // 否则全部重定向到登录页
+        return
       }
+      // 加载数据字典
+      store.dictStore.initDict()
+      // 获取系统配置
+      store.sysConfigStore.getConfig()
+      // 获取路由
+      if (store.permissionStore.fetchRoutes.length === 0) { // 判断是否获取路由
+        await store.permissionStore.getRoutes()
+        if (store.permissionStore.fetchRoutes.length === 0) {
+          ElMessage.error('你的账号权限存在问题')
+          next('/login') // 否则全部重定向到登录页
+          return
+        }
+        store.permissionStore.addRoutes.forEach(item => {
+          router.addRoute(item) // 动态添加可访问路由表
+        })
+        // 获取权限
+        await store.permissionStore.getPermissions()
+        if (store.permissionStore.permissions.length === 0) {
+          ElMessage.error('你的账号权限存在问题')
+          next('/login') // 否则全部重定向到登录页
+        } else {
+          next('/dashboard')
+        }
+      }
+    } else {
+      next()
     }
   } else {
-    /* has no token*/
-
     if (whiteList.indexOf(to.path) !== -1) {
-      // in the free login whitelist, go directly
       next()
     } else {
-      // other pages that do not have permission to access are redirected to the login page.
       next(`/login`)
     }
   }
