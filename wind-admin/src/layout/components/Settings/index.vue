@@ -1,32 +1,31 @@
 <template>
   <div>
     <svg-icon icon-class="setting" @click="click" />
-    <el-drawer v-model:visible="show" size="500">
+    <el-drawer v-model="show" size="500">
       <div class="drawer-container">
-        <h3 class="drawer-title">{{ $t('settings.title') }}</h3>
+        <h3 class="drawer-title">系统布局配置</h3>
 
         <div class="drawer-item">
-          <span>{{ $t('settings.theme') }}</span>
-          <theme-picker style="float: right;height: 26px;margin: -3px 8px 0 0;" @change="themeChange" />
+          <span>主题色</span>
         </div>
 
         <div class="drawer-item">
-          <span>{{ $t('settings.tagsView') }}</span>
+          <span>开启 Tags-View</span>
           <el-switch v-model="tagsView" class="drawer-switch" />
         </div>
 
         <div class="drawer-item">
-          <span>{{ $t('settings.topMenu') }}</span>
+          <span>开启 顶部菜单</span>
           <el-switch v-model="topMenu" class="drawer-switch" />
         </div>
 
         <div v-if="false" class="drawer-item">
-          <span>{{ $t('settings.fixedHeader') }}</span>
+          <span>固定 Header</span>
           <el-switch v-model="fixedHeader" class="drawer-switch" />
         </div>
 
         <div class="drawer-item">
-          <span>{{ $t('settings.sidebarLogo') }}</span>
+          <span>侧边栏 Logo</span>
           <el-switch v-model="sidebarLogo" class="drawer-switch" />
         </div>
 
@@ -36,11 +35,11 @@
 </template>
 
 <script>
-import ThemePicker from '@/components/ThemePicker'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
   name: 'Setting',
-  components: { ThemePicker },
+  components: { SvgIcon},
   data() {
     return {
       show: false

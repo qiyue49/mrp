@@ -5,7 +5,9 @@
         <sidebar class="sidebar-container" />
       </el-aside>
       <el-container>
-        <el-header>Header</el-header>
+        <el-header>
+          <navbar />
+        </el-header>
         <el-main>
           <app-main />
         </el-main>
@@ -23,10 +25,11 @@ import { appStore } from '@/stores/modules/app'
 import { settingStore } from '@/stores/modules/settings'
 import AppMain from '@/layout/components/AppMain'
 import Sidebar from '@/layout/components/Sidebar/index'
+import Navbar from '@/layout/components/Navbar.vue'
 
 export default {
   name: 'Layout',
-  components: { Sidebar, AppMain },
+  components: { Navbar, Sidebar, AppMain },
   mixins: [ResizeMixin],
   computed: {
     ...mapState(appStore, ['sidebar', 'device']),

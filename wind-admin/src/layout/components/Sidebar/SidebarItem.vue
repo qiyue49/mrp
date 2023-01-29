@@ -2,7 +2,7 @@
   <div>
     <template v-for="item in menu">
       <a v-if="isExternalUrl(item.path) && !item.children && !item.hidden" :key="item.id" :href="item.path" target="_blank" rel="noopener">
-        <el-sub-menu>
+        <el-sub-menu :index="item.path">
           <template #title>
             <i :class="item.meta.icon"></i>
             <span>{{ item.meta.title }}</span>

@@ -27,6 +27,7 @@
 import { deepClone } from '@/utils'
 import { mapState } from 'pinia'
 import { isExternal } from '@/utils/validate'
+import { permissionStore } from '@/stores/modules/permission'
 
 export default {
   name: 'TopMenu',
@@ -37,7 +38,7 @@ export default {
     }
   },
   computed: {
-    ...mapState({
+    ...mapState(permissionStore, {
       addMenus: state => state.permission.addMenus
     }),
     menu() {

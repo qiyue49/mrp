@@ -20,7 +20,6 @@
 import { mapState } from 'pinia'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
 import { permissionStore } from '@/stores/modules/permission'
 import { appStore } from '@/stores/modules/app'
 
@@ -33,7 +32,6 @@ export default {
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -41,9 +39,6 @@ export default {
     },
     showLogo() {
       return this.$store.settingStore.sidebarLogo
-    },
-    variables() {
-      return variables
     },
     isCollapse() {
       console.log('this.sidebar.opened', this.sidebar.opened)
