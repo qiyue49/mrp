@@ -3281,6 +3281,11 @@ vitest@^0.18.1:
     tinyspy "^1.0.0"
     vite "^2.9.12 || ^3.0.0-0"
 
+vue-count-to@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.npmmirror.com/vue-count-to/-/vue-count-to-1.0.13.tgz#3e7573ea6e64c2b2972f64e0a2ab2e23c7590ff3"
+  integrity sha512-6R4OVBVNtQTlcbXu6SJ8ENR35M2/CdWt3Jmv57jOUM+1ojiFmjVGvZPH8DfHpMDSA+ITs+EW5V6qthADxeyYOQ==
+
 vue-demi@*:
   version "0.13.5"
   resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.5.tgz"

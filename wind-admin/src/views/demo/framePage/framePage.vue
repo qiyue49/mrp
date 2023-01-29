@@ -22,7 +22,7 @@ export default {
   computed: {
     fullscreen: {
       get() {
-        return this.$store.state.settings.fullScreen
+        return this.$store.settingStore.fullScreen
       },
       set(val) {
         this.$store.settingStore.changeSetting({
@@ -36,7 +36,7 @@ export default {
     this.src = 'http://www.163.com'
     const that = this
     window.onresize = function temp() {
-      if (that.$store.state.settings.fullScreen) {
+      if (that.$store.settingStore.fullScreen) {
         that.height = '100vh'
       } else {
         that.height = document.documentElement.clientHeight - 94.5 + 'px;'

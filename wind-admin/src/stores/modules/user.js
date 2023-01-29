@@ -11,19 +11,17 @@ import {
 import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
 import stores from '@/stores'
+import { ref } from 'vue'
 
 export const userStore = defineStore('user', () => {
-  let userInfo = {}
-  let token = getToken()
-  let refreshToken = getRefreshToken()
-  let roles = []
+  const userInfo = ref()
+  const token = ref(getToken())
+  const refreshToken = ref(getRefreshToken())
+  const roles = ref([])
 
-  function setToken(token) {
-    return new Promise((resolve) => {
-      this.token = token
-      saveToken(token)
-      resolve()
-    })
+  function setToken(tokenParam) {
+    token.value = tokenParam
+    saveToken(tokenParam)
   }
 
   // user login
@@ -32,10 +30,9 @@ export const userStore = defineStore('user', () => {
     return new Promise((resolve, reject) => {
       userLogin(username.trim(), password).then(response => {
         const data = response.data
-        token = data.access_token
-        setToken(response.data.access_token)
-        refreshToken = data.refresh_token
-        setRefreshToken(response.data.refresh_token)
+        setToken(data.access_token)
+        refreshToken.value = data.refresh_token
+        setRefreshToken(refreshToken)
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -50,11 +47,11 @@ export const userStore = defineStore('user', () => {
         const data = response.data.data
 
         if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
-          roles = data.roles
+          roles.value = data.roles
         } else {
           reject(response)
         }
-        userInfo = data
+        userInfo.value = data
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -66,10 +63,10 @@ export const userStore = defineStore('user', () => {
   function logout() {
     return new Promise((resolve, reject) => {
       userLogout(token).then(() => {
-        token = ''
-        refreshToken = ''
-        userInfo = {}
-        roles = []
+        token.value = ''
+        refreshToken.value = ''
+        userInfo.value = {}
+        roles.value = []
         removeToken()
         removeRefreshToken()
         resetRouter()

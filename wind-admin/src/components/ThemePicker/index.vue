@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     defaultTheme() {
-      return this.$store.state.settings.theme
+      return this.$store.settingStore.theme
     }
   },
   watch: {
