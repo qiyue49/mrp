@@ -1,31 +1,32 @@
 import { defineStore } from 'pinia'
+import { ref } from 'vue'
 
 export const tagsViewStore = defineStore('tagsView', () => {
-  let isReload = true
-  let visitedViews = []
-  let cachedViews = []
+  const isReload = ref(true)
+  const visitedViews = ref([])
+  const cachedViews = ref([])
 
   function reload(view) {
-    isReload = view
+    isReload.value = view
   }
   function addView(view) {
     addVisitedView(view)
     addCachedView(view)
   }
   function addVisitedView(view) {
-    if (visitedViews.some(v => v.path === view.path)) return
-    visitedViews.push(
+    if (visitedViews.value.some(v => v.path === view.path)) return
+    visitedViews.value.push(
       Object.assign({}, view, {
         title: view.meta.title || 'no-name'
       })
     )
   }
   function addCachedView(view) {
-    if (cachedViews.includes(view.name)) {
+    if (cachedViews.value.includes(view.name)) {
       return
     }
     if (!view.meta.noCache) {
-      cachedViews.push(view.name)
+      cachedViews.value.push(view.name)
     }
   }
 
@@ -41,10 +42,10 @@ export const tagsViewStore = defineStore('tagsView', () => {
   }
   function delVisitedView(view) {
     return new Promise(resolve => {
-      for (let i = 0; i < visitedViews.length; i++) {
+      for (let i = 0; i < visitedViews.value.length; i++) {
         const v = visitedViews[i]
         if (v.path === view.path) {
-          visitedViews.splice(i, 1)
+          visitedViews.value.splice(i, 1)
           break
         }
       }
@@ -53,11 +54,11 @@ export const tagsViewStore = defineStore('tagsView', () => {
   }
   function delCachedView(view) {
     return new Promise(resolve => {
-      for (let i = 0; i < cachedViews.length; i++) {
+      for (let i = 0; i < cachedViews.value.length; i++) {
         const v = cachedViews[i]
         if (v === view.name) {
-          const index = cachedViews.indexOf(v)
-          cachedViews.splice(index, 1)
+          const index = cachedViews.value.indexOf(v)
+          cachedViews.value.splice(index, 1)
           break
         }
       }
@@ -77,7 +78,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
   }
   function delOthersVisitedViews(view) {
     return new Promise(resolve => {
-      visitedViews = visitedViews.filter(v => {
+      visitedViews.value = visitedViews.value.filter(v => {
         return v.meta.affix || v.path === view.path
       })
       resolve([...visitedViews])
@@ -85,11 +86,11 @@ export const tagsViewStore = defineStore('tagsView', () => {
   }
   function delOthersCachedViews(view) {
     return new Promise(resolve => {
-      for (let i = 0; i < cachedViews.length; i++) {
+      for (let i = 0; i < cachedViews.value.length; i++) {
         const v = cachedViews[i]
         if (v === view.name) {
-          const index = cachedViews.indexOf(v)
-          cachedViews = cachedViews.slice(index, index + 1)
+          const index = cachedViews.value.indexOf(v)
+          cachedViews.value = cachedViews.value.slice(index, index + 1)
           break
         }
       }
@@ -110,20 +111,20 @@ export const tagsViewStore = defineStore('tagsView', () => {
   function delAllVisitedViews({ commit, state }) {
     return new Promise(resolve => {
       // keep affix tags
-      const affixTags = visitedViews.filter(tag => tag.meta.affix)
-      visitedViews = affixTags
+      const affixTags = visitedViews.value.filter(tag => tag.meta.affix)
+      visitedViews.value = affixTags
       resolve([...visitedViews])
     })
   }
   function delAllCachedViews({ commit, state }) {
     return new Promise(resolve => {
-      cachedViews = []
+      cachedViews.value = []
       resolve([...cachedViews])
     })
   }
 
   function updateVisitedView(view) {
-    for (let i = 0; i < visitedViews.length; i++) {
+    for (let i = 0; i < visitedViews.value.length; i++) {
       let v = visitedViews[i]
       if (v.path === view.path) {
         v = Object.assign(v, view)
