@@ -1,9 +1,9 @@
 <template>
   <div :class="{'hidden':hidden}" class="pagination-container">
     <el-pagination
+      v-model:current-page="currentPage"
+      v-model:page-size="pageSize"
       :background="background"
-      :current-page.sync="currentPage"
-      :page-size.sync="pageSize"
       :layout="layout"
       :page-sizes="pageSizes"
       :total="total"
@@ -55,6 +55,7 @@ export default {
       default: false
     }
   },
+  emits: ['update:page', 'update:limit', 'pagination'],
   computed: {
     currentPage: {
       get() {

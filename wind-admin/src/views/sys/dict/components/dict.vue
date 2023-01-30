@@ -72,7 +72,7 @@
           <el-button v-permission="['sys:dict:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
             确定
           </el-button>
-        </div>
+        </template>
       </el-dialog>
     </div>
   </div>

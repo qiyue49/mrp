@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import pinia from '@/stores'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 import App from './App.vue'
 import router from './router'
 
@@ -9,9 +10,6 @@ import { isNull } from './utils'
 import formValidate from './utils/formValidate'
 import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
-
-// 如果您正在使用CDN引入，请删除下面一行。
-import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 
 const app = createApp(App)
 

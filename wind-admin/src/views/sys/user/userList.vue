@@ -26,7 +26,7 @@
           </div>
           <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
           <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
         </div>
 
         <el-table
@@ -100,7 +100,7 @@
           <template #footer>
             <el-button @click="dialogFormPasswordVisible = false">取消</el-button>
             <el-button type="primary" :loading="loading" @click="postModifyPassword">确定</el-button>
-          </div>
+          </template>
         </el-dialog>
 
         <el-dialog v-model="dialogFormRolesVisible" title="设置角色">

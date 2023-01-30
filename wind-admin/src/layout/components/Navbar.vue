@@ -22,7 +22,7 @@
         <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
             <el-dropdown-item>
-              {{ $t('navbar.profile') }}
+              个人信息
             </el-dropdown-item>
           </router-link>
           <router-link to="/sys/user/info">
@@ -36,7 +36,7 @@
             </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">{{ $t('navbar.logOut') }}</span>
+            <span style="display:block;" @click="logout">退出登录</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>

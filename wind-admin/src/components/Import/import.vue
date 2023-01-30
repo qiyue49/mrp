@@ -20,7 +20,7 @@
         取消
       </el-button>
       <el-button type="primary" @click="handleTemplate">
-        {{ $t('table.template') }}
+        下载模板
       </el-button>
     </template>
   </el-dialog>
