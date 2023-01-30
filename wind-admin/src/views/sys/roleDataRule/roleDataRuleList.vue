@@ -70,10 +70,10 @@
     </div>
     <div class="drawer-footer">
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button type="primary" :loading="loading" @click="updateData">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
     </div>
   </el-drawer>

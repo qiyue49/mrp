@@ -92,9 +92,9 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+      <el-button @click="dialogFormVisible = false">取消</el-button>
       <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData(true)">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
       <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
     </div>

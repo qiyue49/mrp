@@ -6,8 +6,8 @@
       </el-scrollbar>
     </el-form>
     <template #footer>
-      <el-button @click="iconFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" @click="addCreateData($event)">{{ $t('table.confirm') }}</el-button>
+      <el-button @click="iconFormVisible = false">取消</el-button>
+      <el-button type="primary" @click="addCreateData($event)">确定</el-button>
     </template>
   </el-dialog>
 </template>

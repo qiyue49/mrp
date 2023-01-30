@@ -111,7 +111,7 @@
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
       </div>
     </el-dialog>

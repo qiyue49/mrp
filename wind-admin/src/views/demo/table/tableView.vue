@@ -30,10 +30,10 @@
     </el-form>
     <div>
       <el-button @click="getList">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
     </div>
   </div>

@@ -16,7 +16,7 @@
       </el-form-item>
     </el-form>
     <template #footer>
-      <el-button @click="dialogFormMenuVisible = false">{{ $t('table.cancel') }}</el-button>
+      <el-button @click="dialogFormMenuVisible = false">取消</el-button>
       <el-button type="primary" :loading="loading" @click="handleChangeMenus">设置权限</el-button>
     </template>
   </el-dialog>

@@ -53,10 +53,10 @@
       </div>
       <template #footer>
         <el-button @click="dialogFormVisible = false">
-          {{ $t('table.cancel') }}
+          取消
         </el-button>
         <el-button type="primary" @click="select">
-          {{ $t('table.confirm') }}
+          确定
         </el-button>
       </div>
     </el-dialog>

@@ -17,7 +17,7 @@
     </el-upload>
     <template #footer>
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button type="primary" @click="handleTemplate">
         {{ $t('table.template') }}

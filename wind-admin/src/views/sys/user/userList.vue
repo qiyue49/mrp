@@ -98,8 +98,8 @@
             </el-form-item>
           </el-form>
           <template #footer>
-            <el-button @click="dialogFormPasswordVisible = false">{{ $t('table.cancel') }}</el-button>
-            <el-button type="primary" :loading="loading" @click="postModifyPassword">{{ $t('table.confirm') }}</el-button>
+            <el-button @click="dialogFormPasswordVisible = false">取消</el-button>
+            <el-button type="primary" :loading="loading" @click="postModifyPassword">确定</el-button>
           </div>
         </el-dialog>
 

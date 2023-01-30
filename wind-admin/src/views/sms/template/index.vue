@@ -90,9 +90,9 @@
         </el-form-item>
       </el-form>
       <template #footer>
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-          {{ $t('table.confirm') }}
+          确定
         </el-button>
       </div>
     </el-dialog>
