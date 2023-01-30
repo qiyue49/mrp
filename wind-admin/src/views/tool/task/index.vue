@@ -6,9 +6,9 @@
         <el-input v-model="listQuery.jobName" type="primary" style="width: 200px;" placeholder="请输入任务名称" @keyup.enter.native="handleFilter" />
       </div>
       <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="el-icon-edit" @click="handleCreate">新增</el-button>
-      <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="el-icon-delete" @click="handleBatchDelete">删除</el-button>
-      <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="el-icon-refresh" @click="handleRefreshTask">刷新任务</el-button>
+      <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="Edit" @click="handleCreate">新增</el-button>
+      <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="Delete" @click="handleBatchDelete">删除</el-button>
+      <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="Refresh" @click="handleRefreshTask">刷新任务</el-button>
     </div>
 
     <el-table
@@ -59,7 +59,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button v-if="scope.row.jobStatus==0" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
           <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>

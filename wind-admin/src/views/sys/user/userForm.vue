@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="width: 80%; margin-left:50px;">
       <el-row :gutter="40">
         <el-col :span="12">
@@ -57,10 +57,9 @@
 </template>
 
 <script>
-import { createUser, updateUser } from '@/api/sys/user'
+import { createUser, updateUser, fetchUser } from '@/api/sys/user'
 import { fetchOrganizationList } from '@/api/sys/organization'
 import SystemOrganization from '@/components/System/systemOrganization'
-import { fetchUser } from '@/api/sys/user'
 import UploadImage from '@/components/Upload/uploadImage'
 import permission from '@/directive/permission/permission'
 
@@ -68,6 +67,7 @@ export default {
   name: 'UserForm',
   directives: { permission },
   components: { UploadImage, SystemOrganization },
+  emits: ['refreshList'],
   data() {
     return {
       treeList: [],
@@ -128,7 +128,7 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
@@ -136,7 +136,7 @@ export default {
         this.$message.error('用户名长度不能小于4')
         return
       }
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createUser(this.temp).then(response => {
@@ -157,7 +157,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       fetchUser(id).then(response => {
         if (response.data.code === 0) {
@@ -166,7 +166,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

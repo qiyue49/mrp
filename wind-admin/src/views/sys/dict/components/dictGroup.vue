@@ -31,7 +31,7 @@
           label="分组编码"
           width="160"
         />
-        <el-table-column :label="操作" align="center" width="180" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
           <template #default="scope">
             <el-button v-permission="['sys:dict:group:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
             <el-button v-permission="['sys:dict:group:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除

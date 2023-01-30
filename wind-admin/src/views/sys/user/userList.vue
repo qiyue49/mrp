@@ -26,7 +26,7 @@
           </div>
           <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
           <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
         </div>
 
         <el-table
@@ -56,7 +56,7 @@
           </el-table-column>
           <el-table-column width="160" align="center" label="可否登录">
             <template #default="scope">
-              <el-tag :type="scope.row.status | statusFilter">
+              <el-tag :type="statusFilter(scope.row.status)">
                 {{  dictLabel(scope.row.status, 'sf') }}
               </el-tag>
             </template>
@@ -66,7 +66,7 @@
               <span>{{ scope.row.organization.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
               <el-button v-permission="['sys:user:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
               <el-button v-permission="['sys:user:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
@@ -76,18 +76,7 @@
           </el-table-column>
         </el-table>
 
-        <div class="pagination-container">
-          <el-pagination
-            :current-page.sync="listQuery.page"
-            :page-sizes="pageArray"
-            :page-size="listQuery.limit"
-            :total="total"
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-          />
-        </div>
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
         <user-form ref="form" @refreshList="getList" />
 
@@ -130,21 +119,13 @@ import { fetchUserRoleIds, insertByUserId, deleteByUserId } from '@/api/sys/user
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'UserList',
-  components: { userForm },
+  components: { Pagination, userForm },
   directives: {
     waves, permission
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        1: 'success',
-        0: 'danger'
-      }
-      return statusMap[status]
-    }
   },
   data() {
     return {
@@ -155,7 +136,7 @@ export default {
       },
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {
@@ -190,6 +171,13 @@ export default {
     this.getUsableRoleList()
   },
   methods: {
+    statusFilter(status) {
+      const statusMap = {
+        1: 'success',
+        0: 'danger'
+      }
+      return statusMap[status]
+    },
     getTreeList() {
       this.listLoading = true
       fetchOrganizationList(this.listQuery).then(response => {

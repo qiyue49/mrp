@@ -57,7 +57,7 @@
                     <el-input
                       ref="username"
                       v-model="loginForm.identify"
-                      prefix-icon="el-icon-postcard"
+                      prefix-icon="Postcard"
                       :placeholder="验证码"
                       name="identify"
                       type="text"

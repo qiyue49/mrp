@@ -22,7 +22,7 @@
         </el-select>
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendEmail">邮件重发</el-button>
+      <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
       <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
     </div>
 
@@ -70,7 +70,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>

@@ -37,7 +37,7 @@
           <span>{{  dictLabel(scope.row.enabled, 'sf') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
         <template #default="scope">
           <el-button v-permission="['sys:menu:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button v-permission="['sys:menu:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>

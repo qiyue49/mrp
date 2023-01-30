@@ -23,7 +23,7 @@
       </div>
 
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendMsg">短信重发</el-button>
+      <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
       <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
     </div>
 
@@ -81,7 +81,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>

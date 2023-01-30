@@ -4,7 +4,7 @@
       <el-col v-for="url in imageList" :key="url" :span="span">
         <div class="avatar-uploader">
           <el-image :src="url" fit="fill" :preview-src-list="imageList" style="width: 100%; height: 100%" />
-          <el-button type="danger" circle size="mini" icon="el-icon-delete" class="delete" @click="remove(url)" />
+          <el-button type="danger" circle size="mini" icon="Delete" class="delete" @click="remove(url)" />
         </div>
       </el-col>
       <el-col v-if="imageList.length < maxCount" :span="span">

@@ -15,8 +15,8 @@
       </div>
 
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">导出</el-button>
-      <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="el-icon-delete" @click="handleBatchDelete">删除</el-button>
+      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+      <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
     </div>
 
     <el-table
@@ -73,7 +73,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>

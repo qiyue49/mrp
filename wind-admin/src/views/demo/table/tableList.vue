@@ -8,10 +8,10 @@
       <el-button v-permission="['test:table:table:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleImport">
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
         导入
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleExport">
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleExport">
         导出
       </el-button>
     </div>
