@@ -7,9 +7,9 @@
         :key="tag.path"
         :class="isActive(tag)?'active':''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
-        tag="span"
+        :data-path="tag.path"
         class="tags-view-item"
-        @click="closeSelectedTag(tag)"
+        @click.middle="closeSelectedTag(tag)"
         @contextmenu.prevent="openMenu(tag,$event)"
       >
         {{ tag.meta.title }}
@@ -35,9 +35,10 @@
 
 <script>
 import ScrollPane from './ScrollPane.vue'
-import path from 'path'
+import path from 'path-browserify'
 
 export default {
+  name: 'TagView',
   components: { ScrollPane },
   data() {
     return {

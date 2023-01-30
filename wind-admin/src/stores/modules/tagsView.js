@@ -132,6 +132,6 @@ export const tagsViewStore = defineStore('tagsView', () => {
       }
     }
   }
-  return { isReload, visitedViews, cachedViews, reload, addView, delView, delAllViews, updateVisitedView, delOthersViews }
+  return { isReload, visitedViews, cachedViews, reload, addVisitedView, addView, delView, delAllViews, updateVisitedView, delOthersViews }
 })
 

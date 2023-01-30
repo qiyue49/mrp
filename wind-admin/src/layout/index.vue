@@ -7,6 +7,7 @@
       <el-container>
         <el-header>
           <navbar />
+          <tag-view />
         </el-header>
         <el-main>
           <app-main />
@@ -26,10 +27,11 @@ import { settingStore } from '@/stores/modules/settings'
 import AppMain from '@/layout/components/AppMain'
 import Sidebar from '@/layout/components/Sidebar/index'
 import Navbar from '@/layout/components/Navbar.vue'
+import TagView from '@/layout/components/TagsView/index.vue'
 
 export default {
   name: 'Layout',
-  components: { Navbar, Sidebar, AppMain },
+  components: { TagView, Navbar, Sidebar, AppMain },
   mixins: [ResizeMixin],
   computed: {
     ...mapState(appStore, ['sidebar', 'device']),
@@ -51,6 +53,7 @@ export default {
 }
 </script>
 
+<!--
 <style lang="scss" scoped>
   @import "@/styles/mixin.scss";
   @import "@/styles/variables.scss";
@@ -94,3 +97,4 @@ export default {
     width: 100%;
   }
 </style>
+-->
