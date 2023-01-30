@@ -1,16 +1,17 @@
 import { defineStore } from 'pinia'
 import { getUserConfigList } from '@/api/sys/config'
+import { reactive, ref } from 'vue'
 
 export const sysConfigStore = defineStore('sysConfig', () => {
-  let configList = []
-  const config = {}
+  const configList = ref([])
+  const config = reactive({})
 
   function getConfig() {
     return new Promise((resolve, reject) => {
       getUserConfigList().then(res => {
         if (res.data.code === 0) {
-          configList = res.data.data
-          configList.forEach(item => {
+          configList.value = res.data.data
+          configList.value.forEach(item => {
             config[item.code] = item.value
           })
         }

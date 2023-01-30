@@ -1,11 +1,12 @@
 import { fetchDictMap } from '@/api/system/dict'
 import { defineStore } from 'pinia'
 import { isNull } from '@/utils'
+import { ref } from 'vue'
 
 export const dictStore = defineStore('dict', () => {
-  let dicts = {}
-  const defaultPageSizes = 10
-  let pageArray = []
+  const dicts = ref({})
+  const defaultPageSizes = ref(10)
+  const pageArray = ref([])
 
   function initDict () {
     return new Promise((resolve, reject) => {
@@ -26,8 +27,8 @@ export const dictStore = defineStore('dict', () => {
             }
           })
         })
-        pageArray = value
-        dicts = data
+        pageArray.value = value
+        dicts.value = data
         resolve(response)
       }).catch(error => {
         reject(error)

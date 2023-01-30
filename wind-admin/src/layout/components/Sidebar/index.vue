@@ -5,15 +5,12 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
         router
       >
-        <sidebar-item :menu="permission_menus" />
+        <sidebar-item :menu="menus" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -23,19 +20,18 @@
 import { mapState } from 'pinia'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
-import variables from '@/styles/variables.scss'
 import { permissionStore } from '@/stores/modules/permission'
 import { appStore } from '@/stores/modules/app'
 
 export default {
+  name: 'Sidebar',
   components: { SidebarItem, Logo },
   computed: {
-    ...mapState(permissionStore, ['permission_menus']),
+    ...mapState(permissionStore, ['menus']),
     ...mapState(appStore, ['sidebar']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
-      // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
         return meta.activeMenu
       }
@@ -44,10 +40,8 @@ export default {
     showLogo() {
       return this.$store.settingStore.sidebarLogo
     },
-    variables() {
-      return variables
-    },
     isCollapse() {
+      console.log('this.sidebar.opened', this.sidebar.opened)
       return !this.sidebar.opened
     }
   }

@@ -9,8 +9,8 @@
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        @click.middle.native="closeSelectedTag(tag)"
-        @contextmenu.prevent.native="openMenu(tag,$event)"
+        @click="closeSelectedTag(tag)"
+        @contextmenu.prevent="openMenu(tag,$event)"
       >
         {{ tag.meta.title }}
         <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"></span>
@@ -18,16 +18,16 @@
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">
-        {{ $t('tagsView.refresh') }}
+        刷新
       </li>
       <li v-if="!(selectedTag.meta&&selectedTag.meta.affix)" @click="closeSelectedTag(selectedTag)">
-        {{ $t('tagsView.close') }}
+        关闭
       </li>
       <li @click="closeOthersTags">
-        {{ $t('tagsView.closeOthers') }}
+        关闭其它
       </li>
       <li @click="closeAllTags(selectedTag)">
-        {{ $t('tagsView.closeAll') }}
+        关闭全部
       </li>
     </ul>
   </div>

@@ -24,10 +24,6 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.component(key, component)
 }
 
-pinia.dictStore.initDict().then(() => {
-  console.log('数据字典加载成功...')
-})
-
 // 定义字典全局方法
 app.config.globalProperties.dictList = function (code) {
   return pinia.dictStore.dicts[code]

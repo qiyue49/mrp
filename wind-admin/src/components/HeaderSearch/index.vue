@@ -18,13 +18,12 @@
 </template>
 
 <script>
-// fuse is a lightweight fuzzy-search module
-// make search results more in line with expectations
 import Fuse from 'fuse.js'
-import path from 'path'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
   name: 'HeaderSearch',
+  components: { SvgIcon },
   data() {
     return {
       search: '',
@@ -36,7 +35,7 @@ export default {
   },
   computed: {
     routes() {
-      return this.$store.permissionStore.permission_routes
+      return this.$store.permissionStore.routes
     }
   },
   watch: {
@@ -107,15 +106,15 @@ export default {
         if (router.hidden) { return }
 
         const data = {
-          path: path.resolve(basePath, router.path),
+          path: router.path,
           title: [...prefixTitle]
         }
 
         if (router.meta && router.meta.title) {
           // generate internationalized title
-          const hasKey = i18n.te(`route.${router.meta.title}`)
+          const hasKey = router.meta.title
           if (hasKey) {
-            const i18ntitle = i18n.t(`route.${router.meta.title}`)
+            const i18ntitle = router.meta.title
             data.title = [...data.title, i18ntitle]
           } else {
             data.title = [...data.title, router.meta.title]
