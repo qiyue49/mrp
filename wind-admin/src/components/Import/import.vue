@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      uploadImageUrl: process.env.VUE_APP_BASE_API + this.importUrl,
+      uploadImageUrl: import.meta.env.VITE_APP_BASE_API + this.importUrl,
       uploadData: { 'base_path': this.basePath },
       myHeaders: { access_token: getToken() },
       extensions: ['xls', 'xlsx'],
@@ -62,7 +62,7 @@ export default {
     importUrl: {
       immediate: true,
       handler(val) {
-        this.uploadImageUrl = process.env.VUE_APP_BASE_API + val
+        this.uploadImageUrl = import.meta.env.VITE_APP_BASE_API + val
       }
     }
   },

@@ -56,8 +56,8 @@ export default {
       imageList: [],
       resultUrl: undefined,
       myHeaders: { access_token: getToken() },
-      uploadImageUrl: process.env.VUE_APP_BASE_API + '/oss/attachment/upload',
-      uploadData: { 'base_path': this.basePath }
+      uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
+      uploadData: { base_path: this.basePath }
     }
   },
   computed: {

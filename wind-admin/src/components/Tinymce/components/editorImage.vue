@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: process.env.VUE_APP_BASE_API + '/json/oss/imgToBase64',
+      uploadUrl: import.meta.env.VITE_APP_BASE_API + '/json/oss/imgToBase64',
       dialogVisible: false,
       listObj: {},
       fileList: []
