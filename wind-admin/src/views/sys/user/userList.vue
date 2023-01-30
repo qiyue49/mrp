@@ -57,7 +57,7 @@
           <el-table-column width="160" align="center" label="可否登录">
             <template #default="scope">
               <el-tag :type="scope.row.status | statusFilter">
-                {{ scope.row.status | dictLabel('sf') }}
+                {{  dictLabel(scope.row.status, 'sf') }}
               </el-tag>
             </template>
           </el-table-column>
@@ -70,8 +70,8 @@
             <template #default="scope">
               <el-button v-permission="['sys:user:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
               <el-button v-permission="['sys:user:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
-              <el-button v-permission="['sys:user:role']" size="small" type="text" icon="el-icon-user" @click="toAssignRoles(scope.row)">设置角色</el-button>
-              <el-button v-permission="['sys:user:change:password']" size="small" type="text" icon="el-icon-refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
+              <el-button v-permission="['sys:user:role']" size="small" type="primary" text icon="User" @click="toAssignRoles(scope.row)">设置角色</el-button>
+              <el-button v-permission="['sys:user:change:password']" size="small" type="primary" text icon="Refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
             </template>
           </el-table-column>
         </el-table>

@@ -34,14 +34,14 @@
       </el-table-column>
       <el-table-column width="100" align="center" label="是否可用">
         <template #default="scope">
-          <span>{{ scope.row.enabled | dictLabel('sf') }}</span>
+          <span>{{  dictLabel(scope.row.enabled, 'sf') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="操作" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
         <template #default="scope">
           <el-button v-permission="['sys:menu:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button v-permission="['sys:menu:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
-          <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="text" icon="el-icon-coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
+          <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="primary" text icon="Coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
         </template>
       </el-table-column>
     </el-table>

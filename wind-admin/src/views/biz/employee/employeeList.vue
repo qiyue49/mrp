@@ -51,7 +51,7 @@
           </el-table-column>
           <el-table-column label="性别" min-width="150px" align="center">
             <template slot-scope="{row}">
-              <span>{{ row.sex | dictLabel('sex') }}</span>
+              <span>{{  dictLabel(row.sex, 'sex') }}</span>
             </template>
           </el-table-column>
           <el-table-column label="生日" min-width="150px" align="center">
@@ -66,10 +66,10 @@
           </el-table-column>
           <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
             <template slot-scope="{row}">
-              <el-button v-permission="['biz:employee:employee:update']" type="text" size="mini" @click="handleUpdate(row)">
+              <el-button v-permission="['biz:employee:employee:update']" type="primary" text size="mini" @click="handleUpdate(row)">
                 编辑
               </el-button>
-              <el-button v-permission="['biz:employee:employee:delete']" type="text" size="mini" @click="handleDelete(row,'deleted')">
+              <el-button v-permission="['biz:employee:employee:delete']" type="primary" text size="mini" @click="handleDelete(row,'deleted')">
                 删除
               </el-button>
             </template>

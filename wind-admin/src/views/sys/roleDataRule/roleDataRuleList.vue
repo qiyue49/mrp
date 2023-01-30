@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column label="数据权限类型" min-width="150px">
           <template #default="{row}">
-            <span>{{ row.scopeType | dictLabel('dataRuleType') }}</span>
+            <span>{{  dictLabel(row.scopeType, 'dataRuleType') }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">

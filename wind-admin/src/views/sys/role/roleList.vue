@@ -35,14 +35,14 @@
       </el-table-column>
       <el-table-column width="200" align="center" label="是否可用">
         <template slot-scope="scope">
-          <span>{{ scope.row.usable | dictLabel('sf') }}</span>
+          <span>{{  dictLabel(scope.row.usable, 'sf') }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template v-if="scope.row.tenantId === tenantId" slot-scope="scope">
-          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
-          <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-s-operation" @click="toSetPermission(scope.row)">设置权限</el-button>
-          <el-button v-permission="['sys:datarule:update']" size="small" type="text" icon="el-icon-finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
+          <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
+          <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Operation" @click="toSetPermission(scope.row)">设置权限</el-button>
+          <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
           <el-button v-permission="['sys:role:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button v-permission="['sys:role:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>

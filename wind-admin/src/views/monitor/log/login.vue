@@ -59,7 +59,7 @@
       </el-table-column>
       <el-table-column width="80" align="center" label="登陆状态">
         <template #default="scope">
-          <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | dictLabel('loginstatus') }}</el-tag>
+          <el-tag :type="scope.row.status | statusTypeFilter">{{  dictLabel(scope.row.status, 'loginstatus') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column width="200" align="center" label="操作信息">

@@ -3,7 +3,7 @@ import store from '@/stores'
 var webSocket
 
 function getURL() {
-  const userId = store.getters.info.id
+  const userId = store.userStore.userInfo.id
   console.log('process.env.NODE_ENV', process.env.NODE_ENV)
   console.log('process.env.VUE_APP_BASE_WEBSOCKET', process.env.VUE_APP_BASE_WEBSOCKET)
   console.log('process.env.VUE_APP_ENV', process.env.VUE_APP_ENV)

@@ -33,10 +33,10 @@
       </el-table-column>
       <el-table-column label="操作" align="center" min-width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button v-permission="['biz:company:company:update']" type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">
+          <el-button v-permission="['biz:company:company:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:company:company:delete']" type="text" size="small" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row,'deleted')">
+          <el-button v-permission="['biz:company:company:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
             删除
           </el-button>
         </template>
