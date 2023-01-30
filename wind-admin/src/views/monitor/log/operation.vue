@@ -70,7 +70,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>

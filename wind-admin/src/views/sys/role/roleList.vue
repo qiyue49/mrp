@@ -38,7 +38,7 @@
           <span>{{ scope.row.usable | dictLabel('sf') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template v-if="scope.row.tenantId === tenantId" slot-scope="scope">
           <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
           <el-button v-permission="['sys:role:update']" size="small" type="text" icon="el-icon-s-operation" @click="toSetPermission(scope.row)">设置权限</el-button>

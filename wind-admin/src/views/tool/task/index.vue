@@ -59,7 +59,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+      <el-table-column :label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
           <el-button v-if="scope.row.jobStatus==0" v-permission="['task:schedule:job:change:job:status']" type="text" size="small" icon="el-icon-video-play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
           <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="text" size="small" icon="el-icon-video-pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
