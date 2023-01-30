@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input v-model="listQuery.title" :placeholder="$t('table.title')" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
       </el-button>
-      <el-button v-permission="['test:table:table:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
+      <el-button v-permission="['test:table:table:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+        新增
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleImport">
         {{ $t('table.import') }}
@@ -66,11 +66,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template #default="{row}">
-          <el-button v-permission="['test:table:table:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
-            {{ $t('table.edit') }}
+          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+            编辑
           </el-button>
-          <el-button v-permission="['test:table:table:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdateView(row)">
-            {{ $t('table.edit') }}(新页签)
+          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdateView(row)">
+            编辑(新页签)
           </el-button>
           <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
             {{ $t('table.publish') }}
@@ -78,8 +78,8 @@
           <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
             {{ $t('table.draft') }}
           </el-button>
-          <el-button v-permission="['test:table:table:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
-            {{ $t('table.delete') }}
+          <el-button v-permission="['test:table:table:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+            删除
           </el-button>
         </template>
       </el-table-column>

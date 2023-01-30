@@ -5,11 +5,11 @@
         <span>新闻类型名称:</span>
         <el-input v-model="listQuery.newsTypeName" placeholder="请输入新闻类型名称" style="width: 200px" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
       </el-button>
-      <el-button v-permission="['biz:newsType:newstype:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
+      <el-button v-permission="['biz:newsType:newstype:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+        新增
       </el-button>
     </div>
 
@@ -31,10 +31,10 @@
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
           <el-button v-permission="['biz:newsType:newstype:update']" type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">
-            {{ $t('table.edit') }}
+            编辑
           </el-button>
           <el-button v-permission="['biz:newsType:newstype:delete']" type="text" size="small" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row,'deleted')">
-            {{ $t('table.delete') }}
+            删除
           </el-button>
         </template>
       </el-table-column>

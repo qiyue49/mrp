@@ -22,8 +22,8 @@
         </el-select>
       </div>
 
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="handleBathDelete">{{ $t('table.delete') }}</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button v-waves class="filter-item" type="danger" icon="el-icon-delete" @click="handleBathDelete">删除</el-button>
     </div>
 
     <el-table
@@ -82,7 +82,7 @@
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>

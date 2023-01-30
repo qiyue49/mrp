@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
-      <el-button slot="append" icon="el-icon-search" @click="show" />
+      <el-button slot="append" icon="Search" @click="show" />
     </el-input>
     <el-dialog title="选择用户" :visible.sync="dialogFormVisible" destroy-on-close append-to-body>
       <div class="app-container calendar-list-container">
@@ -9,7 +9,7 @@
           <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
           <el-input v-model="listQuery.username" style="width: 200px;" class="filter-item" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
           <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         </div>
 
         <el-table

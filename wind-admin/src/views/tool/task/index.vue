@@ -5,9 +5,9 @@
         <span>任务名称:</span>
         <el-input v-model="listQuery.jobName" type="primary" style="width: 200px;" placeholder="请输入任务名称" @keyup.enter.native="handleFilter" />
       </div>
-      <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-      <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="el-icon-delete" @click="handleBatchDelete">{{ $t('table.delete') }}</el-button>
+      <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="el-icon-edit" @click="handleCreate">新增</el-button>
+      <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="el-icon-delete" @click="handleBatchDelete">删除</el-button>
       <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="el-icon-refresh" @click="handleRefreshTask">刷新任务</el-button>
     </div>
 
@@ -65,8 +65,8 @@
           <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="text" size="small" icon="el-icon-video-pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
           <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="text" icon="el-icon-refresh" @click="handleRefresh(scope.row)">刷新</el-button>
           <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="text" icon="el-icon-arrow-right" @click="runAJobNow(scope.row)">执行一次</el-button>
-          <el-button v-permission="['task:schedule:job:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-permission="['task:schedule:job:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
+          <el-button v-permission="['task:schedule:job:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['task:schedule:job:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

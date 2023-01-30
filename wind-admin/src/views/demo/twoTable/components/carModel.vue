@@ -3,8 +3,8 @@
     <div>
       <div class="filter-container">
         <el-input v-model="listQuery.keyword" style="width: 200px;" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter.native="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
       <el-table
@@ -29,8 +29,8 @@
         />
         <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-button v-permission="['test:car:carModel:detail']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button v-permission="['test:car:carModel:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+            <el-button v-permission="['test:car:carModel:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['test:car:carModel:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
             </el-button>
           </template>
         </el-table-column>

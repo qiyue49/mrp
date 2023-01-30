@@ -9,7 +9,7 @@
         <span>操作IP:</span>
         <el-input v-model="listQuery.operationIp" placeholder="请输入操作IP" style="width: 200px" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       <el-button class="filter-item" type="danger" icon="el-icon-document" @click="handleBatchDelete">删除</el-button>
     </div>
     <el-table
@@ -72,7 +72,7 @@
 
       <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
+          <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

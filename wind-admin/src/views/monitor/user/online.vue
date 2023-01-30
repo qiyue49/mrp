@@ -9,7 +9,7 @@
         <span>IP:</span>
         <el-input v-model="listQuery.loginIp" placeholder="请输入IP" style="width: 200px" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
     </div>
 
     <el-table

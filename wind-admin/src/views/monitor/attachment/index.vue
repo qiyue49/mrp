@@ -5,7 +5,7 @@
         <span>附件名称:</span>
         <el-input v-model="listQuery.fileName" style="width: 200px;" placeholder="请输入附件名称" @keyup.enter.native="handleFilter" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="el-icon-delete" @click="handleBatchDelete">删除</el-button>
     </div>
 
@@ -55,7 +55,7 @@
 
       <el-table-column :label="$t('table.actions')" width="80" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
