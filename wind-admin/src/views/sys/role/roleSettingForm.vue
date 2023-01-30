@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="dialogFormMenuVisible" title="设置权限" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormMenuVisible" title="设置权限" :close-on-click-modal="false">
     <el-form ref="dataForm" :model="menuTemp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
       <el-form-item label="操作权限">
         <el-scrollbar style="height: 60vh">
@@ -15,10 +15,10 @@
         </el-scrollbar>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormMenuVisible = false">{{ $t('table.cancel') }}</el-button>
       <el-button type="primary" :loading="loading" @click="handleChangeMenus">设置权限</el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 

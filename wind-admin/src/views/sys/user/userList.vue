@@ -91,19 +91,19 @@
 
         <user-form ref="form" @refreshList="getList" />
 
-        <el-dialog :visible.sync="dialogFormPasswordVisible" title="修改密码">
+        <el-dialog v-model="dialogFormPasswordVisible" title="修改密码">
           <el-form ref="dataModifyForm" :rules="modifyPasswordRules" :model="modifyPassword" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
             <el-form-item label="初始密码" prop="password">
               <el-input v-model="modifyPassword.password" type="password" />
             </el-form-item>
           </el-form>
-          <div slot="footer" class="dialog-footer">
+          <template #footer>
             <el-button @click="dialogFormPasswordVisible = false">{{ $t('table.cancel') }}</el-button>
             <el-button type="primary" :loading="loading" @click="postModifyPassword">{{ $t('table.confirm') }}</el-button>
           </div>
         </el-dialog>
 
-        <el-dialog :visible.sync="dialogFormRolesVisible" title="设置角色">
+        <el-dialog v-model="dialogFormRolesVisible" title="设置角色">
           <el-transfer
             v-model="userRoleIds"
             :filterable="true"

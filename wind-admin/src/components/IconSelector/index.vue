@@ -1,14 +1,14 @@
 <template>
-  <el-dialog :title="title" :visible.sync="iconFormVisible" :close-on-click-modal="false" append-to-body>
+  <el-dialog :title="title" v-model="iconFormVisible" :close-on-click-modal="false" append-to-body>
     <el-form ref="addIconForm" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:9%;">
       <el-scrollbar style="height: 550px">
         <ui-icons @listenIcon="showIcon" />
       </el-scrollbar>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="iconFormVisible = false">{{ $t('table.cancel') }}</el-button>
       <el-button type="primary" @click="addCreateData($event)">{{ $t('table.confirm') }}</el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 

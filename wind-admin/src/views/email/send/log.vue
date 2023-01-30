@@ -91,7 +91,7 @@
       />
     </div>
 
-    <el-dialog :visible.sync="dialogFormVisible" title="发送邮件" width="70%">
+    <el-dialog v-model="dialogFormVisible" title="发送邮件" width="70%">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
         <el-form-item label="Email" prop="email">
           <el-input
@@ -110,7 +110,7 @@
           模板内容:{{ template.templateContent }}
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
         <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
       </div>

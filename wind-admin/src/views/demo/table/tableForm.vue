@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" destroy-on-close>
+  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" destroy-on-close>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
@@ -28,14 +28,14 @@
 
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormVisible = false">
         {{ $t('table.cancel') }}
       </el-button>
       <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
         {{ $t('table.confirm') }}
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-  <el-drawer :direction="'rtl'" :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" size="50%">
+  <el-drawer :direction="'rtl'" :title="textMap[dialogStatus]" v-model="dialogFormVisible" size="50%">
     <div class="app-container">
       <div class="filter-container">
         <div class="filter-item">

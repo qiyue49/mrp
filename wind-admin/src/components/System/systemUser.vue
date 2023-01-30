@@ -3,7 +3,7 @@
     <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
       <el-button slot="append" icon="Search" @click="show" />
     </el-input>
-    <el-dialog title="选择用户" :visible.sync="dialogFormVisible" destroy-on-close append-to-body>
+    <el-dialog title="选择用户" v-model="dialogFormVisible" destroy-on-close append-to-body>
       <div class="app-container calendar-list-container">
         <div class="filter-container">
           <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
@@ -51,7 +51,7 @@
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
       </div>
-      <div slot="footer" class="dialog-footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">
           {{ $t('table.cancel') }}
         </el-button>

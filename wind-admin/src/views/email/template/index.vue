@@ -55,7 +55,7 @@
       />
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" width="80%">
+    <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" width="80%">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
         <el-form-item label="模版名称" prop="name">
           <el-input v-model="temp.name" />
@@ -67,7 +67,7 @@
           <el-input id="templateContentTinymce" v-model="temp.templateContent" :height="500" type="textarea" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
         <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
           {{ $t('table.confirm') }}

@@ -102,7 +102,7 @@
       />
     </div>
 
-    <el-dialog :visible.sync="dialogFormVisible" title="发送短信">
+    <el-dialog v-model="dialogFormVisible" title="发送短信">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
         <el-form-item label="电话号码" prop="phone">
           <el-input
@@ -119,7 +119,7 @@
           <json-editor ref="jsonEditor" v-model="temp.data" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
         <el-button type="primary" @click="runSendMsg">发送短信</el-button>
       </div>
