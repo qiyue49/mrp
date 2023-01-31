@@ -35,34 +35,34 @@ export const tagsViewStore = defineStore('tagsView', () => {
       delVisitedView(view)
       delCachedView(view)
       resolve({
-        visitedViews: [...visitedViews],
-        cachedViews: [...cachedViews]
+        visitedViews: [...visitedViews.value],
+        cachedViews: [...cachedViews.value]
       })
     })
   }
   function delVisitedView(view) {
     return new Promise(resolve => {
       for (let i = 0; i < visitedViews.value.length; i++) {
-        const v = visitedViews[i]
+        const v = visitedViews.value[i]
         if (v.path === view.path) {
           visitedViews.value.splice(i, 1)
           break
         }
       }
-      resolve([...visitedViews])
+      resolve([...visitedViews.value])
     })
   }
   function delCachedView(view) {
     return new Promise(resolve => {
       for (let i = 0; i < cachedViews.value.length; i++) {
-        const v = cachedViews[i]
+        const v = cachedViews.value[i]
         if (v === view.name) {
           const index = cachedViews.value.indexOf(v)
           cachedViews.value.splice(index, 1)
           break
         }
       }
-      resolve([...cachedViews])
+      resolve([...cachedViews.value])
     })
   }
 
@@ -71,8 +71,8 @@ export const tagsViewStore = defineStore('tagsView', () => {
       delOthersVisitedViews(view)
       delOthersCachedViews(view)
       resolve({
-        visitedViews: [...visitedViews],
-        cachedViews: [...cachedViews]
+        visitedViews: [...visitedViews.value],
+        cachedViews: [...cachedViews.value]
       })
     })
   }
@@ -81,7 +81,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
       visitedViews.value = visitedViews.value.filter(v => {
         return v.meta.affix || v.path === view.path
       })
-      resolve([...visitedViews])
+      resolve([...visitedViews.value])
     })
   }
   function delOthersCachedViews(view) {
@@ -94,7 +94,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
           break
         }
       }
-      resolve([...cachedViews])
+      resolve([...cachedViews.value])
     })
   }
 
@@ -103,8 +103,8 @@ export const tagsViewStore = defineStore('tagsView', () => {
       delAllVisitedViews(view)
       delAllCachedViews(view)
       resolve({
-        visitedViews: [...visitedViews],
-        cachedViews: [...cachedViews]
+        visitedViews: [...visitedViews.value],
+        cachedViews: [...cachedViews.value]
       })
     })
   }
@@ -113,13 +113,13 @@ export const tagsViewStore = defineStore('tagsView', () => {
       // keep affix tags
       const affixTags = visitedViews.value.filter(tag => tag.meta.affix)
       visitedViews.value = affixTags
-      resolve([...visitedViews])
+      resolve([...visitedViews.value])
     })
   }
   function delAllCachedViews({ commit, state }) {
     return new Promise(resolve => {
       cachedViews.value = []
-      resolve([...cachedViews])
+      resolve([...cachedViews.value])
     })
   }
 
@@ -132,6 +132,6 @@ export const tagsViewStore = defineStore('tagsView', () => {
       }
     }
   }
-  return { isReload, visitedViews, cachedViews, reload, addVisitedView, addView, delView, delAllViews, updateVisitedView, delOthersViews }
+  return { isReload, visitedViews, cachedViews, reload, addVisitedView, addView, delView, delAllViews, delCachedView, updateVisitedView, delOthersViews }
 })
 

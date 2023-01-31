@@ -134,11 +134,12 @@ export default {
       })
     },
     refreshSelectedTag(view) {
-      // console.log('refreshSelectedTag', view)
-      this.$store.tagsViewStore.reload(false).then(() => {
+      this.$store.tagsViewStore.delCachedView(view).then(() => {
+        const { fullPath } = view
         this.$nextTick(() => {
-          // console.log('refreshSelectedTag')
-          this.$store.tagsViewStore.reload(true)
+          this.$router.replace({
+            path: '/redirect' + fullPath
+          })
         })
       })
     },
