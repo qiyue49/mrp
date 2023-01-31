@@ -2,8 +2,8 @@
   <el-row>
     <el-col :span="6">
       <div>
-        <div id="treeBox" class="filter-container">
-          <el-table :data="treeList" style="width: 100%;" row-key="id" border lazy :load="load" @row-click="getListByTreeId">
+        <div class="filter-container left-tree-list">
+          <el-table :data="treeList" row-key="id" border lazy :load="load" @row-click="getListByTreeId">
             <el-table-column prop="name" label="名称" sortable />
           </el-table>
         </div>
@@ -165,11 +165,4 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-#treeBox {
-  margin-top: 1px;
-  .el-table thead {
-    display: none;
-  }
-}
-</style>
+

@@ -31,6 +31,16 @@ body {
   font-weight: normal;
 }
 
+.left-tree-list {
+  margin-top: 1px;
+  .el-table {
+    width: 100%;
+    thead {
+      display: none;
+    }
+  }
+}
+
 .filter-container {
   padding-bottom: 10px;
 
