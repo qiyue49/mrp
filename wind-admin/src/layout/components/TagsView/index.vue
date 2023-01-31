@@ -10,10 +10,9 @@
         :data-path="tag.path"
         class="tags-view-item"
         @click.middle="closeSelectedTag(tag)"
-        @contextmenu.prevent="openMenu(tag,$event)"
-      >
+        @contextmenu.prevent="openMenu(tag,$event)" >
         {{ tag.meta.title }}
-        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)"></span>
+        <el-icon v-if="!tag.meta.affix" class="close" @click.prevent.stop="closeSelectedTag(tag)"><Close /></el-icon>
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
@@ -179,17 +178,20 @@ export default {
         }
       }
     },
+    show() {
+      this.visible = true
+    },
     openMenu(tag, e) {
       const menuMinWidth = 105
-      const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
+      // const offsetLeft = this.$el.getBoundingClientRect().left // container margin left
       const offsetWidth = this.$el.offsetWidth // container width
       const maxLeft = offsetWidth - menuMinWidth // left boundary
-      const left = e.clientX - offsetLeft + 15 // 15: margin right
+      // const left = e.clientX - offsetLeft + 15 // 15: margin right
 
-      if (left > maxLeft) {
+      if (e.clientX > maxLeft) {
         this.left = maxLeft
       } else {
-        this.left = left
+        this.left = e.clientX
       }
 
       this.top = e.clientY
@@ -204,6 +206,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.router-link-active {
+  text-decoration: none;
+}
+a{
+  text-decoration: none;
+}
 .tags-view-container {
   height: 34px;
   width: 100%;
@@ -224,6 +232,24 @@ export default {
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+      .close {
+        width: 16px;
+        height: 16px;
+        vertical-align: -2px;
+        border-radius: 50%;
+        text-align: center;
+        transition: all .3s cubic-bezier(.645, .045, .355, 1);
+        transform-origin: 100% 50%;
+        &:before {
+          transform: scale(.6);
+          display: inline-block;
+          vertical-align: -3px;
+        }
+        &:hover {
+          background-color: #b4bccc;
+          color: #fff;
+        }
+      }
       &:first-of-type {
         margin-left: 15px;
       }
@@ -271,28 +297,3 @@ export default {
 }
 </style>
 
-<style lang="scss">
-//reset element css of el-icon-close
-.tags-view-wrapper {
-  .tags-view-item {
-    .el-icon-close {
-      width: 16px;
-      height: 16px;
-      vertical-align: 2px;
-      border-radius: 50%;
-      text-align: center;
-      transition: all .3s cubic-bezier(.645, .045, .355, 1);
-      transform-origin: 100% 50%;
-      &:before {
-        transform: scale(.6);
-        display: inline-block;
-        vertical-align: -3px;
-      }
-      &:hover {
-        background-color: #b4bccc;
-        color: #fff;
-      }
-    }
-  }
-}
-</style>
