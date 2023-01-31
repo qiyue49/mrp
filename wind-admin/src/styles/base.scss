@@ -49,12 +49,3 @@
     --color-text: var(--vt-c-text-dark-2);
   }
 }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-  font-weight: normal;
-}

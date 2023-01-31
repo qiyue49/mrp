@@ -31,3 +31,21 @@ body {
   font-weight: normal;
 }
 
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+  }
+  .filter-item:not(.el-button) {
+    span {
+      font-size: 14px;
+      color: #606266;
+    }
+  }
+
+}
+
