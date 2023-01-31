@@ -1,7 +1,7 @@
 <template>
-  <div class="common-layout">
+  <div :class="classObj" class="app-wrapper">
     <el-container>
-      <el-aside width="200px">
+      <el-aside>
         <sidebar class="sidebar-container" />
       </el-aside>
       <el-container>
@@ -19,7 +19,6 @@
 </template>
 
 <script>
-// import { AppMain, Navbar, Sidebar, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 import { mapState } from 'pinia'
 import { appStore } from '@/stores/modules/app'
@@ -53,48 +52,31 @@ export default {
 }
 </script>
 
-<!--
 <style lang="scss" scoped>
-  @import "@/styles/mixin.scss";
-  @import "@/styles/variables.scss";
+.sidebar-container {
+  width: 210px !important;
+}
 
-  .app-wrapper {
-    @include clearfix;
-    position: relative;
-    height: 100%;
-    width: 100%;
-
-    &.mobile.openSidebar {
-      position: fixed;
-      top: 0;
-    }
+.hideSidebar {
+  .sidebar-container {
+    width: 64px !important;
   }
-
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
-
-  .fixed-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 9;
-    width: calc(100% - 210px);
-    transition: width 0.28s;
-  }
-
-  .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
-  }
-
-  .mobile .fixed-header {
-    width: 100%;
-  }
+}
+.el-aside {
+  border-right: solid 1px var(--el-menu-border-color);
+  overflow: auto;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  width: auto;
+}
+.el-header {
+  padding: 0px;
+  height: auto;
+}
+.el-footer {
+  height: auto;
+}
+.el-main {
+  min-height: calc(100vh - 108px);
+}
 </style>
--->
