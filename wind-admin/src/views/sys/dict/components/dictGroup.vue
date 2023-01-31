@@ -6,8 +6,8 @@
           <span>分组名称或编码:</span>
           <el-input v-model="listQuery.keyword" style="width: 200px;" placeholder="请输入分组名称或编码" @keyup.enter.native="handleFilter" />
         </div>
-        <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-        <el-button v-permission="['sys:dict:group:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+        <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:dict:group:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
       <el-table
@@ -31,10 +31,10 @@
           label="分组编码"
           width="160"
         />
-        <el-table-column :label="$t('table.actions')" align="center" width="180" class-name="small-padding fixed-width">
+        <el-table-column label="操作" align="center" width="180" class-name="small-padding fixed-width">
           <template #default="scope">
-            <el-button v-permission="['sys:dict:group:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-            <el-button v-permission="['sys:dict:group:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+            <el-button v-permission="['sys:dict:group:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['sys:dict:group:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -53,7 +53,7 @@
         />
       </div>
 
-      <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+      <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
         <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
           <el-form-item label="分组名称" prop="name">
             <el-input v-model="temp.name" />
@@ -65,12 +65,12 @@
             <el-input v-model="temp.remarks" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
           </el-form-item>
         </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+        <template #footer>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
           <el-button v-permission="['sys:dict:group:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-            {{ $t('table.confirm') }}
+            确定
           </el-button>
-        </div>
+        </template>
       </el-dialog>
     </div>
   </div>

@@ -24,9 +24,9 @@
             <span>手机号码:</span>
             <el-input v-model="listQuery.phone" style="width: 200px;" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
           </div>
-          <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-          <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
-          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">{{ $t('table.export') }}</el-button>
+          <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+          <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
         </div>
 
         <el-table
@@ -56,8 +56,8 @@
           </el-table-column>
           <el-table-column width="160" align="center" label="可否登录">
             <template #default="scope">
-              <el-tag :type="scope.row.status | statusFilter">
-                {{ scope.row.status | dictLabel('sf') }}
+              <el-tag :type="statusFilter(scope.row.status)">
+                {{  dictLabel(scope.row.status, 'sf') }}
               </el-tag>
             </template>
           </el-table-column>
@@ -66,44 +66,33 @@
               <span>{{ scope.row.organization.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
             <template #default="scope">
-              <el-button v-permission="['sys:user:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-              <el-button v-permission="['sys:user:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
-              <el-button v-permission="['sys:user:role']" size="small" type="text" icon="el-icon-user" @click="toAssignRoles(scope.row)">设置角色</el-button>
-              <el-button v-permission="['sys:user:change:password']" size="small" type="text" icon="el-icon-refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
+              <el-button v-permission="['sys:user:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+              <el-button v-permission="['sys:user:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button v-permission="['sys:user:role']" size="small" type="primary" text icon="User" @click="toAssignRoles(scope.row)">设置角色</el-button>
+              <el-button v-permission="['sys:user:change:password']" size="small" type="primary" text icon="Refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
             </template>
           </el-table-column>
         </el-table>
 
-        <div class="pagination-container">
-          <el-pagination
-            :current-page.sync="listQuery.page"
-            :page-sizes="pageArray"
-            :page-size="listQuery.limit"
-            :total="total"
-            background
-            layout="total, sizes, prev, pager, next, jumper"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-          />
-        </div>
+        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
         <user-form ref="form" @refreshList="getList" />
 
-        <el-dialog :visible.sync="dialogFormPasswordVisible" title="修改密码">
+        <el-dialog v-model="dialogFormPasswordVisible" title="修改密码">
           <el-form ref="dataModifyForm" :rules="modifyPasswordRules" :model="modifyPassword" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
             <el-form-item label="初始密码" prop="password">
               <el-input v-model="modifyPassword.password" type="password" />
             </el-form-item>
           </el-form>
-          <div slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormPasswordVisible = false">{{ $t('table.cancel') }}</el-button>
-            <el-button type="primary" :loading="loading" @click="postModifyPassword">{{ $t('table.confirm') }}</el-button>
-          </div>
+          <template #footer>
+            <el-button @click="dialogFormPasswordVisible = false">取消</el-button>
+            <el-button type="primary" :loading="loading" @click="postModifyPassword">确定</el-button>
+          </template>
         </el-dialog>
 
-        <el-dialog :visible.sync="dialogFormRolesVisible" title="设置角色">
+        <el-dialog v-model="dialogFormRolesVisible" title="设置角色">
           <el-transfer
             v-model="userRoleIds"
             :filterable="true"
@@ -130,21 +119,13 @@ import { fetchUserRoleIds, insertByUserId, deleteByUserId } from '@/api/sys/user
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'UserList',
-  components: { userForm },
+  components: { Pagination, userForm },
   directives: {
     waves, permission
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        1: 'success',
-        0: 'danger'
-      }
-      return statusMap[status]
-    }
   },
   data() {
     return {
@@ -155,7 +136,7 @@ export default {
       },
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {
@@ -190,6 +171,13 @@ export default {
     this.getUsableRoleList()
   },
   methods: {
+    statusFilter(status) {
+      const statusMap = {
+        1: 'success',
+        0: 'danger'
+      }
+      return statusMap[status]
+    },
     getTreeList() {
       this.listLoading = true
       fetchOrganizationList(this.listQuery).then(response => {

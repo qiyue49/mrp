@@ -17,11 +17,11 @@
         <span>租户名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入租户名称" style="width: 200px" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
       </el-button>
-      <el-button v-permission="['sys:tenant:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
+      <el-button v-permission="['sys:tenant:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+        新增
       </el-button>
     </div>
 
@@ -60,11 +60,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template #default="{row}">
-          <el-button v-permission="['sys:tenant:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(row)">
-            {{ $t('table.edit') }}
+          <el-button v-permission="['sys:tenant:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+            编辑
           </el-button>
-          <el-button v-permission="['sys:tenant:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row)">
-            {{ $t('table.delete') }}
+          <el-button v-permission="['sys:tenant:delete']" size="small" type="danger" text icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
+            删除
           </el-button>
         </template>
       </el-table-column>

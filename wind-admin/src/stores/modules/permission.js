@@ -7,7 +7,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 
 export const Layout = () => import('@/layout/index.vue')
-const modules = import.meta.glob('@/views/**/**.vue')
+const modules = import.meta.glob('../../views/**/**.vue')
 
 export const permissionStore = defineStore('permission', () => {
   const routes = ref([])
@@ -56,7 +56,7 @@ export const permissionStore = defineStore('permission', () => {
         const component = tmp.component
         try {
           if (component) {
-            const componentFile = modules[`../../views/${tmp.component}.vue`]
+            const componentFile = modules[`../../${tmp.component}.vue`]
             item.children[0].component = componentFile
           } else {
             item.children[0].component = undefined

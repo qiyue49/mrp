@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false" append-to-body>
+  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false" append-to-body>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
       <el-form-item label="数据权限名称" prop="scopeName">
         <el-input v-model="temp.scopeName" />
@@ -39,14 +39,14 @@
         <el-input v-model="temp.scopeValue" type="textarea" />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button v-permission="['sys:datarule:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 

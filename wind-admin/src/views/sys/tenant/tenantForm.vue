@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
       <el-form-item label="租户名称" prop="name">
         <el-input v-model="temp.name" />
@@ -19,30 +19,30 @@
         <el-input v-model="temp.remarks" type="textarea" />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button v-permission="['sys:tenant:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 
 <script>
 import { createTenant, updateTenant, getTenant } from '@/api/sys/tenant/tenant'
 import permission from '@/directive/permission/permission'
-import { validatePhoneRule } from '@/utils/validate'
 
 export default {
   name: 'TenantForm',
   directives: { permission },
+  emits: ['refreshList'],
   data() {
     return {
       rules: {
         contact: [{ required: true, message: '联系人为必填项', trigger: 'blur' }],
-        phone: [{ required: true, message: '电话为必填项', trigger: 'blur' }, { validator: validatePhoneRule, tigger: 'blur' }],
+        phone: [{ required: true, message: '电话为必填项', trigger: 'blur' }, { validator: this.formValidate.validateTelOrMobileRule, tigger: 'blur' }],
         name: [{ required: true, message: '租户名称为必填项', trigger: 'blur' }],
         userName: [{ required: true, message: '用户名为必填项', trigger: 'blur' }]
       },
@@ -97,11 +97,11 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        // this.$refs['dataForm'].clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createTenant(this.temp).then(response => {
@@ -122,7 +122,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getTenant(id).then(response => {
         if (response.data.code === 0) {
@@ -134,7 +134,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

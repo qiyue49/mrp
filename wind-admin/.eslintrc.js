@@ -18,8 +18,8 @@ module.exports = {
   ],
   rules: {
     'vue/max-attributes-per-line': ['error', {
-      singleline: { max: 5 },
-      multiline: { max: 5 }
+      singleline: { max: 10 },
+      multiline: { max: 10 }
     }],
     'vue/html-self-closing': [
       'error',

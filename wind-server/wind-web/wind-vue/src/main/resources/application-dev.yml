@@ -27,10 +27,9 @@ spring:
 
   #DATABASE CONFIG
   datasource:
-    username: appdev
-    password: Lw820602
-    url: jdbc:mysql://rm-2zej6285404z242zao.mysql.rds.aliyuncs.com:3306/wind?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useInformationSchema=true
-
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/wind?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
 
 #文件上传配置
 #使用的上传存储空间,local本地,aliyun:阿里云

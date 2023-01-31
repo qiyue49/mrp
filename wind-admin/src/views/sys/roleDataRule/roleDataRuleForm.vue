@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
       <el-form-item label="主键" prop="id">
         <el-input v-model="temp.id" />
@@ -14,14 +14,14 @@
         <el-input v-model="temp.roleId" />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -69,11 +69,11 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createRoleDataRule(this.temp).then(response => {
@@ -94,7 +94,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getRoleDataRule(id).then(response => {
         if (response.data.code === 0) {
@@ -106,7 +106,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

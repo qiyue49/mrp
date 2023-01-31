@@ -1,15 +1,15 @@
 <template>
   <div>
     <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
-      <el-button slot="append" icon="el-icon-search" @click="show" />
+      <el-button slot="append" icon="Search" @click="show" />
     </el-input>
-    <el-dialog title="选择用户" :visible.sync="dialogFormVisible" destroy-on-close append-to-body>
+    <el-dialog title="选择用户" v-model="dialogFormVisible" destroy-on-close append-to-body>
       <div class="app-container calendar-list-container">
         <div class="filter-container">
           <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
           <el-input v-model="listQuery.username" style="width: 200px;" class="filter-item" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
           <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
+          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         </div>
 
         <el-table
@@ -51,12 +51,12 @@
 
         <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
       </div>
-      <div slot="footer" class="dialog-footer">
+      <template #footer>
         <el-button @click="dialogFormVisible = false">
-          {{ $t('table.cancel') }}
+          取消
         </el-button>
         <el-button type="primary" @click="select">
-          {{ $t('table.confirm') }}
+          确定
         </el-button>
       </div>
     </el-dialog>

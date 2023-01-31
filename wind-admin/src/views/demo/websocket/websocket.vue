@@ -13,7 +13,7 @@
     >
       {{ item.label }}
     </el-radio>
-    <el-button v-waves :loading="loading" type="primary" icon="el-icon-download" @click="sendMessage">
+    <el-button v-waves :loading="loading" type="primary" icon="Download" @click="sendMessage">
       发送
     </el-button>
   </div>

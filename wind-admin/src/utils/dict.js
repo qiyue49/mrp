@@ -7,7 +7,7 @@ import { isNull } from '@/utils/index'
  * @returns {*}
  */
 export function getDictList(code) {
-  return store.getters.dicts[code]
+  return store.dictStore.dicts[code]
 }
 
 /**
@@ -16,7 +16,7 @@ export function getDictList(code) {
  * @param value
  */
 export function getDictLabel(code, value) {
-  const dictList = store.getters.dicts[code]
+  const dictList = store.dictStore.dicts[code]
   if (isNull(dictList)) {
     return 'Error Code'
   }
@@ -36,7 +36,7 @@ export function getDictLabel(code, value) {
  * @returns {string}
  */
 export function getDictValue(code, label) {
-  const dictList = store.getters.dicts[code]
+  const dictList = store.dictStore.dicts[code]
   if (isNull(dictList)) {
     return 'Error Code'
   }

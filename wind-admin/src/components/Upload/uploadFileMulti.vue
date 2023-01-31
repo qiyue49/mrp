@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      uploadImageUrl: process.env.VUE_APP_BASE_API + '/oss/attachment/upload',
+      uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
       uploadData: { 'base_path': this.basePath },
       myHeaders: { access_token: getToken() },
       imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],

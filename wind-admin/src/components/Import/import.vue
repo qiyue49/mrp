@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="导入" :visible.sync="dialogFormVisible" width="30%" :close-on-click-modal="false">
+  <el-dialog title="导入" v-model="dialogFormVisible" width="30%" :close-on-click-modal="false">
     <el-upload
       v-loading="uploadLoading"
       :data="uploadData"
@@ -15,14 +15,14 @@
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <div slot="tip" class="el-upload__tip">请按照模板上传数据</div>
     </el-upload>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button type="primary" @click="handleTemplate">
-        {{ $t('table.template') }}
+        下载模板
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      uploadImageUrl: process.env.VUE_APP_BASE_API + this.importUrl,
+      uploadImageUrl: import.meta.env.VITE_APP_BASE_API + this.importUrl,
       uploadData: { 'base_path': this.basePath },
       myHeaders: { access_token: getToken() },
       extensions: ['xls', 'xlsx'],
@@ -62,7 +62,7 @@ export default {
     importUrl: {
       immediate: true,
       handler(val) {
-        this.uploadImageUrl = process.env.VUE_APP_BASE_API + val
+        this.uploadImageUrl = import.meta.env.VITE_APP_BASE_API + val
       }
     }
   },

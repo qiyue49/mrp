@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
 
       <el-row :gutter="20">
@@ -91,10 +91,10 @@
         <el-input v-model="temp.remarks" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="请填写备注" />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+    <template #footer>
+      <el-button @click="dialogFormVisible = false">取消</el-button>
       <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData(true)">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
       <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="width: 80%; margin-left:50px;">
       <el-row :gutter="40">
         <el-col :span="24">
@@ -32,14 +32,14 @@
         </el-col>
       </el-row>
     </el-form>
-    <div slot="footer" class="dialog-footer">
+    <template #footer>
       <el-button @click="dialogFormVisible = false">
-        {{ $t('table.cancel') }}
+        取消
       </el-button>
       <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 
@@ -58,10 +58,7 @@ export default {
   components: { Tinymce, uploadImage },
   data() {
     return {
-      uploadImageUrl: 'http://' + process.env.VUE_APP_BASE_API + '/json/oss/upload',
-      dialogImageUrl: '',
       dialogVisible: false,
-
       options: [],
       rules: {
         newsContentTitle: [{ required: true, message: '内容标题为必填项', trigger: 'blur' }],
@@ -110,7 +107,7 @@ export default {
       this.dialogFormVisible = true
       this.$nextTick(() => {
         // console.log("ddddddddddddddddddd")
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       this.options = []
       getNewsContentType().then(response => {
@@ -121,7 +118,7 @@ export default {
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           createNewsContent(this.temp).then(response => {
             if (response.data.code === 0) {
@@ -140,7 +137,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
 
       this.options = []
@@ -159,7 +156,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           updateNewsContent(tempData).then(response => {

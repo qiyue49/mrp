@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import pinia from '@/stores'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 import App from './App.vue'
 import router from './router'
 
@@ -9,9 +10,7 @@ import { isNull } from './utils'
 import formValidate from './utils/formValidate'
 import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
-
-// 如果您正在使用CDN引入，请删除下面一行。
-import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
+import { dictLabel } from '@/filters'
 
 const app = createApp(App)
 
@@ -28,7 +27,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 app.config.globalProperties.dictList = function (code) {
   return pinia.dictStore.dicts[code]
 }
-
+app.config.globalProperties.dictLabel = dictLabel
 // 表单校验
 app.config.globalProperties.formValidate = formValidate
 // pinia

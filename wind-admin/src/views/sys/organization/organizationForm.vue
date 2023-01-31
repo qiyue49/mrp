@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="margin-left:50px;margin-right:50px;">
       <el-form-item label="上级部门" prop="parentIds">
         <el-cascader
@@ -19,12 +19,12 @@
         <el-input v-model="temp.remarks" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+    <template #footer>
+      <el-button @click="dialogFormVisible = false">取消</el-button>
       <el-button v-permission="['sys:organization:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
-        {{ $t('table.confirm') }}
+        确定
       </el-button>
-    </div>
+    </template>
   </el-dialog>
 </template>
 

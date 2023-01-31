@@ -21,9 +21,9 @@
           />
         </el-select>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendEmail">邮件重发</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleSendEmail">发送邮件</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
+      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
     </div>
 
     <el-table
@@ -70,9 +70,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -91,7 +91,7 @@
       />
     </div>
 
-    <el-dialog :visible.sync="dialogFormVisible" title="发送邮件" width="70%">
+    <el-dialog v-model="dialogFormVisible" title="发送邮件" width="70%">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
         <el-form-item label="Email" prop="email">
           <el-input
@@ -110,8 +110,8 @@
           模板内容:{{ template.templateContent }}
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+      <template #footer>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
       </div>
     </el-dialog>

@@ -5,8 +5,8 @@
         <span>菜单名称:</span>
         <el-input v-model="listQuery.keyword" style="width: 200px;" placeholder="请输入菜单名称" @keyup.enter.native="handleFilter" />
       </div>
-      <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button v-permission="['sys:menu:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">{{ $t('table.add') }}</el-button>
+      <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button v-permission="['sys:menu:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
@@ -34,14 +34,14 @@
       </el-table-column>
       <el-table-column width="100" align="center" label="是否可用">
         <template #default="scope">
-          <span>{{ scope.row.enabled | dictLabel('sf') }}</span>
+          <span>{{  dictLabel(scope.row.enabled, 'sf') }}</span>
         </template>
       </el-table-column>
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
         <template #default="scope">
-          <el-button v-permission="['sys:menu:update']" size="small" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)">{{ $t('table.edit') }}</el-button>
-          <el-button v-permission="['sys:menu:delete']" size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}</el-button>
-          <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="text" icon="el-icon-coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
+          <el-button v-permission="['sys:menu:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['sys:menu:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="primary" text icon="Coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
         </template>
       </el-table-column>
     </el-table>

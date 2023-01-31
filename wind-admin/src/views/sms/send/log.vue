@@ -22,9 +22,9 @@
         </el-select>
       </div>
 
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">{{ $t('table.search') }}</el-button>
-      <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="el-icon-document" @click="handleRetrySendMsg">短信重发</el-button>
-      <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleSendMsg">发送短信</el-button>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
     </div>
 
     <el-table
@@ -81,9 +81,9 @@
         </template>
       </el-table-column>
 
-      <el-table-column :label="$t('table.actions')" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template #default="scope">
-          <el-button size="small" type="text" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(scope.row)">{{ $t('table.delete') }}
+          <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -102,7 +102,7 @@
       />
     </div>
 
-    <el-dialog :visible.sync="dialogFormVisible" title="发送短信">
+    <el-dialog v-model="dialogFormVisible" title="发送短信">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
         <el-form-item label="电话号码" prop="phone">
           <el-input
@@ -119,8 +119,8 @@
           <json-editor ref="jsonEditor" v-model="temp.data" />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
+      <template #footer>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" @click="runSendMsg">发送短信</el-button>
       </div>
     </el-dialog>

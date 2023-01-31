@@ -1,9 +1,9 @@
 <template>
   <div class="upload-container">
-    <el-button :style="{background:color,borderColor:color}" icon="el-icon-upload" size="mini" type="primary" @click=" dialogVisible=true">
+    <el-button :style="{background:color,borderColor:color}" icon="Upload" size="mini" type="primary" @click=" dialogVisible=true">
       upload
     </el-button>
-    <el-dialog :visible.sync="dialogVisible" append-to-body>
+    <el-dialog v-model="dialogVisible" append-to-body>
       <el-upload
         :multiple="true"
         :file-list="fileList"
@@ -42,7 +42,7 @@ export default {
   },
   data() {
     return {
-      uploadUrl: process.env.VUE_APP_BASE_API + '/json/oss/imgToBase64',
+      uploadUrl: import.meta.env.VITE_APP_BASE_API + '/json/oss/imgToBase64',
       dialogVisible: false,
       listObj: {},
       fileList: []

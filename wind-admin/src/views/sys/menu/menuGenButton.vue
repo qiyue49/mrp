@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="generateButtonDialogFormVisible" title="生成按钮" width="60%" :close-on-click-modal="false">
+  <el-dialog v-model="generateButtonDialogFormVisible" title="生成按钮" width="60%" :close-on-click-modal="false">
     <el-form ref="generateButtonDataForm" :rules="generateButtonRules" :model="generateButtonTemp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
       <el-form-item label="父级权限" prop="parentPermission">
         <el-input v-model="generateButtonTemp.parentPermission" />
@@ -28,10 +28,10 @@
         </el-radio>
       </el-form-item>
     </el-form>
-    <div slot="footer" class="dialog-footer">
-      <el-button @click="generateButtonDialogFormVisible = false">{{ $t('table.cancel') }}</el-button>
-      <el-button type="primary" :loading="loading" @click="generateButton">{{ $t('table.confirm') }}</el-button>
-    </div>
+    <template #footer>
+      <el-button @click="generateButtonDialogFormVisible = false">取消</el-button>
+      <el-button type="primary" :loading="loading" @click="generateButton">确定</el-button>
+    </template>
   </el-dialog>
 </template>
 <script>

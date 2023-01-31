@@ -19,11 +19,11 @@
             :value="item.value" />
         </el-select>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        {{ $t('table.search') }}
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
       </el-button>
-      <el-button v-permission="['biz:event:event:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        {{ $t('table.add') }}
+      <el-button v-permission="['biz:event:event:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+        新增
       </el-button>
     </div>
 
@@ -49,7 +49,7 @@
       </el-table-column>
       <el-table-column label="类型" min-width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.type | dictLabel('event_type') }}</span>
+          <span>{{  dictLabel(row.type, 'event_type') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="用户" min-width="150px">
@@ -64,11 +64,11 @@
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button v-permission="['biz:event:event:update']" type="text" size="small" icon="el-icon-edit" @click="handleUpdate(row)">
-            {{ $t('table.edit') }}
+          <el-button v-permission="['biz:event:event:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+            编辑
           </el-button>
-          <el-button v-permission="['biz:event:event:delete']" type="text" size="small" icon="el-icon-delete" class="delete-text-btn" @click="handleDelete(row,'deleted')">
-            {{ $t('table.delete') }}
+          <el-button v-permission="['biz:event:event:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
+            删除
           </el-button>
         </template>
       </el-table-column>
