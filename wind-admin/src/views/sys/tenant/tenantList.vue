@@ -3,24 +3,24 @@
     <div class="filter-container">
       <div class="filter-item">
         <span>租户标识:</span>
-        <el-input v-model="listQuery.tenantId" placeholder="请输入租户标识" style="width: 200px" />
+        <el-input v-model="listQuery.tenantId" placeholder="请输入租户标识" />
       </div>
       <div class="filter-item">
         <span>联系人:</span>
-        <el-input v-model="listQuery.contact" placeholder="请输入联系人" style="width: 200px" />
+        <el-input v-model="listQuery.contact" placeholder="请输入联系人" />
       </div>
       <div class="filter-item">
         <span>电话:</span>
-        <el-input v-model="listQuery.phone" placeholder="请输入电话" style="width: 200px" />
+        <el-input v-model="listQuery.phone" placeholder="请输入电话" />
       </div>
       <div class="filter-item">
         <span>租户名称:</span>
-        <el-input v-model="listQuery.name" placeholder="请输入租户名称" style="width: 200px" />
+        <el-input v-model="listQuery.name" placeholder="请输入租户名称" />
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['sys:tenant:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['sys:tenant:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -70,7 +70,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
     <tenant-form ref="form" @refreshList="getList" />
 

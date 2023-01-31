@@ -4,10 +4,10 @@
       <div class="filter-container">
         <div class="filter-item">
           <span>字典标签或值:</span>
-          <el-input v-model="listQuery.keyword" style="width: 200px;" placeholder="请输入字典标签或值" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.keyword" placeholder="请输入字典标签或值" @keyup.enter="handleFilter" />
         </div>
         <el-button v-permission="['sys:dict:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button v-permission="['sys:dict:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+        <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
       <el-table

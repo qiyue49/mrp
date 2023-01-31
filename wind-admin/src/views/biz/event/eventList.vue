@@ -3,11 +3,11 @@
     <div class="filter-container">
       <div class="filter-item">
         <span>标题:</span>
-        <el-input v-model="listQuery.title" placeholder="请输入标题" style="width: 200px" />
+        <el-input v-model="listQuery.title" placeholder="请输入标题" />
       </div>
       <div class="filter-item">
         <span>用户:</span>
-        <el-input v-model="listQuery.userId" placeholder="请输入用户" style="width: 200px" />
+        <el-input v-model="listQuery.userId" placeholder="请输入用户" />
       </div>
       <div class="filter-item">
         <span>类型:</span>
@@ -22,7 +22,7 @@
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['biz:event:event:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -74,7 +74,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
     <event-form ref="form" @refreshList="getList" />
 

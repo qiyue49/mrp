@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="标题" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['test:table:table:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['test:table:table:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
@@ -85,7 +85,7 @@
       </el-table-column>
     </el-table>
     <import ref="import" template-url="/test/table/table/template" import-url="/test/table/table/import" />
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
     <table-form ref="form" @refreshList="getList" />
 

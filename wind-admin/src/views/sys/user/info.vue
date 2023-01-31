@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div>
     <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
       <el-form-item label="姓名" prop="realname">
         <el-input v-model="userForm.realname" />

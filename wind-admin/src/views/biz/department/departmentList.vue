@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-permission="['biz:department:department:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['biz:department:department:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>

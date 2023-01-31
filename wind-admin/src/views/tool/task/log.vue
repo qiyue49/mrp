@@ -1,17 +1,17 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div>
     <div class="filter-container">
       <div class="filter-item">
         <span>任务名称:</span>
-        <el-input v-model="listQuery.jobName" style="width: 200px;" placeholder="请输入任务名称" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.jobName" placeholder="请输入任务名称" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>执行类:</span>
-        <el-input v-model="listQuery.executeClass" style="width: 200px;" placeholder="请输入执行类" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.executeClass" placeholder="请输入执行类" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>状态:</span>
-        <el-select v-model="listQuery.status" style="width: 200px;" placeholder="请选择状态">
+        <el-select v-model="listQuery.status" placeholder="请选择状态">
           <el-option label="全部状态" value="" />
           <el-option
             v-for="item in statusOptions"
@@ -88,7 +88,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
   </div>
 </template>
 

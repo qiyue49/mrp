@@ -1,16 +1,16 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div>
     <div class="filter-container">
       <div class="filter-item">
         <span>角色名称:</span>
-        <el-input v-model="listQuery.name" style="width: 200px;" placeholder="请输入角色名称" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.name" placeholder="请输入角色名称" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>角色编码:</span>
-        <el-input v-model="listQuery.code" style="width: 200px;" placeholder="请输入角色编码" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.code" placeholder="请输入角色编码" @keyup.enter="handleFilter" />
       </div>
       <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button v-permission="['sys:role:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+      <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
     <el-table

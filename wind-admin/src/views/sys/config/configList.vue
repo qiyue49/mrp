@@ -3,16 +3,16 @@
     <div class="filter-container">
       <div class="filter-item">
         <span>配置名称:</span>
-        <el-input v-model="listQuery.name" placeholder="请输入配置名称" style="width: 200px" />
+        <el-input v-model="listQuery.name" placeholder="请输入配置名称" />
       </div>
       <div class="filter-item">
         <span>配置编码:</span>
-        <el-input v-model="listQuery.code" placeholder="请输入配置编码" style="width: 200px" />
+        <el-input v-model="listQuery.code" placeholder="请输入配置编码" />
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['sys:config:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['sys:config:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>

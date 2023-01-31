@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div>
     <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
       <el-form-item label="原密码" prop="oldPassword">
         <el-input v-model.trim="userForm.oldPassword" :type="passwordType" placeholder="原密码" />

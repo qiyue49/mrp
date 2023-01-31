@@ -1,17 +1,17 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <template>
     <div class="filter-container">
       <div class="filter-item">
         <span>手机号码:</span>
-        <el-input v-model="listQuery.phone" style="width: 200px;" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>模板编码:</span>
-        <el-input v-model="listQuery.code" style="width: 200px;" placeholder="请输入模板编码" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.code" placeholder="请输入模板编码" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>发送状态:</span>
-        <el-select v-model="listQuery.status" style="width: 200px;" placeholder="请选择发送状态">
+        <el-select v-model="listQuery.status" placeholder="请选择发送状态">
           <el-option label="全部状态" value="" />
           <el-option
             v-for="item in statusOptions"
@@ -122,7 +122,7 @@
       <template #footer>
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" @click="runSendMsg">发送短信</el-button>
-      </div>
+      </template>
     </el-dialog>
 
   </div>

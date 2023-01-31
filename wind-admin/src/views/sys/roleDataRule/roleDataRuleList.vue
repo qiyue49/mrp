@@ -4,16 +4,16 @@
       <div class="filter-container">
         <div class="filter-item">
           <span>资源编号:</span>
-          <el-input v-model="listQuery.resourceCode" placeholder="请输入资源编号" style="width: 200px" />
+          <el-input v-model="listQuery.resourceCode" placeholder="请输入资源编号" />
         </div>
         <div class="filter-item">
           <span>数据权限名称:</span>
-          <el-input v-model="listQuery.scopeName" placeholder="请输入数据权限名称" style="width: 200px" />
+          <el-input v-model="listQuery.scopeName" placeholder="请输入数据权限名称" />
         </div>
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
-        <el-button v-permission="['sys:datarule:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+        <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -63,7 +63,7 @@
         </el-table-column>
       </el-table>
 
-      <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+      <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
       <data-rule-form ref="form" @refreshList="getList" />
 

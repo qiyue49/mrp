@@ -1,7 +1,7 @@
 <template>
   <el-row>
     <el-col :span="6">
-      <div class="app-container calendar-list-container">
+      <div>
         <div id="treeBox" class="filter-container">
           <el-table :data="treeList" style="width: 100%;" row-key="id" border lazy :load="load" @row-click="getListByTreeId">
             <el-table-column prop="name" label="名称" sortable />
@@ -14,7 +14,7 @@
         <div class="filter-container">
           <div class="filter-item">
             <span>姓名:</span>
-            <el-input v-model="listQuery.name" placeholder="请输入姓名" style="width: 200px" />
+            <el-input v-model="listQuery.name" placeholder="请输入姓名" />
           </div>
           <div class="filter-item">
             <span>性别:</span>
@@ -29,7 +29,7 @@
           <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
             搜索
           </el-button>
-          <el-button v-permission="['biz:employee:employee:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+          <el-button v-permission="['biz:employee:employee:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
             新增
           </el-button>
         </div>
@@ -76,7 +76,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+        <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
         <employee-form ref="form" @refreshList="getList" />
       </div>

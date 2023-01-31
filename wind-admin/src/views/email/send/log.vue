@@ -1,17 +1,17 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <template>
     <div class="filter-container">
       <div class="filter-item">
         <span>Email:</span>
-        <el-input v-model="listQuery.email" style="width: 200px;" placeholder="请输入Email" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.email" placeholder="请输入Email" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>主题:</span>
-        <el-input v-model="listQuery.subject" style="width: 200px;" placeholder="请输入主题" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.subject" placeholder="请输入主题" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>发送状态:</span>
-        <el-select v-model="listQuery.status" style="width: 200px;" placeholder="请选择发送状态">
+        <el-select v-model="listQuery.status" placeholder="请选择发送状态">
           <el-option label="全部状态" value="" />
           <el-option
             v-for="item in statusOptions"
@@ -23,7 +23,7 @@
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
     </div>
 
     <el-table
@@ -113,7 +113,7 @@
       <template #footer>
         <el-button @click="dialogFormVisible = false">取消</el-button>
         <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
-      </div>
+      </template>
     </el-dialog>
 
   </div>

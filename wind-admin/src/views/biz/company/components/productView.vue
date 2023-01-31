@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -42,7 +42,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
     <product-form ref="form" @refreshList="getList" />
 

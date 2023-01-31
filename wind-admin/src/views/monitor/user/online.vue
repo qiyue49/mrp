@@ -1,13 +1,13 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div>
     <div class="filter-container">
       <div class="filter-item">
         <span>用户名:</span>
-        <el-input v-model="listQuery.username" placeholder="请输入用户名" style="width: 200px" />
+        <el-input v-model="listQuery.username" placeholder="请输入用户名" />
       </div>
       <div class="filter-item">
         <span>IP:</span>
-        <el-input v-model="listQuery.loginIp" placeholder="请输入IP" style="width: 200px" />
+        <el-input v-model="listQuery.loginIp" placeholder="请输入IP" />
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
     </div>

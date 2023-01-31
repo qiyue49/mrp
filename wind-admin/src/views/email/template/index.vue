@@ -1,16 +1,16 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <template>
     <div class="filter-container">
       <div class="filter-item">
         <span>模版名称:</span>
-        <el-input v-model="listQuery.name" style="width: 200px;" class="filter-item" placeholder="请输入模版名称" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.name" class="filter-item" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
       </div>
       <div class="filter-item">
         <span>模版编码:</span>
-        <el-input v-model="listQuery.code" style="width: 200px;" class="filter-item" placeholder="请输入模版编码" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.code" class="filter-item" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
       </div>
       <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
     <el-table
@@ -72,7 +72,7 @@
         <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
           确定
         </el-button>
-      </div>
+      </template>
     </el-dialog>
 
   </div>

@@ -1,14 +1,14 @@
 <template>
-  <div class="app-container calendar-list-container">
+  <div>
     <div class="filter-container">
       <div class="filter-item">
         <span>名称:</span>
-        <el-input v-model="listQuery.name" placeholder="请输入名称" style="width: 200px;" @keyup.enter.native="handleFilter" />
+        <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
       </div>
       <el-button v-permission="['sys:organization:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['sys:organization:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+      <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border>
       <el-table-column prop="name" label="名称" width="180" />

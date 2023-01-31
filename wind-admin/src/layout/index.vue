@@ -1,5 +1,5 @@
 <template>
-  <div :class="classObj" class="app-wrapper">
+  <div :class="classObj">
     <el-container>
       <el-aside>
         <sidebar class="sidebar-container" />

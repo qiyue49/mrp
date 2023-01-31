@@ -1,14 +1,14 @@
 <template>
-  <div>
+  <template>
     <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
       <el-button slot="append" icon="Search" @click="show" />
     </el-input>
     <el-dialog title="选择用户" v-model="dialogFormVisible" destroy-on-close append-to-body>
-      <div class="app-container calendar-list-container">
+      <div>
         <div class="filter-container">
-          <el-input v-model="listQuery.realname" style="width: 200px;" class="filter-item" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
-          <el-input v-model="listQuery.username" style="width: 200px;" class="filter-item" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
-          <el-input v-model="listQuery.phone" style="width: 200px;" class="filter-item" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
+          <el-input v-model="listQuery.realname" class="filter-item" placeholder="请输入姓名" @keyup.enter="handleFilter" />
+          <el-input v-model="listQuery.username" class="filter-item" placeholder="请输入用户名" @keyup.enter="handleFilter" />
+          <el-input v-model="listQuery.phone" class="filter-item" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
           <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         </div>
 
@@ -49,7 +49,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+        <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
       </div>
       <template #footer>
         <el-button @click="dialogFormVisible = false">
@@ -58,7 +58,7 @@
         <el-button type="primary" @click="select">
           确定
         </el-button>
-      </div>
+      </template>
     </el-dialog>
   </div>
 </template>

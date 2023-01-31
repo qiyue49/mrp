@@ -1,7 +1,7 @@
 <template>
-  <el-row>
+  <el-row :gutter="40">
     <el-col :span="6">
-      <div class="app-container calendar-list-container">
+      <div>
         <div id="treeBox" class="filter-container">
           <el-table :data="treeList" style="width: 100%;" row-key="id" border @row-click="submitForm">
             <el-table-column prop="name" label="名称" sortable />
@@ -10,23 +10,23 @@
       </div>
     </el-col>
     <el-col :span="18">
-      <div class="app-container calendar-list-container">
+      <div>
         <div class="filter-container">
           <div class="filter-item">
             <span>姓名:</span>
-            <el-input v-model="listQuery.realname" style="width: 200px;" placeholder="请输入姓名" @keyup.enter.native="handleFilter" />
+            <el-input v-model="listQuery.realname" placeholder="请输入姓名" @keyup.enter="handleFilter" />
           </div>
           <div class="filter-item">
             <span>用户名:</span>
-            <el-input v-model="listQuery.username" style="width: 200px;" placeholder="请输入用户名" @keyup.enter.native="handleFilter" />
+            <el-input v-model="listQuery.username" placeholder="请输入用户名" @keyup.enter="handleFilter" />
           </div>
           <div class="filter-item">
             <span>手机号码:</span>
-            <el-input v-model="listQuery.phone" style="width: 200px;" placeholder="请输入手机号码" @keyup.enter.native="handleFilter" />
+            <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
           </div>
           <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-          <el-button v-permission="['sys:user:add']" class="filter-item" style="margin-left: 10px;" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-          <el-button v-permission="['sys:user:export']" v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+          <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
         </div>
 
         <el-table
@@ -39,29 +39,29 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column width="150" align="center" label="姓名">
+          <el-table-column min-width="150" align="center" label="姓名">
             <template #default="scope">
               <span>{{ scope.row.realname }}</span>
             </template>
           </el-table-column>
-          <el-table-column width="120" label="用户名">
+          <el-table-column min-width="120" label="用户名">
             <template #default="scope">
               <span>{{ scope.row.username }}</span>
             </template>
           </el-table-column>
-          <el-table-column width="120" align="center" label="联系电话">
+          <el-table-column min-width="120" align="center" label="联系电话">
             <template #default="scope">
               <span>{{ scope.row.phone }}</span>
             </template>
           </el-table-column>
-          <el-table-column width="160" align="center" label="可否登录">
+          <el-table-column min-width="160" align="center" label="可否登录">
             <template #default="scope">
               <el-tag :type="statusFilter(scope.row.status)">
-                {{  dictLabel(scope.row.status, 'sf') }}
+                {{ dictLabel(scope.row.status, 'sf') }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column width="160" align="center" label="部门">
+          <el-table-column min-width="160" align="center" label="部门">
             <template #default="scope">
               <span>{{ scope.row.organization.name }}</span>
             </template>
@@ -76,7 +76,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+        <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
         <user-form ref="form" @refreshList="getList" />
 
@@ -237,12 +237,12 @@ export default {
       this.modifyPassword.id = row.id // copy obj
       this.dialogFormPasswordVisible = true
       this.$nextTick(() => {
-        this.$refs['dataModifyForm'].clearValidate()
+        this.$refs.dataModifyForm.clearValidate()
       })
     },
     postModifyPassword() {
       this.loading = false
-      this.$refs['dataModifyForm'].validate((valid) => {
+      this.$refs.dataModifyForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.modifyPassword)
@@ -275,7 +275,7 @@ export default {
       })
     },
     handleInsertByUserId(selectCurentUserId, roleIds) {
-      var idsStr = roleIds.join(',')
+      const idsStr = roleIds.join(',')
       insertByUserId(selectCurentUserId, idsStr).then((response) => {
         if (response.data.code === 0) {
           this.$message.success('设置成功')
@@ -285,7 +285,7 @@ export default {
       })
     },
     handleDeleteByUserId(selectCurentUserId, roleIds) {
-      var idsStr = roleIds.join(',')
+      const idsStr = roleIds.join(',')
       deleteByUserId(selectCurentUserId, idsStr).then((response) => {
         if (response.data.code === 0) {
           this.$message('撤回成功')
