@@ -97,7 +97,7 @@
         确定
       </el-button>
       <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
-    </div>
+    </template>
 
     <icon-selector ref="iconSelector" @iconSelect="addCreateData" />
 
