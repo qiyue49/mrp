@@ -44,7 +44,7 @@
 
 <script>
 import { mapState } from 'pinia'
-import Hamburger from '@/components/Hamburger'
+import Hamburger from '@/layout/components/Hamburger'
 import Search from '@/layout/components/HeaderSearch'
 import defaultAvatar from '@/assets/img/avatar.png'
 import Setting from './Settings'
