@@ -38,7 +38,6 @@ export default {
 .svg-icon {
   margin-left: 10px;
   margin-right: 10px;
-  vertical-align: -0.15em;
   overflow: hidden;
   fill: currentColor;
 }

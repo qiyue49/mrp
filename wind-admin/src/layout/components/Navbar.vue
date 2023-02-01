@@ -5,11 +5,7 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
-
-        <el-tooltip content="布局大小" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip>
+        <search class="right-menu-item" />
 
         <setting class="right-menu-item hover-effect" />
       </template>
@@ -19,26 +15,28 @@
           <img :src="avatarUrl+'?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom"></i>
         </div>
-        <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
-            <el-dropdown-item>
-              个人信息
+        <template #dropdown>
+          <el-dropdown-menu>
+            <router-link to="/profile/index">
+              <el-dropdown-item>
+                个人信息
+              </el-dropdown-item>
+            </router-link>
+            <router-link to="/sys/user/info">
+              <el-dropdown-item>
+                修改信息
+              </el-dropdown-item>
+            </router-link>
+            <router-link to="/sys/user/changePassword">
+              <el-dropdown-item>
+                修改密码
+              </el-dropdown-item>
+            </router-link>
+            <el-dropdown-item divided>
+              <span style="display:block;" @click="logout">退出登录</span>
             </el-dropdown-item>
-          </router-link>
-          <router-link to="/sys/user/info">
-            <el-dropdown-item>
-              修改信息
-            </el-dropdown-item>
-          </router-link>
-          <router-link to="/sys/user/changePassword">
-            <el-dropdown-item>
-              修改密码
-            </el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">退出登录</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>
@@ -47,8 +45,7 @@
 <script>
 import { mapState } from 'pinia'
 import Hamburger from '@/components/Hamburger'
-import SizeSelect from '@/components/SizeSelect'
-import Search from '@/components/HeaderSearch'
+import Search from '@/layout/components/HeaderSearch'
 import defaultAvatar from '@/assets/img/avatar.png'
 import Setting from './Settings'
 import TopMenu from '@/layout/components/TopMenu/topMenu'
@@ -61,7 +58,6 @@ export default {
     TopMenu,
     Setting,
     Hamburger,
-    SizeSelect,
     Search
   },
   computed: {
@@ -88,6 +84,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.router-link-active {
+  text-decoration: none;
+}
+a{
+  text-decoration: none;
+}
 .navbar {
   height: 50px;
   overflow: hidden;
