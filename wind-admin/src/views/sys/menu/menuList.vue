@@ -23,7 +23,7 @@
       </el-table-column>
       <el-table-column width="80" align="center" label="排序">
         <template #default="scope">
-          <el-input v-model="scope.row.sort" size="mini" @change="handleChangeSort(scope.row.id, scope.row.sort)" />
+          <el-input v-model="scope.row.sort" @change="handleChangeSort(scope.row.id, scope.row.sort)" />
         </template>
       </el-table-column>
       <el-table-column width="150" label="图标">

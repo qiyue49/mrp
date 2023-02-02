@@ -1,12 +1,16 @@
-// const req = require.context('@/assets/icons/svg', false, /\.svg$/)
-// const requireAll = requireContext => requireContext.keys()
-//
-// const re = /\.\/(.*)\.svg/
-//
-// const svgIcons = requireAll(req).map(i => {
-//   return i.match(re)[1]
-// })
-const files = import.meta.globEager('@/assets/mdcImgs/*.png')
-const svgIcons = Object.values(files).map((v) => v.default)
+function getFileName(url) {
+  let name = ''
+  if (url !== null && url !== '') {
+    name = url.substring(url.lastIndexOf('/') + 1)
+  } else {
+    name = ''
+  }
+  return name.split('.')[0]
+}
+const files = import.meta.globEager('@/assets/icons/svg/*.svg')
+console.log('Object.values(files)', Object.values(files))
+const svgIcons = Object.values(files).map(i => {
+  return getFileName(i.default)
+})
 
 export default svgIcons

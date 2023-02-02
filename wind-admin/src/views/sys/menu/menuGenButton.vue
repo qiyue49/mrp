@@ -38,6 +38,7 @@
 import { generateButton } from '@/api/sys/menu'
 export default {
   name: 'MenuGenButton',
+  emits: ['refreshList'],
   data() {
     return {
       buttonInit: [

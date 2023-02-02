@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
 
       <el-row :gutter="20">
@@ -107,10 +107,14 @@
 import { createMenu, updateMenu } from '@/api/sys/menu'
 import iconSelector from '@/components/IconSelector'
 import { isExternal } from '@/utils/validate'
+import permission from '@/directive/permission/permission'
+import waves from '@/directive/waves'
 
 export default {
   name: 'MenuForm',
+  directives: { permission },
   components: { iconSelector },
+  emits: ['refreshList'],
   data() {
     return {
       list: [],
@@ -202,7 +206,7 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     addIcon() {
@@ -217,7 +221,7 @@ export default {
           this.temp.parentId = parentId
         }
       }
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
@@ -260,11 +264,11 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     updateData(refresh) {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           const parentIds = this.temp.parentIds
           if (parentIds !== undefined && parentIds !== '') {
