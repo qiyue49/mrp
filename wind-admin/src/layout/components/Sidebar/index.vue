@@ -10,7 +10,7 @@
         mode="vertical"
         router
       >
-        <sidebar-item :menu="menus" />
+        <sidebar-item v-for="item in menus" :key="item.id" :menu="item" />
       </el-menu>
     </el-scrollbar>
   </div>
