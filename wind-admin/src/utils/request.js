@@ -3,7 +3,7 @@ import qs from 'qs'
 import { refreshToken } from '@/api/sys/oauth2'
 import { getToken, getRefreshToken } from '@/utils/auth'
 
-import pinia from '@/stores'
+import store from '@/stores'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { isNull } from './index'
 
@@ -22,9 +22,9 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // Do something before request is sent
-    if (!isNull(pinia.userStore.token)) {
+    if (!isNull(store.userStore.token)) {
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      config.headers.access_token = pinia.userStore.token
+      config.headers.access_token = store.userStore.token
     }
     return config
   },
@@ -52,11 +52,11 @@ service.interceptors.response.use(
         const refreshTokenData = getRefreshToken()
         const tokenResponse = await refreshToken(refreshTokenData)
         const data = tokenResponse.data
-        pinia.userStore.setToken(data.access_token)
+        store.userStore.setToken(data.access_token)
         const originalRequest = response.config
         originalRequest._retry = true
         // Do something before request is sent
-        if (pinia.userStore.token) {
+        if (store.userStore.token) {
           // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
           originalRequest.headers.access_token = getToken()
         }
@@ -68,7 +68,7 @@ service.interceptors.response.use(
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          pinia.userStore.logout().then(() => {
+          store.userStore.logout().then(() => {
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
         })
