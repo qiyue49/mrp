@@ -77,6 +77,6 @@ export default {
   height: auto;
 }
 .el-main {
-  min-height: calc(100vh - 108px);
+  min-height: calc(100vh - 109px);
 }
 </style>
