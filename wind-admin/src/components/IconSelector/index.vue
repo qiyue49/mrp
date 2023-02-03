@@ -1,6 +1,9 @@
 <template>
   <div>
     <el-input v-model="name" readonly style="width: 100%">
+      <template #prepend>
+        <svg-icon :icon-class="name" />
+      </template>
       <template #append>
         <el-button icon="Search" @click="show" />
       </template>
@@ -8,21 +11,17 @@
     <el-dialog v-model="iconFormVisible" title="选择图标" :close-on-click-modal="false" append-to-body>
       <el-form style="width: 90%; margin-left:9%;">
         <el-row :gutter="20">
-          <el-col :span="24">
-            <el-input v-model="name" suffix-icon="Search" placeholder="请输入图标名称" @input="filterIcons"/>
-          </el-col>
-          <el-col :span="24" style="margin-top: 20px">
-            <el-scrollbar height="400px">
-              <el-row>
-                <el-col
-                    v-for="item in iconList" :key="item" :span="6" :class="{'active': item === isActive}"
-                    @click="activeFun(item)">
-                  <svg-icon :icon-class="item"/>
-                  <span class="col-span">{{ item }}</span>
-                </el-col>
-              </el-row>
-            </el-scrollbar>
-          </el-col>
+          <el-input v-model="name" suffix-icon="Search" placeholder="请输入图标名称" @input="filterIcons"/>
+          <el-scrollbar height="400px" style="margin-top:20px">
+            <el-row>
+              <el-col
+                v-for="item in iconList" :key="item" :span="6" :class="{'active': item === isActive}"
+                @click="activeFun(item)">
+                <svg-icon :icon-class="item"/>
+                <span class="col-span">{{ item }}</span>
+              </el-col>
+            </el-row>
+          </el-scrollbar>
         </el-row>
       </el-form>
       <template #footer>
@@ -55,7 +54,7 @@ export default {
       iconFormVisible: false
     }
   },
-  watch:{
+  watch: {
     value: {
       immediate: true,
       handle(val) {
