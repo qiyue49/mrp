@@ -3,7 +3,7 @@ import qs from 'qs'
 import { refreshToken } from '@/api/sys/oauth2'
 import { getToken, getRefreshToken } from '@/utils/auth'
 
-import store from '@/stores'
+import { store } from '@/stores'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { isNull } from './index'
 

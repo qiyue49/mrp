@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import pinia from '@/stores'
+import pinia, { store } from '@/stores'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
@@ -16,7 +16,6 @@ const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
-pinia.init()
 app.use(ElementPlus)
 
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
@@ -25,13 +24,13 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 // 定义字典全局方法
 app.config.globalProperties.dictList = function (code) {
-  return pinia.dictStore.dicts[code]
+  return store.dictStore.dicts[code]
 }
 app.config.globalProperties.dictLabel = dictLabel
 // 表单校验
 app.config.globalProperties.formValidate = formValidate
 // pinia
-app.config.globalProperties.$store = pinia
+app.config.globalProperties.$store = store
 // 判空函数
 app.config.globalProperties.isNull = isNull
 

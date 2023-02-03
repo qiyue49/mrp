@@ -1,6 +1,6 @@
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { getToken } from '@/utils/auth'
-import store from '@/stores'
+import { store } from '@/stores'
 import { ElMessage } from 'element-plus'
 
 export const Layout = () => import('@/layout/index.vue')

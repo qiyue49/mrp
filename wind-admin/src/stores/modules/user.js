@@ -10,7 +10,7 @@ import {
 } from '@/utils/auth'
 import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
-import stores from '@/stores'
+import { store } from '@/stores'
 import { ref } from 'vue'
 
 export const userStore = defineStore('user', () => {
@@ -70,8 +70,8 @@ export const userStore = defineStore('user', () => {
         removeToken()
         removeRefreshToken()
         resetRouter()
-        stores.permissionStore.resetPermissionsAndRoute()
-        stores.tagsViewStore.delAllViews()
+        store.permissionStore.resetPermissionsAndRoute()
+        store.tagsViewStore.delAllViews()
         resolve()
       }).catch(error => {
         reject(error)

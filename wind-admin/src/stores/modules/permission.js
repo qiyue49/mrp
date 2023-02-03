@@ -1,6 +1,6 @@
 import { constantRoutes, constantMenus } from '@/router'
 import { getMenus, fetchPermissionList } from '@/api/sys/menu'
-import store from '../index'
+import { store } from '../index'
 import { isNull } from '@/utils'
 import { isExternal } from '@/utils/validate'
 import { defineStore } from 'pinia'

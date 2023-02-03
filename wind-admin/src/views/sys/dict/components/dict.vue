@@ -82,7 +82,7 @@
 import { fetchDictList, createDict, deleteDict, updateDict } from '@/api/sys/dict'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import store from '@/stores'
+import { store } from '@/stores'
 
 export default {
   name: 'SysDictComponent',

@@ -1,5 +1,5 @@
 // translate router.meta.title, be used in breadcrumb sidebar tagsview
-import store from '@/stores'
+import { store } from '@/stores'
 export function generateTitle(title) {
   const hasKey = this.$te('route.' + title)
 

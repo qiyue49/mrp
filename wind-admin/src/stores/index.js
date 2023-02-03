@@ -8,13 +8,13 @@ import { permissionStore } from './modules/permission'
 import { tagsViewStore } from './modules/tagsView'
 
 const pinia = createPinia()
-pinia.init = function () {
-  pinia.userStore = userStore(pinia)
-  pinia.dictStore = dictStore(pinia)
-  pinia.sysConfigStore = sysConfigStore(pinia)
-  pinia.settingStore = settingStore(pinia)
-  pinia.appStore = appStore(pinia)
-  pinia.permissionStore = permissionStore(pinia)
-  pinia.tagsViewStore = tagsViewStore(pinia)
+export const store = {
+  userStore: userStore(pinia),
+  dictStore: dictStore(pinia),
+  sysConfigStore: sysConfigStore(pinia),
+  settingStore: settingStore(pinia),
+  appStore: appStore(pinia),
+  permissionStore: permissionStore(pinia),
+  tagsViewStore: tagsViewStore(pinia)
 }
 export default pinia

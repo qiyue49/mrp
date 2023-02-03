@@ -58,7 +58,7 @@
                       ref="username"
                       v-model="loginForm.identify"
                       prefix-icon="Postcard"
-                      :placeholder="验证码"
+                      placeholder="验证码"
                       name="identify"
                       type="text"
                       tabindex="3" />
@@ -224,10 +224,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app {
-  width: 100%;
+  width: 75%;
   height: 100vh;
   background-position: top center;
-  background-size: 100% 100%;
+  background-size: 100% 110%;
   position: absolute;
   background-image: url("@/assets/img/login/login1/login1.png");
   justify-content: center;
