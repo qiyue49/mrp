@@ -76,9 +76,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="图标" prop="icon">
-            <el-input v-model="temp.icon" clearable :disabled="temp.type === '3'" @focus="addIcon" @clear="clear1" >
-              <i slot="prefix" :class="['fas', 'fa-' + temp.icon]" style="line-height: 36px;"></i>
-            </el-input>
+            <icon-selector v-model="temp.icon" :disabled="temp.type === '3'" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
