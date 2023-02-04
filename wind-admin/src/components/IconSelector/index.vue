@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <el-input v-model="name" readonly style="width: 100%">
+  <div style="width: 100%">
+    <el-input v-model="name" readonly>
       <template #prefix>
         <svg-icon :icon-class="name" />
       </template>
@@ -57,7 +57,7 @@ export default {
   watch: {
     modelValue: {
       immediate: true,
-      handle(val) {
+      handler(val) {
         this.name = val
       }
     }

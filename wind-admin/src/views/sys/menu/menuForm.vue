@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false" draggable>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 90%; margin-left:50px;">
 
       <el-row :gutter="20">
