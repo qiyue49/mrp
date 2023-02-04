@@ -24,27 +24,27 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="配置名称" class-name="status-col" width="350px">
+      <el-table-column min-width="150" label="配置名称">
         <template #default="{row}">
           {{ row.name }}
         </template>
       </el-table-column>
-      <el-table-column label="配置编码" class-name="status-col" width="350px">
+      <el-table-column min-width="150" label="配置编码">
         <template #default="{row}">
           {{ row.code }}
         </template>
       </el-table-column>
-      <el-table-column label="参数值" class-name="status-col">
+      <el-table-column min-width="150" label="参数值">
         <template #default="{row}">
           {{ row.value }}
         </template>
       </el-table-column>
-      <el-table-column label="备注" class-name="status-col">
+      <el-table-column min-width="150" label="备注">
         <template #default="{row}">
           {{ row.remarks }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="230">
+      <el-table-column min-width="150" label="操作">
         <template #default="{row}">
           <el-button v-permission="['sys:config:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -56,6 +56,8 @@
       </el-table-column>
     </el-table>
 
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
     <config-form ref="form" @refresh-list="getList" />
   </div>
 </template>
@@ -65,16 +67,18 @@ import { fetchConfigList, deleteConfig } from '@/api/sys/config'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import configForm from './configForm'
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'Config',
-  components: { configForm },
+  components: { Pagination, configForm },
   directives: { waves, permission },
   data() {
     return {
       tableKey: 0,
       list: null,
       listLoading: true,
+      total: 0,
       listQuery: {
         name: undefined,
         code: undefined,
@@ -93,6 +97,7 @@ export default {
       fetchConfigList(this.listQuery).then(response => {
         this.listLoading = false
         if (response.data.code === 0) {
+          this.total = response.data.total
           this.list = response.data.data
         }
       })

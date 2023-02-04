@@ -77,27 +77,18 @@
       </el-table-column>
     </el-table>
 
-    <div class="pagination-container">
-      <el-pagination
-        :current-page.sync="listQuery.page"
-        :page-sizes="pageArray"
-        :page-size="listQuery.limit"
-        :total="total"
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
   </div>
 </template>
 
 <script>
 import { fetchOperationLogList, deleteOperationLog, batchDeleteOperationLog } from '@/api/monitor/log/operation'
-import waves from '@/directive/waves' // 水波纹指令
+import waves from '@/directive/waves'
+import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 
 export default {
   name: 'ScheduleJobLogList',
+  components: { Pagination },
   directives: {
     waves
   },
@@ -156,14 +147,6 @@ export default {
     },
     handleFilter() {
       this.listQuery.page = 1
-      this.getList()
-    },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
       this.getList()
     },
     handleModifyStatus(row, status) {

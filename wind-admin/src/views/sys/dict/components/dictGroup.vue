@@ -21,16 +21,9 @@
         style="width: 100%"
         @row-click="refreshDicts"
       >
-        <el-table-column
-          prop="name"
-          label="分组名称"
-          width="160"
-        />
-        <el-table-column
-          prop="code"
-          label="分组编码"
-          width="160"
-        />
+        <el-table-column prop="name" label="分组名称" width="160" />
+        <el-table-column prop="code" label="分组编码" width="160" />
+        <el-table-column prop="remarks" label="备注" width="160" />
         <el-table-column label="操作" width="180">
           <template #default="scope">
             <el-button v-permission="['sys:dict:group:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
@@ -40,21 +33,10 @@
         </el-table-column>
       </el-table>
 
-      <div class="pagination-container">
-        <el-pagination
-          :current-page.sync="listQuery.page"
-          :page-sizes="pageArray"
-          :page-size="listQuery.limit"
-          :total="total"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
-      </div>
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-      <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
-        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
+      <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
+        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="margin-left:50px;">
           <el-form-item label="分组名称" prop="name">
             <el-input v-model="temp.name" />
           </el-form-item>
@@ -79,10 +61,12 @@
 <script>
 import { fetchDictGroupList, createDictGroup, deleteDictGroup, updateDictGroup } from '@/api/sys/dictGroup'
 import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
+import waves from '@/directive/waves'
+import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 
 export default {
   name: 'SysDictGroupComponent',
+  components: { Pagination },
   directives: {
     waves, permission
   },
@@ -139,14 +123,6 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
@@ -168,11 +144,11 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createDictGroup(this.temp).then((response) => {
@@ -194,11 +170,11 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

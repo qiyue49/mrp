@@ -10,26 +10,10 @@
         <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
-      <el-table
-        :key="tableKey"
-        v-loading="listLoading"
-        :data="list"
-        element-loading-text="给我一点时间"
-        border
-        fit
-        highlight-current-row
-        style="width: 100%"
-      >
-        <el-table-column
-          prop="label"
-          label="字典标签"
-          width="160"
-        />
-        <el-table-column
-          prop="value"
-          label="字典值"
-          width="160"
-        />
+      <el-table :key="tableKey" v-loading="listLoading" :data="list" element-loading-text="给我一点时间" border fit highlight-current-row>
+        <el-table-column prop="label" label="字典标签" width="160" />
+        <el-table-column prop="value" label="字典值" width="160" />
+        <el-table-column prop="remarks" label="备注" width="160" />
         <el-table-column label="操作" width="180">
           <template #default="scope">
             <el-button v-permission="['sys:dict:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
@@ -39,21 +23,10 @@
         </el-table-column>
       </el-table>
 
-      <div class="pagination-container">
-        <el-pagination
-          :current-page.sync="listQuery.page"
-          :page-sizes="pageArray"
-          :page-size="listQuery.limit"
-          :total="total"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
-      </div>
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-      <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
-        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="width: 400px; margin-left:50px;">
+      <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
+        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="margin-left:50px;">
           <el-form-item label="字典标签" prop="label">
             <el-input v-model="temp.label" />
           </el-form-item>
@@ -83,9 +56,11 @@ import { fetchDictList, createDict, deleteDict, updateDict } from '@/api/sys/dic
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import { store } from '@/stores'
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'SysDictComponent',
+  components: { Pagination },
   directives: {
     waves, permission
   },
@@ -140,14 +115,6 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
@@ -181,12 +148,12 @@ export default {
         this.dialogStatus = 'create'
         this.dialogFormVisible = true
         this.$nextTick(() => {
-          this.$refs['dataForm'].clearValidate()
+          this.$refs.dataForm.clearValidate()
         })
       }
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createDict(this.temp).then((response) => {
@@ -213,11 +180,11 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

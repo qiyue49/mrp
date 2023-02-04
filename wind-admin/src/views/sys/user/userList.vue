@@ -212,14 +212,6 @@ export default {
       this.listQuery.page = 1
       this.getList()
     },
-    handleSizeChange(val) {
-      this.listQuery.limit = val
-      this.getList()
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val
-      this.getList()
-    },
     handleModifyStatus(row, status) {
       this.$message({
         message: '操作成功',
