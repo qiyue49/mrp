@@ -53,7 +53,7 @@
           <span>{{ row.tag }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="230">
         <template #default="{row}">
           <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -67,7 +67,7 @@
 
     <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
-    <expand-table-form ref="form" @refreshList="getList" />
+    <expand-table-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>

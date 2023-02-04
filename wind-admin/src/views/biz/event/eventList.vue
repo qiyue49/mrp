@@ -42,12 +42,12 @@
           <span>{{ row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="日期" min-width="150px" align="center">
+      <el-table-column label="日期" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.date | parseTime('{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="类型" min-width="150px" align="center">
+      <el-table-column label="类型" min-width="150px">
         <template slot-scope="{row}">
           <span>{{  dictLabel(row.type, 'event_type') }}</span>
         </template>
@@ -62,7 +62,7 @@
           <span v-if="row.organization">{{ row.organization.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="230">
         <template slot-scope="{row}">
           <el-button v-permission="['biz:event:event:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -76,7 +76,7 @@
 
     <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
-    <event-form ref="form" @refreshList="getList" />
+    <event-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>

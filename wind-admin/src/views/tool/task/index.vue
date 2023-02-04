@@ -22,44 +22,44 @@
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column width="250" align="center" label="任务名称">
+      <el-table-column type="selection" />
+      <el-table-column min-width="250" label="任务名称">
         <template #default="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="任务分组">
+      <el-table-column min-width="120" label="任务分组">
         <template #default="scope">
           <span>{{ scope.row.jobGroup }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100" align="center" label="执行类">
+      <el-table-column min-width="100" label="执行类">
         <template #default="scope">
           <span>{{ scope.row.executeClass }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="方法名">
+      <el-table-column min-width="80" label="方法名">
         <template #default="scope">
           <span>{{ scope.row.methodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100" align="center" label="执行表达式">
+      <el-table-column min-width="100" label="执行表达式">
         <template #default="scope">
           <span>{{ scope.row.cronExpression }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="任务状态">
+      <el-table-column min-width="80" label="任务状态">
         <template #default="scope">
           <span>{{ dictLabel(scope.row.jobStatus, 'sf') }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="是否同步">
+      <el-table-column min-width="80" label="是否同步">
         <template #default="scope">
           <span>{{ dictLabel(scope.row.isConcurrent, 'sf') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button v-if="scope.row.jobStatus==0" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
           <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
@@ -171,7 +171,7 @@
     return {
     tableKey: 0,
     list: null,
-    total: null,
+    total: 0,
     listLoading: true,
     refreshTaskLoading: false,
     batchDeleteLoading: false,

@@ -39,49 +39,49 @@
       tyle="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column width="120" align="center" label="联系电话">
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="联系电话">
         <template #default="scope">
           <span>{{ scope.row.phone }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200" align="center" label="模版名称">
+      <el-table-column min-width="200" label="模版名称">
         <template #default="scope">
           <span>{{ scope.row.templateName }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="模版编码">
+      <el-table-column min-width="120" label="模版编码">
         <template #default="scope">
           <span>{{ scope.row.sendCode }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="发送状态">
+      <el-table-column min-width="80" label="发送状态">
         <template #default="scope">
           <span>{{ scope.row.status|statusFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="响应消息ID">
+      <el-table-column min-width="120" label="响应消息ID">
         <template #default="scope">
           <span>{{ scope.row.smsid }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="重试次数">
+      <el-table-column min-width="80" label="重试次数">
         <template #default="scope">
           <span>{{ scope.row.tryNum }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="返回消息">
+      <el-table-column min-width="80" label="返回消息">
         <template #default="scope">
           <span>{{ scope.row.msg }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="160" align="center" label="响应时间">
+      <el-table-column min-width="160" label="响应时间">
         <template #default="scope">
           <span>{{ scope.row.responseDate }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
@@ -153,7 +153,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

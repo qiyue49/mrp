@@ -38,49 +38,49 @@
       tyle="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column width="120" align="center" label="任务名称">
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="任务名称">
         <template #default="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="任务分组">
+      <el-table-column min-width="80" label="任务分组">
         <template #default="scope">
           <span>{{ scope.row.jobGroup }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="执行类">
+      <el-table-column min-width="120" label="执行类">
         <template #default="scope">
           <span>{{ scope.row.executeClass }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="方法名">
+      <el-table-column min-width="80" label="方法名">
         <template #default="scope">
           <span>{{ scope.row.methodName }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="方法参数">
+      <el-table-column min-width="80" label="方法参数">
         <template #default="scope">
           <span>{{ scope.row.methodParams }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200" align="center" label="日志信息">
+      <el-table-column min-width="200" label="日志信息">
         <template #default="scope">
           <span>{{ scope.row.jobMessage }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="状态">
+      <el-table-column min-width="80" label="状态">
         <template #default="scope">
           <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | statusFilter }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="160" align="center" label="操作时间">
+      <el-table-column min-width="160" label="操作时间">
         <template #default="scope">
           <span>{{ scope.row.createTime }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>

@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 export const dictStore = defineStore('dict', () => {
   const dicts = ref({})
-  const defaultPageSizes = ref(10)
+  const defaultPageSize = ref(10)
   const pageArray = ref([])
 
   function initDict () {
@@ -28,6 +28,7 @@ export const dictStore = defineStore('dict', () => {
           })
         })
         pageArray.value = value
+        defaultPageSize.value = pageArray.value[0]
         dicts.value = data
         resolve(response)
       }).catch(error => {
@@ -36,5 +37,5 @@ export const dictStore = defineStore('dict', () => {
     })
   }
 
-  return { dicts, defaultPageSizes, pageArray, initDict }
+  return { dicts, defaultPageSize, pageArray, initDict }
 })

@@ -23,27 +23,27 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column width="200" align="center" label="模版名称">
+      <el-table-column min-width="200" label="模版名称">
         <template #default="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="模版编码">
+      <el-table-column min-width="120" label="模版编码">
         <template #default="scope">
           <span>{{ scope.row.code }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100" align="center" label="业务类型">
+      <el-table-column min-width="100" label="业务类型">
         <template #default="scope">
           <span>{{ scope.row.businessType | businessTypeFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200" align="center" label="模版内容">
+      <el-table-column min-width="200" label="模版内容">
         <template #default="scope">
           <span>{{ scope.row.templateContent }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button v-permission="['sms:template:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button v-permission="['sms:template:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
@@ -114,7 +114,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

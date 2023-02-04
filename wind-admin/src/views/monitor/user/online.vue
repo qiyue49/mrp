@@ -23,37 +23,37 @@
       highlight-current-row
       tyle="width: 100%"
     >
-      <el-table-column min-width="120" align="center" label="用户名">
+      <el-table-column min-width="120" label="用户名">
         <template #default="scope">
           <span>{{ scope.row.realname }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="120" align="center" label="账号">
+      <el-table-column min-width="120" label="账号">
         <template #default="scope">
           <span>{{ scope.row.username }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="120" align="center" label="登陆IP">
+      <el-table-column min-width="120" label="登陆IP">
         <template #default="scope">
           <span>{{ scope.row.loginIp }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="120" align="center" label="登录地点">
+      <el-table-column min-width="120" label="登录地点">
         <template #default="scope">
           <span>{{ scope.row.loginLocation }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="120" align="center" label="浏览器">
+      <el-table-column min-width="120" label="浏览器">
         <template #default="scope">
           <span>{{ scope.row.browser }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="120" align="center" label="操作系统">
+      <el-table-column min-width="120" label="操作系统">
         <template #default="scope">
           <span>{{ scope.row.os }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="160" align="center" label="登陆时间">
+      <el-table-column min-width="160" label="登陆时间">
         <template #default="scope">
           <span>{{ scope.row.startTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
@@ -88,7 +88,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

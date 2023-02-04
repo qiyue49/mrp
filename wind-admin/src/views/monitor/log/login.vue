@@ -31,49 +31,49 @@
       tyle="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column width="120" align="center" label="登陆用户">
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="登陆用户">
         <template #default="scope">
           <span>{{ scope.row.loginName }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="登陆IP">
+      <el-table-column min-width="80" label="登陆IP">
         <template #default="scope">
           <span>{{ scope.row.loginIp }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="登录地点">
+      <el-table-column min-width="120" label="登录地点">
         <template #default="scope">
           <span>{{ scope.row.loginLocation }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="浏览器">
+      <el-table-column min-width="80" label="浏览器">
         <template #default="scope">
           <span>{{ scope.row.browser }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="操作系统">
+      <el-table-column min-width="80" label="操作系统">
         <template #default="scope">
           <span>{{ scope.row.os }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="登陆状态">
+      <el-table-column min-width="80" label="登陆状态">
         <template #default="scope">
           <el-tag :type="scope.row.status | statusTypeFilter">{{  dictLabel(scope.row.status, 'loginstatus') }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column width="200" align="center" label="操作信息">
+      <el-table-column min-width="200" label="操作信息">
         <template #default="scope">
           <span>{{ scope.row.msg }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="160" align="center" label="操作时间">
+      <el-table-column min-width="160" label="操作时间">
         <template #default="scope">
           <span>{{ scope.row.loginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
@@ -119,7 +119,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

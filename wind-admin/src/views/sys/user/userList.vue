@@ -39,7 +39,7 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column min-width="150" align="center" label="姓名">
+          <el-table-column min-width="150" label="姓名">
             <template #default="scope">
               <span>{{ scope.row.realname }}</span>
             </template>
@@ -49,24 +49,24 @@
               <span>{{ scope.row.username }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="120" align="center" label="联系电话">
+          <el-table-column min-width="120" label="联系电话">
             <template #default="scope">
               <span>{{ scope.row.phone }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="160" align="center" label="可否登录">
+          <el-table-column min-width="160" label="可否登录">
             <template #default="scope">
               <el-tag :type="statusFilter(scope.row.status)">
                 {{ dictLabel(scope.row.status, 'sf') }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column min-width="160" align="center" label="部门">
+          <el-table-column min-width="160" label="部门">
             <template #default="scope">
               <span>{{ scope.row.organization.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+          <el-table-column label="操作">
             <template #default="scope">
               <el-button v-permission="['sys:user:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
               <el-button v-permission="['sys:user:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
@@ -78,7 +78,7 @@
 
         <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-        <user-form ref="form" @refreshList="getList" />
+        <user-form ref="form" @refresh-list="getList" />
 
         <el-dialog v-model="dialogFormPasswordVisible" title="修改密码">
           <el-form ref="dataModifyForm" :rules="modifyPasswordRules" :model="modifyPassword" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">

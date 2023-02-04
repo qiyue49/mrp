@@ -49,12 +49,12 @@
               <span>{{ row.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="性别" min-width="150px" align="center">
+          <el-table-column label="性别" min-width="150px">
             <template slot-scope="{row}">
               <span>{{  dictLabel(row.sex, 'sex') }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="生日" min-width="150px" align="center">
+          <el-table-column label="生日" min-width="150px">
             <template slot-scope="{row}">
               <span>{{ row.birthday | parseTime('{y}-{m}-{d}') }}</span>
             </template>
@@ -64,7 +64,7 @@
               <span>{{ row.cardNumber }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+          <el-table-column label="操作" width="230">
             <template slot-scope="{row}">
               <el-button v-permission="['biz:employee:employee:update']" type="primary" text size="mini" @click="handleUpdate(row)">
                 编辑
@@ -78,7 +78,7 @@
 
         <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
-        <employee-form ref="form" @refreshList="getList" />
+        <employee-form ref="form" @refresh-list="getList" />
       </div>
     </el-col>
   </el-row>

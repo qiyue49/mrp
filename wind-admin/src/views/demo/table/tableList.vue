@@ -26,7 +26,7 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column align="center" label="拖拽" width="80">
+      <el-table-column label="拖拽" width="80">
         <template #default="{}">
           <svg-icon class="drag-handler" icon-class="drag" />
         </template>
@@ -36,12 +36,12 @@
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="作者" min-width="110px" align="center">
+      <el-table-column label="作者" min-width="110px">
         <template #default="scope">
           <span>{{ scope.row.user.realname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="创建时间" min-width="150px" align="center">
+      <el-table-column label="创建时间" min-width="150px">
         <template #default="scope">
           <span>{{ scope.row.publishDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
@@ -51,7 +51,7 @@
           <svg-icon v-for="n in +scope.row.level" :key="n" icon-class="star" class="meta-item__icon" />
         </template>
       </el-table-column>
-      <el-table-column label="阅读数" align="center" min-width="95">
+      <el-table-column label="阅读数" min-width="95">
         <template #default="{row}">
           <span v-if="row.readings" class="link-type" @click="handleFetchPv(row.readings)">{{ row.readings }}</span>
           <span v-else>0</span>
@@ -64,7 +64,7 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="230">
         <template #default="{row}">
           <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -87,7 +87,7 @@
     <import ref="import" template-url="/test/table/table/template" import-url="/test/table/table/import" />
     <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
-    <table-form ref="form" @refreshList="getList" />
+    <table-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>

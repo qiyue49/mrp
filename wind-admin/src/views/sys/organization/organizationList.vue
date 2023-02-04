@@ -17,7 +17,7 @@
           <span style="color:sandybrown">{{ scope.row.remarks }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button v-permission="['sys:organization:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button v-permission="['sys:organization:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
@@ -25,7 +25,7 @@
       </el-table-column>
     </el-table>
 
-    <organization-form ref="form" @refreshList="getList" />
+    <organization-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>
@@ -46,7 +46,7 @@ export default {
     return {
       tableKey: 0,
       list: [],
-      total: null,
+      total: 0,
       listLoading: true,
       listQuery: {
         name: undefined

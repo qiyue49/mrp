@@ -1,6 +1,6 @@
 <template>
   <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
-    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 90%; margin-left:50px;">
 
       <el-row :gutter="20">
         <el-col :span="12">
@@ -97,8 +97,6 @@
       <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
     </template>
 
-    <icon-selector ref="iconSelector" @iconSelect="addCreateData" />
-
   </el-dialog>
 </template>
 <script>
@@ -106,7 +104,6 @@ import { createMenu, updateMenu } from '@/api/sys/menu'
 import iconSelector from '@/components/IconSelector'
 import { isExternal } from '@/utils/validate'
 import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves'
 
 export default {
   name: 'MenuForm',

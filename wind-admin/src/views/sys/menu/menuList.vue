@@ -9,35 +9,39 @@
       <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
-      <el-table-column prop="name" label="名称" width="180" />
-      <el-table-column width="150" label="前端地址">
+    <el-table v-loading="listLoading" :data="list" row-key="id" border lazy :load="load">
+      <el-table-column ming-width="150" label="名称">
+        <template #default="scope">
+          <span>{{ scope.row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="150" label="前端地址">
         <template #default="scope">
           <span>{{ scope.row.path }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150" label="前端组件">
+      <el-table-column min-width="150" label="前端组件">
         <template #default="scope">
           <span>{{ scope.row.component }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="排序">
+      <el-table-column min-width="80" label="排序">
         <template #default="scope">
           <el-input v-model="scope.row.sort" @change="handleChangeSort(scope.row.id, scope.row.sort)" />
         </template>
       </el-table-column>
-      <el-table-column width="150" label="图标">
+      <el-table-column min-width="150" label="图标">
         <template #default="scope">
           <i :class="scope.row.icon"></i>
           <span>{{ scope.row.icon }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100" align="center" label="是否可用">
+      <el-table-column min-width="100" label="是否可用">
         <template #default="scope">
-          <span>{{  dictLabel(scope.row.enabled, 'sf') }}</span>
+          <span>{{ dictLabel(scope.row.enabled, 'sf') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width"><!-- fixed="right" width="300"-->
+      <el-table-column min-width="150" label="操作">
         <template #default="scope">
           <el-button v-permission="['sys:menu:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
           <el-button v-permission="['sys:menu:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
@@ -46,9 +50,9 @@
       </el-table-column>
     </el-table>
 
-    <menu-form ref="form" @refreshList="getList" />
+    <menu-form ref="form" @refresh-list="getList" />
 
-    <menu-gen-button ref="genButtonFrom" @refreshList="getList" />
+    <menu-gen-button ref="genButtonFrom" @refresh-list="getList" />
   </div>
 </template>
 

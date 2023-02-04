@@ -33,7 +33,7 @@
           <span>{{ row.newsTypeName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="发布时间" min-width="150px" align="center">
+      <el-table-column label="发布时间" min-width="150px">
         <template slot-scope="{row}">
           <span>{{ row.newsReleaseTime | parseTime('{y}-{m}-{d}') }}</span>
         </template>
@@ -45,7 +45,7 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" min-width="230px" class-name="small-padding fixed-width">
+      <el-table-column label="操作" min-width="230px">
         <template slot-scope="{row}">
           <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -59,7 +59,7 @@
 
     <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
 
-    <news-content-form ref="form" @refreshList="getList" />
+    <news-content-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>

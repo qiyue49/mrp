@@ -44,7 +44,7 @@
           {{ row.remarks }}
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="230">
         <template #default="{row}">
           <el-button v-permission="['sys:config:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -56,7 +56,7 @@
       </el-table-column>
     </el-table>
 
-    <config-form ref="form" @refreshList="getList" />
+    <config-form ref="form" @refresh-list="getList" />
   </div>
 </template>
 

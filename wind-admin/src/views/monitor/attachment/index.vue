@@ -21,39 +21,39 @@
       tyle="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column width="200" align="center" label="文件名称">
+      <el-table-column type="selection" />
+      <el-table-column min-width="200" label="文件名称">
         <template #default="scope">
           <span>{{ scope.row.fileName }}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" label="文件路径">
+      <el-table-column label="文件路径">
         <template #default="scope">
           <span><a :href="scope.row.filePath" target="_blank">{{ scope.row.filePath }}</a></span>
         </template>
       </el-table-column>
-      <el-table-column width="90" align="center" label="文件大小">
+      <el-table-column min-width="90" label="文件大小">
         <template #default="scope">
           <span>{{ scope.row.fileSize }} K</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="扩展名">
+      <el-table-column min-width="80" label="扩展名">
         <template #default="scope">
           <span>{{ scope.row.fileExtension }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="160" align="center" label="上传时间">
+      <el-table-column min-width="160" label="上传时间">
         <template #default="scope">
           <span>{{ scope.row.uploadTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="120" align="center" label="上传的IP">
+      <el-table-column min-width="120" label="上传的IP">
         <template #default="scope">
           <span>{{ scope.row.uploadIp }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" width="80" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="80">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
@@ -90,7 +90,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

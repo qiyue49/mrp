@@ -23,54 +23,54 @@
       highlight-current-row
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column min-width="120" align="center" label="操作标题">
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="操作标题">
         <template #default="scope">
           <span>{{ scope.row.title }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="80" align="center" label="操作类型">
+      <el-table-column min-width="80" label="操作类型">
         <template #default="scope">
           <span>{{ scope.row.logType }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="120" align="center" label="URI">
+      <el-table-column min-width="120" label="URI">
         <template #default="scope">
           <span>{{ scope.row.requestUri }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="80" align="center" label="操作人">
+      <el-table-column min-width="80" label="操作人">
         <template #default="scope">
           <span>{{ scope.row.operationName }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="80" align="center" label="操作IP">
+      <el-table-column min-width="80" label="操作IP">
         <template #default="scope">
           <span>{{ scope.row.operationIp }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="80" align="center" label="浏览器">
+      <el-table-column min-width="80" label="浏览器">
         <template #default="scope">
           <span>{{ scope.row.browser }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="100" align="center" label="操作系统">
+      <el-table-column min-width="100" label="操作系统">
         <template #default="scope">
           <span>{{ scope.row.os }}</span>
         </template>
       </el-table-column>
-      <el-table-column min-width="80" align="center" label="请求状态">
+      <el-table-column min-width="80" label="请求状态">
         <template #default="scope">
           <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | statusFilter }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column min-width="160" align="center" label="操作时间">
+      <el-table-column min-width="160" label="操作时间">
         <template #default="scope">
           <span>{{ scope.row.createDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
@@ -121,7 +121,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

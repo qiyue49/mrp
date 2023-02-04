@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-input v-model="name" readonly style="width: 100%">
-      <template #prepend>
+      <template #prefix>
         <svg-icon :icon-class="name" />
       </template>
       <template #append>
@@ -40,7 +40,7 @@ export default {
   name: 'IconSelector',
   components: { SvgIcon },
   props: {
-    value: {
+    modelValue: {
       type: String,
       required: true
     }
@@ -55,7 +55,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handle(val) {
         this.name = val

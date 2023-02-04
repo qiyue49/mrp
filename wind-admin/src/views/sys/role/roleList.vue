@@ -13,57 +13,39 @@
       <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
-    <el-table
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="给我一点时间"
-      border
-      fit
-      highlight-current-row
-      style="width: 100%"
-    >
-      <el-table-column width="200" align="center" label="角色名称">
-        <template slot-scope="scope">
-          <span>{{ scope.row.name }}</span>
+    <el-table v-loading="listLoading" :data="list" element-loading-text="给我一点时间" border fit highlight-current-row>
+      <el-table-column min-width="150" label="角色名称">
+        <template #default="{row}">
+          <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="150" label="角色编码">
-        <template slot-scope="scope">
-          <span>{{ scope.row.code }}</span>
+      <el-table-column min-width="150" label="角色编码">
+        <template #default="{row}">
+          <span>{{ row.code }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200" align="center" label="是否可用">
-        <template slot-scope="scope">
-          <span>{{  dictLabel(scope.row.usable, 'sf') }}</span>
+      <el-table-column min-width="150" label="是否可用">
+        <template #default="{row}">
+          <span>{{ dictLabel(row.usable, 'sf') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
-        <template v-if="scope.row.tenantId === tenantId" slot-scope="scope">
-          <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Setting" @click="toSetMenu(scope.row)">设置菜单</el-button>
-          <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Operation" @click="toSetPermission(scope.row)">设置权限</el-button>
-          <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Finished" @click="toSetDataRule(scope.row)">数据权限</el-button>
-          <el-button v-permission="['sys:role:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sys:role:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-          </el-button>
+      <el-table-column min-width="200" label="操作">
+        <template #default="{row}">
+          <span v-if="row.tenantId === tenantId">
+            <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Setting" @click="toSetMenu(row)">设置菜单</el-button>
+            <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Operation" @click="toSetPermission(row)">设置权限</el-button>
+            <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Finished" @click="toSetDataRule(row)">数据权限</el-button>
+            <el-button v-permission="['sys:role:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">编辑</el-button>
+            <el-button v-permission="['sys:role:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">删除
+            </el-button>
+          </span>
         </template>
       </el-table-column>
     </el-table>
 
-    <div class="pagination-container">
-      <el-pagination
-        :current-page.sync="listQuery.page"
-        :page-sizes="pageArray"
-        :page-size="listQuery.limit"
-        :total="total"
-        background
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
-    </div>
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-    <role-form ref="form" @refreshList="getList" />
+    <role-form ref="form" @refresh-list="getList" />
     <!--设置权限-->
     <role-setting-form ref="settingForm" />
 
@@ -77,11 +59,12 @@ import roleDataRuleList from '../roleDataRule/roleDataRuleList'
 import waves from '@/directive/waves'
 import permission from '@/directive/permission/permission'
 import RoleForm from './roleForm'
-import RoleSettingForm from './roleSettingForm' // 水波纹指令
+import RoleSettingForm from './roleSettingForm'
+import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 
 export default {
   name: 'RoleList',
-  components: { RoleSettingForm, RoleForm, roleDataRuleList },
+  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList },
   directives: {
     waves, permission
   },
@@ -90,7 +73,7 @@ export default {
       tableKey: 0,
       tenantId: this.$store.userStore.userInfo.tenantId,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       pageArray: this.$store.dictStore.pageArray,
       listQuery: {

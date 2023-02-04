@@ -26,7 +26,7 @@
           <span>{{ row.postalCode }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="230">
         <template #default="{row}">
           <el-button v-permission="['test:treetable:treetable:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -38,7 +38,7 @@
       </el-table-column>
     </el-table>
 
-    <tree-table-form ref="form" @refreshList="getList" />
+    <tree-table-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>

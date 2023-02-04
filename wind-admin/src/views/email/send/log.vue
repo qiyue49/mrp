@@ -38,39 +38,39 @@
       tyle="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <el-table-column type="selection" align="center" />
-      <el-table-column width="150" align="center" label="Email">
+      <el-table-column type="selection" />
+      <el-table-column min-width="150" label="Email">
         <template #default="scope">
           <span>{{ scope.row.email }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="200" align="center" label="发送主题">
+      <el-table-column min-width="200" label="发送主题">
         <template #default="scope">
           <span>{{ scope.row.subject }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="80" align="center" label="发送状态">
+      <el-table-column min-width="80" label="发送状态">
         <template #default="scope">
           <span>{{ scope.row.status|statusFilter }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100" align="center" label="重试次数">
+      <el-table-column min-width="100" label="重试次数">
         <template #default="scope">
           <span>{{ scope.row.tryNum }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="100" align="center" label="返回消息">
+      <el-table-column min-width="100" label="返回消息">
         <template #default="scope">
           <span>{{ scope.row.msg }}</span>
         </template>
       </el-table-column>
-      <el-table-column width="160" align="center" label="响应时间">
+      <el-table-column min-width="160" label="响应时间">
         <template #default="scope">
           <span>{{ scope.row.responseDate }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+      <el-table-column label="操作">
         <template #default="scope">
           <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
@@ -147,7 +147,7 @@ export default {
     return {
       tableKey: 0,
       list: null,
-      total: null,
+      total: 0,
       listLoading: true,
       templateList: undefined,
       template: {},

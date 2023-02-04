@@ -22,27 +22,27 @@
           highlight-current-row
           style="width: 100%"
         >
-          <el-table-column width="50" align="center" label="选择">
+          <el-table-column min-width="50" label="选择">
             <template #default="scope">
               <el-radio v-model="selectCurentUserId" :label="scope.row.id" @change="selectUser(scope.row)"><i></i></el-radio>
             </template>
           </el-table-column>
-          <el-table-column min-width="120" align="center" label="姓名">
+          <el-table-column min-width="120" label="姓名">
             <template #default="scope">
               <span>{{ scope.row.realname }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="120" align="center" label="用户名">
+          <el-table-column min-width="120" label="用户名">
             <template #default="scope">
               <span>{{ scope.row.username }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="120" align="center" label="联系电话">
+          <el-table-column min-width="120" label="联系电话">
             <template #default="scope">
               <span>{{ scope.row.phone }}</span>
             </template>
           </el-table-column>
-          <el-table-column min-width="120" align="center" label="部门">
+          <el-table-column min-width="120" label="部门">
             <template #default="scope">
               <span>{{ scope.row.organization.name }}</span>
             </template>

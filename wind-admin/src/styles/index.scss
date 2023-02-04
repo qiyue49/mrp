@@ -42,6 +42,17 @@ body {
   }
 }
 
+.el-table {
+  width: 100%;
+  .el-table__cell {
+    text-align: center;
+  }
+  .el-input {
+    width: 60%;
+  }
+}
+
+
 .filter-container {
   padding-bottom: 10px;
 

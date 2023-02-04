@@ -22,7 +22,7 @@
           <span>{{ row.user.realname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column label="操作" width="230">
         <template slot-scope="{row}">
           <el-button v-permission="['biz:department:department:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
@@ -34,7 +34,7 @@
       </el-table-column>
     </el-table>
 
-    <department-form ref="form" @refreshList="getList" />
+    <department-form ref="form" @refresh-list="getList" />
 
   </div>
 </template>
