@@ -108,7 +108,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
       })
     })
   }
-  function delAllVisitedViews({ commit, state }) {
+  function delAllVisitedViews() {
     return new Promise(resolve => {
       // keep affix tags
       const affixTags = visitedViews.value.filter(tag => tag.meta.affix)
@@ -116,7 +116,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
       resolve([...visitedViews.value])
     })
   }
-  function delAllCachedViews({ commit, state }) {
+  function delAllCachedViews() {
     return new Promise(resolve => {
       cachedViews.value = []
       resolve([...cachedViews.value])

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router
 import { getToken } from '@/utils/auth'
 import { store } from '@/stores'
 import { ElMessage } from 'element-plus'
+import defaultSettings from '@/settings'
 
 export const Layout = () => import('@/layout/index.vue')
 
@@ -10,7 +11,7 @@ export const constantMenus = [
     path: '/dashboard',
     component: () => import('@/views/dashboard/index'),
     name: 'dashboard',
-    meta: { title: '首页', icon: 'el-icon-menu', affix: true }
+    meta: { title: '首页', icon: 'Menu', affix: true }
   }
 
 ]
@@ -28,7 +29,8 @@ export const constantRoutes = [
   {
     path: '/login',
     component: () => import('@/views/login/index'),
-    hidden: true
+    hidden: true,
+    meta: { title: defaultSettings.title }
   },
   {
     path: '/whiteList',
@@ -42,12 +44,12 @@ export const constantRoutes = [
   },
   {
     path: '/404',
-    component: () => import('@/views/error-page/404'),
+    component: () => import('@/views/errorPage/404'),
     hidden: true
   },
   {
     path: '/401',
-    component: () => import('@/views/error-page/401'),
+    component: () => import('@/views/errorPage/401'),
     hidden: true
   },
   {
@@ -171,8 +173,13 @@ router.beforeEach(async(to, from, next) => {
     }
   }
 })
+
 export function resetRouter() {
-  const newRouter = createRouter()
+  const newRouter = createRouter({
+    history: import.meta.env.MODE === 'tomcat' ? createWebHashHistory(import.meta.env.BASE_URL) : createFun(import.meta.env.BASE_URL),
+    routes: constantRoutes,
+    scrollBehavior: () => ({ left: 0, top: 0 })
+  })
   router.matcher = newRouter.matcher // reset router
 }
 

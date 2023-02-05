@@ -25,7 +25,7 @@
             </div>
             <div class="input">
               <p>登陆密码</p>
-              <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
+              <el-tooltip :visible="capsTooltip" content="大写键已打开" placement="left" manual>
                 <el-form-item prop="password">
                   <el-input
                     :key="passwordType"
@@ -55,7 +55,7 @@
                 <el-row>
                   <el-col :span="18">
                     <el-input
-                      ref="username"
+                      ref="identify"
                       v-model="loginForm.identify"
                       prefix-icon="Postcard"
                       placeholder="验证码"
@@ -158,15 +158,10 @@ export default {
   methods: {
     makeCode() {
       this.identifyCode = makeCode(4)
-      console.log('identifyCode', this.identifyCode)
     },
     checkCapslock({ shiftKey, key } = {}) {
       if (key && key.length === 1) {
-        if (shiftKey && (key >= 'a' && key <= 'z') || !shiftKey && (key >= 'A' && key <= 'Z')) {
-          this.capsTooltip = true
-        } else {
-          this.capsTooltip = false
-        }
+        this.capsTooltip = (shiftKey && (key >= 'a' && key <= 'z')) || (!shiftKey && (key >= 'A' && key <= 'Z'))
       }
       if (key === 'CapsLock' && this.capsTooltip === true) {
         this.capsTooltip = false
