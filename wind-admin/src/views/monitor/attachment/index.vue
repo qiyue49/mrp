@@ -14,7 +14,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      element-loading-text="给我一点时间"
       border
       fit
       highlight-current-row
@@ -44,7 +43,7 @@
       </el-table-column>
       <el-table-column min-width="160" label="上传时间">
         <template #default="scope">
-          <span>{{ scope.row.uploadTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.uploadTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" label="上传的IP">
@@ -138,11 +137,11 @@ export default {
     handleBatchDelete() {
       if (this.multipleSelection.length) {
         const list = this.multipleSelection
-        var ids = []
+        const ids = []
         list.forEach(function(value, index, array) {
           ids.push(value.id)
         })
-        var idsStr = ids.join(',')
+        const idsStr = ids.join(',')
         batchDeleteAttachment(idsStr).then(response => {
           if (response.data.code === 0) {
             this.$message.success('提交成功')

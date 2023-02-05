@@ -42,8 +42,8 @@ export default {
       treeProps: {
         emitPath: false,
         checkStrictly: true,
-        value: this.props['value'],
-        label: this.props['label']
+        value: this.props.value,
+        label: this.props.label
       },
       ids: undefined
     }

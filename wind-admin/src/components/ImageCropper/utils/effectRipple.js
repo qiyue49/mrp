@@ -6,15 +6,15 @@
  * @return {[bollean]}          [description]
  */
 export default function(e, arg_opts) {
-  var opts = Object.assign({
+  const opts = Object.assign({
     ele: e.target, // 波纹作用元素
     type: 'hit', // hit点击位置扩散center中心点扩展
     bgc: 'rgba(0, 0, 0, 0.15)' // 波纹颜色
   }, arg_opts)
-  var target = opts.ele
+  const target = opts.ele
   if (target) {
-    var rect = target.getBoundingClientRect()
-    var ripple = target.querySelector('.e-ripple')
+    const rect = target.getBoundingClientRect()
+    let ripple = target.querySelector('.e-ripple')
     if (!ripple) {
       ripple = document.createElement('span')
       ripple.className = 'e-ripple'

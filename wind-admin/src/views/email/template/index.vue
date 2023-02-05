@@ -17,7 +17,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      element-loading-text="给我一点时间"
       border
       fit
       highlight-current-row
@@ -44,7 +43,7 @@
 
     <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-    <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" width="80%">
+    <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" width="80%">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
         <el-form-item label="模版名称" prop="name">
           <el-input v-model="temp.name" />
@@ -64,171 +63,172 @@
       </template>
     </el-dialog>
 
-  </div>
-</template>
+    </div>
+  </template>
 
-<script>
-import { fetchTemplateList, createTemplate, deleteTemplate, updateTemplate } from '@/api/email/template'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
-import { getDictLabel, getDictList } from '@/utils/dict'
+  <script>
+    import { fetchTemplateList, createTemplate, deleteTemplate, updateTemplate } from '@/api/email/template'
+    import permission from '@/directive/permission/permission'
+    import waves from '@/directive/waves' // 水波纹指令
+    import { getDictLabel, getDictList } from '@/utils/dict'
 
-export default {
-  name: 'TemplateList',
-  directives: {
+    export default {
+    name: 'TemplateList',
+    directives: {
     waves, permission
-  },
-  filters: {
+    },
+    filters: {
     businessTypeFilter(value) {
-      return getDictLabel('business_type', value)
+    return getDictLabel('business_type', value)
     }
-  },
-  data() {
+    },
+    data() {
     return {
-      tableKey: 0,
-      list: null,
-      total: 0,
-      listLoading: true,
-      pageArray: this.$store.dictStore.pageArray,
-      listQuery: {
-        page: 1,
-        limit: this.$store.dictStore.defaultPageSize,
-        importance: undefined,
-        title: undefined,
-        type: undefined
-      },
-      businessTypeOptions: getDictList('business_type'),
-      showReviewer: false,
-      temp: {
-        id: undefined,
-        name: '',
-        code: '',
-        businessType: '',
-        templateSubject: '',
-        templateContent: '',
-        configId: '',
-        appId: ''
+    tableKey: 0,
+    list: null,
+    total: 0,
+    listLoading: true,
+    pageArray: this.$store.dictStore.pageArray,
+    listQuery: {
+    page: 1,
+    limit: this.$store.dictStore.defaultPageSize,
+    importance: undefined,
+    title: undefined,
+    type: undefined
+    },
+    businessTypeOptions: getDictList('business_type'),
+    showReviewer: false,
+    temp: {
+    id: undefined,
+    name: '',
+    code: '',
+    businessType: '',
+    templateSubject: '',
+    templateContent: '',
+    configId: '',
+    appId: ''
 
-      },
-      loading: false,
-      dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑模板',
-        create: '添加模板'
-      },
-      dialogPvVisible: false,
-      pvData: [],
-      rules: {
-        appId: [{ required: true, message: '请选择所属应用', trigger: 'blur' }],
-        configId: [{ required: true, message: '请选择签名配置', trigger: 'blur' }],
-        businessType: [{ required: true, message: '请选择业务类型', trigger: 'blur' }],
-        name: [{ required: true, message: '模版名称必填', trigger: 'change' }],
-        templateSubject: [{ required: true, message: '模版ID必填', trigger: 'change' }],
-        templateContent: [{ required: true, message: '模版内容必填', trigger: 'change' }]
-      },
-      appList: null,
-      configList: null
+    },
+    loading: false,
+    dialogFormVisible: false,
+    dialogStatus: '',
+    textMap: {
+    update: '编辑模板',
+    create: '添加模板'
+    },
+    dialogPvVisible: false,
+    pvData: [],
+    rules: {
+    appId: [{ required: true, message: '请选择所属应用', trigger: 'blur' }],
+    configId: [{ required: true, message: '请选择签名配置', trigger: 'blur' }],
+    businessType: [{ required: true, message: '请选择业务类型', trigger: 'blur' }],
+    name: [{ required: true, message: '模版名称必填', trigger: 'change' }],
+    templateSubject: [{ required: true, message: '模版ID必填', trigger: 'change' }],
+    templateContent: [{ required: true, message: '模版内容必填', trigger: 'change' }]
+    },
+    appList: null,
+    configList: null
     }
-  },
-  created() {
+    },
+    created() {
     this.getList()
-  },
-  methods: {
+    },
+    methods: {
     getList() {
-      this.listLoading = true
-      fetchTemplateList(this.listQuery).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-        this.listLoading = false
-      })
+    this.listLoading = true
+    fetchTemplateList(this.listQuery).then(response => {
+    this.list = response.data.data
+    this.total = response.data.total
+    this.listLoading = false
+    })
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+    this.listQuery.page = 1
+    this.getList()
     },
     handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
-      row.status = status
+    this.$message({
+    message: '操作成功',
+    type: 'success'
+    })
+    row.status = status
     },
     resetTemp() {
-      this.loading = false
-      this.temp = {
-        id: undefined,
-        name: '',
-        code: '',
-        businessType: '',
-        templateSubject: '',
-        templateContent: '',
-        configId: '',
-        appId: ''
-      }
+    this.loading = false
+    this.temp = {
+    id: undefined,
+    name: '',
+    code: '',
+    businessType: '',
+    templateSubject: '',
+    templateContent: '',
+    configId: '',
+    appId: ''
+    }
     },
     handleCreate() {
-      this.resetTemp()
-      this.dialogStatus = 'create'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+    this.resetTemp()
+    this.dialogStatus = 'create'
+    this.dialogFormVisible = true
+    this.$nextTick(() => {
+    this.$refs['dataForm'].clearValidate()
+    })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          createTemplate(this.temp).then((response) => {
-            this.loading = false
-            if (response.data.code === 0) {
-              this.dialogFormVisible = false
-              this.getList()
-              this.$message.success(response.data.msg)
-            } else {
-              this.$message.error(response.data.msg)
-            }
-          })
-        }
-      })
+    this.$refs['dataForm'].validate((valid) => {
+    if (valid) {
+    this.loading = true
+    createTemplate(this.temp).then((response) => {
+    this.loading = false
+    if (response.data.code === 0) {
+    this.dialogFormVisible = false
+    this.getList()
+    this.$message.success(response.data.msg)
+    } else {
+    this.$message.error(response.data.msg)
+    }
+    })
+    }
+    })
     },
     handleUpdate(row) {
-      this.resetTemp()
-      this.temp = Object.assign({}, row) // copy obj
-      this.dialogStatus = 'update'
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+    this.resetTemp()
+    this.temp = Object.assign({}, row) // copy obj
+    this.dialogStatus = 'update'
+    this.dialogFormVisible = true
+    this.$nextTick(() => {
+    this.$refs['dataForm'].clearValidate()
+    })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          const tempData = Object.assign({}, this.temp)
-          updateTemplate(tempData).then((response) => {
-            this.loading = false
-            if (response.data.code === 0) {
-              this.dialogFormVisible = false
-              this.getList()
-              this.$message.success(response.data.msg)
-            } else {
-              this.$message.error(response.data.msg)
-            }
-          })
-        }
-      })
+    this.$refs['dataForm'].validate((valid) => {
+    if (valid) {
+    this.loading = true
+    const tempData = Object.assign({}, this.temp)
+    updateTemplate(tempData).then((response) => {
+    this.loading = false
+    if (response.data.code === 0) {
+    this.dialogFormVisible = false
+    this.getList()
+    this.$message.success(response.data.msg)
+    } else {
+    this.$message.error(response.data.msg)
+    }
+    })
+    }
+    })
     },
     handleDelete(row) {
-      deleteTemplate(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      })
+    deleteTemplate(row.id).then(() => {
+    this.$message.success('删除成功')
+    const index = this.list.indexOf(row)
+    this.list.splice(index, 1)
+    })
     }
-  }
-}
-</script>
-<script setup>
-import Pagination from '@/components/Pagination/index.vue'
-</script>
+    }
+    }
+  </script>
+  <script setup>
+    import Pagination from '@/components/Pagination/index.vue'
+  </script>
+</template>

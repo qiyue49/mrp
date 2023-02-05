@@ -3,20 +3,20 @@
     <el-row :gutter="6">
       <el-col :span="12">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <template #header>
             <span>供货厂家</span>
-          </div>
+          </template>
           <div class="item">
-            <company-view @refreshSub="refreshSub" />
+            <company-view @refresh-sub="refreshSub" />
           </div>
         </el-card>
 
       </el-col>
       <el-col :span="12">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <template #header>
             <span>产品管理</span>
-          </div>
+          </template>
           <div class="item">
             <product-view ref="form" />
           </div>

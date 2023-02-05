@@ -62,7 +62,7 @@ export default {
       this.list = []
       fetchOrganizationList(this.listQuery).then(response => {
         const organizationList = response.data.data
-        for (var i = 0; i < organizationList.length; i++) {
+        for (let i = 0; i < organizationList.length; i++) {
           this.list.push({
             id: organizationList[i].id,
             name: organizationList[i].name,

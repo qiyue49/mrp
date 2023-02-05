@@ -77,8 +77,8 @@ export default {
     handleChangeMenus() {
       const checkedKeys = this.$refs.menuTree.getCheckedKeys()
       const menuIds = checkedKeys.join(',')
-      const postData = { roleId: this.selectCurentRoleId, menuIds: menuIds }
-      var postFun = this.type !== 1 ? setPermission : setMenu
+      const postData = { roleId: this.selectCurentRoleId, menuIds }
+      const postFun = this.type !== 1 ? setPermission : setMenu
       this.loading = true
       postFun(postData).then(response => {
         this.loading = false

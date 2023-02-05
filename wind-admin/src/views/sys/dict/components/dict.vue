@@ -10,7 +10,7 @@
         <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
-      <el-table :key="tableKey" v-loading="listLoading" :data="list" element-loading-text="给我一点时间" border fit highlight-current-row>
+      <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row>
         <el-table-column prop="label" label="字典标签" width="160" />
         <el-table-column prop="value" label="字典值" width="160" />
         <el-table-column prop="remarks" label="备注" width="160" />

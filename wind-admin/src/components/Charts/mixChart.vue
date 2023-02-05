@@ -34,7 +34,7 @@ export default {
   mounted() {
     this.initChart()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (!this.chart) {
       return
     }
@@ -150,8 +150,7 @@ export default {
             color: '#d3dee5'
 
           },
-          textStyle: {
-            color: '#fff' },
+          textStyle: { color: '#fff' },
           borderColor: '#90979c'
 
         }, {

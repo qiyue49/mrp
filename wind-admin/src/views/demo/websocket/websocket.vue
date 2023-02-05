@@ -40,7 +40,7 @@ export default {
   created() {
     webSocketConnect(this.onMessage)
   },
-  destroyed() {
+  unmounted() {
     webSocketClose()
   },
   methods: {

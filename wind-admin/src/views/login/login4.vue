@@ -11,8 +11,9 @@
             登陆LOGIN
           </h2>
           <div class="input">
-            <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-                     label-position="left">
+            <el-form
+              ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+              label-position="left">
               <el-form-item prop="username">
                 <p>用户名</p>
                 <el-input
@@ -67,8 +68,9 @@
                 </el-row>
               </el-form-item>
 
-              <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                         @click="handleLogin">
+              <el-button
+                :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
+                @click="handleLogin">
                 登录
               </el-button>
             </el-form>

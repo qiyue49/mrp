@@ -24,7 +24,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      element-loading-text="给我一点时间"
       border
       fit
       highlight-current-row
@@ -59,7 +58,7 @@
       </el-table-column>
       <el-table-column min-width="80" label="登陆状态">
         <template #default="scope">
-          <el-tag :type="scope.row.status | statusTypeFilter">{{  dictLabel(scope.row.status, 'loginstatus') }}</el-tag>
+          <el-tag :type="scope.row.status | statusTypeFilter">{{ dictLabel(scope.row.status, 'loginstatus') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column min-width="200" label="操作信息">
@@ -69,7 +68,7 @@
       </el-table-column>
       <el-table-column min-width="160" label="操作时间">
         <template #default="scope">
-          <span>{{ scope.row.loginTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
@@ -100,8 +99,8 @@ export default {
     statusTypeFilter(status) {
       const statusMap = {
         '-1': 'danger',
-        '0': 'info',
-        '1': 'success'
+        0: 'info',
+        1: 'success'
       }
       return statusMap[status]
     }
@@ -183,11 +182,11 @@ export default {
       if (this.multipleSelection.length) {
         this.batchDeleteLoading = true
         const list = this.multipleSelection
-        var ids = []
+        const ids = []
         list.forEach(function(value, index, array) {
           ids.push(value.id)
         })
-        var idsStr = ids.join(',')
+        const idsStr = ids.join(',')
         batchDeleteLoginLog(idsStr).then(() => {
           this.$message.success('提交成功')
           this.$refs.multipleTable.clearSelection()

@@ -22,7 +22,7 @@ import { myUpdateChangePassword } from '@/api/sys/user'
 
 export default {
   data() {
-    var validatePass = (rule, value, callback) => {
+    const validatePass = (rule, value, callback) => {
       if (value === '') {
         callback(new Error('请再次输入密码'))
       } else if (value !== this.userForm.password) {

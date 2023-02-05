@@ -1,5 +1,5 @@
 <template>
-  <el-drawer :direction="'rtl'" :title="textMap[dialogStatus]" v-model="dialogFormVisible" size="50%">
+  <el-drawer v-model="dialogFormVisible" :direction="'rtl'" :title="textMap[dialogStatus]" size="50%">
     <div class="app-container">
       <div class="filter-container">
         <div class="filter-item">
@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column label="数据权限类型" min-width="150px">
           <template #default="{row}">
-            <span>{{  dictLabel(row.scopeType, 'dataRuleType') }}</span>
+            <span>{{ dictLabel(row.scopeType, 'dataRuleType') }}</span>
           </template>
         </el-table-column>
         <el-table-column label="操作" width="230">
@@ -63,7 +63,7 @@
         </el-table-column>
       </el-table>
 
-      <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
       <data-rule-form ref="form" @refresh-list="getList" />
 

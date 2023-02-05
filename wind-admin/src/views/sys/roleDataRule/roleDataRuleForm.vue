@@ -30,6 +30,7 @@ import { createRoleDataRule, updateRoleDataRule, getRoleDataRule } from '@/api/s
 
 export default {
   name: 'RoleDataRuleForm',
+  emits: ['refreshList'],
   data() {
     return {
       rules: {

@@ -113,7 +113,7 @@ export default {
       ctx.font = this.randomNum(this.fontSizeMin, this.fontSizeMax) + 'px SimHei'
       const x = (i) * (this.contentWidth / (this.identifyCode.length + 1)) + 10
       const y = this.randomNum(this.fontSizeMax, this.contentHeight - 5)
-      var deg = this.randomNum(-30, 30)
+      const deg = this.randomNum(-30, 30)
       // 修改坐标原点和旋转角度
       ctx.translate(x, y)
       ctx.rotate(deg * Math.PI / 180)

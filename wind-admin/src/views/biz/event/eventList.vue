@@ -38,43 +38,43 @@
       style="width: 100%;"
     >
       <el-table-column label="标题" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.title }}</span>
         </template>
       </el-table-column>
       <el-table-column label="日期" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.date | parseTime('{y}-{m}-{d}') }}</span>
+        <template #default="{row}">
+          <span>{{ parseTime(row.date, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="类型" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{  dictLabel(row.type, 'event_type') }}</span>
+        <template #default="{row}">
+          <span>{{ dictLabel(row.type, 'event_type') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="用户" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span v-if="row.user">{{ row.user.realname }}</span>
         </template>
       </el-table-column>
       <el-table-column label="所属机构" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span v-if="row.organization">{{ row.organization.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="230">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['biz:event:event:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:event:event:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
+          <el-button v-permission="['biz:event:event:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
     <event-form ref="form" @refresh-list="getList" />
 

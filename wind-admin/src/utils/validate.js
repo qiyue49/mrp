@@ -71,7 +71,7 @@ export function isInteger(val) {
 }
 
 export function isJSON(str) {
-  if (typeof str == 'string') {
+  if (typeof str === 'string') {
     try {
       JSON.parse(str)
       return true

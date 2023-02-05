@@ -2,7 +2,7 @@
   <div class="upload-container">
     <div v-if="resultUrl">
       <el-link target="_blank" :href="resultUrl" :underline="false">
-        <el-button size="mini" type="primary">点击下载</el-button>
+        <el-button size="small" type="primary">点击下载</el-button>
       </el-link>
     </div>
     <el-upload
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
-      uploadData: { 'base_path': this.basePath },
+      uploadData: { base_path: this.basePath },
       myHeaders: { access_token: getToken() },
       imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       extensions: [],
@@ -99,7 +99,7 @@ export default {
     }
   },
   created() {
-    var extension = this.extension.replace(/(^\s+)|(\s+$)/g, '')
+    let extension = this.extension.replace(/(^\s+)|(\s+$)/g, '')
     extension = extension.replace(/\s/g, '')
     this.extensions = extension.split(',')
     if (this.dir !== '') {

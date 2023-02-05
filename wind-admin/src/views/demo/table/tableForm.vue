@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" destroy-on-close>
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" destroy-on-close>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
@@ -54,6 +54,7 @@ const calendarTypeOptions = [
 export default {
   name: 'TableForm',
   components: { SystemUser, Tinymce },
+  emits: ['refreshList'],
   data() {
     return {
       rules: {
@@ -105,11 +106,11 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createTable(this.temp).then(response => {
@@ -130,7 +131,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getTable(id).then(response => {
         if (response.data.code === 0) {
@@ -142,7 +143,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

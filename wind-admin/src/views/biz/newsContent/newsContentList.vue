@@ -24,40 +24,40 @@
       style="width: 100%;"
     >
       <el-table-column label="内容标题" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.newsContentTitle }}</span>
         </template>
       </el-table-column>
       <el-table-column label="新闻类型" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.newsTypeName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="发布时间" min-width="150px">
-        <template slot-scope="{row}">
-          <span>{{ row.newsReleaseTime | parseTime('{y}-{m}-{d}') }}</span>
+        <template #default="{row}">
+          <span>{{ parseTime( row.newsReleaseTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="相关图片" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <div v-for="(img,index) in row.img" :key="index">
             <el-image :src="img" :preview-src-list="row.img" style="width: 75px; height: 75px" />
           </div>
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="230px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:newsContent:newscontent:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
+          <el-button v-permission="['biz:newsContent:newscontent:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
     <news-content-form ref="form" @refresh-list="getList" />
 

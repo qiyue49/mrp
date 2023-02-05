@@ -1,21 +1,21 @@
 import { store } from '@/stores'
 
-var webSocket
+let webSocket
 
 function getURL() {
   const userId = store.userStore.userInfo.id
-  console.log('process.env.NODE_ENV', process.env.NODE_ENV)
-  console.log('process.env.VUE_APP_BASE_WEBSOCKET', process.env.VUE_APP_BASE_WEBSOCKET)
-  console.log('process.env.VUE_APP_ENV', process.env.VUE_APP_ENV)
+  console.log('import.meta.env.NODE_ENV', import.meta.env.NODE_ENV)
+  console.log('import.meta.env.VUE_APP_BASE_WEBSOCKET', import.meta.env.VUE_APP_BASE_WEBSOCKET)
+  console.log('import.meta.env.VUE_APP_ENV', import.meta.env.VUE_APP_ENV)
 
-  if (process.env.VUE_APP_ENV === 'proxy') {
-    return `ws://${location.host}${process.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
+  if (import.meta.env.VUE_APP_ENV === 'proxy') {
+    return `ws://${location.host}${import.meta.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
   }
-  if (process.env.VUE_APP_ENV === 'tomcat') {
-    return `${process.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
+  if (import.meta.env.VUE_APP_ENV === 'tomcat') {
+    return `${import.meta.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
   }
-  if (process.env.VUE_APP_ENV === 'nginx') {
-    return `ws://${location.host}${process.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
+  if (import.meta.env.VUE_APP_ENV === 'nginx') {
+    return `ws://${location.host}${import.meta.env.VUE_APP_BASE_WEBSOCKET}/json/web/server/${userId}`
   }
 }
 export function webSocketConnect(onMessage) {

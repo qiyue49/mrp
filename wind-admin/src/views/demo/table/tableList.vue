@@ -43,7 +43,7 @@
       </el-table-column>
       <el-table-column label="创建时间" min-width="150px">
         <template #default="scope">
-          <span>{{ scope.row.publishDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.publishDate, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="重要程度" min-width="80px">
@@ -72,10 +72,10 @@
           <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdateView(row)">
             编辑(新页签)
           </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
+          <el-button v-if="row.status!='published'" size="small" type="success" @click="handleModifyStatus(row,'published')">
             发布
           </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
+          <el-button v-if="row.status!='draft'" size="small" @click="handleModifyStatus(row,'draft')">
             草稿
           </el-button>
           <el-button v-permission="['test:table:table:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
@@ -85,7 +85,7 @@
       </el-table-column>
     </el-table>
     <import ref="import" template-url="/test/table/table/template" import-url="/test/table/table/import" />
-    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
     <table-form ref="form" @refresh-list="getList" />
 
@@ -101,10 +101,11 @@ import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination'
 import Sortable from 'sortablejs'
 import Import from '@/components/Import/import'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
   name: 'ComplexTable',
-  components: { Import, tableForm, Pagination },
+  components: { SvgIcon, Import, tableForm, Pagination },
   directives: { waves, permission },
   filters: {
     statusFilter(status) {

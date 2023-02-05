@@ -8,26 +8,26 @@
 
     <el-table :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
       <el-table-column label="名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="编码" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.code }}</span>
         </template>
       </el-table-column>
       <el-table-column label="用户" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.user.realname }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="230">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['biz:department:department:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:department:department:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
+          <el-button v-permission="['biz:department:department:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>
@@ -70,7 +70,6 @@ export default {
       fetchDepartmentList(this.listQuery).then(response => {
         if (response.data.code === 0) {
           this.list = response.data.data
-          this.$refs.form.setList(this.list)
         } else {
           this.$message.error(response.data.msg)
         }

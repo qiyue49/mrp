@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="width: 80%; margin-left:50px;">
       <el-row :gutter="40">
         <el-col :span="24">
@@ -71,6 +71,7 @@ import uploadImage from '@/components/Upload/uploadImage'
 export default {
   name: 'EventForm',
   components: { systemUser, systemOrganization, BaiduMapPoint, uploadImage },
+  emits: ['refreshList'],
   data() {
     return {
       rules: {
@@ -117,11 +118,11 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           createEvent(this.temp).then(response => {
             if (response.data.code === 0) {
@@ -140,7 +141,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getEvent(id).then(response => {
         if (response.data.code === 0) {
@@ -152,7 +153,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           updateEvent(tempData).then(response => {

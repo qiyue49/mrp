@@ -67,8 +67,8 @@ export default {
       })
     },
     querySearch(queryString, cb) {
-      var list = this.attrList
-      var results = queryString ? list.filter(this.createFilter(queryString)) : list
+      const list = this.attrList
+      const results = queryString ? list.filter(this.createFilter(queryString)) : list
       // 调用 callback 返回建议列表的数据
       cb(results)
     },

@@ -11,7 +11,6 @@
         :key="tableKey"
         v-loading="listLoading"
         :data="list"
-        element-loading-text="给我一点时间"
         border
         fit
         highlight-current-row
@@ -38,7 +37,7 @@
 
       <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-      <car-model-form ref="form" @getList="getList" />
+      <car-model-form ref="form" @get-list="getList" />
     </div>
   </div>
 </template>

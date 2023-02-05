@@ -33,7 +33,6 @@
           :key="tableKey"
           v-loading="listLoading"
           :data="list"
-          element-loading-text="给我一点时间"
           border
           fit
           highlight-current-row

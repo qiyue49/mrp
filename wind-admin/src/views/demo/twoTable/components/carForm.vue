@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
       <el-form-item label="汽车品牌" prop="name">
         <el-input v-model="temp.name" />
@@ -26,6 +26,7 @@ import { createCar, updateCar, getCar } from '@/api/demo/twoTable/car'
 
 export default {
   name: 'CarForm',
+  emits: ['getList'],
   data() {
     return {
       temp: {
@@ -67,11 +68,11 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createCar(this.temp).then((response) => {
@@ -93,7 +94,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getCar(id).then(response => {
         if (response.data.code === 0) {
@@ -105,7 +106,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

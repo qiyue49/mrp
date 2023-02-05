@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="margin-left:50px;margin-right:50px;">
       <el-form-item label="上级部门" prop="parentIds">
         <el-cascader
@@ -35,6 +35,7 @@ import permission from '@/directive/permission/permission'
 export default {
   name: 'OrganizationForm',
   directives: { permission },
+  emits: ['refreshList'],
   data() {
     return {
       rules: {
@@ -48,7 +49,8 @@ export default {
       },
       treeProps: {
         value: 'id',
-        label: 'name'
+        label: 'name',
+        checkStrictly: true
       },
       loading: false,
       dialogFormVisible: false,
@@ -76,7 +78,7 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
@@ -88,7 +90,7 @@ export default {
           this.temp.parentId = parentId
         }
       }
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
@@ -112,7 +114,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       fetchOrganization(id).then(response => {
         if (response.data.code === 0) {
@@ -134,7 +136,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const parentIds = this.temp.parentIds

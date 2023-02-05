@@ -63,7 +63,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+        <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
         <tree-and-table-form ref="form" @refresh-list="getList" />
       </div>

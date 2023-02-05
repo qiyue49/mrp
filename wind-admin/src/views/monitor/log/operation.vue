@@ -17,7 +17,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      element-loading-text="给我一点时间"
       border
       fit
       highlight-current-row
@@ -66,7 +65,7 @@
       </el-table-column>
       <el-table-column min-width="160" label="操作时间">
         <template #default="scope">
-          <span>{{ scope.row.createDate | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ parseTime(scope.row.createDate, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
@@ -95,15 +94,15 @@ export default {
   filters: {
     statusTypeFilter(status) {
       const statusMap = {
-        '0': 'danger',
-        '1': 'success'
+        0: 'danger',
+        1: 'success'
       }
       return statusMap[status]
     },
     statusFilter(status) {
       const statusMap = {
-        '0': '失败',
-        '1': '成功'
+        0: '失败',
+        1: '成功'
       }
       return statusMap[status]
     }
@@ -170,11 +169,11 @@ export default {
       if (this.multipleSelection.length) {
         this.batchDeleteLoading = true
         const list = this.multipleSelection
-        var ids = []
+        const ids = []
         list.forEach(function(value, index, array) {
           ids.push(value.id)
         })
-        var idsStr = ids.join(',')
+        const idsStr = ids.join(',')
         batchDeleteOperationLog(idsStr).then(() => {
           this.$message.success('提交成功')
           this.$refs.multipleTable.clearSelection()
@@ -198,7 +197,7 @@ export default {
       }
     },
     timestampToTime(timestamp) {
-      var date = new Date(timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      const date = new Date(timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
       const Y = date.getFullYear() + '-'
       const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
       const D = this.change(date.getDate()) + ' '

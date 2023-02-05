@@ -25,27 +25,27 @@
       @row-click="refreshSub"
     >
       <el-table-column label="名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="联系人" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.contact }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" min-width="230">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['biz:company:company:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:company:company:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
+          <el-button v-permission="['biz:company:company:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
     <company-form ref="form" @refresh-list="getList" />
 
@@ -63,6 +63,7 @@ export default {
   name: 'CompanyView',
   components: { companyForm, Pagination },
   directives: { waves, permission },
+  emits: ['refreshSub'],
   data() {
     return {
       tableKey: 0,

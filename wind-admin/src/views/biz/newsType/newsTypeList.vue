@@ -24,23 +24,23 @@
       style="width: 100%;"
     >
       <el-table-column label="新闻类型名称" min-width="150px">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <span>{{ row.newsTypeName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="230">
-        <template slot-scope="{row}">
+        <template #default="{row}">
           <el-button v-permission="['biz:newsType:newstype:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:newsType:newstype:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row,'deleted')">
+          <el-button v-permission="['biz:newsType:newstype:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
     <news-type-form ref="form" @refresh-list="getList" />
 

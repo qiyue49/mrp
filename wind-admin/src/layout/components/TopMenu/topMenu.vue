@@ -10,7 +10,7 @@
     </template>
     <!-- 顶部菜单超出数量折叠 -->
     <el-submenu v-if="menu.length >= visibleNumber" index="more">
-      <template slot="title">更多菜单</template>
+      <template #title>更多菜单</template>
       <template v-for="(item, index) in menu">
         <!-- 最后一级菜单 -->
         <el-menu-item v-if="!item.hidden && index >= visibleNumber" :key="item.id" :index="item.id" @click="click(item)">
@@ -71,7 +71,7 @@ export default {
   beforeMount() {
     window.addEventListener('resize', this.setVisibleNumber)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     window.removeEventListener('resize', this.setVisibleNumber)
   },
   created() {

@@ -56,6 +56,7 @@ import uploadImage from '@/components/Upload/uploadImage'
 export default {
   name: 'NewsContentForm',
   components: { Tinymce, uploadImage },
+  emits: ['refreshList'],
   data() {
     return {
       dialogVisible: false,

@@ -27,6 +27,6 @@ export function retrySend(ids) {
   return request({
     url: '/sms/sendlog/retrySend',
     method: 'post',
-    data: { ids: ids }
+    data: { ids }
   })
 }

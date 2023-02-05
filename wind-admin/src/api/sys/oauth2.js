@@ -19,7 +19,7 @@ export function logout(token) {
   return request({
     url: '/sso/oauth2/revoke_token',
     method: 'post',
-    data: { 'access_token': token }
+    data: { access_token: token }
   })
 }
 

@@ -4,7 +4,7 @@
       <el-col v-for="url in imageList" :key="url" :span="span">
         <div class="avatar-uploader">
           <el-image :src="url" fit="fill" :preview-src-list="imageList" style="width: 100%; height: 100%" />
-          <el-button type="danger" circle size="mini" icon="Delete" class="delete" @click="remove(url)" />
+          <el-button type="danger" circle size="small" icon="Delete" class="delete" @click="remove(url)" />
         </div>
       </el-col>
       <el-col v-if="imageList.length < maxCount" :span="span">
@@ -17,7 +17,7 @@
           :before-upload="beforeAvatarUpload"
           class="avatar-uploader"
         >
-          <i class="el-icon-plus avatar-uploader-icon"></i>
+          <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
         </el-upload>
       </el-col>
     </el-row>
@@ -51,6 +51,7 @@ export default {
       default: 4
     }
   },
+  emits: ['input'],
   data() {
     return {
       imageList: [],
@@ -124,26 +125,26 @@ export default {
 
 <style lang="scss" scoped>
   $value: 150px;
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
+  :deep(.el-upload) {
+    border: 1px dashed var(--el-border-color);
     border-radius: 6px;
     cursor: pointer;
     width: $value;
     height: $value;
     position: relative;
     overflow: hidden;
+    transition: var(--el-transition-duration-fast);
   }
 
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
+  :deep(.el-upload):hover {
+    border-color: var(--el-color-primary);
   }
 
-  .avatar-uploader-icon {
+  .el-icon.avatar-uploader-icon {
     font-size: 28px;
     color: #8c939d;
     width: $value;
     height: $value;
-    line-height: $value;
     text-align: center;
   }
 

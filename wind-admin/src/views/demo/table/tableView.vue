@@ -117,11 +117,11 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'create'
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           createTable(this.temp).then(response => {
@@ -140,7 +140,7 @@ export default {
       this.resetTemp()
       this.dialogStatus = 'update'
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getTable(id).then(response => {
         if (response.data.code === 0) {
@@ -151,7 +151,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
           const tempData = Object.assign({}, this.temp)

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="width: 80%; margin-left:50px;">
       <el-row :gutter="40">
         <el-col :span="12">
@@ -34,7 +34,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="生日" prop="birthday">
-            <el-date-picker v-model="temp.birthday" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
+            <el-date-picker v-model="temp.birthday" type="date" value-format="yyyy-MM-dd" format="yyyy-MM-dd" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -67,6 +67,7 @@ import uploadImage from '@/components/Upload/uploadImage'
 export default {
   name: 'EmployeeForm',
   components: { uploadImage },
+  emits: ['refreshList'],
   data() {
     return {
       rules: {
@@ -121,7 +122,7 @@ export default {
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {
@@ -129,7 +130,7 @@ export default {
         this.temp.orgId = this.temp.orgId[this.temp.orgId.length - 1]
       }
 
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           createEmployee(this.temp).then(response => {
             if (response.data.code === 0) {
@@ -148,7 +149,7 @@ export default {
       this.dialogStatus = 'update'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
       getEmployee(id).then(response => {
         if (response.data.code === 0) {
@@ -160,7 +161,7 @@ export default {
       })
     },
     updateData() {
-      this.$refs['dataForm'].validate((valid) => {
+      this.$refs.dataForm.validate((valid) => {
         if (valid) {
           if (this.temp.orgId !== undefined && this.temp.orgId !== '' && this.temp.orgId instanceof Array) {
             this.temp.orgId = this.temp.orgId[this.temp.orgId.length - 1]

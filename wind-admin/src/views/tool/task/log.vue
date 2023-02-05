@@ -31,7 +31,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      element-loading-text="给我一点时间"
       border
       fit
       highlight-current-row
@@ -71,7 +70,7 @@
       </el-table-column>
       <el-table-column min-width="80" label="状态">
         <template #default="scope">
-          <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | statusFilter }}</el-tag>
+          <el-tag :type=" statusTypeFilter(scope.row.status)">{{ statusFilter(scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column min-width="160" label="操作时间">
@@ -88,7 +87,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
   </div>
 </template>
 
@@ -107,16 +106,16 @@ export default {
     statusTypeFilter(status) {
       const statusMap = {
         '-1': 'danger',
-        '0': 'info',
-        '1': 'success'
+        0: 'info',
+        1: 'success'
       }
       return statusMap[status]
     },
     statusFilter(status) {
       const statusMap = {
         '-1': '失败',
-        '0': '普通',
-        '1': '成功'
+        0: '普通',
+        1: '成功'
       }
       return statusMap[status + '']
     }

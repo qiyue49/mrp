@@ -39,7 +39,7 @@ import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
   name: 'Setting',
-  components: { SvgIcon},
+  components: { SvgIcon },
   data() {
     return {
       show: false

@@ -27,7 +27,7 @@ export default {
   data() {
     return {
       title: this.$store.settingStore.title,
-      logo: logo
+      logo
     }
   }
 }

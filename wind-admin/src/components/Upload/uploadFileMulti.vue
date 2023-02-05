@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
-      uploadData: { 'base_path': this.basePath },
+      uploadData: { base_path: this.basePath },
       myHeaders: { access_token: getToken() },
       imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       extensions: [],
@@ -102,7 +102,7 @@ export default {
   },
   created() {
     if (!this.isNull(this.extension)) {
-      var extension = this.extension.replace(/(^\s+)|(\s+$)/g, '')
+      let extension = this.extension.replace(/(^\s+)|(\s+$)/g, '')
       extension = extension.replace(/\s/g, '')
       this.extensions = extension.split(',')
     }

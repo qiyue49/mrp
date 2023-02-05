@@ -31,7 +31,6 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      element-loading-text="给我一点时间"
       border
       fit
       highlight-current-row
@@ -105,175 +104,176 @@
       </template>
     </el-dialog>
 
-  </div>
-</template>
+    </div>
+  </template>
 
-<script>
-import { fetchSendLogList, sendEmail, deleteSendlog, retrySend } from '@/api/email/sendlog'
-import { fetchTemplateList } from '@/api/email/template'
-import { unescape } from '@/utils/index'
-import JsonEditor from '@/components/JsonEditor'
-import waves from '@/directive/waves' // 水波纹指令
-const jsonData = '{}'
+  <script>
+    import { fetchSendLogList, sendEmail, deleteSendlog, retrySend } from '@/api/email/sendlog'
+    import { fetchTemplateList } from '@/api/email/template'
+    import { unescape } from '@/utils/index'
+    import JsonEditor from '@/components/JsonEditor'
+    import waves from '@/directive/waves' // 水波纹指令
+    const jsonData = '{}'
 
-export default {
-  name: 'EmailSendlogList',
-  components: { JsonEditor },
-  directives: {
+    export default {
+    name: 'EmailSendlogList',
+    components: { JsonEditor },
+    directives: {
     waves
-  },
-  filters: {
+    },
+    filters: {
     statusFilter(status) {
-      const statusMap = {
-        '-1': '发送失败',
-        '0': '发送中',
-        '1': '发送成功'
-      }
-      return statusMap[status + '']
+    const statusMap = {
+    '-1': '发送失败',
+    '0': '发送中',
+    '1': '发送成功'
     }
-  },
-  data() {
+    return statusMap[status + '']
+    }
+    },
+    data() {
     return {
-      tableKey: 0,
-      list: null,
-      total: 0,
-      listLoading: true,
-      templateList: undefined,
-      template: {},
-      pageArray: this.$store.dictStore.pageArray,
-      listQuery: {
-        page: 1,
-        limit: this.$store.dictStore.defaultPageSize,
-        subject: undefined,
-        email: undefined,
-        status: undefined
-      },
-      showReviewer: false,
-      rules: {
-        email: [{ required: true, message: 'Email地址必填', trigger: 'blur' }],
-        code: [{ required: true, message: '编码必填', trigger: 'blur' }]
-      },
-      dialogFormVisible: false,
-      temp: {
-        phone: '',
-        code: '',
-        data: JSON.parse(jsonData)
-      },
-      multipleSelection: [],
-      sendEmailLoading: false,
-      statusOptions: [
-        { label: '发送失败', value: '-1' },
-        { label: '发送中', value: '0' },
-        { label: '发送成功', value: '1' }
-      ]
+    tableKey: 0,
+    list: null,
+    total: 0,
+    listLoading: true,
+    templateList: undefined,
+    template: {},
+    pageArray: this.$store.dictStore.pageArray,
+    listQuery: {
+    page: 1,
+    limit: this.$store.dictStore.defaultPageSize,
+    subject: undefined,
+    email: undefined,
+    status: undefined
+    },
+    showReviewer: false,
+    rules: {
+    email: [{ required: true, message: 'Email地址必填', trigger: 'blur' }],
+    code: [{ required: true, message: '编码必填', trigger: 'blur' }]
+    },
+    dialogFormVisible: false,
+    temp: {
+    phone: '',
+    code: '',
+    data: JSON.parse(jsonData)
+    },
+    multipleSelection: [],
+    sendEmailLoading: false,
+    statusOptions: [
+    { label: '发送失败', value: '-1' },
+    { label: '发送中', value: '0' },
+    { label: '发送成功', value: '1' }
+    ]
     }
-  },
-  created() {
+    },
+    created() {
     this.getTemplateList()
     this.getList()
-  },
-  methods: {
+    },
+    methods: {
     getTemplateList() {
-      this.listLoading = true
-      fetchTemplateList(this.listQuery).then(response => {
-        this.templateList = response.data.data
-      })
+    this.listLoading = true
+    fetchTemplateList(this.listQuery).then(response => {
+    this.templateList = response.data.data
+    })
     },
     getList() {
-      this.listLoading = true
-      fetchSendLogList(this.listQuery).then(response => {
-        this.list = response.data.data
-        this.total = response.data.total
-        this.listLoading = false
-      })
+    this.listLoading = true
+    fetchSendLogList(this.listQuery).then(response => {
+    this.list = response.data.data
+    this.total = response.data.total
+    this.listLoading = false
+    })
     },
     handleFilter() {
-      this.listQuery.page = 1
-      this.getList()
+    this.listQuery.page = 1
+    this.getList()
     },
     handleSelect(val) {
-      this.templateList.forEach(item => {
-        if (item.code === val) {
-          this.template = item
-          this.template.templateContent = unescape(this.template.templateContent)
-        }
-      })
+    this.templateList.forEach(item => {
+    if (item.code === val) {
+    this.template = item
+    this.template.templateContent = unescape(this.template.templateContent)
+    }
+    })
     },
     handleModifyStatus(row, status) {
-      this.$message({
-        message: '操作成功',
-        type: 'success'
-      })
-      row.status = status
+    this.$message({
+    message: '操作成功',
+    type: 'success'
+    })
+    row.status = status
     },
     resetTemp() {
-      this.sendEmailLoading = false
-      this.temp = {
-        phone: '',
-        code: '',
-        data: JSON.parse(jsonData)
-      }
+    this.sendEmailLoading = false
+    this.temp = {
+    phone: '',
+    code: '',
+    data: JSON.parse(jsonData)
+    }
     },
     handleSendEmail() {
-      this.resetTemp()
-      this.dialogFormVisible = true
-      this.$nextTick(() => {
-        this.$refs['dataForm'].clearValidate()
-      })
+    this.resetTemp()
+    this.dialogFormVisible = true
+    this.$nextTick(() => {
+    this.$refs['dataForm'].clearValidate()
+    })
     },
     runSendEmail() {
-      this.$refs['dataForm'].validate((valid) => {
-        if (valid) {
-          this.sendEmailLoading = true
-          sendEmail(this.temp).then(response => {
-            this.sendEmailLoading = false
-            if (response.data.code === 0) {
-              this.dialogFormVisible = false
-              this.getList()
-              this.$message.success(response.data.msg)
-            } else {
-              this.$message.error(response.data.msg)
-            }
-          })
-        }
-      })
+    this.$refs['dataForm'].validate((valid) => {
+    if (valid) {
+    this.sendEmailLoading = true
+    sendEmail(this.temp).then(response => {
+    this.sendEmailLoading = false
+    if (response.data.code === 0) {
+    this.dialogFormVisible = false
+    this.getList()
+    this.$message.success(response.data.msg)
+    } else {
+    this.$message.error(response.data.msg)
+    }
+    })
+    }
+    })
     },
     handleDelete(row) {
-      deleteSendlog(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
-      })
+    deleteSendlog(row.id).then(() => {
+    this.$message.success('删除成功')
+    const index = this.list.indexOf(row)
+    this.list.splice(index, 1)
+    })
     },
     handleSelectionChange(val) {
-      this.multipleSelection = val
+    this.multipleSelection = val
     },
     handleRetrySendEmail() {
-      if (this.multipleSelection.length) {
-        this.sendEmailLoading = true
-        const list = this.multipleSelection
-        var ids = []
-        list.forEach(function(value, index, array) {
-          ids.push(value.id)
-        })
-        var idsStr = ids.join(',')
-        retrySend(idsStr).then(() => {
-          this.$message.success('提交成功')
-          this.$refs.multipleTable.clearSelection()
-          this.sendEmailLoading = false
-        }).catch(() => {
-          this.sendEmailLoading = false
-        })
-      } else {
-        this.$message({
-          message: '至少选择一条重发',
-          type: 'warning'
-        })
-      }
+    if (this.multipleSelection.length) {
+    this.sendEmailLoading = true
+    const list = this.multipleSelection
+    var ids = []
+    list.forEach(function(value, index, array) {
+    ids.push(value.id)
+    })
+    var idsStr = ids.join(',')
+    retrySend(idsStr).then(() => {
+    this.$message.success('提交成功')
+    this.$refs.multipleTable.clearSelection()
+    this.sendEmailLoading = false
+    }).catch(() => {
+    this.sendEmailLoading = false
+    })
+    } else {
+    this.$message({
+    message: '至少选择一条重发',
+    type: 'warning'
+    })
     }
-  }
-}
-</script>
-<script setup>
-import Pagination from '@/components/Pagination/index.vue'
-</script>
+    }
+    }
+    }
+  </script>
+  <script setup>
+    import Pagination from '@/components/Pagination/index.vue'
+  </script>
+</template>

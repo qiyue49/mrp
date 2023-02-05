@@ -3,9 +3,9 @@
     <el-row :gutter="6">
       <el-col :span="12">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <template #header>
             <span>字典分组</span>
-          </div>
+          </template>
           <div class="item">
             <dict-group @refreshDicts="onRefreshDicts" />
           </div>
@@ -14,9 +14,9 @@
       </el-col>
       <el-col :span="12">
         <el-card class="box-card">
-          <div slot="header" class="clearfix">
+          <template #header>
             <span>[{{ dictGroupName }}]字典值</span>
-          </div>
+          </template>
           <div class="item">
             <dict ref="dict" />
           </div>

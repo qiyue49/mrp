@@ -6,7 +6,7 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 import App from './App.vue'
 import router from './router'
 
-import { isNull } from './utils'
+import { isNull, parseTime } from './utils'
 import formValidate from './utils/formValidate'
 import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
@@ -27,6 +27,9 @@ app.config.globalProperties.dictList = function (code) {
   return store.dictStore.dicts[code]
 }
 app.config.globalProperties.dictLabel = dictLabel
+
+// 解析时间格式
+app.config.globalProperties.parseTime = parseTime
 // 表单校验
 app.config.globalProperties.formValidate = formValidate
 // pinia

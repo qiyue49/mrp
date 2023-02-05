@@ -1,9 +1,9 @@
 <template>
-  <template>
+  <div style="width: 100%">
     <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
       <el-button slot="append" icon="Search" @click="show" />
     </el-input>
-    <el-dialog title="选择用户" v-model="dialogFormVisible" destroy-on-close append-to-body>
+    <el-dialog v-model="dialogFormVisible" title="选择用户" destroy-on-close append-to-body>
       <div>
         <div class="filter-container">
           <el-input v-model="listQuery.realname" class="filter-item" placeholder="请输入姓名" @keyup.enter="handleFilter" />
@@ -16,7 +16,6 @@
           :key="tableKey"
           v-loading="listLoading"
           :data="list"
-          element-loading-text="给我一点时间"
           border
           fit
           highlight-current-row
@@ -49,7 +48,7 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total>0" :total="total" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :page-sizes="pageArray" @pagination="getList" />
+        <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
       </div>
       <template #footer>
         <el-button @click="dialogFormVisible = false">

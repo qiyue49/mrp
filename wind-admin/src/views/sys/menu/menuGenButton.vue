@@ -102,11 +102,11 @@ export default {
       this.resetGenerateButtonTemp(row)
       this.generateButtonDialogFormVisible = true
       this.$nextTick(() => {
-        this.$refs['generateButtonDataForm'].clearValidate()
+        this.$refs.generateButtonDataForm.clearValidate()
       })
     },
     generateButton() {
-      this.$refs['generateButtonDataForm'].validate((valid) => {
+      this.$refs.generateButtonDataForm.validate((valid) => {
         if (valid) {
           const permissionTitle = []
           this.generateButtonTemp.permission.forEach((permission, permissionIndex) => {

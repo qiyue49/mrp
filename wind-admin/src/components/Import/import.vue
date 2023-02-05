@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="导入" v-model="dialogFormVisible" width="30%" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" title="导入" width="30%" :close-on-click-modal="false">
     <el-upload
       v-loading="uploadLoading"
       :data="uploadData"
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + this.importUrl,
-      uploadData: { 'base_path': this.basePath },
+      uploadData: { base_path: this.basePath },
       myHeaders: { access_token: getToken() },
       extensions: ['xls', 'xlsx'],
       dialogFormVisible: false,
