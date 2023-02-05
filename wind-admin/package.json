@@ -10,6 +10,17 @@
     "test:unit": "vitest --environment jsdom",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,vue}": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "dependencies": {
     "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^2.0.10",
@@ -43,6 +54,7 @@
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
     "vite": "^4.0.0",
+    "vite-plugin-eslint": "^1.8.1",
     "vite-plugin-svg-icons": "^2.0.1",
     "vitest": "^0.18.1"
   }
