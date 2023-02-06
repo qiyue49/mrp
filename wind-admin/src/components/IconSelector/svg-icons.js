@@ -8,7 +8,7 @@ function getFileName(url) {
   return name.split('.')[0]
 }
 const files = import.meta.globEager('@/assets/icons/svg/*.svg')
-console.log('Object.values(files)', Object.values(files))
+// console.log('Object.values(files)', Object.values(files))
 const svgIcons = Object.values(files).map(i => {
   return getFileName(i.default)
 })

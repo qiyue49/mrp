@@ -41,7 +41,6 @@ export default {
       return this.$store.settingStore.sidebarLogo
     },
     isCollapse() {
-      console.log('this.sidebar.opened', this.sidebar.opened)
       return !this.sidebar.opened
     }
   }

@@ -102,8 +102,7 @@ export const mixin = {
                 return
               }
               const path = { path: this.redirect || '/', query: this.otherQuery }
-              console.log(path)
-              this.$router.push('/')
+              this.$router.push(path)
             })
             .catch(() => {
               this.loading = false
