@@ -72,7 +72,7 @@
 
     <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-    <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]">
+    <el-dialog v-model="dialogFormVisible" :title="title">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
         <el-row :gutter="20">
           <el-col :span="12">
@@ -147,7 +147,7 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+        <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
           确定
         </el-button>
       </template>
@@ -199,11 +199,7 @@ export default {
       },
       loading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑任务',
-        create: '添加任务'
-      },
+      title: undefined,
       dialogPvVisible: false,
       pvData: [],
       rules: {
@@ -269,7 +265,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -299,7 +295,7 @@ export default {
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
       this.temp.timestamp = new Date(this.temp.timestamp)
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

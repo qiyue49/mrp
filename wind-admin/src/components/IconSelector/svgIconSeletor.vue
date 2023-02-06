@@ -37,7 +37,7 @@ import svgIcons from '@/components/IconSelector/svg-icons'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default {
-  name: 'IconSelector',
+  name: 'SvgIconSelector',
   components: { SvgIcon },
   props: {
     modelValue: {

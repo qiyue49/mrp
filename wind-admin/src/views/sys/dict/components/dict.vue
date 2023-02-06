@@ -25,7 +25,7 @@
 
       <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-      <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
+      <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false">
         <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="margin-left:50px;">
           <el-form-item label="字典标签" prop="label">
             <el-input v-model="temp.label" />
@@ -42,7 +42,7 @@
         </el-form>
         <template #footer>
           <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button v-permission="['sys:dict:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+          <el-button v-permission="['sys:dict:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
             确定
           </el-button>
         </template>
@@ -89,11 +89,7 @@ export default {
       },
       loading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑字典',
-        create: '添加字典'
-      },
+      title: undefined,
       rules: {
         label: [{ required: true, message: '字典标签不能为空', trigger: 'change' }],
         value: [{ required: true, message: '字典值不能为空', trigger: 'change' }],
@@ -145,7 +141,7 @@ export default {
         this.$message.error('请选择字典分组')
       } else {
         this.resetTemp()
-        this.dialogStatus = 'create'
+        this.title = '新增'
         this.dialogFormVisible = true
         this.$nextTick(() => {
           this.$refs.dataForm.clearValidate()
@@ -177,7 +173,7 @@ export default {
     handleUpdate(row) {
       this.resetTemp()
       this.temp = Object.assign({}, row) // copy obj
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

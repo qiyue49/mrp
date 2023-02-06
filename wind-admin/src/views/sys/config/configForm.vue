@@ -1,18 +1,18 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
-    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px" style="width: 80%; margin-left:50px;">
+  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px">
       <el-row :gutter="40">
         <el-col :span="12">
           <el-form-item label="配置名称" prop="name">
-            <el-input v-model="temp.name" :disabled="dialogStatus!=='create' && temp.isSys" />
+            <el-input v-model="temp.name" :disabled="title!=='新增' && temp.isSys" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
           <el-form-item label="配置编码" prop="code">
-            <el-input v-model="temp.code" :disabled="dialogStatus!=='create' && temp.isSys" />
+            <el-input v-model="temp.code" :disabled="title!=='新增' && temp.isSys" />
           </el-form-item>
         </el-col>
-        <el-col v-if="dialogStatus==='create'" :span="12">
+        <el-col v-if="title==='新增'" :span="12">
           <el-form-item label="组件类型" prop="type">
             <el-select v-model="temp.type" placeholder="请选择组件类型">
               <el-option
@@ -23,7 +23,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col v-if="dialogStatus==='create'" :span="12">
+        <el-col v-if="title==='新增'" :span="12">
           <el-form-item label="系统参数" prop="isSys">
             <el-radio
               v-for="item in dictList('sf_bool')"
@@ -54,7 +54,7 @@
       <el-button @click="dialogFormVisible = false">
         取消
       </el-button>
-      <el-button v-permission="['sys:config:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:config:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </template>
@@ -78,13 +78,9 @@ export default {
     return {
       statusOptions,
       temp: {},
-      textMap: {
-        update: '编辑',
-        create: '新建'
-      },
+      title: undefined,
       loading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
       rules: {
         name: [{ required: true, message: '配置名称为必填', trigger: 'blur' }],
         code: [{ required: true, message: '配置编码为必填', trigger: 'blur' }],
@@ -117,7 +113,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -143,7 +139,7 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

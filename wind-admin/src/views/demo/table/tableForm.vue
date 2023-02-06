@@ -1,6 +1,6 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" destroy-on-close>
-    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
+  <el-dialog v-model="dialogFormVisible" :title="title" destroy-on-close>
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
       </el-form-item>
@@ -32,7 +32,7 @@
       <el-button @click="dialogFormVisible = false">
         取消
       </el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </template>
@@ -75,13 +75,9 @@ export default {
         author: ''
       },
       calendarTypeOptions,
-      textMap: {
-        update: '编辑',
-        create: '新建'
-      },
+      title: undefined,
       loading: false,
-      dialogFormVisible: false,
-      dialogStatus: ''
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -103,7 +99,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -128,7 +124,7 @@ export default {
     },
     handleUpdate(id) {
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]">
+  <el-dialog v-model="dialogFormVisible" :title="title">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
       <el-form-item label="汽车品牌" prop="name">
         <el-input v-model="temp.name" />
@@ -13,7 +13,7 @@
     </el-form>
     <template #footer>
       <el-button @click="dialogFormVisible = false">取消</el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </template>
@@ -37,11 +37,7 @@ export default {
       },
       loading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑品牌',
-        create: '添加品牌'
-      },
+      title: undefined,
       rules: {
         name: [{ required: true, message: '品牌名称必填', trigger: 'change' }],
         code: [{ required: true, message: '品牌编码必填', trigger: 'blur' }]
@@ -65,7 +61,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -91,7 +87,7 @@ export default {
     },
     handleUpdate(id) {
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

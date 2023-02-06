@@ -1,6 +1,6 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false" append-to-body>
-    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
+  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false" append-to-body>
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
       <el-form-item label="数据权限名称" prop="scopeName">
         <el-input v-model="temp.scopeName" />
       </el-form-item>
@@ -43,7 +43,7 @@
       <el-button @click="dialogFormVisible = false">
         取消
       </el-button>
-      <el-button v-permission="['sys:datarule:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:datarule:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </template>
@@ -72,35 +72,10 @@ export default {
         scopeValue: [{ required: true, message: '自定义SQL为必填项', trigger: 'blur' }],
         scopeType: [{ required: true, message: '数据权限类型为必填项', trigger: 'blur' }]
       },
-      temp: {
-        id: undefined,
-        menuId: undefined,
-        resourceCode: undefined,
-        scopeName: undefined,
-        scopeField: '*',
-        scopeClass: undefined,
-        scopeColumn: 'organization_id',
-        tableName: 'sys_organization',
-        userColumn: 'organization_id',
-        userEntityField: 'organizationId',
-        scopeType: undefined,
-        scopeValue: undefined,
-        remark: undefined,
-        createUser: undefined,
-        createDept: undefined,
-        createTime: undefined,
-        updateUser: undefined,
-        updateTime: undefined,
-        status: undefined,
-        isDeleted: undefined
-      },
-      textMap: {
-        update: '编辑',
-        create: '新建'
-      },
+      temp: {},
+      title: undefined,
       loading: false,
-      dialogFormVisible: false,
-      dialogStatus: ''
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -154,7 +129,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -179,7 +154,7 @@ export default {
     },
     handleUpdate(id) {
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

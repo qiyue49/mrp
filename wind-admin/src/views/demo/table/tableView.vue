@@ -1,6 +1,6 @@
 <template>
   <div style="margin: 50px">
-    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 80%; margin-left:50px;">
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
       </el-form-item>
@@ -32,7 +32,7 @@
       <el-button @click="getList">
         取消
       </el-button>
-      <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </div>
@@ -75,11 +75,7 @@ export default {
         author: ''
       },
       calendarTypeOptions,
-      textMap: {
-        update: '编辑',
-        create: '新建'
-      },
-      dialogStatus: undefined,
+      title: undefined,
       loading: false
     }
   },
@@ -114,7 +110,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
       })
@@ -137,7 +133,7 @@ export default {
     },
     handleUpdate(id) {
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
       })

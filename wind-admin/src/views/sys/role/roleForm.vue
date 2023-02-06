@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
       <el-form-item label="角色名称" prop="name">
         <el-input v-model="temp.name" />
@@ -38,7 +38,7 @@
     </el-form>
     <template #footer>
       <el-button @click="dialogFormVisible = false">取消</el-button>
-      <el-button v-permission="['sys:role:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:role:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </template>
@@ -59,11 +59,7 @@ export default {
       tenantId: this.$store.userStore.userInfo.id,
       loading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
-      textMap: {
-        update: '编辑角色',
-        create: '添加角色'
-      },
+      title: undefined,
       rules: {
         code: [{ required: true, message: '角色编码必填', trigger: 'change' }],
         name: [{ required: true, message: '角色名称必填', trigger: 'change' }],
@@ -95,7 +91,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -120,7 +116,7 @@ export default {
     },
     handleUpdate(row) {
       this.temp = Object.assign({}, row) // copy obj
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

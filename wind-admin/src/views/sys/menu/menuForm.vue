@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" :close-on-click-modal="false" draggable>
+  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false" draggable>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 90%; margin-left:50px;">
 
       <el-row :gutter="20">
@@ -91,17 +91,17 @@
     </el-form>
     <template #footer>
       <el-button @click="dialogFormVisible = false">取消</el-button>
-      <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData(true)">
+      <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData(true)">
         确定
       </el-button>
-      <el-button v-if="dialogStatus!='create'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
+      <el-button v-if="title==='新增'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
     </template>
 
   </el-dialog>
 </template>
 <script>
 import { createMenu, updateMenu } from '@/api/sys/menu'
-import iconSelector from '@/components/IconSelector'
+import iconSelector from '@/components/IconSelector/iconSeletor'
 import { isExternal } from '@/utils/validate'
 import permission from '@/directive/permission/permission'
 
@@ -148,12 +148,8 @@ export default {
       dialogFormVisible: false,
       displayDisable: false,
       iconFormVisible: false,
-      dialogStatus: '',
       iconStatus: '',
-      textMap: {
-        update: '修改菜单',
-        create: '添加菜单'
-      }
+      title: undefined,
     }
   },
   computed: {
@@ -198,7 +194,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -236,9 +232,6 @@ export default {
         }
       })
     },
-    addCreateData(icon) {
-      this.temp.icon = 'fas fa-' + icon
-    },
     handleUpdate(row) {
       this.resetTemp()
       this.temp = Object.assign({}, row) // copy obj
@@ -256,7 +249,7 @@ export default {
       this.temp.cacheable = this.temp.cacheable + ''
       this.temp.requireAuth = this.temp.requireAuth + ''
       this.externalLink = isExternal(this.temp.path) ? '1' : '0'
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

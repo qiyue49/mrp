@@ -1,5 +1,5 @@
 <template>
-  <el-drawer v-model="dialogFormVisible" :direction="'rtl'" :title="textMap[dialogStatus]" size="50%">
+  <el-drawer v-model="dialogFormVisible" :direction="'rtl'" :title="title" size="50%">
     <div class="app-container">
       <div class="filter-container">
         <div class="filter-item">
@@ -109,19 +109,15 @@ export default {
         roleId: undefined,
         ids: []
       },
-      textMap: {
-        update: '编辑',
-        create: '新建'
-      },
+      title: undefined,
       loading: false,
       dialogFormVisible: false,
-      dialogStatus: '',
       multipleSelection: []
     }
   },
   methods: {
     handleRoleDataRuleUpdate(id) {
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.loading = false
       this.dialogFormVisible = true
       this.listQuery.roleId = id

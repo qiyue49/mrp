@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]">
+  <el-dialog v-model="dialogFormVisible" :title="title">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="margin-left:50px;margin-right:50px;">
       <el-form-item label="上级部门" prop="parentIds">
         <el-cascader
@@ -21,7 +21,7 @@
     </el-form>
     <template #footer>
       <el-button @click="dialogFormVisible = false">取消</el-button>
-      <el-button v-permission="['sys:organization:update']" type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+      <el-button v-permission="['sys:organization:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
     </template>
@@ -43,18 +43,14 @@ export default {
       },
       list: [],
       temp: {},
-      textMap: {
-        update: '编辑',
-        create: '新建'
-      },
+      title: undefined,
       treeProps: {
         value: 'id',
         label: 'name',
         checkStrictly: true
       },
       loading: false,
-      dialogFormVisible: false,
-      dialogStatus: ''
+      dialogFormVisible: false
     }
   },
   methods: {
@@ -75,7 +71,7 @@ export default {
     },
     handleCreate() {
       this.resetTemp()
-      this.dialogStatus = 'create'
+      this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
@@ -111,7 +107,7 @@ export default {
     },
     handleUpdate(id) {
       this.resetTemp()
-      this.dialogStatus = 'update'
+      this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()

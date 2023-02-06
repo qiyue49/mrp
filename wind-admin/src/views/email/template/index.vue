@@ -43,8 +43,8 @@
 
     <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-    <el-dialog v-model="dialogFormVisible" :title="textMap[dialogStatus]" width="80%">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 80%; margin-left:50px;">
+    <el-dialog v-model="dialogFormVisible" :title="title" width="80%">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
         <el-form-item label="模版名称" prop="name">
           <el-input v-model="temp.name" />
         </el-form-item>
@@ -57,7 +57,7 @@
       </el-form>
       <template #footer>
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" :loading="loading" @click="dialogStatus==='create'?createData():updateData()">
+        <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
           确定
         </el-button>
       </template>
@@ -111,11 +111,7 @@
     },
     loading: false,
     dialogFormVisible: false,
-    dialogStatus: '',
-    textMap: {
-    update: '编辑模板',
-    create: '添加模板'
-    },
+      title: undefined,
     dialogPvVisible: false,
     pvData: [],
     rules: {
@@ -168,7 +164,7 @@
     },
     handleCreate() {
     this.resetTemp()
-    this.dialogStatus = 'create'
+    this.title = '新增'
     this.dialogFormVisible = true
     this.$nextTick(() => {
     this.$refs['dataForm'].clearValidate()
@@ -194,7 +190,7 @@
     handleUpdate(row) {
     this.resetTemp()
     this.temp = Object.assign({}, row) // copy obj
-    this.dialogStatus = 'update'
+    this.title = '编辑'
     this.dialogFormVisible = true
     this.$nextTick(() => {
     this.$refs['dataForm'].clearValidate()
