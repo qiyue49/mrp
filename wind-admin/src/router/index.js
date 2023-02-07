@@ -11,7 +11,7 @@ export const constantMenus = [
     path: '/dashboard',
     component: () => import('@/views/dashboard/index'),
     name: 'dashboard',
-    meta: { title: '首页', icon: 'Menu', affix: true }
+    meta: { title: '首页', icon: 'DataLine', affix: true }
   }
 
 ]

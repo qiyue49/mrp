@@ -9,7 +9,7 @@
       </template>
     </el-input>
     <el-dialog v-model="iconFormVisible" title="选择图标" :close-on-click-modal="false" append-to-body>
-      <el-form style="width: 90%; margin-left:9%;">
+      <el-form>
         <el-row :gutter="20">
           <el-input v-model="name" suffix-icon="Search" placeholder="请输入图标名称" @input="filterIcons"/>
           <el-scrollbar height="400px" style="margin-top:20px; width: 100%">
@@ -26,7 +26,7 @@
       </el-form>
       <template #footer>
         <el-button @click="iconFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="addCreateData($event)">确定</el-button>
+        <el-button type="primary" @click="addCreateData()">确定</el-button>
       </template>
     </el-dialog>
   </div>
@@ -42,7 +42,7 @@ export default {
       required: true
     }
   },
-  emits: ['input'],
+  emits: ['update:modelValue'],
   data() {
     return {
       isActive: undefined,
@@ -65,7 +65,7 @@ export default {
     },
     filterIcons() {
       if (this.name) {
-        this.iconList = this.$icons.filter(item => item.includes(this.name))
+        this.iconList = this.$icons.filter(item => item.toLowerCase().includes(this.name.toLowerCase()))
       } else {
         this.iconList = this.$icons
       }
@@ -78,7 +78,7 @@ export default {
       this.iconFormVisible = true
     },
     addCreateData() {
-      this.$emit('input', this.name)
+      this.$emit('update:modelValue', this.name)
       this.iconFormVisible = false
     }
   }
@@ -87,7 +87,6 @@ export default {
 <style scoped>
 .col-span{
   vertical-align: middle;
-  margin-left: 10px;
 }
 </style>
 
