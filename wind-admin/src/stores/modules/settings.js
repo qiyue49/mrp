@@ -3,7 +3,7 @@ import defaultSettings from '@/settings'
 import { reactive, ref } from 'vue'
 
 export const settingStore = defineStore('setting', () => {
-  const { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo, fullScreen } = reactive(defaultSettings)
+  const { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo } = reactive(defaultSettings)
 
   const fullScreenFun = ref()
 
@@ -22,6 +22,6 @@ export const settingStore = defineStore('setting', () => {
     fullScreenFun.value()
   }
 
-  return { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo, fullScreen, changeSetting, setFun, toggleFullScreen }
+  return { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo, changeSetting, setFun, toggleFullScreen }
 })
 

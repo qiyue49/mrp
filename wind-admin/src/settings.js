@@ -5,7 +5,6 @@ const defaultSettings = {
   tagsView: true,
   fixedHeader: false,
   sidebarLogo: true,
-  fullScreen: false,
   errorLog: 'production'
 }
 export default defaultSettings
