@@ -6,7 +6,7 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search class="right-menu-item" />
-
+        <full-screen class="right-menu-item" @click="fullScreen" />
         <setting class="right-menu-item hover-effect" />
       </template>
 
@@ -52,9 +52,11 @@ import TopMenu from '@/layout/components/TopMenu/topMenu'
 import { appStore } from '@/stores/modules/app'
 import { userStore } from '@/stores/modules/user'
 import { settingStore } from '@/stores/modules/settings'
+import FullScreen from '@/components/FullScreen/fullScreen'
 
 export default {
   components: {
+    FullScreen,
     TopMenu,
     Setting,
     Hamburger,
@@ -72,6 +74,12 @@ export default {
     }
   },
   methods: {
+    fullScreen() {
+      this.$store.settingStore.changeSetting('fullScreen', {
+        key: 'fullScreen',
+        value: true
+      })
+    },
     toggleSideBar() {
       this.$store.appStore.toggleSideBar()
     },

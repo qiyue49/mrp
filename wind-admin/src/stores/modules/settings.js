@@ -1,16 +1,27 @@
 import { defineStore } from 'pinia'
 import defaultSettings from '@/settings'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 export const settingStore = defineStore('setting', () => {
   const { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo, fullScreen } = reactive(defaultSettings)
 
+  const fullScreenFun = ref()
+
   function changeSetting({ key, value }) {
+    console.log(3333)
     if (Object.prototype.hasOwnProperty.call(defaultSettings, key)) {
       defaultSettings[key] = value
     }
   }
 
-  return { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo, fullScreen, changeSetting }
+  function setFun(fun) {
+    fullScreenFun.value = fun
+  }
+
+  function toggleFullScreen() {
+    fullScreenFun.value()
+  }
+
+  return { title, showSettings, topMenu, tagsView, fixedHeader, sidebarLogo, fullScreen, changeSetting, setFun, toggleFullScreen }
 })
 

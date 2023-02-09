@@ -2987,6 +2987,11 @@ sass@^1.57.1:
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
 
+screenfull@^5.1.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/screenfull/-/screenfull-5.2.0.tgz#6533d524d30621fc1283b9692146f3f13a93d1ba"
+  integrity sha512-9BakfsO2aUQN2K9Fdbj87RJIEZ82Q9IGim7FqM5OsebfoFC6ZHXgDq/KvniuLTPdeM8wY2o6Dj3WQ7KeQCj3cA==
+
 semver@^5.6.0:
   version "5.7.1"
   resolved "https://registry.npmmirror.com/semver/-/semver-5.7.1.tgz"
@@ -3478,6 +3483,13 @@ vue-eslint-parser@^9.0.1:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
+
+vue-fullscreen@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/vue-fullscreen/-/vue-fullscreen-3.1.1.tgz#385097e0b43f4604ded99adb0ceb225dea3e0326"
+  integrity sha512-I59sIO0O22116gwVPo1qM2cNf5binEC5vTswIm8qJsqgatGfFquIJANpoVggSUS2EgUF0Xg4tHliT1ITcwQw8Q==
+  dependencies:
+    screenfull "^5.1.0"
 
 vue-router@^4.1.6:
   version "4.1.6"
