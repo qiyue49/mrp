@@ -44,7 +44,6 @@ export default {
     },
     routes() {
       this.searchPool = this.generateRoutes(this.routes)
-      console.log('searchPool', this.searchPool)
     },
     searchPool(list) {
       this.initFuse(list)
@@ -59,7 +58,6 @@ export default {
   },
   mounted() {
     this.searchPool = this.generateRoutes(this.routes)
-    console.log('searchPool', this.searchPool)
   },
   methods: {
     click() {
@@ -150,7 +148,6 @@ export default {
           this.options.push(item.item)
         })
       }
-      console.log('options', this.options)
     }
   }
 }
