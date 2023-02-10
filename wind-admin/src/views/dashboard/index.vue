@@ -8,6 +8,9 @@
 import { useFullscreen } from '@vueuse/core'
 export default {
   name: 'DashBoard',
+  mounted() {
+    this.$store.settingStore.setFun(this.toggleFullScreen)
+  },
   methods: {
     toggleFullScreen() {
       const { toggle } = useFullscreen(this.$refs.view)
