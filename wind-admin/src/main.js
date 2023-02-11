@@ -6,11 +6,10 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 import App from './App.vue'
 import router from './router'
 
-import { isNull, parseTime } from './utils'
+import { isNull, parseTime, dictLabel } from './utils'
 import formValidate from './utils/formValidate'
 import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
-import { dictLabel } from '@/filters'
 // import Vue3BaiduMapGL from 'vue3-baidu-map-gl'
 
 const app = createApp(App)

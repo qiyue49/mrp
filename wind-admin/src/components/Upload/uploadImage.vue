@@ -16,7 +16,7 @@
       <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
     </el-upload>
     <el-dialog v-model="dialogVisible">
-      <img w-full :src="dialogImageUrl" alt="Preview Image" />
+      <img :src="dialogImageUrl" alt="Preview Image" />
     </el-dialog>
   </div>
 </template>

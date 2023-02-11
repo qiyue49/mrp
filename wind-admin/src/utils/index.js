@@ -1,7 +1,17 @@
 /**
  * Created by PanJiaChen on 16/11/18.
  */
+import { getDictLabel } from '@/utils/dict'
 
+export function dictLabel(value, code) {
+  value = value + ''
+  const labelList = []
+  value.split(',').forEach(item => {
+    const label = getDictLabel(code, item)
+    labelList.push(label)
+  })
+  return labelList.join(',')
+}
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time
