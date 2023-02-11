@@ -1,26 +1,23 @@
 <template>
   <div class="upload-container">
-    <el-row :gutter="10">
-      <el-col v-for="url in imageList" :key="url" :span="span">
-        <div class="avatar-uploader">
-          <el-image :src="url" fit="fill" :preview-src-list="imageList" style="width: 100%; height: 100%" />
-          <el-button type="danger" circle size="small" icon="Delete" class="delete" @click="remove(url)" />
-        </div>
-      </el-col>
-      <el-col v-if="imageList.length < maxCount" :span="span">
-        <el-upload
-          :data="uploadData"
-          :action="uploadImageUrl"
-          :show-file-list="false"
-          :headers="myHeaders"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-          class="avatar-uploader"
-        >
-          <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
-        </el-upload>
-      </el-col>
-    </el-row>
+    <el-upload
+      v-model:file-list="imageList"
+      :data="uploadData"
+      :action="uploadImageUrl"
+      list-type="picture-card"
+      :limit="maxCount"
+      :headers="myHeaders"
+      :on-success="handleAvatarSuccess"
+      :before-upload="beforeAvatarUpload"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="remove"
+      class="avatar-uploader"
+    >
+      <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
+    </el-upload>
+    <el-dialog v-model="dialogVisible">
+      <img w-full :src="dialogImageUrl" alt="Preview Image" />
+    </el-dialog>
   </div>
 </template>
 
@@ -30,7 +27,7 @@ import { getToken } from '@/utils/auth'
 export default {
   name: 'UploadImage',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -56,6 +53,8 @@ export default {
     return {
       imageList: [],
       resultUrl: undefined,
+      dialogImageUrl: undefined,
+      dialogVisible: false,
       myHeaders: { access_token: getToken() },
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
       uploadData: { base_path: this.basePath }
@@ -67,14 +66,14 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         if (this.isNull(val)) {
           this.imageList = []
           return
         }
-        this.imageList = val.split(',')
+        this.imageList = JSON.parse(val)
       }
     }
   },
@@ -84,17 +83,21 @@ export default {
     }
   },
   methods: {
-    remove(url) {
-      this.imageList.splice(this.imageList.indexOf(url), 1)
-      this.emitInput(this.imageList.join(','))
+    handlePictureCardPreview(uploadFile) {
+      this.dialogImageUrl = uploadFile.url
+      this.dialogVisible = true
+    },
+    remove() {
+      // this.imageList.splice(this.imageList.indexOf(uploadFile), 1)
+      this.emitInput(this.imageList)
     },
     emitInput(val) {
-      this.$emit('input', val)
+      this.$emit('input', JSON.stringify(val))
     },
     handleAvatarSuccess(response, file) {
       if (response.code === 0) {
         this.imageList.push(response.data)
-        this.emitInput(this.imageList.join(','))
+        this.emitInput(this.imageList)
       } else {
         this.$message.error(response.msg)
       }
@@ -124,7 +127,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $value: 150px;
+  $value: --el-upload-list-picture-card-size;
   :deep(.el-upload) {
     border: 1px dashed var(--el-border-color);
     border-radius: 6px;
