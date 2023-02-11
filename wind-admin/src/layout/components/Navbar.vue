@@ -7,6 +7,7 @@
       <template v-if="device!=='mobile'">
         <search class="right-menu-item hover-effect" />
         <full-screen class="right-menu-item hover-effect" />
+        <dark-theme class="right-menu-item hover-effect" />
         <setting class="right-menu-item hover-effect" />
       </template>
 
@@ -104,7 +105,6 @@ a{
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {
