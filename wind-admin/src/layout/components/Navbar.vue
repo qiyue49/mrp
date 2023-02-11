@@ -6,7 +6,7 @@
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search class="right-menu-item" />
-        <full-screen class="right-menu-item" @click="fullScreen" />
+        <full-screen class="right-menu-item" />
         <setting class="right-menu-item hover-effect" />
       </template>
 
