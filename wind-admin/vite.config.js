@@ -15,7 +15,6 @@ export default ({ mode }) => {
     // 静态资源服务的文件夹
     publicDir: 'public',
     base: './',
-    // define: { title: '帝江' },
     server: {
       host: '0.0.0.0',
       port: 9528,
@@ -44,6 +43,13 @@ export default ({ mode }) => {
         symbolId: 'icon-[dir]-[name]'
       })
     ],
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "@/styles/element/index.scss" as *;`
+        }
+      }
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url))
