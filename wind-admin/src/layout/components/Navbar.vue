@@ -5,8 +5,9 @@
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search class="right-menu-item" />
-        <full-screen class="right-menu-item" @click="fullScreen" />
+        <search class="right-menu-item hover-effect" />
+        <full-screen class="right-menu-item hover-effect" />
+        <dark-theme class="right-menu-item hover-effect" />
         <setting class="right-menu-item hover-effect" />
       </template>
 
@@ -53,9 +54,11 @@ import { appStore } from '@/stores/modules/app'
 import { userStore } from '@/stores/modules/user'
 import { settingStore } from '@/stores/modules/settings'
 import FullScreen from '@/components/FullScreen/fullScreen'
+import DarkTheme from '@/components/DarkTheme/darkTheme.vue'
 
 export default {
   components: {
+    DarkTheme,
     FullScreen,
     TopMenu,
     Setting,
@@ -102,7 +105,6 @@ a{
   height: 50px;
   overflow: hidden;
   position: relative;
-  background: #fff;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
 
   .hamburger-container {

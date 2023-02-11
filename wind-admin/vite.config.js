@@ -15,7 +15,6 @@ export default ({ mode }) => {
     // 静态资源服务的文件夹
     publicDir: 'public',
     base: './',
-    // define: { title: '帝江' },
     server: {
       host: '0.0.0.0',
       port: 9528,

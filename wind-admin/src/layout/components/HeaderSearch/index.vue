@@ -12,7 +12,7 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')" />
+      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title" />
     </el-select>
   </div>
 </template>
@@ -112,13 +112,14 @@ export default {
 
         if (router.meta && router.meta.title) {
           // generate internationalized title
-          const hasKey = router.meta.title
-          if (hasKey) {
-            const i18ntitle = router.meta.title
-            data.title = [...data.title, i18ntitle]
-          } else {
-            data.title = [...data.title, router.meta.title]
-          }
+          data.title = router.meta.title
+          // const hasKey = router.meta.title
+          // if (hasKey) {
+          //   const i18ntitle = router.meta.title
+          //   data.title = [...data.title, i18ntitle]
+          // } else {
+          //   data.title = [...data.title, router.meta.title]
+          // }
           // const i18ntitle = generateTitle(router.meta.title)
 
           // data.title = [...data.title, i18ntitle]
@@ -141,10 +142,11 @@ export default {
       return res
     },
     querySearch(query) {
+      this.options = []
       if (query !== '') {
-        this.options = this.fuse.search(query)
-      } else {
-        this.options = []
+        this.fuse.search(query).forEach(item => {
+          this.options.push(item.item)
+        })
       }
     }
   }

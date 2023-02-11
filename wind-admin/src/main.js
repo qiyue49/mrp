@@ -17,7 +17,6 @@ const app = createApp(App)
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
-
 // 初始化图标
 app.config.globalProperties.$icons = []
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {

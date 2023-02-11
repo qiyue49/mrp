@@ -22,7 +22,6 @@
     ]
   },
   "dependencies": {
-    "@element-plus/icons": "^0.0.11",
     "@element-plus/icons-vue": "^2.0.10",
     "@vueuse/core": "^9.11.1",
     "axios": "^0.27.2",
