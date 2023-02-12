@@ -1,11 +1,11 @@
 <template>
   <a v-if="isExternalUrl(menu.path) && !menu.children && !menu.hidden" :key="menu.id" :href="menu.path" target="_blank" rel="noopener">
-    <el-sub-menu :index="menu.path">
+    <el-menu-item :index="menu.path">
+      <el-icon class="icon"><component :is="menu.meta.icon"/></el-icon>
       <template #title>
-        <el-icon class="icon"><component :is="menu.meta.icon"/></el-icon>
         <span>{{ menu.meta.title }}</span>
       </template>
-    </el-sub-menu>
+    </el-menu-item>
   </a>
 
   <!-- 最后一级菜单 -->
@@ -50,12 +50,8 @@ export default {
 </script>
 
 <style scoped>
-  $icon-size: 20px;
-  .icon{
-    //width: $icon-size;
-    //height: $icon-size;
-    //padding: 8px;
-    //vertical-align: middle;
+  a {
+    text-decoration: none;
   }
 </style>
 

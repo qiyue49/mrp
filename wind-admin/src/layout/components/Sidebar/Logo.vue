@@ -34,6 +34,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.router-link-active {
+  text-decoration: none;
+  color: var(--el-text-color-primary);
+}
+a{
+  text-decoration: none;
+  color: var(--el-text-color-primary);
+}
+
 .sidebarLogoFade-enter-active {
   transition: opacity 1.5s;
 }

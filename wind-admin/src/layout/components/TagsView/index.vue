@@ -209,6 +209,7 @@ export default {
 <style lang="scss" scoped>
 .router-link-active {
   text-decoration: none;
+  color: white;
 }
 a{
   text-decoration: none;
