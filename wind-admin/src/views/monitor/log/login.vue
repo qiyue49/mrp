@@ -58,7 +58,7 @@
       </el-table-column>
       <el-table-column min-width="80" label="登陆状态">
         <template #default="scope">
-          <el-tag :type="scope.row.status | statusTypeFilter">{{ dictLabel(scope.row.status, 'loginstatus') }}</el-tag>
+          <el-tag :type="statusTypeFilter(scope.row.status)">{{ dictLabel(scope.row.status, 'login_status') }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column min-width="200" label="操作信息">
@@ -95,16 +95,6 @@ export default {
   directives: {
     waves
   },
-  filters: {
-    statusTypeFilter(status) {
-      const statusMap = {
-        '-1': 'danger',
-        0: 'info',
-        1: 'success'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
       tableKey: 0,
@@ -135,6 +125,14 @@ export default {
     this.getList()
   },
   methods: {
+    statusTypeFilter(status) {
+      const statusMap = {
+        '-1': 'danger',
+        0: 'info',
+        1: 'success'
+      }
+      return statusMap[status]
+    },
     getList() {
       this.listLoading = true
       fetchLoginLogList(this.listQuery).then(response => {

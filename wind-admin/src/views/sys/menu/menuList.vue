@@ -117,7 +117,7 @@ export default {
     },
     handleUpdate(row) {
       this.$refs.form.setList(this.list)
-      this.$refs.form.handleUpdate(row)
+      this.$refs.form.handleUpdate(row.id)
     },
     handleCreate() {
       this.$refs.form.setList(this.list)

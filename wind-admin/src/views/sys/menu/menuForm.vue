@@ -100,15 +100,15 @@
   </el-dialog>
 </template>
 <script>
-import { createMenu, updateMenu } from '@/api/sys/menu'
-import iconSelector from '@/components/IconSelector/iconSeletor'
+import { createMenu, fetchMenu, updateMenu } from '@/api/sys/menu'
+import IconSelector from '@/components/IconSelector/iconSeletor'
 import { isExternal } from '@/utils/validate'
 import permission from '@/directive/permission/permission'
 
 export default {
   name: 'MenuForm',
   directives: { permission },
-  components: { iconSelector },
+  components: { IconSelector },
   emits: ['refreshList'],
   data() {
     return {
@@ -141,7 +141,8 @@ export default {
       ruleList: [],
       treeProps: {
         value: 'id',
-        label: 'name'
+        label: 'name',
+        checkStrictly: true
       },
       externalLink: '0',
       loading: false,
@@ -149,7 +150,7 @@ export default {
       displayDisable: false,
       iconFormVisible: false,
       iconStatus: '',
-      title: undefined,
+      title: undefined
     }
   },
   computed: {
@@ -186,7 +187,6 @@ export default {
         enabled: '1',
         sort: '0',
         icon: '',
-        edirect: '',
         component: '',
         remark: ''
       }
@@ -232,27 +232,31 @@ export default {
         }
       })
     },
-    handleUpdate(row) {
+    handleUpdate(id) {
       this.resetTemp()
-      this.temp = Object.assign({}, row) // copy obj
-      if (this.temp.children !== undefined) {
-        this.temp.children.length = 0
-      }
-      if (this.temp.parentIds !== undefined) {
-        let parentIds = this.temp.parentIds.trim()
-        if (parentIds.length > 0) {
-          parentIds = parentIds.substr(0, parentIds.length - 1)
-        }
-        this.temp.parentIds = parentIds.split('\/')
-      }
-      this.temp.enabled = this.temp.enabled + ''
-      this.temp.cacheable = this.temp.cacheable + ''
-      this.temp.requireAuth = this.temp.requireAuth + ''
-      this.externalLink = isExternal(this.temp.path) ? '1' : '0'
       this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
+      })
+      fetchMenu(id).then(response => {
+        if (response.data.code === 0) {
+          this.temp = response.data.data // copy obj
+          if (this.temp.children !== undefined) {
+            this.temp.children.length = 0
+          }
+          if (this.temp.parentIds !== undefined) {
+            let parentIds = this.temp.parentIds.trim()
+            if (parentIds.length > 0) {
+              parentIds = parentIds.substr(0, parentIds.length - 1)
+            }
+            this.temp.parentIds = parentIds.split('\/')
+            this.externalLink = isExternal(this.temp.path) ? '1' : '0'
+          }
+        } else {
+          this.dialogFormVisible = false
+          this.$message.error(response.data.msg)
+        }
       })
     },
     updateData(refresh) {

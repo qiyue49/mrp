@@ -60,7 +60,7 @@
       </el-table-column>
       <el-table-column min-width="80" label="请求状态">
         <template #default="scope">
-          <el-tag :type="scope.row.status | statusTypeFilter">{{ scope.row.status | statusFilter }}</el-tag>
+          <el-tag :type="statusTypeFilter(scope.row.status)">{{ statusFilter(scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column min-width="160" label="操作时间">
@@ -91,22 +91,6 @@ export default {
   directives: {
     waves
   },
-  filters: {
-    statusTypeFilter(status) {
-      const statusMap = {
-        0: 'danger',
-        1: 'success'
-      }
-      return statusMap[status]
-    },
-    statusFilter(status) {
-      const statusMap = {
-        0: '失败',
-        1: '成功'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
       tableKey: 0,
@@ -136,6 +120,20 @@ export default {
     this.getList()
   },
   methods: {
+    statusTypeFilter(status) {
+      const statusMap = {
+        0: 'danger',
+        1: 'success'
+      }
+      return statusMap[status]
+    },
+    statusFilter(status) {
+      const statusMap = {
+        0: '失败',
+        1: '成功'
+      }
+      return statusMap[status]
+    },
     getList() {
       this.listLoading = true
       fetchOperationLogList(this.listQuery).then(response => {

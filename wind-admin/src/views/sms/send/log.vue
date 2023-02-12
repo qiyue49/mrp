@@ -56,7 +56,7 @@
       </el-table-column>
       <el-table-column min-width="80" label="发送状态">
         <template #default="scope">
-          <span>{{ scope.row.status|statusFilter }}</span>
+          <span>{{ statusFilter(scope.row.status) }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="120" label="响应消息ID">
@@ -104,7 +104,7 @@
           <el-input v-model="temp.code" placeholder="请设置模版编码" />
         </el-form-item>
         <el-form-item label="变量值" prop="data">
-          <json-editor ref="jsonEditor" v-model="temp.data" />
+          <el-input ref="jsonEditor" v-model="temp.data" type="textarea"/>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -114,155 +114,149 @@
     </el-dialog>
 
   </div>
-  </div>
+</template>
 
-  <script>
-    import { fetchList, sendMsg, deleteSendlog, retrySend } from '@/api/sms/sendlog'
-    import waves from '@/directive/waves' // 水波纹指令
-    import JsonEditor from '@/components/JsonEditor'
+<script>
+import Pagination from '@/components/Pagination/index.vue'
+import { fetchList, sendMsg, deleteSendlog, retrySend } from '@/api/sms/sendlog'
+import waves from '@/directive/waves' // 水波纹指令
 
-    export default {
-    name: 'SmsSendlogList',
-    components: { JsonEditor },
-    directives: {
+export default {
+  name: 'SmsSendlogList',
+  components: { Pagination },
+  directives: {
     waves
-    },
-    filters: {
-    statusFilter(status) {
-    const statusMap = {
-    '-1': '发送失败',
-    '0': '发送中',
-    '1': '发送成功'
-    }
-    return statusMap[status + '']
-    }
-    },
-    data() {
+  },
+  data() {
     return {
-    tableKey: 0,
-    list: null,
-    total: 0,
-    listLoading: true,
-    pageArray: this.$store.dictStore.pageArray,
-    listQuery: {
-    page: 1,
-    limit: this.$store.dictStore.defaultPageSize,
-    importance: undefined,
-    title: undefined,
-    type: undefined
-    },
-    showReviewer: false,
-    rules: {
-    phone: [{ required: true, message: '手机号码必填', trigger: 'blur' }],
-    code: [{ required: true, message: '编码必填', trigger: 'blur' }]
-    },
-    dialogFormVisible: false,
-    temp: {
-    phone: '',
-    code: '',
-    data: JSON.parse('{}')
-    },
-    multipleSelection: [],
-    sendMsgLoading: false,
-    statusOptions: [
-    { label: '发送失败', value: '-1' },
-    { label: '发送中', value: '0' },
-    { label: '发送成功', value: '1' }
-    ]
+      tableKey: 0,
+      list: null,
+      total: 0,
+      listLoading: true,
+      pageArray: this.$store.dictStore.pageArray,
+      listQuery: {
+        page: 1,
+        limit: this.$store.dictStore.defaultPageSize,
+        importance: undefined,
+        title: undefined,
+        type: undefined
+      },
+      showReviewer: false,
+      rules: {
+        phone: [{ required: true, message: '手机号码必填', trigger: 'blur' }],
+        code: [{ required: true, message: '编码必填', trigger: 'blur' }]
+      },
+      dialogFormVisible: false,
+      temp: {
+        phone: '',
+        code: '',
+        data: JSON.parse('{}')
+      },
+      multipleSelection: [],
+      sendMsgLoading: false,
+      statusOptions: [
+        { label: '发送失败', value: '-1' },
+        { label: '发送中', value: '0' },
+        { label: '发送成功', value: '1' }
+      ]
     }
-    },
-    created() {
+  },
+  created() {
     this.getList()
-    },
-    methods: {
+  },
+  methods: {
     getList() {
-    this.listLoading = true
-    fetchList(this.listQuery).then(response => {
-    this.list = response.data.data
-    this.total = response.data.total
-    this.listLoading = false
-    })
+      this.listLoading = true
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.data
+        this.total = response.data.total
+        this.listLoading = false
+      })
     },
     handleFilter() {
-    this.listQuery.page = 1
-    this.getList()
+      this.listQuery.page = 1
+      this.getList()
+    },
+    statusFilter(status) {
+      const statusMap = {
+        '-1': '发送失败',
+        0: '发送中',
+        1: '发送成功'
+      }
+      return statusMap[status + '']
     },
     handleModifyStatus(row, status) {
-    this.$message({
-    message: '操作成功',
-    type: 'success'
-    })
-    row.status = status
+      this.$message({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
     },
     resetTemp() {
-    this.sendMsgLoading = false
-    this.temp = {
-    phone: '',
-    code: '',
-    data: JSON.parse('{}')
-    }
+      this.sendMsgLoading = false
+      this.temp = {
+        phone: '',
+        code: '',
+        data: JSON.parse('{}')
+      }
     },
     handleSendMsg() {
-    this.resetTemp()
-    this.dialogFormVisible = true
-    this.$nextTick(() => {
-    this.$refs['dataForm'].clearValidate()
-    })
+      this.resetTemp()
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        this.$refs.dataForm.clearValidate()
+      })
     },
     runSendMsg() {
-    this.$refs['dataForm'].validate((valid) => {
-    if (valid) {
-    this.sendMsgLoading = true
-    sendMsg(this.temp).then(response => {
-    this.sendMsgLoading = false
-    if (response.data.code === 0) {
-    this.dialogFormVisible = false
-    this.getList()
-    this.$message.success(response.data.msg)
-    } else {
-    this.$message.error(response.data.msg)
-    }
-    })
-    }
-    })
+      this.$refs.dataForm.validate((valid) => {
+        if (valid) {
+          this.sendMsgLoading = true
+          sendMsg(this.temp).then(response => {
+            this.sendMsgLoading = false
+            if (response.data.code === 0) {
+              this.dialogFormVisible = false
+              this.getList()
+              this.$message.success(response.data.msg)
+            } else {
+              this.$message.error(response.data.msg)
+            }
+          })
+        }
+      })
     },
     handleDelete(row) {
-    deleteSendlog(row.id).then(() => {
-    this.$message.success('删除成功')
-    const index = this.list.indexOf(row)
-    this.list.splice(index, 1)
-    })
+      deleteSendlog(row.id).then(() => {
+        this.$message.success('删除成功')
+        const index = this.list.indexOf(row)
+        this.list.splice(index, 1)
+      })
     },
     handleSelectionChange(val) {
-    this.multipleSelection = val
+      this.multipleSelection = val
     },
     handleRetrySendMsg() {
-    if (this.multipleSelection.length) {
-    this.sendMsgLoading = true
-    const list = this.multipleSelection
-    var ids = []
-    list.forEach(function(value, index, array) {
-    ids.push(value.id)
-    })
-    var idsStr = ids.join(',')
-    retrySend(idsStr).then(() => {
-    this.$message.success('提交成功')
-    this.$refs.multipleTable.clearSelection()
-    this.sendMsgLoading = false
-    }).catch(() => {
-    this.sendMsgLoading = false
-    })
-    } else {
-    this.$message({
-    message: '至少选择一条重发',
-    type: 'warning'
-    })
+      if (this.multipleSelection.length) {
+        this.sendMsgLoading = true
+        const list = this.multipleSelection
+        const ids = []
+        list.forEach(function(value, index, array) {
+          ids.push(value.id)
+        })
+        const idsStr = ids.join(',')
+        retrySend(idsStr).then(() => {
+          this.$message.success('提交成功')
+          this.$refs.multipleTable.clearSelection()
+          this.sendMsgLoading = false
+        }).catch(() => {
+          this.sendMsgLoading = false
+        })
+      } else {
+        this.$message({
+          message: '至少选择一条重发',
+          type: 'warning'
+        })
+      }
     }
-    }
-    }
-    }
-  </script>
-  <script setup>
-    import Pagination from '@/components/Pagination/index.vue'
-  </script>
-</template>
+  }
+}
+</script>

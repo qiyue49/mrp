@@ -70,7 +70,7 @@
       </el-table-column>
       <el-table-column min-width="80" label="状态">
         <template #default="scope">
-          <el-tag :type=" statusTypeFilter(scope.row.status)">{{ statusFilter(scope.row.status) }}</el-tag>
+          <el-tag :type="statusTypeFilter(scope.row.status)">{{ statusFilter(scope.row.status) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column min-width="160" label="操作时间">
@@ -101,24 +101,6 @@ export default {
   components: { Pagination },
   directives: {
     waves
-  },
-  filters: {
-    statusTypeFilter(status) {
-      const statusMap = {
-        '-1': 'danger',
-        0: 'info',
-        1: 'success'
-      }
-      return statusMap[status]
-    },
-    statusFilter(status) {
-      const statusMap = {
-        '-1': '失败',
-        0: '普通',
-        1: '成功'
-      }
-      return statusMap[status + '']
-    }
   },
   data() {
     return {
@@ -153,6 +135,22 @@ export default {
         this.total = response.data.total
         this.listLoading = false
       })
+    },
+    statusTypeFilter(status) {
+      const statusMap = {
+        '-1': 'danger',
+        0: 'info',
+        1: 'success'
+      }
+      return statusMap[status]
+    },
+    statusFilter(status) {
+      const statusMap = {
+        '-1': '失败',
+        0: '普通',
+        1: '成功'
+      }
+      return statusMap[status + '']
     },
     handleFilter() {
       this.listQuery.page = 1

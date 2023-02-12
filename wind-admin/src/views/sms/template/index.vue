@@ -34,7 +34,7 @@
       </el-table-column>
       <el-table-column min-width="100" label="业务类型">
         <template #default="scope">
-          <span>{{ scope.row.businessType | businessTypeFilter }}</span>
+          <span>{{ dictLabel(scope.row.businessType, 'business_type') }}</span>
         </template>
       </el-table-column>
       <el-table-column min-width="200" label="模版内容">
@@ -92,7 +92,7 @@
 import { fetchList, createTemplate, deleteTemplate, updateTemplate } from '@/api/sms/template'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'SysTemplateList',
@@ -114,6 +114,7 @@ export default {
         title: undefined,
         type: undefined
       },
+      businessTypeOptions: this.dictList('business_type'),
       showReviewer: false,
       temp: {
         id: undefined,

@@ -8,6 +8,13 @@ export function fetchMenuList(query) {
   })
 }
 
+export function fetchMenu(id) {
+  return request({
+    url: '/sys/menu/detail/' + id,
+    method: 'get'
+  })
+}
+
 export function getMenus(query) {
   return request({
     url: '/sys/menu/getMenus',

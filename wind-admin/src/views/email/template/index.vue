@@ -65,25 +65,18 @@
 
   </div>
 </template>
-
 <script>
 import { fetchTemplateList, createTemplate, deleteTemplate, updateTemplate } from '@/api/email/template'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import { getDictLabel, getDictList } from '@/utils/dict'
-</script>
-<script setup>
+import { getDictList } from '@/utils/dict'
 import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'TemplateList',
+  components: { Pagination },
   directives: {
     waves, permission
-  },
-  filters: {
-    businessTypeFilter(value) {
-      return getDictLabel('business_type', value)
-    }
   },
   data() {
     return {
@@ -227,4 +220,3 @@ export default {
   }
 }
 </script>
-</template>

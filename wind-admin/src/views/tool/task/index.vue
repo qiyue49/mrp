@@ -22,7 +22,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />
-      <el-table-column min-width="250" label="任务名称">
+      <el-table-column min-width="150" label="任务名称">
         <template #default="scope">
           <span>{{ scope.row.jobName }}</span>
         </template>
@@ -437,4 +437,4 @@ export default {
   }
 }
 </script>
-</template>
+

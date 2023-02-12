@@ -37,10 +37,7 @@
 export default {
   name: 'IconSelector',
   props: {
-    modelValue: {
-      type: String,
-      required: true
-    }
+    modelValue: undefined
   },
   emits: ['update:modelValue'],
   data() {

@@ -75,7 +75,13 @@ public class MenuController extends BaseBeanController<Menu> {
         menuService.insertOrUpdate(entity);
         return Response.ok("更新成功");
     }
-
+    @GetMapping("detail/{id}")
+    @Log(logType = LogType.SELECT)
+    @RequiresPermissions("sys:menu:detail")
+    public String detail(@PathVariable("id") String id) {
+        Menu organization = menuService.selectById(id);
+        return Response.successJson(organization);
+    }
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @RequiresPermissions("sys:menu:delete")
