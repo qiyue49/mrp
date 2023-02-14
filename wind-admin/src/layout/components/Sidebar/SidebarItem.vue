@@ -1,6 +1,6 @@
 <template>
   <a v-if="isExternalUrl(menu.path) && !menu.children && !menu.hidden" :key="menu.id" :href="menu.path" target="_blank" rel="noopener">
-    <el-menu-item :index="menu.path">
+    <el-menu-item index="">
       <el-icon class="icon"><component :is="menu.meta.icon"/></el-icon>
       <template #title>
         <span>{{ menu.meta.title }}</span>
@@ -52,6 +52,7 @@ export default {
 <style scoped>
   a {
     text-decoration: none;
+    color: var(--el-text-color-primary);
   }
 </style>
 
