@@ -77,13 +77,13 @@ export const permissionStore = defineStore('permission', () => {
   function toggleMenu() {
     if (store.settingStore.topMenu) {
       for (let i = 0; i < fetchRoutes.value.length; i++) {
-        const accessedMenusKey = fetchRoutes[i]
+        const accessedMenusKey = fetchRoutes.value[i]
         if (accessedMenusKey.children && accessedMenusKey.children.length !== 0) {
-          menus.value = fetchRoutes[i].children
+          menus.value = fetchRoutes.value[i].children
         }
       }
     } else {
-      menus.value = constantMenus.concat(fetchRoutes)
+      menus.value = constantMenus.concat(fetchRoutes.value)
     }
   }
   function updateMenu(menu) {

@@ -17,18 +17,19 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
-import { permissionStore } from '@/stores/modules/permission'
-import { appStore } from '@/stores/modules/app'
 
 export default {
   name: 'Sidebar',
   components: { SidebarItem, Logo },
   computed: {
-    ...mapState(permissionStore, ['menus']),
-    ...mapState(appStore, ['sidebar']),
+    menus() {
+      return this.$store.permissionStore.menus
+    },
+    sidebar() {
+      return this.$store.appStore.sidebar
+    },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

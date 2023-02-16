@@ -4,30 +4,28 @@
     <template v-for="(item, index) in menu">
       <!-- 最后一级菜单 -->
       <el-menu-item v-if="!item.hidden && index < visibleNumber" :key="item.id" :index="item.id" @click="click(item)">
-        <i :class="item.meta.icon"></i>
-        <span slot="title">{{ item.meta.title }}</span>
+        <el-icon class="icon"><component :is="item.meta.icon"/></el-icon>
+        <template #title>{{ item.meta.title }}</template>
       </el-menu-item>
     </template>
     <!-- 顶部菜单超出数量折叠 -->
-    <el-submenu v-if="menu.length >= visibleNumber" index="more">
+    <el-sub-menu v-if="menu.length >= visibleNumber" index="more">
       <template #title>更多菜单</template>
       <template v-for="(item, index) in menu">
         <!-- 最后一级菜单 -->
         <el-menu-item v-if="!item.hidden && index >= visibleNumber" :key="item.id" :index="item.id" @click="click(item)">
-          <i :class="item.meta.icon"></i>
-          <span slot="title">{{ item.meta.title }}</span>
+          <el-icon class="icon"><component :is="item.meta.icon"/></el-icon>
+          <template #title>{{ item.meta.title }}</template>
         </el-menu-item>
       </template>
-    </el-submenu>
+    </el-sub-menu>
 
   </el-menu>
 </template>
 
 <script>
 import { deepClone } from '@/utils'
-import { mapState } from 'pinia'
 import { isExternal } from '@/utils/validate'
-import { permissionStore } from '@/stores/modules/permission'
 
 export default {
   name: 'TopMenu',
@@ -38,9 +36,9 @@ export default {
     }
   },
   computed: {
-    ...mapState(permissionStore, {
-      addMenus: state => state.permission.addMenus
-    }),
+    addMenus() {
+      return this.$store.permissionStore.addMenus
+    },
     menu() {
       const list = []
       this.addMenus.forEach(item => {
@@ -75,7 +73,7 @@ export default {
     window.removeEventListener('resize', this.setVisibleNumber)
   },
   created() {
-    // this.setVisibleNumber()
+    this.setVisibleNumber()
     this.updateActiveIndex()
   },
   methods: {
@@ -86,6 +84,8 @@ export default {
     setVisibleNumber() {
       const width = document.body.getBoundingClientRect().width / 3
       this.visibleNumber = parseInt(width / 85)
+      console.log('width', width)
+      console.log('visibleNumber', this.visibleNumber)
     },
     click(menu) {
       if (isExternal(menu.path)) {
@@ -99,7 +99,8 @@ export default {
     updateActiveIndex() {
       const path = this.$route.path
       this.activeIndex = this.findIndex(this.addMenus, path)
-      console.log('this.activeIndex', this.activeIndex)
+      this.$store.permissionStore.updateMenu(this.addMenus[0])
+      // console.log('this.activeIndex', this.activeIndex)
     },
     findIndex(menuList, path) {
       const menu = menuList.find(item => {

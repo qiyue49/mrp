@@ -44,15 +44,11 @@
 </template>
 
 <script>
-import { mapState } from 'pinia'
 import Hamburger from '@/layout/components/Hamburger'
 import Search from '@/layout/components/HeaderSearch'
 import defaultAvatar from '@/assets/img/avatar.png'
 import Setting from './Settings'
 import TopMenu from '@/layout/components/TopMenu/topMenu'
-import { appStore } from '@/stores/modules/app'
-import { userStore } from '@/stores/modules/user'
-import { settingStore } from '@/stores/modules/settings'
 import FullScreen from '@/components/FullScreen/fullScreen'
 import DarkTheme from '@/components/DarkTheme/darkTheme.vue'
 
@@ -66,9 +62,18 @@ export default {
     Search
   },
   computed: {
-    ...mapState(appStore, ['sidebar', 'device']),
-    ...mapState(userStore, ['avatar']),
-    ...mapState(settingStore, ['topMenu']),
+    device() {
+      return this.$store.appStore.device
+    },
+    sidebar() {
+      return this.$store.appStore.sidebar
+    },
+    avatar() {
+      return this.$store.userStore.userInfo.portrait
+    },
+    topMenu() {
+      return this.$store.settingStore.topMenu
+    },
     avatarUrl() {
       if (this.avatar === undefined) {
         return defaultAvatar
