@@ -20,9 +20,6 @@
 
 <script>
 import ResizeMixin from './mixin/ResizeHandler'
-import { mapState } from 'pinia'
-import { appStore } from '@/stores/modules/app'
-import { settingStore } from '@/stores/modules/settings'
 import AppMain from '@/layout/components/AppMain'
 import Sidebar from '@/layout/components/Sidebar/index'
 import Navbar from '@/layout/components/Navbar.vue'
@@ -33,8 +30,12 @@ export default {
   components: { TagView, Navbar, Sidebar, AppMain },
   mixins: [ResizeMixin],
   computed: {
-    ...mapState(appStore, ['sidebar', 'device']),
-    ...mapState(settingStore, ['showSettings', 'needTagsView', 'fixedHeader']),
+    sidebar() {
+      return this.$store.appStore.sidebar
+    },
+    device() {
+      return this.$store.appStore.device
+    },
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,

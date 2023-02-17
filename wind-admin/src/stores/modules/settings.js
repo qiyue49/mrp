@@ -3,7 +3,6 @@ import defaultSettings from '@/settings'
 import { ref } from 'vue'
 
 export const settingStore = defineStore('setting', () => {
-
   const fullScreenFun = ref()
   const topMenu = ref(defaultSettings.topMenu)
   const title = ref(defaultSettings.title)

@@ -213,6 +213,7 @@ export default {
 }
 a{
   text-decoration: none;
+  color: var(--el-text-color-primary);
 }
 .tags-view-container {
   height: 34px;
