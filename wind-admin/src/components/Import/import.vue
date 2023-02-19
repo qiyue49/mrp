@@ -47,6 +47,7 @@ export default {
       default: ''
     }
   },
+  emits: ['refreshList'],
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + this.importUrl,

@@ -12,9 +12,13 @@
     :before-upload="beforeUpload"
     :file-list="fileList"
     :auto-upload="false">
-    <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+    <template #trigger>
+      <el-button size="small" type="primary">选取文件</el-button>
+    </template>
     <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
-    <div slot="tip" class="el-upload__tip">{{ waringLabel }}</div>
+    <template #tip>
+      <div class="el-upload__tip">{{ waringLabel }}</div>
+    </template>
   </el-upload>
 </template>
 

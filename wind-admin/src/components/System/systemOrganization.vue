@@ -17,7 +17,7 @@ import { fetchOrganizationList } from '@/api/sys/organization'
 export default {
   name: 'SystemOrganization',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: undefined
     },
@@ -30,6 +30,7 @@ export default {
       default: true
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       treeList: [],
@@ -44,7 +45,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.organizationIds = val
@@ -81,10 +82,10 @@ export default {
       return ''
     },
     select(val) {
-      console.log('val', val)
+      // console.log('val', val)
       this.selectId = val
-      console.log('this.selectId', this.selectId)
-      this.$emit('input', this.selectId)
+      // console.log('this.selectId', this.selectId)
+      this.$emit('update:modelValue', this.selectId)
     }
   }
 }

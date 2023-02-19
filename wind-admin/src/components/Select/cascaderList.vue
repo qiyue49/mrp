@@ -15,7 +15,7 @@
 export default {
   name: 'CascaderList',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: undefined
     },
@@ -49,7 +49,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.ids = this.getIds(this.treeList, val)

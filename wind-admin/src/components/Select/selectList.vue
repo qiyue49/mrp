@@ -13,7 +13,7 @@
 export default {
   name: 'SelectList',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -45,7 +45,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.attrValue = val

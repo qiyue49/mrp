@@ -20,7 +20,7 @@
       <i v-else class="el-icon-upload uploader-icon">
         {{ uploadLabel }}
       </i>
-      <div v-if="!imageUrl&&showWaringLabel" slot="tip" class="waring-label">{{ waringLabel }}</div>
+      <template v-if="!imageUrl&&showWaringLabel" #tip class="waring-label">{{ waringLabel }}</template>
     </el-upload>
   </div>
 </template>

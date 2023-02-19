@@ -13,7 +13,7 @@
 export default {
   name: 'Checkbox',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -30,13 +30,14 @@ export default {
       }
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       checkList: []
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.checkList = []
@@ -53,7 +54,7 @@ export default {
   },
   methods: {
     change(val) {
-      this.$emit('input', val.join(','))
+      this.$emit('update:modelValue', val.join(','))
     }
 
   }

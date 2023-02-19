@@ -76,7 +76,7 @@ export default {
     waves, permission
   },
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: undefined
     },
@@ -95,6 +95,7 @@ export default {
       }
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       tableKey: 0,
@@ -112,7 +113,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.getUserInfo()
@@ -150,7 +151,7 @@ export default {
         this.$message.warning('请选择一个用户')
         return
       }
-      this.$emit('input', this.selectCurentUserId)
+      this.$emit('update:modelValue', this.selectCurentUserId)
       this.dialogFormVisible = false
     },
     getUserInfo() {

@@ -2,34 +2,30 @@
   <div>
     <el-input v-if="showText" v-model="location" />
     <el-button v-if="showText" type="primary" @click="addPath">数据画点</el-button>
-    <baidu-map :center="centerPoint" :scroll-wheel-zoom="true" :zoom="zoom" :style="{height:height,width:width}" @click="getClickInfo">
-      <bm-marker
-        v-if="point.lng"
-        :position="{lng:point.lng, lat: point.lat}"
-        :dragging="true"
-      >
-        <bm-label
-          :label-style="{color: 'red', fontSize : '14px'}"
-          :offset="{width: 20, height: -15}"
-          content="当前位置"
-        />
-      </bm-marker>
-    </baidu-map>
+    <div :style="{height:height,width:width}">
+      <el-bmap ref="map" :center="center" :zoom="zoom" @click="getClickInfo">
+        <el-bmap-marker :position="location" enable-dragging raise-on-drag/>
+      </el-bmap>
+    </div>
   </div>
 
 </template>
 
 <script>
+import { nextTick } from 'vue'
+
 export default {
   name: 'BaiduMapPoint',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: undefined
     },
     center: {
-      type: [Object, String],
-      default: '北京'
+      type: Array,
+      default: () => {
+        return [121.59996, 31.197646]
+      }
     },
     zoom: {
       type: Number,
@@ -45,39 +41,29 @@ export default {
     },
     showText: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
-      location: undefined,
-      emitting: false,
-      point: {},
-      centerPoint: {}
+      location: [],
+      emitting: false
     }
   },
   watch: {
-    center: {
-      immediate: true,
-      handler(val) {
-        this.centerPoint = val
-      }
-    },
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         if (this.emitting) {
           return
         }
-        if (this.value) {
-          this.point = JSON.parse(this.value)
-          this.location = this.value
-          this.centerPoint = this.point
+        if (val) {
+          this.location = JSON.parse(val)
         } else {
           this.point = {}
-          this.location = undefined
+          this.location = []
         }
-        console.log('this.point1', this.point)
       }
     }
   },
@@ -85,26 +71,17 @@ export default {
   },
   methods: {
     addPath() {
-      try {
-        const point = JSON.parse(this.location)
-        if (!Number(point.lat) || !Number(point.lat)) {
-          this.$message.error('你输入的格式错误')
-          return
-        }
-        this.point = point
-        this.$emit('input', this.location)
-      } catch (e) {
-        this.$message.error('你输入的格式错误')
-      }
+
     },
     getClickInfo(e) {
-      this.point = e.point
+      const point = e.latlng
+      this.location = [point.lng, point.lat]
       this.updateData()
     },
     updateData() {
-      this.location = JSON.stringify(this.point)
       this.emitting = true
-      this.$emit('input', this.location).$nextTick(() => {
+      this.$emit('update:modelValue', JSON.stringify(this.location))
+      nextTick(() => {
         this.emitting = false
       })
     }

@@ -40,7 +40,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="位置" prop="location">
-            <baidu-map-point v-model="temp.location" />
+            <baidu-map-line v-model="temp.location" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -67,10 +67,12 @@ import systemUser from '@/components/System/systemUser'
 import systemOrganization from '@/components/System/systemOrganization'
 import BaiduMapPoint from '@/components/BaiduMap/baiduMapPoint'
 import uploadImage from '@/components/Upload/uploadImage'
+import BaiduMapRect from '@/components/BaiduMap/baiduMapRect.vue'
+import BaiduMapLine from '@/components/BaiduMap/baiduMapLine.vue'
 
 export default {
   name: 'EventForm',
-  components: { systemUser, systemOrganization, BaiduMapPoint, uploadImage },
+  components: { BaiduMapLine, BaiduMapRect, systemUser, systemOrganization, BaiduMapPoint, uploadImage },
   emits: ['refreshList'],
   data() {
     return {

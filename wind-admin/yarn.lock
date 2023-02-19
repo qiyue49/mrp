@@ -697,6 +697,11 @@ callsites@^3.0.0:
   resolved "https://registry.npmmirror.com/callsites/-/callsites-3.1.0.tgz"
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
+camelcase@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-1.2.1.tgz#9bb5304d2e0b56698b2c758b08a3eaa9daa58a39"
+  integrity sha512-wzLkDa4K/mzI1OSITC+DUyjgIl/ETNHE9QvYgy6J6Jvqyyz4C0Xfd+lQhb19sX2jMpZV4IssUn0VDVmglV+s4g==
+
 chai@^4.3.6:
   version "4.3.7"
   resolved "https://registry.npmmirror.com/chai/-/chai-4.3.7.tgz"
@@ -2405,6 +2410,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+mapvgl@1.0.0-beta.145:
+  version "1.0.0-beta.145"
+  resolved "https://registry.yarnpkg.com/mapvgl/-/mapvgl-1.0.0-beta.145.tgz#692e112b16de6a231f27f54ddf45a70bebf25bd5"
+  integrity sha512-vTUrp7a0BdF8Yzzts4XcJQKxm5W93vdR2qUcK6fktdWq+LkGuOP2tP6SfoQstR3fZl4i/xSAMWzp1RjBqJv4hA==
+
 mdn-data@2.0.14:
   version "2.0.14"
   resolved "https://registry.npmmirror.com/mdn-data/-/mdn-data-2.0.14.tgz"
@@ -2484,11 +2494,6 @@ minimist@^1.2.0, minimist@^1.2.6:
   version "1.2.6"
   resolved "https://registry.npmmirror.com/minimist/-/minimist-1.2.6.tgz"
   integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
-
-mitt@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.0.tgz#69ef9bd5c80ff6f57473e8d89326d01c414be0bd"
-  integrity sha512-7dX2/10ITVyqh4aOSVI9gdape+t9l2/8QxHrFmUXu4EEUpdlxl6RudZUPZoc+zuY2hk1j7XxVroIVIan/pD/SQ==
 
 mixin-deep@^1.2.0:
   version "1.3.2"
@@ -3361,6 +3366,13 @@ unset-value@^1.0.0:
     has-value "^0.3.1"
     isobject "^3.0.0"
 
+uppercamelcase@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/uppercamelcase/-/uppercamelcase-1.1.0.tgz#324d98a6b3afc7e8a8953e10641509b0e4e23f97"
+  integrity sha512-C7YEMvhgrvTEKEEVqA7LXNID/1TvvIwYZqNIKLquS6y/MGSkRQAav9LnTTILlC1RqUM8eTVBOe1U/fnB652PRA==
+  dependencies:
+    camelcase "^1.2.1"
+
 uri-js@^4.2.2:
   version "4.4.1"
   resolved "https://registry.npmmirror.com/uri-js/-/uri-js-4.4.1.tgz"
@@ -3455,6 +3467,13 @@ vitest@^0.18.1:
     tinyspy "^1.0.0"
     vite "^2.9.12 || ^3.0.0-0"
 
+vue-bmap-gl@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/vue-bmap-gl/-/vue-bmap-gl-1.0.4.tgz#9d1ef2de72c3dbf734220f40d8013bd0bce74f98"
+  integrity sha512-4FFSCWsBNuuf1Gpjj2zkXAaGp58fbKHm/ATM82mphcEa8GoMbnQ1npyzi7jycAtIo94gsWhXHGNSaMBM+GHogw==
+  dependencies:
+    uppercamelcase "^1.1.0"
+
 vue-demi@*:
   version "0.13.11"
   resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.11.tgz"
@@ -3473,6 +3492,13 @@ vue-eslint-parser@^9.0.1:
     lodash "^4.17.21"
     semver "^7.3.6"
 
+vue-mapvgl@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/vue-mapvgl/-/vue-mapvgl-1.0.3.tgz#8872f44dfde71fc408ac9d463df9204a4b922bb5"
+  integrity sha512-sfJ/8C6vlQLUoyh3i4bUAMt+XOXybWTAb3TKNQmz7xka5UekMYuxX5l0lJRfXANI0/aDUL1H1CgtZ6S+OBhw0Q==
+  dependencies:
+    mapvgl "1.0.0-beta.145"
+
 vue-router@^4.1.6:
   version "4.1.6"
   resolved "https://registry.npmmirror.com/vue-router/-/vue-router-4.1.6.tgz"
@@ -3480,15 +3506,7 @@ vue-router@^4.1.6:
   dependencies:
     "@vue/devtools-api" "^6.4.5"
 
-vue3-baidu-map-gl@^1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/vue3-baidu-map-gl/-/vue3-baidu-map-gl-1.1.3.tgz#f5222cb0f911f7418cfac61e629711611b09e101"
-  integrity sha512-MFwqaQLQGdbiI57X6viBDUw1+xNItSSadlLCs1qpnOvCej6PjVXNNzgXzkI40Te0Usi3VhYDFVfTmnJhYbkE+g==
-  dependencies:
-    mitt "^3.0.0"
-    vue "^3.2.40"
-
-vue@^3.2.40, vue@^3.2.45:
+vue@^3.2.45:
   version "3.2.47"
   resolved "https://registry.npmmirror.com/vue/-/vue-3.2.47.tgz"
   integrity sha512-60188y/9Dc9WVrAZeUVSDxRQOZ+z+y5nO2ts9jWXSTkMvayiWxCWOWtBQoYjLeccfXkiiPZWAHcV+WTPhkqJHQ==

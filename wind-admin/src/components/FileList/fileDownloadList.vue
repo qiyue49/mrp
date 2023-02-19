@@ -13,7 +13,7 @@
 export default {
   name: 'FileDownloadList',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     }
@@ -24,7 +24,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         if (this.isNull(val)) {

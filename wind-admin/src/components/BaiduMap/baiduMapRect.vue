@@ -4,9 +4,11 @@
     <el-button type="primary" @click="clearRect">清除多边形</el-button>
     <el-button v-if="showText" type="primary" @click="addPath">数据画线</el-button>
     <el-input v-if="showText" v-model="path" style="margin-top: 10px; margin-bottom: 10px" />
-    <baidu-map :center="center" :scroll-wheel-zoom="true" :zoom="zoom" :style="{height:height,width:width}" @moving="syncCenterAndZoom" @moveend="syncCenterAndZoom" @zoomend="syncCenterAndZoom">
-      <bm-polygon :path="polygonPath" :stroke-color="color" :stroke-opacity="opacity" :stroke-weight="weight" :editing="true" @lineupdate="updatePolygonPath" />
-    </baidu-map>
+    <div :style="{height:height,width:width}">
+      <el-bmap :center="center" :zoom="zoom" @moveend="syncCenterAndZoom" @zoomend="syncCenterAndZoom">
+        <el-bmap-polygon v-if="show" :path="path" :stroke-color="color" :stroke-opacity="opacity" :stroke-weight="weight" enable-editing @editend="updatePolygonPath" />
+      </el-bmap>
+    </div>
   </div>
 </template>
 
@@ -14,13 +16,15 @@
 export default {
   name: 'BaiduMapRect',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: undefined
     },
     center: {
-      type: [Object, String],
-      default: '北京'
+      type: Array,
+      default: () => {
+        return [121.59996, 31.197646]
+      }
     },
     zoom: {
       type: Number,
@@ -36,7 +40,7 @@ export default {
     },
     weight: {
       type: Number,
-      default: 2
+      default: 5
     },
     width: {
       type: String,
@@ -48,84 +52,74 @@ export default {
     },
     showText: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
-      polygonPath: [],
       mapCenter: {},
+      show: false,
       path: undefined
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
-        if (this.value) {
-          this.polygonPath = JSON.parse(this.value)
-          this.path = this.value
+        if (!this.isNull(val)) {
+          this.path = JSON.parse(val)
+          if (!(this.path instanceof Array)) {
+            this.path = undefined
+            this.show = false
+            return
+          }
+          this.show = true
         } else {
-          this.polygonPath = []
           this.path = undefined
+          this.show = false
         }
       }
     }
   },
   created() {
+    this.mapCenter.lat = this.center[1]
+    this.mapCenter.lng = this.center[0]
   },
   methods: {
     syncCenterAndZoom(e) {
       const { lng, lat } = e.target.getCenter()
       this.mapCenter.lng = lng
       this.mapCenter.lat = lat
-      // this.zoom = e.target.getZoom();
     },
     newRect() {
       const lng = this.mapCenter.lng
       const lat = this.mapCenter.lat
-      this.polygonPath = []
-      this.polygonPath.push({ lng: lng + 0.01, lat: lat + 0.01 })
-      this.polygonPath.push({ lng: lng + 0.01, lat: lat - 0.01 })
-      this.polygonPath.push({ lng: lng - 0.01, lat: lat - 0.01 })
-      this.polygonPath.push({ lng: lng - 0.01, lat: lat + 0.01 })
+      this.path = []
+      this.path.push([lng + 0.01, lat + 0.01])
+      this.path.push([lng + 0.01, lat - 0.01])
+      this.path.push([lng - 0.01, lat - 0.01])
+      this.path.push([lng - 0.01, lat + 0.01])
+      this.show = true
       this.updateData()
     },
     clearRect() {
-      this.polygonPath = undefined
+      this.path = []
+      this.show = false
       this.updateData()
     },
-    addPath() {
-      try {
-        const points = JSON.parse(this.path)
-        if (!(points instanceof Array)) {
-          this.$message.error('你输入的格式错误')
-          return
-        }
-        let validate = true
-        points.find(item => {
-          if (!Number(item.lat) || !Number(item.lat)) {
-            validate = false
-            return true
-          }
-        })
-        if (!validate) {
-          this.$message.error('你输入的格式错误')
-        }
-        this.polygonPath = points
-        this.$emit('input', this.path)
-      } catch (e) {
-        this.$message.error('你输入的格式错误')
-      }
+    addPath: function() {
     },
     updatePolygonPath(e) {
-      this.polygonPath = e.target.getPath()
+      const polygonPath = e.target.getPath()
+      this.path = []
+      polygonPath.forEach(item => {
+        this.path.push([item.lng, item.lat])
+      })
       this.updateData()
     },
     updateData() {
-      this.path = JSON.stringify(this.polygonPath)
-      this.path = this.path === '[]' ? undefined : this.path
-      this.$emit('input', this.path)
+      this.$emit('update:modelValue', JSON.stringify(this.path))
     }
 
   }

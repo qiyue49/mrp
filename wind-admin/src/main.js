@@ -10,17 +10,19 @@ import { isNull, parseTime, dictLabel } from './utils'
 import formValidate from './utils/formValidate'
 import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
-// import Vue3BaiduMapGL from 'vue3-baidu-map-gl'
+import VueBMap, { initBMapApiLoader } from 'vue-bmap-gl'
+import 'vue-bmap-gl/dist/style.css'
 
 const app = createApp(App)
 
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
-// app.use(Vue3BaiduMapGL, {
-//   ak: '6C45Mk02tovos4GSlTqp0Vptp8MZjQv7',
-//   plugins: ['TrackAnimation']
-// })
+initBMapApiLoader({
+  ak: '6C45Mk02tovos4GSlTqp0Vptp8MZjQv7',
+  plugins: 'Lushu,TrackAnimation'
+})
+app.use(VueBMap)
 
 // 初始化图标
 app.config.globalProperties.$icons = []

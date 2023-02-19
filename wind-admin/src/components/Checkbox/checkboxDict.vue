@@ -13,7 +13,7 @@
 export default {
   name: 'CheckboxDict',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -22,16 +22,17 @@ export default {
       default: ''
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       checkList: []
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
-        console.log('value', val)
+        // console.log('value', val)
         if (val === undefined || val === '') {
           return
         }
@@ -40,14 +41,14 @@ export default {
             return true
           }
         })
-        console.log('checkList', this.checkList)
+        // console.log('checkList', this.checkList)
       }
     }
   },
   methods: {
     change(val) {
-      console.log('change', val)
-      this.$emit('input', val.join(','))
+      // console.log('change', val)
+      this.$emit('update:modelValue', val.join(','))
     }
 
   }

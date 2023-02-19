@@ -11,7 +11,7 @@
 export default {
   name: 'ImageGallery',
   props: {
-    value: {
+    modelValue: {
       type: [String, Array],
       required: false,
       default: ''
@@ -48,7 +48,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         if (this.isNull(val)) {
