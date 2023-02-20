@@ -46,20 +46,15 @@
           <span>{{ parseTime(scope.row.publishDate, '{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="重要程度" min-width="80px">
-        <template #default="scope">
-          <svg-icon v-for="n in +scope.row.level" :key="n" icon-class="star" class="meta-item__icon" />
-        </template>
-      </el-table-column>
       <el-table-column label="阅读数" min-width="95">
         <template #default="{row}">
-          <span v-if="row.readings" class="link-type" @click="handleFetchPv(row.readings)">{{ row.readings }}</span>
+          <span v-if="row.readings" class="link-type">{{ row.readings }}</span>
           <span v-else>0</span>
         </template>
       </el-table-column>
       <el-table-column label="状态" class-name="status-col" min-width="100">
         <template #default="{row}">
-          <el-tag :type="row.status | statusFilter">
+          <el-tag :type="statusFilter(row.status)">
             {{ row.status }}
           </el-tag>
         </template>
@@ -107,16 +102,6 @@ export default {
   name: 'ComplexTable',
   components: { SvgIcon, Import, tableForm, Pagination },
   directives: { waves, permission },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'info',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
       tableKey: 0,
@@ -138,6 +123,14 @@ export default {
     this.getList()
   },
   methods: {
+    statusFilter(status) {
+      const statusMap = {
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
+      }
+      return statusMap[status]
+    },
     getList() {
       this.listLoading = true
       fetchTableList(this.listQuery).then(response => {
@@ -207,8 +200,9 @@ export default {
       this.$refs.form.handleCreate()
     },
     setSort() {
-      const el = this.$refs.dragTable.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0]
+      const el = this.$refs.dragTable.$el.querySelectorAll('.el-table__body-wrapper tbody')[0]
       this.sortable = Sortable.create(el, {
+        handle: '.drag-handler',
         setData: function(dataTransfer) {
           // to avoid Firefox bug
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
