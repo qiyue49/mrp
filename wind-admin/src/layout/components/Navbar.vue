@@ -1,19 +1,23 @@
 <template>
   <div class="navbar">
-    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <!-- <div @click="cc">{{ visitedViews }}</div> -->
+    <div class="topleft">
+      <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <!-- <span v-if="visitedViews[0].meta.title">{{ visitedViews[0].meta.title }}</span> -->
+    </div>
     <top-menu v-if="topMenu" class="topmenu-container" />
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search class="right-menu-item hover-effect" />
-        <full-screen class="right-menu-item hover-effect" />
-        <dark-theme class="right-menu-item hover-effect" />
-        <setting class="right-menu-item hover-effect" />
+        <search />
+        <!-- <full-screen class="right-menu-item hover-effect" /> -->
+        <!-- <dark-theme class="right-menu-item hover-effect" /> -->
+        <!-- <setting class="right-menu-item hover-effect" /> -->
       </template>
-
+      <div><img style="width:40px" :src="avatarUrl+'?imageView2/1/w/80/h/80'" class="user-avatar" /></div>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatarUrl+'?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <span>张子瑞</span>
           <i class="el-icon-caret-bottom"></i>
         </div>
         <template #dropdown>
@@ -62,6 +66,10 @@ export default {
     Search
   },
   computed: {
+    visitedViews() {
+      // const name = this.$store.tagsViewStore.visitedViews.filter((item) => item.path == this.$route.path)
+      return this.$store.tagsViewStore.visitedViews.filter((item) => item.path == this.$route.path)
+    },
     device() {
       return this.$store.appStore.device
     },
@@ -82,6 +90,12 @@ export default {
     }
   },
   methods: {
+    cc() {
+      console.log('dsd', this.$store.tagsViewStore.visitedViews)
+      console.log('dsdssss', this.$store.permissionStore.routes)
+      console.log('当前', this.$route.path)
+      console.log('当前sssss', this.$store.tagsViewStore.visitedViews.filter((item) => item.path == this.$route.path)[0].meta.title)
+    },
     fullScreen() {
       this.$store.settingStore.changeSetting('fullScreen', {
         key: 'fullScreen',
@@ -111,7 +125,10 @@ a{
   overflow: hidden;
   position: relative;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-
+  .topleft{
+    // display: flex;
+    // align-items: center;
+  }
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -140,7 +157,9 @@ a{
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 50px;
+    // line-height: 50px;
+    display: flex;
+    align-items: center;
 
     &:focus {
       outline: none;
@@ -166,11 +185,10 @@ a{
 
     .avatar-container {
       margin-right: 30px;
-
+      line-height: 35px;
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-
         .user-avatar {
           cursor: pointer;
           width: 40px;

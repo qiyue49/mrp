@@ -79,5 +79,6 @@ export default {
 }
 .el-main {
   min-height: calc(100vh - 109px);
+  background-color: #F3F5F8;
 }
 </style>

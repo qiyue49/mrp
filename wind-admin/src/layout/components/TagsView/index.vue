@@ -210,6 +210,7 @@ export default {
 .router-link-active {
   text-decoration: none;
   color: white;
+  // background-color: red;
 }
 a{
   text-decoration: none;
@@ -218,8 +219,10 @@ a{
 .tags-view-container {
   height: 34px;
   width: 100%;
-  border-bottom: 1px solid #d8dce5;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
+  background-color: #F3F5F8;
+  padding: 10px 0;
+  // border-bottom: 1px solid #d8dce5;
+  // box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .12), 0 0 3px 0 rgba(0, 0, 0, .04);
   .tags-view-wrapper {
     .tags-view-item {
       display: inline-block;
@@ -227,11 +230,13 @@ a{
       cursor: pointer;
       height: 26px;
       line-height: 26px;
-      border: 1px solid #d8dce5;
+      // border: 1px solid #d8dce5;
       padding: 0 8px;
       font-size: 12px;
       margin-left: 5px;
       margin-top: 4px;
+      // background-color: #ffffff;
+      border-radius: 20px;
       .close {
         width: 16px;
         height: 16px;
@@ -257,8 +262,9 @@ a{
         margin-right: 15px;
       }
       &.active {
-        background-color: #42b983;
-        border-color: #42b983;
+        background-color: #0243A3;
+        border-color: #0243A3;
+        border-radius: 20px;
         &::before {
           content: '';
           background: #fff;

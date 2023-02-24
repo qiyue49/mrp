@@ -7,6 +7,7 @@
         :collapse="isCollapse"
         :unique-opened="false"
         :collapse-transition="false"
+        active-text-color="#fff"
         mode="vertical"
         router
       >
@@ -47,9 +48,34 @@ export default {
   }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
+.el-scrollbar{
+  margin-left: 20px;
+}
 .el-menu {
   border-right: 0px;
 }
+.el-menu-item{
+  height: 40px;
+}
+.el-menu-item.is-active, li.el-menu-item.is-active {
+   background-color: #0242A3 !important;
+   border-radius: 20px 0 0 20px;
+}
+.el-sub-menu.is-active.is-opened{
+  .el-menu.el-menu--inline{
+    .el-menu-item.is-active{
+  background: #0242A3 !important;
+  border-radius: 20px 0 0 20px;
+}
+  }
+}
+.el-sub-menu__title{
+.is-active{
+  background: #0242A3 !important;
+  border-radius: 20px 0 0 20px;
+}
+}
+
 </style>
 

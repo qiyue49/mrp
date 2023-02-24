@@ -145,8 +145,8 @@ export default {
 </script>
 <style lang="scss">
   .active {
-    background-color: #0088CC;
-    color: #FFFFFF;
+    background-color: #0088CC !important;
+    // color: #FFFFFF;
   }
 
   .el-col-8 {

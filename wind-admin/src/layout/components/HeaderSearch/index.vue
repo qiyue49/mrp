@@ -1,5 +1,12 @@
 <template>
-  <div :class="{'show':show}" class="header-search">
+  <div class="all">
+    <div class="serc">
+      <img src="@/assets/img/searc.png" alt=""/>
+      <input v-model="input" placeholder="请输入内容"/>
+    </div>
+    <span>搜索</span>
+  </div>
+  <!-- <div :class="{'show':show}" class="header-search">
     <svg-icon class="search-icon" icon-class="search" @click.stop="click" />
     <el-select
       ref="headerSearchSelect"
@@ -14,7 +21,7 @@
     >
       <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title" />
     </el-select>
-  </div>
+  </div> -->
 </template>
 
 <script>
@@ -154,6 +161,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.all{
+  font-size: 14px;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  .serc{
+  border: 1px solid #E7ECF3;
+  height: 30px;
+  line-height: 30px;
+  border-top-left-radius: 10PX;
+  border-bottom-left-radius: 10PX;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  input:focus{
+        border: none !important;
+    }
+  input::placeholder{
+        color: #E7ECF3;
+    }
+
+  input{
+    border: none !important;
+    color: #E7ECF3;
+    padding: 0 10px;
+    // outline: none;
+    .el-input__wrapper{
+      border: 0 !important;
+    }
+  }
+   input:focus{
+       border: 0;
+}
+}
+span{
+    background-color: #0243A3;
+    height: 30PX;
+    line-height: 30PX;
+    padding: 0 10PX;
+    border-top-right-radius: 10PX;
+    border-bottom-right-radius: 10PX;
+    border: 1px solid #0243A3;
+    color: #FFF;
+  }
+}
 .header-search {
   font-size: 0 !important;
 
