@@ -1,7 +1,7 @@
 <template>
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-scrollbar :class="{'scrollbar-left':$store.appStore.sidebar.opened}" wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -49,7 +49,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-.el-scrollbar{
+.scrollbar-left{
   margin-left: 20px;
 }
 .el-menu {
@@ -61,6 +61,17 @@ export default {
 .el-menu-item.is-active, li.el-menu-item.is-active {
    background-color: #0242A3 !important;
    border-radius: 20px 0 0 20px;
+   position: relative;
+   color: #fff;
+}
+.el-menu-item.is-active, li.el-menu-item.is-active::after {
+   content: 's';
+   position: absolute;
+   right: 0;
+   color: #F5C265;
+   background-color: #F5C265;
+   height: 40px;
+  //  width: 10px;
 }
 .el-sub-menu.is-active.is-opened{
   .el-menu.el-menu--inline{

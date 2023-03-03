@@ -5,6 +5,7 @@ import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue' // global css
 import App from './App.vue'
 import router from './router'
+import * as echarts from 'echarts'
 
 import { isNull, parseTime, dictLabel } from './utils'
 import formValidate from './utils/formValidate'
@@ -15,6 +16,7 @@ import 'vue-bmap-gl/dist/style.css'
 
 const app = createApp(App)
 
+app.config.globalProperties.$echarts = echarts
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)

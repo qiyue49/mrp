@@ -145,7 +145,7 @@ export default {
 </script>
 <style lang="scss">
   .active {
-    background-color: #0088CC !important;
+    // background-color: #0088CC !important;
     // color: #FFFFFF;
   }
 

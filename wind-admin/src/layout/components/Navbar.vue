@@ -104,6 +104,7 @@ export default {
     },
     toggleSideBar() {
       this.$store.appStore.toggleSideBar()
+      console.log('点击', this.$store.appStore.sidebar.opened)
     },
     async logout() {
       await this.$store.userStore.logout()
