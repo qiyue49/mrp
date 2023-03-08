@@ -16,11 +16,11 @@ export default {
   components: { Login1, Login3, Login4, Login5 },
   data() {
     return {
-      index: 0
+      index: 4
     }
   },
   created() {
-    this.index = 1
+    this.index = 4
     // console.log('index', this.index)
   },
   methods: {

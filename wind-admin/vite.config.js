@@ -22,7 +22,7 @@ export default ({ mode }) => {
       proxy: {
         [env.VITE_APP_BASE_API]: {
           // 本地API地址
-          target: 'http://192.168.0.105:8083',
+          target: 'http://192.168.0.129:8083',
           changeOrigin: true,
           rewrite: path => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         },

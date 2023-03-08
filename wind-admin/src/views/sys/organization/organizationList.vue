@@ -10,7 +10,7 @@
       </el-button>
       <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
-    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border>
+    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
       <el-table-column prop="name" label="名称" width="180" />
       <el-table-column label="备注">
         <template #default="scope">

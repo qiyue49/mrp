@@ -13,11 +13,11 @@
       </div>
     </div>
     <div class="f2">
-      <div ref="$chart1" style="width: 100%;height: 220px">
+      <div ref="$chart1" style="width: 100%;height: 100%">
       </div>
-      <div class="f3">
-        <span>查看数据详情</span>
-      </div>
+    </div>
+    <div class="f3">
+      <span>查看数据详情</span>
     </div>
   </div></template>
 

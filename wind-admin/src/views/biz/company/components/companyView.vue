@@ -22,6 +22,7 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
       @row-click="refreshSub"
     >
       <el-table-column label="名称" min-width="150px">

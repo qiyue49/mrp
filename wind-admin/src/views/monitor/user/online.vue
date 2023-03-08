@@ -21,6 +21,7 @@
       fit
       highlight-current-row
       tyle="width: 100%"
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
     >
       <el-table-column min-width="120" label="用户名">
         <template #default="scope">

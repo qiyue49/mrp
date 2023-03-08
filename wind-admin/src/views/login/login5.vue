@@ -1,6 +1,9 @@
 <template>
   <div class="all">
-    <div class="left"></div>
+    <div class="left">
+      <img src="../../assets/img/qq.png" alt=""/>
+    </div>
+    <div class="medd"></div>
     <div class="right">
       <el-form
         ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
@@ -70,7 +73,7 @@
 </template>
 
 <script>
-import { mixin } from '@/views/login/mixin'
+import { mixin } from './mixin'
 export default {
   name: 'Login5',
   mixins: [mixin]
@@ -78,13 +81,53 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+*{
+  padding: 0;
+  margin: 0;
+}
 .all{
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
     display: flex;
+    width: 100%;
+    height: 100bh;
     .left{
-    width:50%
+    width:50%;
+    img{
+      width: 100%;
+      height: 100vh;
+    }
+}
+.medd{
+  width: 10px;
+  height: 100%;
+  background-color: #C24229;
 }
 .right{
-    width:50%
+    width:50%;
+    background-color: #0243A3;
+    // padding: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .el-form{
+      background-color: #fff;
+      padding: 100px;
+      border-radius: 40px;
+      .el-form-item{
+        .el-form-item__content{
+          .el-input{
+            .el-input__wrapper{
+              border-radius: 0;
+            }
+        border-radius: 30px !important;
+      }
+        }
+      }
+    }
 }
 }
 </style>

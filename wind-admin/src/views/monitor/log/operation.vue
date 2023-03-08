@@ -20,6 +20,7 @@
       border
       fit
       highlight-current-row
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />

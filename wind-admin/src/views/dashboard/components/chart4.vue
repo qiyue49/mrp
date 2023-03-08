@@ -6,7 +6,7 @@
       <span>本月</span>
       <span>本周</span>
     </div>
-    <div ref="$chart1" style="width: 100%;height: 400px"></div>
+    <div ref="$chart1" style="width: 100%;height: 100%"></div>
   </div>
 
 </template>
@@ -32,16 +32,18 @@ export default {
             }
           }
         },
-        toolbox: {
-          feature: {
-            dataView: { show: true, readOnly: false },
-            magicType: { show: true, type: ['line', 'bar'] },
-            restore: { show: true },
-            saveAsImage: { show: true }
-          }
-        },
+        // toolbox: {
+        //   feature: {
+        //     dataView: { show: false, readOnly: false },
+        //     magicType: { show: false, type: ['line', 'bar'] },
+        //     restore: { show: true },
+        //     saveAsImage: { show: true }
+        //   }
+        // },
         legend: {
-          data: ['Evaporation', 'Precipitation', 'Temperature']
+          data: ['入院人数', '出院人数', '花费'],
+          x: 'right',
+          y: 'top'
         },
         xAxis: [
           {
@@ -55,29 +57,35 @@ export default {
         yAxis: [
           {
             type: 'value',
-            name: 'Precipitation',
+            name: '',
             min: 0,
             max: 250,
             interval: 50,
             axisLabel: {
-              formatter: '{value} ml'
+              formatter: '{value}'
             }
           },
           {
             type: 'value',
-            name: 'Temperature',
+            name: '花费',
             min: 0,
             max: 25,
             interval: 5,
             axisLabel: {
-              formatter: '{value} °C'
+              formatter: '{value}'
             }
           }
         ],
         series: [
           {
-            name: 'Evaporation',
+            name: '入院人数',
             type: 'bar',
+            itemStyle: {
+              normal: {
+                color: '#0243A3',
+                barBorderRadius: [30, 30, 0, 0]
+              }
+            },
             tooltip: {
               valueFormatter: function (value) {
                 return value + ' ml'
@@ -88,8 +96,14 @@ export default {
             ]
           },
           {
-            name: 'Precipitation',
+            name: '出院人数',
             type: 'bar',
+            itemStyle: {
+              normal: {
+                color: '#C24229',
+                barBorderRadius: [30, 30, 0, 0]
+              }
+            },
             tooltip: {
               valueFormatter: function (value) {
                 return value + ' ml'
@@ -100,9 +114,16 @@ export default {
             ]
           },
           {
-            name: 'Temperature',
+            name: '花费',
             type: 'line',
             yAxisIndex: 1,
+            smooth: true,
+            showSymbol: false,
+            itemStyle: {
+              normal: {
+                color: '#FFBF49'
+              }
+            },
             tooltip: {
               valueFormatter: function (value) {
                 return value + ' °C'

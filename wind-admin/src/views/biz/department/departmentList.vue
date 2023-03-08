@@ -6,7 +6,7 @@
       </el-button>
     </div>
 
-    <el-table :data="list" style="width: 100%;" row-key="id" border lazy :load="load">
+    <el-table :data="list" style="width: 100%;" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
       <el-table-column label="名称" min-width="150px">
         <template #default="{row}">
           <span>{{ row.name }}</span>

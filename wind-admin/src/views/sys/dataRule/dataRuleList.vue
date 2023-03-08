@@ -24,7 +24,8 @@
       border
       fit
       highlight-current-row
-      style="width: 100%;">
+      style="width: 100%;"
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
       <el-table-column label="资源编号" min-width="150px">
         <template #default="{row}">
           <span>{{ row.resourceCode }}</span>

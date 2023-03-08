@@ -25,6 +25,7 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
     >
       <el-table-column label="拖拽" width="80">
         <template #default="{}">

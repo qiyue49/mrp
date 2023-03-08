@@ -22,6 +22,7 @@
       fit
       highlight-current-row
       style="width: 100%;"
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
     >
       <el-table-column label="新闻类型名称" min-width="150px">
         <template #default="{row}">

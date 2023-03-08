@@ -53,3 +53,6 @@ $--colors: (
 
 // custom dark variables
 @use "./dark.scss";
+.el-table{
+  border: none !important;
+}

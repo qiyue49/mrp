@@ -13,7 +13,8 @@
       border
       fit
       highlight-current-row
-      style="width: 100%;">
+      style="width: 100%;"
+      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
       <el-table-column type="expand">
         <template #default="props">
           <el-form label-position="left" inline class="table-expand" label-width="120px" style="width: 90%; margin-left:50px;">

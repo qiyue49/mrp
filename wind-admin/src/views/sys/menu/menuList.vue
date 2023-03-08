@@ -9,7 +9,7 @@
       <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" row-key="id" border lazy :load="load">
+    <el-table v-loading="listLoading" :data="list" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
       <el-table-column ming-width="150" label="名称">
         <template #default="scope">
           <span>{{ scope.row.name }}</span>

@@ -3,7 +3,7 @@
     <el-col :span="6">
       <div>
         <div class="filter-container left-tree-list">
-          <el-table :data="treeList" row-key="id" border lazy :load="load" @row-click="getListByTreeId">
+          <el-table :data="treeList" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}" @row-click="getListByTreeId">
             <el-table-column prop="name" label="名称" sortable />
           </el-table>
         </div>
