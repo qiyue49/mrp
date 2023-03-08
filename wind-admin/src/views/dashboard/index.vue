@@ -5,7 +5,7 @@
         <div class="top_left_top">
           <chart-1 style="width:30%;height:100%"/>
           <chart-2 style="marginLeft:20px;width:30%;height:100%"/>
-          <chart-3 style="marginLeft:20px;width:30%;height:100%"/>
+          <chart-3 style="marginLeft:20px;width:40%;height:100%"/>
         </div>
         <div class="top_left_boom">
           <chart-4 style="width:100%"/>
@@ -67,10 +67,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+*{
+  box-sizing: border-box;
+}
 .top{
   display: flex;
-  height: 60vh;
+  height: 50vh;
   // overflow: hidden;
+  margin-top: -20px;
   .top_left{
     width: 60%;
     .top_left_top{
@@ -78,7 +82,7 @@ export default {
       height: 50%;
     }
     .top_left_boom{
-      width: 100%;
+      // width: 100%;
       height: 50%;
     }
   }

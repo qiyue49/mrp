@@ -6,7 +6,7 @@
       <span>本月</span>
       <span>本周</span>
     </div>
-    <div ref="$chart1" style="width: 100%;height: 100%"></div>
+    <div ref="$chart1" style="width: 100%;height: 80%"></div>
   </div>
 
 </template>
@@ -147,5 +147,7 @@ export default {
     // align-items: center;
     margin-top: 20px;
     border-radius: 20px;
+    height: 100%;
+    width: 100%;
 }
 </style>

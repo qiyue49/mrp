@@ -36,7 +36,6 @@ export default {
     return {}
   },
   mounted() {
-    this.echartsInit()
   },
   methods: {
     echartsInit() {
