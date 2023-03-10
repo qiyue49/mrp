@@ -3,7 +3,9 @@
     <router-view v-slot="{ Component, route }">
       <transition name="router-fade" mode="out-in">
         <keep-alive :include="cachedViews">
-          <component :is="Component" :key="route.fullPath" />
+          <el-card>
+            <component :is="Component" :key="route.fullPath" />
+          </el-card>
         </keep-alive>
       </transition>
     </router-view>
