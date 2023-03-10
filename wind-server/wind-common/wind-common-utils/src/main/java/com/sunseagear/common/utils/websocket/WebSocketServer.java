@@ -2,10 +2,10 @@ package com.sunseagear.common.utils.websocket;
 
 import com.sunseagear.common.utils.websocket.processor.SocketMessage;
 import com.google.gson.Gson;
+import jakarta.websocket.*;
+import jakarta.websocket.server.PathParam;
 import org.springframework.context.annotation.Bean;
 
-import javax.websocket.*;
-import javax.websocket.server.PathParam;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

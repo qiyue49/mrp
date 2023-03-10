@@ -7,7 +7,7 @@ import com.sunseagear.wind.modules.oss.entity.Attachment;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

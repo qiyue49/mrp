@@ -9,8 +9,8 @@ import com.lmax.disruptor.dsl.ProducerType;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import javax.annotation.PostConstruct;
-import javax.mail.internet.MimeMessage;
+import jakarta.annotation.PostConstruct;
+import jakarta.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;

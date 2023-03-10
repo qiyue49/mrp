@@ -7,8 +7,9 @@ import com.sunseagear.common.utils.StringUtils;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.util.Assert;
 
-import javax.xml.bind.*;
-import javax.xml.bind.annotation.XmlAnyElement;
+import jakarta.xml.bind.*;
+import jakarta.xml.bind.annotation.XmlAnyElement;
+
 import javax.xml.namespace.QName;
 import javax.xml.transform.stream.StreamSource;
 import java.io.StringReader;

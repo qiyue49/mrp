@@ -4,7 +4,7 @@ import com.sunseagear.common.utils.websocket.WebSocketServer;
 import com.sunseagear.wind.modules.websocket.processor.WebServerHellowRequestProcessor;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.server.ServerEndpoint;
+import jakarta.websocket.server.ServerEndpoint;
 
 @Component
 @ServerEndpoint("/json/web/server/{userId}")

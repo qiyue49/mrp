@@ -3,7 +3,7 @@ package com.sunseagear.wind.modules.sso.service;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.utils.entity.Principal;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**

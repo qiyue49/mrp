@@ -3,7 +3,7 @@ package com.sunseagear.common.utils;
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.Headers;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
