@@ -91,10 +91,6 @@ public class User extends DataEntity<String> {
         return salt;
     }
 
-    public void setDefault() {
-        this.status = STATUS_NORMAL;
-    }
-
     public String findRoleIds() {
         List<String> roleIds = new ArrayList<>();
         roles.forEach(item -> {

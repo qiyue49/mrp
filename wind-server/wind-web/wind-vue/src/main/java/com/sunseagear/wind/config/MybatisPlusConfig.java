@@ -12,9 +12,13 @@ import com.baomidou.mybatisplus.extension.plugins.inner.TenantLineInnerIntercept
 import com.sunseagear.common.datarule.handler.DataRuleHandler;
 import com.sunseagear.common.datarule.handler.MyDataPermissionHandler;
 import com.sunseagear.wind.common.handler.BaseMetaObjectHandler;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Properties;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -52,6 +56,17 @@ public class MybatisPlusConfig {
     @Bean
     public IKeyGenerator keyGenerator() {
         return new H2KeyGenerator();
+    }
+
+    @Bean
+    public DatabaseIdProvider getDatabaseIdProvider() {
+        DatabaseIdProvider databaseIdProvider = new VendorDatabaseIdProvider();
+        Properties properties = new Properties();
+        properties.setProperty("Oracle", "oracle");
+        properties.setProperty("Microsoft SQL Server", "sqlServer");
+        properties.setProperty("MySQL", "mysql");
+        databaseIdProvider.setProperties(properties);
+        return databaseIdProvider;
     }
 
 }

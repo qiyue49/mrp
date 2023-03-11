@@ -9,7 +9,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.http.ValidResponse;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -51,7 +51,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sys/user")
-@RequiresPermissions("sys:user")
+@PreAuthorize("hasAuthority('sys:user')")
 @Log(title = "用户管理")
 public class UserController extends BaseBeanController<User> {
     @Autowired
@@ -71,7 +71,7 @@ public class UserController extends BaseBeanController<User> {
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:user:list")
+    @PreAuthorize("hasAuthority('sys:user:list')")
     public String list(HttpServletRequest request) throws IOException {
         QueryWrapper<User> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("t.tenant_id", UserUtils.getTenantId());
@@ -98,7 +98,7 @@ public class UserController extends BaseBeanController<User> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:user:add")
+    @PreAuthorize("hasAuthority('sys:user:add')")
     public String add(@Valid User entity, BindingResult result,
                       HttpServletRequest request) {
         // 验证错误
@@ -116,7 +116,7 @@ public class UserController extends BaseBeanController<User> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:user:update")
+    @PreAuthorize("hasAuthority('sys:user:update')")
     public String update(@Valid User entity, BindingResult result,
                          HttpServletRequest request) {
         // 验证错误
@@ -133,7 +133,7 @@ public class UserController extends BaseBeanController<User> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:user:delete")
+    @PreAuthorize("hasAuthority('sys:user:delete')")
     public String delete(@PathVariable("id") String id) {
         userService.deleteById(id);
         return Response.ok("删除成功");
@@ -141,7 +141,7 @@ public class UserController extends BaseBeanController<User> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:user:delete")
+    @PreAuthorize("hasAuthority('sys:user:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         userService.deleteBatchIds(idList);
@@ -150,7 +150,7 @@ public class UserController extends BaseBeanController<User> {
 
     @PostMapping(value = "{id}/changePassword")
     @Log(logType = LogType.OTHER, title = "修改成功")
-    @RequiresPermissions("sys:user:change:password")
+    @PreAuthorize("hasAuthority('sys:user:change:password')")
     public String changePassword(@PathVariable("id") String id, HttpServletRequest request,
                                  HttpServletResponse response) {
         String password = request.getParameter("password");
@@ -160,7 +160,7 @@ public class UserController extends BaseBeanController<User> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:user:list")
+    @PreAuthorize("hasAuthority('sys:user:list')")
     public String detail(@PathVariable("id") String id) {
         User user = userService.selectById(id);
         return Response.successJson(user);
@@ -185,7 +185,7 @@ public class UserController extends BaseBeanController<User> {
 
     @GetMapping("export")
     @Log(logType = LogType.EXPORT)
-    @RequiresPermissions("sys:user:export")
+    @PreAuthorize("hasAuthority('sys:user:export')")
     public String export(HttpServletRequest request) {
         HashMap<String, Object> response = new HashMap<>();
         try {

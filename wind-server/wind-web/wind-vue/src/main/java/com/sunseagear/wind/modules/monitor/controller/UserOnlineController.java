@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.sunseagear.common.utils.entity.Principal;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 @RestController
 @RequestMapping(value = "/monitor/user/online")
-@RequiresPermissions("monitor:user:online")
+@PreAuthorize("hasAuthority('monitor:user:online')")
 @Log(title = "在线用户")
 public class UserOnlineController extends BaseBeanController<Principal> {
 
@@ -36,7 +36,7 @@ public class UserOnlineController extends BaseBeanController<Principal> {
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("monitor:user:online:list")
+    @PreAuthorize("hasAuthority('monitor:user:online:list')")
     public String list(HttpServletRequest request) throws IOException {
         // 预处理
         Page pageBean = oAuthService.activePrincipal(getPage(),request);

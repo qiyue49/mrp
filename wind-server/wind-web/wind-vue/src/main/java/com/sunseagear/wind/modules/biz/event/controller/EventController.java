@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("biz/event/event")
-@RequiresPermissions("biz:event:event")
+@PreAuthorize("hasAuthority('biz:event:event')")
 @Log(title = "事件管理&mdash;&mdash;单表（飞廉演示）")
 public class EventController extends BaseBeanController<Event> {
 
@@ -50,7 +50,7 @@ public class EventController extends BaseBeanController<Event> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:event:event:list")
+    @PreAuthorize("hasAuthority('biz:event:event:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Event> queryWrapper = new QueryWrapper<>();
@@ -74,7 +74,7 @@ public class EventController extends BaseBeanController<Event> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("biz:event:event:add")
+    @PreAuthorize("hasAuthority('biz:event:event:add')")
     public String add(Event entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -85,7 +85,7 @@ public class EventController extends BaseBeanController<Event> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("biz:event:event:update")
+    @PreAuthorize("hasAuthority('biz:event:event:update')")
     public String update(Event entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -96,7 +96,7 @@ public class EventController extends BaseBeanController<Event> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:event:event:detail")
+    @PreAuthorize("hasAuthority('biz:event:event:detail')")
     public String detail(Model model, @PathVariable("id") String id) {
         Event event = eventService.selectById(id);
         return Response.successJson(event);
@@ -104,7 +104,7 @@ public class EventController extends BaseBeanController<Event> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("biz:event:event:delete")
+    @PreAuthorize("hasAuthority('biz:event:event:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         eventService.deleteBatchIds(idList);

@@ -9,7 +9,7 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.biz.newsType.entity.NewsType;
 import com.sunseagear.wind.modules.biz.newsType.service.INewsTypeService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("biz/newsType/newstype")
-@RequiresPermissions("biz:newsType:newstype")
+@PreAuthorize("hasAuthority('biz:newsType:newstype')")
 @Log(title = "新闻类型")
 public class NewsTypeController extends BaseBeanController<NewsType> {
 
@@ -50,7 +50,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:newsType:newstype:list")
+    @PreAuthorize("hasAuthority('biz:newsType:newstype:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<NewsType> entityWrapper = new QueryWrapper<>();
@@ -66,7 +66,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("biz:newsType:newstype:add")
+    @PreAuthorize("hasAuthority('biz:newsType:newstype:add')")
     public String add(NewsType entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -77,7 +77,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("biz:newsType:newstype:update")
+    @PreAuthorize("hasAuthority('biz:newsType:newstype:update')")
     public String update(NewsType entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -88,7 +88,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:newsType:newstype:detail")
+    @PreAuthorize("hasAuthority('biz:newsType:newstype:detail')")
     public String detail(Model model, @PathVariable("id") String id) {
         NewsType newsType = newsTypeService.selectById(id);
         return Response.successJson(newsType);
@@ -96,7 +96,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("biz:newsType:newstype:delete")
+    @PreAuthorize("hasAuthority('biz:newsType:newstype:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         newsTypeService.deleteBatchIds(idList);
@@ -106,7 +106,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
 
     @GetMapping(value = "/select")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:newsType:newstype:list")
+    @PreAuthorize("hasAuthority('biz:newsType:newstype:list')")
     public String selectNewsContentType(){
         QueryWrapper<NewsType> entityWrapper = new QueryWrapper<>();
         entityWrapper.orderByDesc(false, "create_date");

@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
  */
 @ComponentScan({"com.sunseagear.common.datarule.config", "com.sunseagear.common.tenant", "com.sunseagear.common.quartz.config", "com.sunseagear.common.oss", "com.sunseagear.common.sms", "com.sunseagear.wind"})
 @SpringBootApplication
-@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class VueWebBootApplication {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(VueWebBootApplication.class, args);

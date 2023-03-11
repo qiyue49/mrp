@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -31,7 +31,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("sms/sendlog")
-@RequiresPermissions("sms:sendlog")
+@PreAuthorize("hasAuthority('sms:sendlog')")
 @Log(title = "短信发送日志")
 public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
 
@@ -41,7 +41,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
 
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sms:sendlog:list")
+    @PreAuthorize("hasAuthority('sms:sendlog:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<SmsSendLog> entityWrapper = new QueryWrapper<>();
@@ -65,7 +65,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sms:sendlog:delete")
+    @PreAuthorize("hasAuthority('sms:sendlog:delete')")
     public String delete(@PathVariable("id") String id) {
         smsSendLogService.deleteById(id);
         return Response.ok("删除成功");
@@ -73,7 +73,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sms:sendlog:delete")
+    @PreAuthorize("hasAuthority('sms:sendlog:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         smsSendLogService.deleteBatchIds(idList);

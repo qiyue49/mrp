@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("sys/datarule")
-@RequiresPermissions("sys:datarule")
+@PreAuthorize("hasAuthority('sys:datarule')")
 @Log(title = "数据权限表")
 public class DataRuleController extends BaseBeanController<DataRule> {
 
@@ -51,7 +51,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:datarule:list")
+    @PreAuthorize("hasAuthority('sys:datarule:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<DataRule> entityWrapper = new QueryWrapper<>();
@@ -71,7 +71,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:datarule:add")
+    @PreAuthorize("hasAuthority('sys:datarule:add')")
     public String add(@Valid DataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -81,7 +81,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:datarule:update")
+    @PreAuthorize("hasAuthority('sys:datarule:update')")
     public String update(@Valid DataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -91,7 +91,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:datarule:delete")
+    @PreAuthorize("hasAuthority('sys:datarule:delete')")
     public String delete(@PathVariable("id") String id) {
         dataRuleService.deleteById(id);
         return Response.ok("删除成功");
@@ -99,7 +99,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:datarule:detail")
+    @PreAuthorize("hasAuthority('sys:datarule:detail')")
     public String detail(@PathVariable("id") String id) {
         DataRule dataRule = dataRuleService.selectById(id);
         return Response.successJson(dataRule);
@@ -107,7 +107,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:datarule:delete")
+    @PreAuthorize("hasAuthority('sys:datarule:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         dataRuleService.deleteBatchIds(idList);

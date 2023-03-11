@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.VueTreeHelper;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -37,7 +37,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("biz/department/department")
-@RequiresPermissions("biz:department:department")
+@PreAuthorize("hasAuthority('biz:department:department')")
 @Log(title = "组织架构&mdash;&mdash;左树右表树表（飞廉演示）")
 public class DepartmentController extends BaseBeanController<Department> {
 
@@ -52,7 +52,7 @@ public class DepartmentController extends BaseBeanController<Department> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:department:department:list")
+    @PreAuthorize("hasAuthority('biz:department:department:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Department> queryWrapper = new QueryWrapper<>();
@@ -64,7 +64,7 @@ public class DepartmentController extends BaseBeanController<Department> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("biz:department:department:add")
+    @PreAuthorize("hasAuthority('biz:department:department:add')")
     public String add(Department entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -75,7 +75,7 @@ public class DepartmentController extends BaseBeanController<Department> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("biz:department:department:update")
+    @PreAuthorize("hasAuthority('biz:department:department:update')")
     public String update(Department entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -86,7 +86,7 @@ public class DepartmentController extends BaseBeanController<Department> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:department:department:detail")
+    @PreAuthorize("hasAuthority('biz:department:department:detail')")
     public String detail(Model model, @PathVariable("id") String id) {
         Department department = departmentService.selectById(id);
         return Response.successJson(department);
@@ -94,7 +94,7 @@ public class DepartmentController extends BaseBeanController<Department> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("biz:department:department:delete")
+    @PreAuthorize("hasAuthority('biz:department:department:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         departmentService.deleteBatchIds(idList);

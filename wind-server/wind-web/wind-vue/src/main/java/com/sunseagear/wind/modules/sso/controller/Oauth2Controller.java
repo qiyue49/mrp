@@ -1,48 +1,24 @@
 package com.sunseagear.wind.modules.sso.controller;
 
-import com.sunseagear.common.utils.IpUtils;
+import com.sunseagear.common.datarule.handler.DataRuleHandler;
+import com.sunseagear.common.http.Response;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
-import com.sunseagear.wind.common.response.ResponseError;
-import com.sunseagear.wind.config.autoconfigure.ShiroConfigProperties;
+import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
-import com.sunseagear.wind.security.shiro.filter.authc.UsernamePasswordToken;
-import com.sunseagear.wind.utils.JWTHelper;
 import com.sunseagear.wind.utils.LoginLogUtils;
-import com.sunseagear.wind.utils.ResponseUtils;
 import com.sunseagear.wind.utils.UserUtils;
-import org.apache.oltu.oauth2.as.issuer.MD5Generator;
-import org.apache.oltu.oauth2.as.issuer.OAuthIssuer;
-import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
-import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
-import org.apache.oltu.oauth2.as.request.OAuthTokenRequest;
-import org.apache.oltu.oauth2.as.response.OAuthASResponse;
-import org.apache.oltu.oauth2.common.OAuth;
-import org.apache.oltu.oauth2.common.exception.OAuthProblemException;
-import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
-import org.apache.oltu.oauth2.common.message.OAuthResponse;
-import org.apache.oltu.oauth2.common.message.types.GrantType;
-import org.apache.oltu.oauth2.common.message.types.ResponseType;
-import org.apache.oltu.oauth2.common.utils.OAuthUtils;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.ExpiredCredentialsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.subject.Subject;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RestController;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,141 +32,67 @@ import java.util.Map;
  * @description: Oauth2.0认证开发 * @date: 2018/1/8 15:56
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-@Controller
+@RestController
 @RequestMapping("/sso/oauth2")
 public class Oauth2Controller {
 
     @Autowired
     private IOAuthService oAuthService;
+    @Autowired
+    private JWTHelper jwtHelper;
+    @Autowired
+    private DataRuleHandler dataRuleHandler;
 
     @Autowired
-    private ShiroConfigProperties shiroConfigProperties;
+    private AuthenticationManager authenticationManager;
 
     /**
      * 登陆方法
      *
-     * @param subject
      * @param request
      * @return
      */
-    private boolean login(Subject subject, String username, String password, String captcha, HttpServletRequest request) {
-        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
-            return false;
-        }
-        boolean rememberMe = true;
-        String host = IpUtils.getIpAddr((HttpServletRequest) request);
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha);
-        try {
-            subject.login(token);
-            LoginLogUtils.recordSuccessLoginLog(UserUtils.getUser().getUsername(), "登陆成功");
-            return true;
-        } catch (ExpiredCredentialsException e) {
-            request.setAttribute("error", e.getMessage());
-            request.setAttribute("errorCode", ResponseError.EXPIRED_FAIL);
-            LoginLogUtils.recordFailLoginLog(username, e.getMessage());
-            return false;
-        } catch (IncorrectCredentialsException e) {
-            request.setAttribute("error", "用户名或密码错误");
-            request.setAttribute("errorCode", ResponseError.USERNAME_OR_PASSWORD_ERROR);
-            LoginLogUtils.recordFailLoginLog(username, "用户名或密码错误");
-            return false;
-        } catch (AuthenticationException e) {
-            request.setAttribute("error", e.getMessage());
-            request.setAttribute("errorCode", ResponseError.MSG_LOGIN_FAILE);
-            LoginLogUtils.recordFailLoginLog(username, e.getMessage());
-            return false;
-        } catch (Exception e) {
-            request.setAttribute("error", e.getMessage());
-            request.setAttribute("errorCode", ResponseError.MSG_LOGIN_FAILE);
-            LoginLogUtils.recordFailLoginLog(username, e.getMessage());
-            return false;
-        }
-    }
-
-
     @RequestMapping("/access_token")
     @ResponseBody
-    public HttpEntity accessToken(HttpServletRequest request)
-            throws URISyntaxException, OAuthSystemException {
-
-        try {
-            //构建OAuth请求
-            OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
-
-            //检查提交的客户端id是否正确
-            if (!oAuthService.checkClientId(oauthRequest.getClientId())) {
-                return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_CLIENT);
-            }
-
-            // 检查客户端安全KEY是否正确
-            if (!oAuthService.checkClientSecret(oauthRequest.getClientSecret())) {
-                return ResponseUtils.getErrResponse(HttpServletResponse.SC_UNAUTHORIZED, ResponseError.INVALID_CLIENT_SECRET);
-            }
-
-            String authCode = "";
-            // 检查验证类型，此处只检查AUTHORIZATION_CODE类型，其他的还有PASSWORD或REFRESH_TOKEN
-            if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.AUTHORIZATION_CODE.toString())) {
-                authCode = oauthRequest.getParam(OAuth.OAUTH_CODE);
-                if (!oAuthService.checkAuthCode(authCode)) {
-                    return ResponseUtils.getErrResponse(HttpServletResponse.SC_UNAUTHORIZED, ResponseError.INVALID_AUTH_CODE);
-                }
-            } else if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.PASSWORD.toString())) { //密码模式
-                //判断客户端有访问的权限
-                Subject subject = SecurityUtils.getSubject();
-                String username = oauthRequest.getUsername();
-                String password = oauthRequest.getPassword();
-                //如果用户没有登录，跳转到登陆页面
-                if (!subject.isAuthenticated() && !login(subject, username, password, "", request)) {
-                    String error = (String) request.getAttribute("error");
-                    int errorCode = (Integer) request.getAttribute("errorCode");
-                    return ResponseUtils.getErrResponse(HttpServletResponse.SC_UNAUTHORIZED, errorCode, error);
-                } else {
-                    Principal principal = UserUtils.getPrincipal(); // 如果已经登录，则跳转到管理首页
-                    OAuthIssuerImpl oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
-                    authCode = oauthIssuerImpl.authorizationCode();
-                    oAuthService.addAuthCode(authCode, principal);
-                }
-            }
-
-            //生成Access Token
-            Principal principal = oAuthService.getPrincipalByAuthCode(authCode);
-            Map<String, String> dataMap = new HashMap<String, String>();
-            dataMap.put("id", principal.getId());
-            dataMap.put("username", principal.getUsername());
-            dataMap.put("realname", principal.getRealname());
-            dataMap.put("tenantId", principal.getTenantId());
-            dataMap.put("roleId", principal.getRoleId());
-            final String accessToken = JWTHelper.sign(dataMap, shiroConfigProperties.getJwtTokenSecret(), Long.parseLong(oAuthService.getExpireIn() + ""));
-            oAuthService.addAccessToken(accessToken, oAuthService.getPrincipalByAuthCode(authCode));
-
-            //生成Refresh Token
-            OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
-            final String refreshToken = oauthIssuerImpl.refreshToken();
-            oAuthService.addRefreshToken(refreshToken, oAuthService.getPrincipalByAuthCode(authCode));
-
-            //生成OAuth响应
-            OAuthResponse response = OAuthASResponse
-                    .tokenResponse(HttpServletResponse.SC_OK)
-                    .setAccessToken(accessToken)
-                    .setRefreshToken(refreshToken)
-                    // .setParam("openid",UserUtils.getPrincipal().getId())
-                    .setExpiresIn(String.valueOf(oAuthService.getExpireIn()))
-                    .buildJSONMessage();
-
-            //根据OAuthResponse生成ResponseEntity
-            return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-        } catch (OAuthProblemException e) {
-            //构建错误响应
-            return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_AUTH_CODE, e.getDescription());
+    public String accessToken(HttpServletRequest request) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            return Response.failJson("用户名密码不能为空");
         }
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        if (!authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("用户名密码错误");
+        }
+        //生成Access Token
+        Principal principal = (Principal) authentication.getPrincipal();
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("id", principal.getId());
+        dataMap.put("username", principal.getUsername());
+        dataMap.put("realname", principal.getRealname());
+        dataMap.put("tenantId", principal.getTenantId());
+        dataMap.put("roleId", principal.getRoleId());
+        final String accessToken = jwtHelper.createToken(dataMap, username);
+        oAuthService.addAccessToken(accessToken, principal);
+
+        //生成Refresh Token
+//        OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
+//        final String refreshToken = oauthIssuerImpl.refreshToken();
+//        oAuthService.addRefreshToken(refreshToken, principal);
+
+        //将用户信息缓存到数据权限模块
+        dataRuleHandler.refreshUser(principal.getId());
+
+
+        return Response.successJson((Object) accessToken);
     }
 
 
     @RequestMapping("/refresh_token")
     @ResponseBody
-    public HttpEntity refreshToken(HttpServletRequest request)
-            throws URISyntaxException, OAuthSystemException {
-
+    public HttpEntity refreshToken(HttpServletRequest request) {
+/*
         try {
             //构建OAuth请求
             OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
@@ -232,37 +134,8 @@ public class Oauth2Controller {
         } catch (OAuthProblemException e) {
             //构建错误响应
             return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_REFRESH_TOKEN, e.getDescription());
-        }
-    }
-
-    /**
-     * 检查TOKEN
-     *
-     * @param request
-     * @return
-     * @throws URISyntaxException
-     * @throws OAuthSystemException
-     */
-    @RequestMapping("/check_token")
-    @ResponseBody
-    public HttpEntity checkToken(HttpServletRequest request)
-            throws URISyntaxException, OAuthSystemException {
-        //try {
-        //构建OAuth资源请求
-        //OAuthAccessResourceRequest oauthRequest = new OAuthAccessResourceRequest(request, ParameterStyle.QUERY);
-
-        //获取Access Token
-        String accessToken = request.getHeader("access_token");
-        //验证Access Token
-        if (!oAuthService.checkAccessToken(accessToken)) {
-            // 如果不存在/过期了，返回未验证错误，需重新验证
-            return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_ACCESS_TOKEN);
-        }
-        return ResponseUtils.getErrResponse(HttpServletResponse.SC_OK, ResponseError.OK);
-       /* } catch (OAuthProblemException e) {
-            //构建错误响应
-            return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_ACCESS_TOKEN,e.getDescription());
         }*/
+        return null;
     }
 
     /**
@@ -271,14 +144,13 @@ public class Oauth2Controller {
      * @param request
      * @return
      * @throws URISyntaxException
-     * @throws OAuthSystemException
      */
     @RequestMapping("/revoke_token")
     @ResponseBody
-    public HttpEntity revokeToken(HttpServletRequest request) throws OAuthSystemException {
+    public String revokeToken(HttpServletRequest request) {
         String accessToken = request.getHeader("access_token");
         LoginLogUtils.recordLogoutLoginLog(UserUtils.getUser().getUsername(), "退出成功");
         oAuthService.revokeToken(accessToken);
-        return ResponseUtils.getErrResponse(HttpServletResponse.SC_OK, ResponseError.OK);
+        return Response.successJson("退出成功");
     }
 }

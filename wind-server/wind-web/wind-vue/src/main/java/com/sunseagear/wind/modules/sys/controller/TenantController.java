@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("sys/tenant")
-@RequiresPermissions("sys:tenant")
+@PreAuthorize("hasAuthority('sys:tenant')")
 @Log(title = "租户管理")
 public class TenantController extends BaseBeanController<Tenant> {
 
@@ -52,7 +52,7 @@ public class TenantController extends BaseBeanController<Tenant> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:tenant:list")
+    @PreAuthorize("hasAuthority('sys:tenant:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Tenant> entityWrapper = new QueryWrapper<>();
@@ -80,7 +80,7 @@ public class TenantController extends BaseBeanController<Tenant> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:tenant:add")
+    @PreAuthorize("hasAuthority('sys:tenant:add')")
     public String add(@Valid Tenant entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -91,7 +91,7 @@ public class TenantController extends BaseBeanController<Tenant> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:tenant:update")
+    @PreAuthorize("hasAuthority('sys:tenant:update')")
     public String update(@Valid Tenant entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -101,7 +101,7 @@ public class TenantController extends BaseBeanController<Tenant> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:tenant:delete")
+    @PreAuthorize("hasAuthority('sys:tenant:delete')")
     public String delete(@PathVariable("id") String id) {
         tenantService.deleteById(id);
         return Response.ok("删除成功");
@@ -109,7 +109,7 @@ public class TenantController extends BaseBeanController<Tenant> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:tenant:detail")
+    @PreAuthorize("hasAuthority('sys:tenant:detail')")
     public String detail(@PathVariable("id") String id) {
         Tenant tenant = tenantService.selectById(id);
         return Response.successJson(tenant);
@@ -117,7 +117,7 @@ public class TenantController extends BaseBeanController<Tenant> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:tenant:delete")
+    @PreAuthorize("hasAuthority('sys:tenant:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         tenantService.deleteBatchIds(idList);

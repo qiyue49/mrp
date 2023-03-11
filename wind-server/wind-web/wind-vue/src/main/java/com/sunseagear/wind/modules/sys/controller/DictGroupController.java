@@ -5,7 +5,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.wind.utils.DictUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -22,7 +22,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/sys/dict/group")
-@RequiresPermissions("sys:dict")
+@PreAuthorize("hasAuthority('sys:dict')")
 @Log(title = "字典分组")
 public class DictGroupController extends BaseBeanController<DictGroup> {
 
@@ -38,7 +38,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:dict:group:list")
+    @PreAuthorize("hasAuthority('sys:dict:group:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<DictGroup> entityWrapper = new QueryWrapper<>();
@@ -54,7 +54,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:dict:group:add")
+    @PreAuthorize("hasAuthority('sys:dict:group:add')")
     public String add(@Valid DictGroup entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -65,7 +65,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:dict:group:update")
+    @PreAuthorize("hasAuthority('sys:dict:group:update')")
     public String update(@Valid DictGroup entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -75,7 +75,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     }
 
     @PostMapping("delete/{id}")
-    @RequiresPermissions("sys:dict:group:delete")
+    @PreAuthorize("hasAuthority('sys:dict:group:delete')")
     public String delete(@PathVariable("id") String id) {
         dictGroupService.deleteById(id);
         DictUtils.initDict();

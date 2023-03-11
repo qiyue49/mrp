@@ -9,7 +9,7 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.biz.newsContent.entity.NewsContent;
 import com.sunseagear.wind.modules.biz.newsContent.service.INewsContentService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("biz/newsContent/newscontent")
-@RequiresPermissions("biz:newsContent:newscontent")
+@PreAuthorize("hasAuthority('biz:newsContent:newscontent')")
 @Log(title = "新闻内容")
 public class NewsContentController extends BaseBeanController<NewsContent> {
 
@@ -50,7 +50,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:newsContent:newscontent:list")
+    @PreAuthorize("hasAuthority('biz:newsContent:newscontent:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<NewsContent> entityWrapper = new QueryWrapper<>();
@@ -74,7 +74,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("biz:newsContent:newscontent:add")
+    @PreAuthorize("hasAuthority('biz:newsContent:newscontent:add')")
     public String add(NewsContent entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -85,7 +85,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("biz:newsContent:newscontent:update")
+    @PreAuthorize("hasAuthority('biz:newsContent:newscontent:update')")
     public String update(NewsContent entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -96,7 +96,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:newsContent:newscontent:detail")
+    @PreAuthorize("hasAuthority('biz:newsContent:newscontent:detail')")
     public String detail(Model model, @PathVariable("id") String id) {
         NewsContent newsContent = newsContentService.selectById(id);
         return Response.successJson(newsContent);
@@ -104,7 +104,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("biz:newsContent:newscontent:delete")
+    @PreAuthorize("hasAuthority('biz:newsContent:newscontent:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         newsContentService.deleteBatchIds(idList);

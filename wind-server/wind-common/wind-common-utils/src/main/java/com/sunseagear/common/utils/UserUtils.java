@@ -1,10 +1,8 @@
 package com.sunseagear.common.utils;
 
 import com.sunseagear.common.utils.entity.Principal;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.UnavailableSecurityManagerException;
-import org.apache.shiro.session.InvalidSessionException;
-import org.apache.shiro.subject.Subject;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -18,30 +16,16 @@ import org.apache.shiro.subject.Subject;
 @SuppressWarnings("unchecked")
 public class UserUtils {
 
-    /**
-     * 获取授权主要对象
-     */
-    public static Subject getSubject() {
-        return SecurityUtils.getSubject();
+
+    public static Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 
     /**
      * 获取当前登录者对象
      */
     public static Principal getPrincipal() {
-        try {
-            Subject subject = SecurityUtils.getSubject();
-            Principal principal = (Principal) subject.getPrincipal();
-            if (principal != null) {
-                return principal;
-            }
-            // subject.logout();
-        } catch (UnavailableSecurityManagerException e) {
-
-        } catch (InvalidSessionException e) {
-
-        }
-        return null;
+        return (Principal) getAuthentication().getPrincipal();
     }
 
     public static String getTenantId() {

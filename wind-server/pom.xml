@@ -23,10 +23,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mybatis-plus-boot-starter.version>3.5.3</mybatis-plus-boot-starter.version>
         <java.version>17</java.version>
-        <shiro.version>1.11.0</shiro.version>
         <bitwalker.version>1.21</bitwalker.version>
-        <org-apache-oltu-oauth2.version>1.0.2</org-apache-oltu-oauth2.version>
-        <jwt.version>3.3.0</jwt.version>
+        <jwt.version>0.11.5</jwt.version>
         <poi.version>4.4.0</poi.version>
         <druid.version>1.1.21</druid.version>
         <mysql.version>8.0.17</mysql.version>
@@ -197,12 +195,6 @@
                 <version>${tencentcloud.sdk.java.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.apache.shiro</groupId>
-                <artifactId>shiro-spring-boot-web-starter</artifactId>
-                <version>${shiro.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>cn.afterturn</groupId>
                 <artifactId>easypoi-web</artifactId>
                 <version>${poi.version}</version>
@@ -216,22 +208,21 @@
             </dependency>
             <!--jwt-->
             <dependency>
-                <groupId>com.auth0</groupId>
-                <artifactId>java-jwt</artifactId>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
                 <version>${jwt.version}</version>
             </dependency>
-            <!--oltu-->
             <dependency>
-                <groupId>org.apache.oltu.oauth2</groupId>
-                <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
-                <version>${org-apache-oltu-oauth2.version}</version>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jwt.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.apache.oltu.oauth2</groupId>
-                <artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
-                <version>${org-apache-oltu-oauth2.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>sqljdbc4</artifactId>

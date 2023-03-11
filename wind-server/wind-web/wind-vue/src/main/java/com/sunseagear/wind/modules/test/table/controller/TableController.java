@@ -12,7 +12,7 @@ import com.sunseagear.wind.modules.test.table.entity.Table;
 import com.sunseagear.wind.modules.test.table.service.ITableService;
 import com.sunseagear.wind.utils.excel.ImportExcel;
 import org.apache.commons.text.StringEscapeUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -44,7 +44,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("test/table/table")
-@RequiresPermissions("test:table:table")
+@PreAuthorize("hasAuthority('test:table:table')")
 @Log(title = "综合表格")
 public class TableController extends BaseBeanController<Table> {
 
@@ -59,7 +59,7 @@ public class TableController extends BaseBeanController<Table> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:table:table:list")
+    @PreAuthorize("hasAuthority('test:table:table:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
@@ -84,7 +84,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("test:table:table:add")
+    @PreAuthorize("hasAuthority('test:table:table:add')")
     public String add(@Valid Table entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -94,7 +94,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("test:table:table:update")
+    @PreAuthorize("hasAuthority('test:table:table:update')")
     public String update(@Valid Table entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -104,7 +104,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:table:table:delete")
+    @PreAuthorize("hasAuthority('test:table:table:delete')")
     public String delete(@PathVariable("id") String id) {
         tableService.deleteById(id);
         return Response.ok("删除成功");
@@ -112,7 +112,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:table:table:detail")
+    @PreAuthorize("hasAuthority('test:table:table:detail')")
     public String detail(@PathVariable("id") String id) {
         Table tableEntity = tableService.selectById(id);
         tableEntity.setContent(StringEscapeUtils.unescapeHtml4(tableEntity.getContent()));
@@ -121,7 +121,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:table:table:delete")
+    @PreAuthorize("hasAuthority('test:table:table:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = Arrays.asList(ids);
         tableService.deleteBatchIds(idList);
@@ -130,7 +130,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @GetMapping("template")
     @Log(logType = LogType.IMPORT)
-    @RequiresPermissions("test:table:table:import")
+    @PreAuthorize("hasAuthority('test:table:table:import')")
     public String template() {
         try {
             List<Table> list = new ArrayList<>();
@@ -151,7 +151,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @PostMapping("import")
     @Log(logType = LogType.IMPORT)
-    @RequiresPermissions("test:table:table:import")
+    @PreAuthorize("hasAuthority('test:table:table:import')")
     public String export(MultipartFile file) {
         try {
             ImportExcel ei = new ImportExcel(file, 1, 0);
@@ -166,7 +166,7 @@ public class TableController extends BaseBeanController<Table> {
 
     @PostMapping("export")
     @Log(logType = LogType.EXPORT)
-    @RequiresPermissions("test:table:table:export")
+    @PreAuthorize("hasAuthority('test:table:table:export')")
     public String export(HttpServletRequest request) {
         try {
             QueryWrapper<Table> entityWrapper = new QueryWrapper<>();

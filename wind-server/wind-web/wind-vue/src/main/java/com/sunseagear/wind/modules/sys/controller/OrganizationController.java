@@ -4,7 +4,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.wind.modules.sys.entity.DataRule;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -26,7 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sys/organization")
-@RequiresPermissions("sys:organization")
+@PreAuthorize("hasAuthority('sys:organization')")
 @Log(title = "部门管理")
 public class OrganizationController extends BaseBeanController<Organization> {
 
@@ -43,7 +43,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:organization:list")
+    @PreAuthorize("hasAuthority('sys:organization:list')")
     public String list(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
         QueryWrapper<Organization> entityWrapper = new QueryWrapper<Organization>();
@@ -60,7 +60,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:organization:add")
+    @PreAuthorize("hasAuthority('sys:organization:add')")
     public String add(@Valid Organization entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -72,7 +72,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:organization:update")
+    @PreAuthorize("hasAuthority('sys:organization:update')")
     public String update(@Valid Organization entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -82,7 +82,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:organization:detail")
+    @PreAuthorize("hasAuthority('sys:organization:detail')")
     public String detail(@PathVariable("id") String id) {
         Organization organization = organizationService.selectById(id);
         return Response.successJson(organization);
@@ -90,7 +90,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:organization:delete")
+    @PreAuthorize("hasAuthority('sys:organization:delete')")
     public String delete(@PathVariable("id") String id) {
         organizationService.deleteById(id);
         return Response.ok("删除成功");
@@ -98,7 +98,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:organization:delete")
+    @PreAuthorize("hasAuthority('sys:organization:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         organizationService.deleteBatchIds(idList);

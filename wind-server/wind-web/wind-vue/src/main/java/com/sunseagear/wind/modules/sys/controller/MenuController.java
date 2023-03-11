@@ -3,7 +3,7 @@ package com.sunseagear.wind.modules.sys.controller;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -27,7 +27,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sys/menu")
-@RequiresPermissions("sys:menu")
+@PreAuthorize("hasAuthority('sys:menu')")
 @Log(title = "菜单管理")
 public class MenuController extends BaseBeanController<Menu> {
 
@@ -42,7 +42,7 @@ public class MenuController extends BaseBeanController<Menu> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:menu:list")
+    @PreAuthorize("hasAuthority('sys:menu:list')")
     public String list(HttpServletRequest request) throws IOException {
         QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
         //加入条件
@@ -58,7 +58,7 @@ public class MenuController extends BaseBeanController<Menu> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:menu:add")
+    @PreAuthorize("hasAuthority('sys:menu:add')")
     public String add(@Valid Menu entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -68,7 +68,7 @@ public class MenuController extends BaseBeanController<Menu> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:menu:update")
+    @PreAuthorize("hasAuthority('sys:menu:update')")
     public String update(@Valid Menu entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -77,14 +77,14 @@ public class MenuController extends BaseBeanController<Menu> {
     }
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:menu:detail")
+    @PreAuthorize("hasAuthority('sys:menu:detail')")
     public String detail(@PathVariable("id") String id) {
         Menu organization = menuService.selectById(id);
         return Response.successJson(organization);
     }
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:menu:delete")
+    @PreAuthorize("hasAuthority('sys:menu:delete')")
     public String delete(@PathVariable("id") String id) {
         QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("parent_id", id);
@@ -95,7 +95,7 @@ public class MenuController extends BaseBeanController<Menu> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:menu:delete")
+    @PreAuthorize("hasAuthority('sys:menu:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = Arrays.asList(ids);
         menuService.deleteBatchIds(idList);
@@ -140,7 +140,7 @@ public class MenuController extends BaseBeanController<Menu> {
 
     @PostMapping("{id}/generate/button")
     @Log(logType = LogType.OTHER, title = "生成按钮")
-    @RequiresPermissions("sys:menu:generate:button")
+    @PreAuthorize("hasAuthority('sys:menu:generate:button')")
     public String generateButton(@PathVariable("id") String id,
                                  @RequestParam("parentPermission") String parentPermission,
                                  @RequestParam("permissions") String permissions,

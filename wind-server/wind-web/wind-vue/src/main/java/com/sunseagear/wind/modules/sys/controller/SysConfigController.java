@@ -11,7 +11,7 @@ import com.sunseagear.wind.common.helper.SysConfigHelper;
 import com.sunseagear.wind.modules.sys.entity.SysConfig;
 import com.sunseagear.wind.modules.sys.service.ISysConfigService;
 import com.sunseagear.wind.utils.UserUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +35,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sys/config")
-@RequiresPermissions("sys:config")
+@PreAuthorize("hasAuthority('sys:config')")
 @Log(title = "系统配置")
 public class SysConfigController extends BaseBeanController<SysConfig> {
     @Autowired
@@ -43,7 +43,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
 
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:config:list")
+    @PreAuthorize("hasAuthority('sys:config:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<SysConfig> entityWrapper = new QueryWrapper<>();
@@ -64,7 +64,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:config:add")
+    @PreAuthorize("hasAuthority('sys:config:add')")
     public String add(@Valid SysConfig entity, BindingResult result) {
         long count = sysConfigService.selectCount(new QueryWrapper<SysConfig>().
                 nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
@@ -82,7 +82,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:config:update")
+    @PreAuthorize("hasAuthority('sys:config:update')")
     public String update(@Valid SysConfig entity, BindingResult result) {
         long count = sysConfigService.selectCount(new QueryWrapper<SysConfig>()
                 .nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
@@ -101,7 +101,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:config:delete")
+    @PreAuthorize("hasAuthority('sys:config:delete')")
     public String delete(@PathVariable("id") String id) {
         sysConfigService.deleteById(id);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
@@ -110,7 +110,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:config:detail")
+    @PreAuthorize("hasAuthority('sys:config:detail')")
     public String detail(@PathVariable("id") String id) {
         SysConfig tenant = sysConfigService.selectById(id);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
@@ -119,7 +119,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
 
     @GetMapping("config")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:config:list")
+    @PreAuthorize("hasAuthority('sys:config:list')")
     public String config() {
         List<SysConfig> list = SysConfigHelper.getInstance().getSysConfigList(UserUtils.getTenantId());
         return Response.successJson(list);

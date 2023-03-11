@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -35,7 +35,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sys/dict")
-@RequiresPermissions("sys:dict")
+@PreAuthorize("hasAuthority('sys:dict')")
 @Log(title = "字典管理")
 public class DictController extends BaseBeanController<Dict> {
 
@@ -66,7 +66,7 @@ public class DictController extends BaseBeanController<Dict> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:dict:list")
+    @PreAuthorize("hasAuthority('sys:dict:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Dict> entityWrapper = new QueryWrapper<>();
@@ -86,7 +86,7 @@ public class DictController extends BaseBeanController<Dict> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:dict:add")
+    @PreAuthorize("hasAuthority('sys:dict:add')")
     public String add(@Valid Dict entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -97,7 +97,7 @@ public class DictController extends BaseBeanController<Dict> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:dict:add")
+    @PreAuthorize("hasAuthority('sys:dict:add')")
     public String update(@Valid Dict entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -108,7 +108,7 @@ public class DictController extends BaseBeanController<Dict> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:dict:delete")
+    @PreAuthorize("hasAuthority('sys:dict:delete')")
     public String delete(@PathVariable("id") String id) {
         dictService.deleteById(id);
         DictUtils.initDict();
@@ -117,7 +117,7 @@ public class DictController extends BaseBeanController<Dict> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:dict:delete")
+    @PreAuthorize("hasAuthority('sys:dict:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = Arrays.asList(ids);
         dictService.deleteBatchIds(idList);

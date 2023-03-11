@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("test/treeandtable/treeandtable")
-@RequiresPermissions("test:treeandtable:treeandtable")
+@PreAuthorize("hasAuthority('test:treeandtable:treeandtable')")
 @Log(title = "左树右表")
 public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
 
@@ -51,7 +51,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:treeandtable:treeandtable:list")
+    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<TreeAndTable> entityWrapper = new QueryWrapper<>();
@@ -75,7 +75,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("test:treeandtable:treeandtable:add")
+    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:add')")
     public String add(@Valid TreeAndTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -85,7 +85,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("test:treeandtable:treeandtable:update")
+    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:update')")
     public String update(@Valid TreeAndTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -95,7 +95,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:treeandtable:treeandtable:delete")
+    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:delete')")
     public String delete(@PathVariable("id") String id) {
         treeAndTableService.deleteById(id);
         return Response.ok("删除成功");
@@ -103,7 +103,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:treeandtable:treeandtable:detail")
+    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:detail')")
     public String detail(@PathVariable("id") String id) {
         TreeAndTable treeAndTable = treeAndTableService.selectById(id);
         return Response.successJson(treeAndTable);
@@ -111,7 +111,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:treeandtable:treeandtable:delete")
+    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         treeAndTableService.deleteBatchIds(idList);

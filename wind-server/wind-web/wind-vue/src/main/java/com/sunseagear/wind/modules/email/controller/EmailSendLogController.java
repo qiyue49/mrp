@@ -5,7 +5,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -32,7 +32,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/email/sendlog")
-@RequiresPermissions("email:sendlog")
+@PreAuthorize("hasAuthority('email:sendlog')")
 @Log(title = "邮件发送日志")
 public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
@@ -44,7 +44,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("email:sendlog:list")
+    @PreAuthorize("hasAuthority('email:sendlog:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<EmailSendLog> entityWrapper = new QueryWrapper<>();
@@ -68,7 +68,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("email:sendlog:delete")
+    @PreAuthorize("hasAuthority('email:sendlog:delete')")
     public String delete(@PathVariable("id") String id) {
         emailSendLogService.deleteById(id);
         return Response.ok("删除成功");
@@ -76,7 +76,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("email:sendlog:delete")
+    @PreAuthorize("hasAuthority('email:sendlog:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         emailSendLogService.deleteBatchIds(idList);
@@ -85,7 +85,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
     @PostMapping(value = "retrySend")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("email:sendlog:list")
+    @PreAuthorize("hasAuthority('email:sendlog:list')")
     public String retrySend(@RequestParam(value = "ids", required = false) String[] ids) {
         try {
             List<Serializable> idList = java.util.Arrays.asList(ids);

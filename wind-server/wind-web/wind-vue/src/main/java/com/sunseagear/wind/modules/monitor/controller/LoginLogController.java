@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -40,7 +40,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("monitor/login/log")
-@RequiresPermissions("monitor:login:log")
+@PreAuthorize("hasAuthority('monitor:login:log')")
 @Log(title = "登陆日志")
 public class LoginLogController extends BaseBeanController<LoginLog> {
 
@@ -56,7 +56,7 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("monitor:login:log:list")
+    @PreAuthorize("hasAuthority('monitor:login:log:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<LoginLog> entityWrapper = new QueryWrapper<>();
@@ -72,14 +72,14 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
     }
 
     @PostMapping("delete/{id}")
-    @RequiresPermissions("monitor:login:log:delete")
+    @PreAuthorize("hasAuthority('monitor:login:log:delete')")
     public String delete(@PathVariable("id") String id) {
         loginLogService.deleteById(id);
         return Response.ok("删除成功");
     }
 
     @PostMapping("batch/delete")
-    @RequiresPermissions("monitor:login:log:delete")
+    @PreAuthorize("hasAuthority('monitor:login:log:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         loginLogService.deleteBatchIds(idList);
@@ -88,7 +88,7 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
 
     @GetMapping("export")
     @Log(logType = LogType.EXPORT)
-    @RequiresPermissions("monitor:login:log:export")
+    @PreAuthorize("hasAuthority('monitor:login:log:export')")
     public String export(HttpServletRequest request) {
         HashMap<String, Object> response = new HashMap<>();
         try {

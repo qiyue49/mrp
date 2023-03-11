@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.test.expandtable.entity.ExpandTable;
@@ -35,7 +35,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("test/expandtable/expandtable")
-@RequiresPermissions("test:expandtable:expandtable")
+@PreAuthorize("hasAuthority('test:expandtable:expandtable')")
 @Log(title = "商品信息")
 public class ExpandTableController extends BaseBeanController<ExpandTable> {
 
@@ -50,7 +50,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:expandtable:expandtable:list")
+    @PreAuthorize("hasAuthority('test:expandtable:expandtable:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<ExpandTable> entityWrapper = new QueryWrapper<>();
@@ -62,7 +62,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("test:expandtable:expandtable:add")
+    @PreAuthorize("hasAuthority('test:expandtable:expandtable:add')")
     public String add(@Valid ExpandTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -72,7 +72,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("test:expandtable:expandtable:update")
+    @PreAuthorize("hasAuthority('test:expandtable:expandtable:update')")
     public String update(@Valid ExpandTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -82,7 +82,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:expandtable:expandtable:delete")
+    @PreAuthorize("hasAuthority('test:expandtable:expandtable:delete')")
     public String delete(@PathVariable("id") String id) {
         expandTableService.deleteById(id);
         return Response.ok("删除成功");
@@ -90,7 +90,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:expandtable:expandtable:detail")
+    @PreAuthorize("hasAuthority('test:expandtable:expandtable:detail')")
     public String detail(@PathVariable("id") String id) {
         ExpandTable expandTable = expandTableService.selectById(id);
         return Response.successJson(expandTable);
@@ -98,7 +98,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:expandtable:expandtable:delete")
+    @PreAuthorize("hasAuthority('test:expandtable:expandtable:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         expandTableService.deleteBatchIds(idList);

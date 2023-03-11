@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -33,7 +33,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/test/twotable/carmodel")
-@RequiresPermissions("test:twotable:carmodel")
+@PreAuthorize("hasAuthority('test:twotable:carmodel')")
 @Log(title = "车辆型号管理")
 public class CarModelController extends BaseBeanController<CarModel> {
 
@@ -49,7 +49,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:twotable:carmodel:list")
+    @PreAuthorize("hasAuthority('test:twotable:carmodel:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<CarModel> entityWrapper = new QueryWrapper<>();
@@ -69,7 +69,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:twotable:carmodel:detail")
+    @PreAuthorize("hasAuthority('test:twotable:carmodel:detail')")
     public String detail(@PathVariable("id") String id) {
         CarModel carModel = carModelService.selectById(id);
         return Response.successJson(carModel);
@@ -77,7 +77,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @PostMapping("add")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("add")
+    @PreAuthorize("hasAuthority('add')")
     public String add(@Valid CarModel entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -87,7 +87,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("test:twotable:carmodel:update")
+    @PreAuthorize("hasAuthority('test:twotable:carmodel:update')")
     public String update(@Valid CarModel entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -97,7 +97,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:twotable:carmodel:delete")
+    @PreAuthorize("hasAuthority('test:twotable:carmodel:delete')")
     public String delete(@PathVariable("id") String id) {
         carModelService.deleteById(id);
         return Response.ok("删除成功");
@@ -105,7 +105,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:twotable:carmodel:delete")
+    @PreAuthorize("hasAuthority('test:twotable:carmodel:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         carModelService.deleteBatchIds(idList);

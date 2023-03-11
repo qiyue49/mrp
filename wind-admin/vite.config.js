@@ -5,8 +5,6 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
-export const title = '帝江'
-
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   // 获取 .env 环境配置文件
@@ -22,7 +20,7 @@ export default ({ mode }) => {
       proxy: {
         [env.VITE_APP_BASE_API]: {
           // 本地API地址
-          target: 'http://8.131.113.114:9211/wind-vue',
+          target: 'http://localhost:8082',
           changeOrigin: true,
           rewrite: path => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         },

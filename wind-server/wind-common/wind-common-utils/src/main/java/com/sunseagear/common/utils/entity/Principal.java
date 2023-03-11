@@ -5,17 +5,22 @@ import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Data
-public class Principal implements Serializable {
+public class Principal implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
 
     private String id; // 编号
     private String username; // 登录名
+    private String password; // 密码
     private String realname; // 姓名
     private String tenantId; //租户ID
     private String roleId; //角色ID
@@ -25,6 +30,8 @@ public class Principal implements Serializable {
     private Date stopTime;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastAccessTime;
+
+    private Set<GrantedAuthority> permission;
     /**
      * 登录IP
      */
@@ -74,4 +81,28 @@ public class Principal implements Serializable {
         return id;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return permission;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

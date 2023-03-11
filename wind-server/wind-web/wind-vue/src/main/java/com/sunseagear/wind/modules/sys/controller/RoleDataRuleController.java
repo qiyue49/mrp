@@ -5,7 +5,7 @@ import com.sunseagear.common.datarule.handler.DataRuleHandler;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -40,7 +40,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("sys/roledatarule")
-@RequiresPermissions("sys:datarule")
+@PreAuthorize("hasAuthority('sys:datarule')")
 @Log(title = "角色数据权限关联表")
 public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
@@ -59,7 +59,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:datarule:list")
+    @PreAuthorize("hasAuthority('sys:datarule:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<RoleDataRule> roleDataRuleEntityWrapper = new QueryWrapper<>();
@@ -92,7 +92,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:datarule:add")
+    @PreAuthorize("hasAuthority('sys:datarule:add')")
     public String add(@Valid RoleDataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -102,7 +102,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:datarule:update")
+    @PreAuthorize("hasAuthority('sys:datarule:update')")
     public String update(@Valid RoleDataRule entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -112,7 +112,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
     @PostMapping("updateRules")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sys:datarule:update")
+    @PreAuthorize("hasAuthority('sys:datarule:update')")
     public String update(@Valid String roleId, String[] ids) {
         QueryWrapper<RoleDataRule> roleDataRuleEntityWrapper = new QueryWrapper<>();
         roleDataRuleEntityWrapper.eq("role_id", roleId);
@@ -136,7 +136,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:datarule:delete")
+    @PreAuthorize("hasAuthority('sys:datarule:delete')")
     public String delete(@PathVariable("id") String id) {
         roleDataRuleService.deleteById(id);
         return Response.ok("删除成功");
@@ -144,7 +144,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:datarule:detail")
+    @PreAuthorize("hasAuthority('sys:datarule:detail')")
     public String detail(@PathVariable("id") String id) {
         RoleDataRule roleDataRule = roleDataRuleService.selectById(id);
         return Response.successJson(roleDataRule);
@@ -152,7 +152,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:datarule:delete")
+    @PreAuthorize("hasAuthority('sys:datarule:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         roleDataRuleService.deleteBatchIds(idList);

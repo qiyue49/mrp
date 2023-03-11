@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -21,7 +21,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/test/twotable/car")
-@RequiresPermissions("test:twotable:car")
+@PreAuthorize("hasAuthority('test:twotable:car')")
 @Log(title = "车辆品牌分组")
 public class CarController extends BaseBeanController<Car> {
 
@@ -37,7 +37,7 @@ public class CarController extends BaseBeanController<Car> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:twotable:car:list")
+    @PreAuthorize("hasAuthority('test:twotable:car:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Car> entityWrapper = new QueryWrapper<>();
@@ -53,7 +53,7 @@ public class CarController extends BaseBeanController<Car> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:twotable:car:detail")
+    @PreAuthorize("hasAuthority('test:twotable:car:detail')")
     public String detail(@PathVariable("id") String id) {
         Car car = carService.selectById(id);
         return Response.successJson(car);
@@ -61,7 +61,7 @@ public class CarController extends BaseBeanController<Car> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("add")
+    @PreAuthorize("hasAuthority('add')")
     public String add(@Valid Car entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -71,7 +71,7 @@ public class CarController extends BaseBeanController<Car> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("test:twotable:car:update")
+    @PreAuthorize("hasAuthority('test:twotable:car:update')")
     public String update(@Valid Car entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -80,7 +80,7 @@ public class CarController extends BaseBeanController<Car> {
     }
 
     @PostMapping("delete/{id}")
-    @RequiresPermissions("test:twotable:car:delete")
+    @PreAuthorize("hasAuthority('test:twotable:car:delete')")
     public String delete(@PathVariable("id") String id) {
         carService.deleteById(id);
         return Response.ok("删除成功");

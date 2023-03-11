@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -31,7 +31,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/task/schedule/job/log")
-@RequiresPermissions("task:schedule:joblog")
+@PreAuthorize("hasAuthority('task:schedule:joblog')")
 @Log(title = "计划任务日志")
 public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog> {
 
@@ -40,7 +40,7 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
 
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("task:schedule:joblog:list")
+    @PreAuthorize("hasAuthority('task:schedule:joblog:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<ScheduleJobLog> entityWrapper = new QueryWrapper<>();
@@ -64,7 +64,7 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("task:schedule:joblog:delete")
+    @PreAuthorize("hasAuthority('task:schedule:joblog:delete')")
     public String delete(@PathVariable("id") String id) {
         scheduleJobLogService.deleteById(id);
         return Response.ok("删除成功");
@@ -72,7 +72,7 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("task:schedule:joblog:delete")
+    @PreAuthorize("hasAuthority('task:schedule:joblog:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         scheduleJobLogService.deleteBatchIds(idList);

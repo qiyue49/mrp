@@ -58,7 +58,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         }
         // 如果没有登录，则返回实例化空的User对象。
         User user = new User();
-        user.setDefault();
         return user;
     }
 
@@ -107,6 +106,9 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      */
     public static List<Role> getRoleList() {
         User user = getUser();
+        return getRoleList(user);
+    }
+    public static List<Role> getRoleList(User user) {
         List<Role> roleList = CacheUtils.getCacheObject(CACHE_ROLE_LIST + user.getId());
         if (ObjectUtils.isNullOrEmpty(roleList)) {
             roleList = roleService.findListByUserId(user.getId());
@@ -144,7 +146,11 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      * @return
      */
     public static Set<String> getPermissionSet() {
-        List<String> permissionList = UserUtils.getPermissionList();
+        User user = getUser();
+        return getPermissionSet(user);
+    }
+    public static Set<String> getPermissionSet(User user) {
+        List<String> permissionList = UserUtils.getPermissionList(user);
         Set<String> permissionsList = Sets.newConcurrentHashSet();
         for (String permission : permissionList) {
             if (StringUtils.isNotBlank(permission)) {
@@ -175,8 +181,13 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      * @return
      */
     public static List<String> getPermissionList() {
+        User user = getUser();
+        return getPermissionList(user);
+    }
+
+    public static List<String> getPermissionList(User user) {
         final List<String> permissionList = new ArrayList<>();
-        getRoleList().forEach(item -> {
+        getRoleList(user).forEach(item -> {
             ArrayList<String> cachePermissions = CacheUtils.getCacheObject(CACHE_PERMISSION_LIST + item.getId());
             permissionList.addAll(ObjectUtils.isNullOrEmpty(cachePermissions) ? new ArrayList<>() : cachePermissions);
             if (ObjectUtils.isNullOrEmpty(permissionList)) {

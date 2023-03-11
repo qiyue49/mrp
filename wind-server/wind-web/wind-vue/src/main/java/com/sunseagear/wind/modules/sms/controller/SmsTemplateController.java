@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -35,7 +35,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("sms/template")
-@RequiresPermissions("sms:template")
+@PreAuthorize("hasAuthority('sms:template')")
 @Log(title = "短信模板")
 public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
 
@@ -45,7 +45,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
 
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sms:template:list")
+    @PreAuthorize("hasAuthority('sms:template:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<SmsTemplate> entityWrapper = new QueryWrapper<>();
@@ -65,7 +65,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sms:template:add")
+    @PreAuthorize("hasAuthority('sms:template:add')")
     public String add(@Valid SmsTemplate entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -77,7 +77,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("sms:template:update")
+    @PreAuthorize("hasAuthority('sms:template:update')")
     public String update(@Valid SmsTemplate entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -87,7 +87,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sms:template:delete")
+    @PreAuthorize("hasAuthority('sms:template:delete')")
     public String delete(@PathVariable("id") String id) {
         smsTemplateService.deleteById(id);
         return Response.ok("删除成功");
@@ -95,7 +95,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sms:template:delete")
+    @PreAuthorize("hasAuthority('sms:template:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = Arrays.asList(ids);
         smsTemplateService.deleteBatchIds(idList);

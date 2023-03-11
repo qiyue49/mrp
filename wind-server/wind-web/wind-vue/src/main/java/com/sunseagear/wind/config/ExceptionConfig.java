@@ -2,15 +2,13 @@ package com.sunseagear.wind.config;
 
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.utils.ExceptionUtils;
-import org.apache.shiro.ShiroException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -33,10 +31,10 @@ public class ExceptionConfig {
      * @return
      */
     //@ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler(ShiroException.class)
-    public Object handle401(ShiroException ex) {
-        return Response.error(401, ex.getMessage());
-    }
+//    @ExceptionHandler(ShiroException.class)
+//    public Object handle401(ShiroException ex) {
+//        return Response.error(401, ex.getMessage());
+//    }
 
     /**
      * 捕捉UnauthorizedException

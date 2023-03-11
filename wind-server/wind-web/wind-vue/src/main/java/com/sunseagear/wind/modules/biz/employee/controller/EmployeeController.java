@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("biz/employee/employee")
-@RequiresPermissions("biz:employee:employee")
+@PreAuthorize("hasAuthority('biz:employee:employee')")
 @Log(title = "员工信息&mdash;&mdash;左树右表主表（飞廉演示）")
 public class EmployeeController extends BaseBeanController<Employee> {
 
@@ -50,7 +50,7 @@ public class EmployeeController extends BaseBeanController<Employee> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:employee:employee:list")
+    @PreAuthorize("hasAuthority('biz:employee:employee:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Employee> queryWrapper = new QueryWrapper<>();
@@ -74,7 +74,7 @@ public class EmployeeController extends BaseBeanController<Employee> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("biz:employee:employee:add")
+    @PreAuthorize("hasAuthority('biz:employee:employee:add')")
     public String add(Employee entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -85,7 +85,7 @@ public class EmployeeController extends BaseBeanController<Employee> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("biz:employee:employee:update")
+    @PreAuthorize("hasAuthority('biz:employee:employee:update')")
     public String update(Employee entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -96,7 +96,7 @@ public class EmployeeController extends BaseBeanController<Employee> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:employee:employee:detail")
+    @PreAuthorize("hasAuthority('biz:employee:employee:detail')")
     public String detail(Model model, @PathVariable("id") String id) {
         Employee employee = employeeService.selectById(id);
         return Response.successJson(employee);
@@ -104,7 +104,7 @@ public class EmployeeController extends BaseBeanController<Employee> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("biz:employee:employee:delete")
+    @PreAuthorize("hasAuthority('biz:employee:employee:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         employeeService.deleteBatchIds(idList);

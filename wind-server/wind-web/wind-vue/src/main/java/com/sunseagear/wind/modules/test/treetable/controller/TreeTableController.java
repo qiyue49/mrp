@@ -4,7 +4,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.utils.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.common.helper.VueTreeHelper;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("test/treetable/treetable")
-@RequiresPermissions("test:treetable:treetable")
+@PreAuthorize("hasAuthority('test:treetable:treetable')")
 @Log(title = "树形结构表")
 public class TreeTableController extends BaseBeanController<TreeTable> {
 
@@ -51,7 +51,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:treetable:treetable:list")
+    @PreAuthorize("hasAuthority('test:treetable:treetable:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<TreeTable> entityWrapper = new QueryWrapper<>();
@@ -69,7 +69,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("test:treetable:treetable:add")
+    @PreAuthorize("hasAuthority('test:treetable:treetable:add')")
     public String add(@Valid TreeTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -79,7 +79,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("test:treetable:treetable:update")
+    @PreAuthorize("hasAuthority('test:treetable:treetable:update')")
     public String update(@Valid TreeTable entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -89,7 +89,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:treetable:treetable:delete")
+    @PreAuthorize("hasAuthority('test:treetable:treetable:delete')")
     public String delete(@PathVariable("id") String id) {
         treeTableService.deleteById(id);
         return Response.ok("删除成功");
@@ -97,7 +97,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("test:treetable:treetable:detail")
+    @PreAuthorize("hasAuthority('test:treetable:treetable:detail')")
     public String detail(@PathVariable("id") String id) {
         TreeTable treeTable = treeTableService.selectById(id);
         return Response.successJson(treeTable);
@@ -105,7 +105,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("test:treetable:treetable:delete")
+    @PreAuthorize("hasAuthority('test:treetable:treetable:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         treeTableService.deleteBatchIds(idList);

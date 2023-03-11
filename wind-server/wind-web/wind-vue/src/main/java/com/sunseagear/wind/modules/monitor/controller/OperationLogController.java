@@ -6,7 +6,7 @@ import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.tenant.TenantProperties;
 import com.sunseagear.common.utils.StringUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
@@ -32,7 +32,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("monitor/operation/log")
-@RequiresPermissions("monitor:operation:log")
+@PreAuthorize("hasAuthority('monitor:operation:log')")
 @Log(title = "操作日志")
 public class OperationLogController extends BaseBeanController<OperationLog> {
 
@@ -50,7 +50,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("monitor:operation:log:list")
+    @PreAuthorize("hasAuthority('monitor:operation:log:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<OperationLog> entityWrapper = new QueryWrapper<>();
@@ -71,7 +71,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("monitor:operation:log:delete")
+    @PreAuthorize("hasAuthority('monitor:operation:log:delete')")
     public String delete(@PathVariable("id") String id) {
         operationLogService.deleteById(id);
         return Response.ok("删除成功");
@@ -79,7 +79,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("monitor:operation:log:detail")
+    @PreAuthorize("hasAuthority('monitor:operation:log:detail')")
     public String detail(@PathVariable("id") String id) {
         OperationLog operationLog = operationLogService.selectById(id);
         return Response.successJson(operationLog);
@@ -87,7 +87,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("monitor:operation:log:delete")
+    @PreAuthorize("hasAuthority('monitor:operation:log:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         operationLogService.deleteBatchIds(idList);

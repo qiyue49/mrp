@@ -10,7 +10,7 @@ import com.sunseagear.common.utils.MessageUtils;
 import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.common.response.ResponseError;
 import org.apache.commons.fileupload.FileUploadBase;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("oss/attachment")
-@RequiresPermissions("oss:attachment")
+@PreAuthorize("hasAuthority('oss:attachment')")
 @Log(title = "附件日志")
 public class AttachmentController extends BaseBeanController<Attachment> {
 
@@ -54,7 +54,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("oss:attachment:list")
+    @PreAuthorize("hasAuthority('oss:attachment:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Attachment> entityWrapper = new QueryWrapper<>();
@@ -70,7 +70,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("oss:attachment:delete")
+    @PreAuthorize("hasAuthority('oss:attachment:delete')")
     public String delete(@PathVariable("id") String id) {
         attachmentService.deleteById(id);
         return Response.ok();
@@ -78,7 +78,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
 
     @PostMapping("batch/delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("oss:attachment:delete")
+    @PreAuthorize("hasAuthority('oss:attachment:delete')")
     public String batchDelete(@RequestParam(value = "ids", required = false) String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         attachmentService.deleteBatchIds(idList);

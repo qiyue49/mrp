@@ -3,7 +3,7 @@ package com.sunseagear.wind.modules.sys.controller;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sys.entity.UserRole;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/sys/user/role")
-@RequiresPermissions("sys:user:role")
+@PreAuthorize("hasAuthority('sys:user:role')")
 @Log(title = "用户管理")
 public class UserRoleController extends BaseBeanController<UserRole> {
 
@@ -47,7 +47,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
      */
     @GetMapping(value = "{userid}/roleIds")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("sys:user:role:list")
+    @PreAuthorize("hasAuthority('sys:user:role:list')")
     public List<String> userRoleIds(@PathVariable("userid") String userid, HttpServletRequest request,
                                     HttpServletResponse response) throws IOException {
         List<String> roleIdList = new ArrayList<String>();
@@ -67,7 +67,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
      */
     @PostMapping("{userId}/insertByUserId")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("sys:user:role:add")
+    @PreAuthorize("hasAuthority('sys:user:role:add')")
     public String insertByUserId(@PathVariable("userId") String userId, @RequestParam("roleIds") String[] roleIds) {
         for (String roleId : roleIds) {
             UserRole userRole = new UserRole();
@@ -88,7 +88,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
      */
     @PostMapping("{userId}/deleteByUserId")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("sys:user:role:delete")
+    @PreAuthorize("hasAuthority('sys:user:role:delete')")
     public String deleteByUserId(@PathVariable("userId") String userId, @RequestParam("roleIds") String roleIds) {
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", userId);

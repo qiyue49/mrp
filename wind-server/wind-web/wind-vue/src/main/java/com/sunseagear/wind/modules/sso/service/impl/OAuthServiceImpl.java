@@ -4,12 +4,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.utils.CacheUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
-import com.sunseagear.wind.config.autoconfigure.ShiroConfigProperties;
+import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,8 +26,6 @@ import java.util.concurrent.TimeUnit;
 @Service("oAuthService")
 public class OAuthServiceImpl implements IOAuthService {
 
-    @Autowired
-    private ShiroConfigProperties shiroConfigProperties;
 
     private final String ACCESS_TOKEN_KEY = "access_token:key";
     private final String AUTH_CODE_PRE = "auth_code_pre:";
@@ -37,12 +34,12 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void addAuthCode(String authCode, Principal principal) {
-        CacheUtils.setCacheObject(AUTH_CODE_PRE + authCode, principal, shiroConfigProperties.getCodeExpiresIn(), TimeUnit.SECONDS);
+        CacheUtils.setCacheObject(AUTH_CODE_PRE + authCode, principal, getExpireIn(), TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void addAccessToken(String accessToken, Principal principal) {
-        CacheUtils.setCacheObject(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.SECONDS);
+        CacheUtils.setCacheObject(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.MILLISECONDS);
         CacheUtils.addCacheSet(ACCESS_TOKEN_KEY, accessToken);
         CacheUtils.expire(ACCESS_TOKEN_KEY, getExpireIn());//设置过期时间
 
@@ -50,7 +47,7 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void addRefreshToken(String refreshToken, Principal principal) {
-        CacheUtils.setCacheObject(REFRESH_TOKEN_PRE + refreshToken, principal, shiroConfigProperties.getRefreshTokenExpiresIn(), TimeUnit.SECONDS);
+        CacheUtils.setCacheObject(REFRESH_TOKEN_PRE + refreshToken, principal, getExpireIn(), TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -113,7 +110,7 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public Integer getExpireIn() {
-        return shiroConfigProperties.getAccesTokenExpiresIn();
+        return JWTHelper.getExpireIn();
     }
 
     @Override

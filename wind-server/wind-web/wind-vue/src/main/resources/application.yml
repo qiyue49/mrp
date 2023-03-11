@@ -36,24 +36,6 @@ spring:
     #    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     #    Oracle
     #    driver-class-name: oracle.jdbc.driver.OracleDriver
-    type: com.alibaba.druid.pool.DruidDataSource   #这里是配置druid连接池，以下都是druid的配置信息
-    #以下配置参见Dbconfig类
-    filters: config,stat,wall,slf4j
-    maxActive: 20
-    initialSize: 1
-    maxWait: 60000
-    minIdle: 1
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: select count(*) from sys_user
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    maxOpenPreparedStatements: 20
-    maxPoolPreparedStatementPerConnectionSize: 20
-    publicKey: MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCYVbEFPqEMp6PGoHcTRLjOnFKSHMT3EGrxneHax7lHie0ZQcO3GNLsgLBWfUmSXb+geWsgM0A9vQ+g14QUbMfvjk82Ii3v5u3zbKoupudUbD/f+e6450DOtU5PBaIiALdB66+2M5SRJg57H5eLQ0I23RQ6cUyXHymVwURM72fvOwIDAQAB
-    connection-properties: druid.stat.merggSql=ture;druid.stat.slowSqlMillis=5000;config.decrypt=false;config.decrypt.key=${spring.datasource.publicKey}
   web:
     resources:
       static-locations: file:${oss.local.upload-file-path}

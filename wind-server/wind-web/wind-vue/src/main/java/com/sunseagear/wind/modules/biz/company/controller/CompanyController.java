@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -36,7 +36,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("biz/company/company")
-@RequiresPermissions("biz:company:company")
+@PreAuthorize("hasAuthority('biz:company:company')")
 @Log(title = "供货厂家&mdash;&mdash;级联表主表（飞廉演示）")
 public class CompanyController extends BaseBeanController<Company> {
 
@@ -50,7 +50,7 @@ public class CompanyController extends BaseBeanController<Company> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:company:company:list")
+    @PreAuthorize("hasAuthority('biz:company:company:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Company> queryWrapper = new QueryWrapper<>();
@@ -66,7 +66,7 @@ public class CompanyController extends BaseBeanController<Company> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
-    @RequiresPermissions("biz:company:company:add")
+    @PreAuthorize("hasAuthority('biz:company:company:add')")
     public String add(Company entity, BindingResult result,
                       HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -77,7 +77,7 @@ public class CompanyController extends BaseBeanController<Company> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @RequiresPermissions("biz:company:company:update")
+    @PreAuthorize("hasAuthority('biz:company:company:update')")
     public String update(Company entity, BindingResult result,
                          HttpServletRequest request, HttpServletResponse response) {
         // 验证错误
@@ -88,7 +88,7 @@ public class CompanyController extends BaseBeanController<Company> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @RequiresPermissions("biz:company:company:detail")
+    @PreAuthorize("hasAuthority('biz:company:company:detail')")
     public String detail(Model model, @PathVariable("id") String id) {
         Company company = companyService.selectById(id);
         return Response.successJson(company);
@@ -96,7 +96,7 @@ public class CompanyController extends BaseBeanController<Company> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @RequiresPermissions("biz:company:company:delete")
+    @PreAuthorize("hasAuthority('biz:company:company:delete')")
     public String batchDelete(@RequestParam("ids") String[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         companyService.deleteBatchIds(idList);
