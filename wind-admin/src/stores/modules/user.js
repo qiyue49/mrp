@@ -33,9 +33,11 @@ export const userStore = defineStore('user', () => {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       userLogin(username.trim(), password).then(response => {
-        const data = response.data.data
-        setToken(data.accessToken)
-        setRefreshToken(data.refreshToken)
+        if (response.code === 0) {
+          const data = response.data.data
+          setToken(data.accessToken)
+          setRefreshToken(data.refreshToken)
+        }
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -51,11 +53,11 @@ export const userStore = defineStore('user', () => {
 
         if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
           roles.value = data.roles
+          userInfo.value = data
+          resolve(data)
         } else {
           reject(response)
         }
-        userInfo.value = data
-        resolve(data)
       }).catch(error => {
         reject(error)
       })

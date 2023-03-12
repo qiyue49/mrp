@@ -12,8 +12,8 @@ import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -62,30 +62,35 @@ public class Oauth2Controller {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return Response.failJson("用户名密码不能为空");
         }
+        try{
+            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+            //生成Access Token
+            Principal principal = (Principal) authentication.getPrincipal();
+            Map<String, Object> dataMap = new HashMap<>();
+            dataMap.put("id", principal.getId());
+            dataMap.put("username", principal.getUsername());
+            dataMap.put("realname", principal.getRealname());
+            dataMap.put("tenantId", principal.getTenantId());
+            dataMap.put("roleId", principal.getRoleId());
+            final String accessToken = jwtHelper.createToken(dataMap, username);
+            oAuthService.addAccessToken(accessToken, principal);
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        if (!authentication.isAuthenticated()) {
-            throw new UsernameNotFoundException("用户名密码错误");
+            //生成Refresh Token
+            final String refreshToken = jwtHelper.createRefreshToken(dataMap, username);
+            oAuthService.addRefreshToken(refreshToken, principal);
+
+            //将用户信息缓存到数据权限模块
+            dataRuleHandler.refreshUser(principal.getId());
+
+            return Response.successJson(new Token(accessToken, refreshToken));
+
+        }catch (UsernameNotFoundException e){
+            return Response.failJson("找不到用户");
+        }catch (BadCredentialsException e){
+            return Response.failJson("用户名密码错误");
+        }catch (Exception e){
+            return Response.failJson("登录失败");
         }
-        //生成Access Token
-        Principal principal = (Principal) authentication.getPrincipal();
-        Map<String, Object> dataMap = new HashMap<>();
-        dataMap.put("id", principal.getId());
-        dataMap.put("username", principal.getUsername());
-        dataMap.put("realname", principal.getRealname());
-        dataMap.put("tenantId", principal.getTenantId());
-        dataMap.put("roleId", principal.getRoleId());
-        final String accessToken = jwtHelper.createToken(dataMap, username);
-        oAuthService.addAccessToken(accessToken, principal);
-
-        //生成Refresh Token
-        final String refreshToken = jwtHelper.createRefreshToken(dataMap, username);
-        oAuthService.addRefreshToken(refreshToken, principal);
-
-        //将用户信息缓存到数据权限模块
-        dataRuleHandler.refreshUser(principal.getId());
-
-        return Response.successJson(new Token(accessToken, refreshToken));
     }
 
 

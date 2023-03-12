@@ -27,12 +27,6 @@ public class SpringSecurityConfig {
     @Autowired
     private JwtAuthFilter authFilter;
 
-//    @Bean
-//    //authentication
-//    public UserDetailsService userDetailsService() {
-//        return userDetailsService;
-//    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authorize -> {
