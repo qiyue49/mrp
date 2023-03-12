@@ -2,8 +2,14 @@ package com.sunseagear.wind.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +18,9 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 /**
@@ -61,6 +69,8 @@ public class RedisConfig extends CachingConfigurerSupport {
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
         // 只反序列化存在的属性
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        objectMapper.registerModule(new SimpleModule().addDeserializer(
+                SimpleGrantedAuthority.class, new SimpleGrantedAuthorityDeserializer()));
         objectJackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
@@ -75,5 +85,16 @@ public class RedisConfig extends CachingConfigurerSupport {
         redisTemplate.setDefaultSerializer(stringRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
+    }
+}
+
+class SimpleGrantedAuthorityDeserializer extends StdDeserializer<SimpleGrantedAuthority> {
+    public SimpleGrantedAuthorityDeserializer() {
+        super(SimpleGrantedAuthority.class);
+    }
+    @Override
+    public SimpleGrantedAuthority deserialize(JsonParser p, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+        JsonNode tree = p.getCodec().readTree(p);
+        return new SimpleGrantedAuthority(tree.get("authority").textValue());
     }
 }

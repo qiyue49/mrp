@@ -34,12 +34,13 @@ public class UserDetailsService implements org.springframework.security.core.use
             throw new UsernameNotFoundException("User " + username + " does not exist");
         }
         Principal principal = new Principal(user.getId(), user.getUsername(), user.getRealname(), user.getTenantId(), user.findRoleIds());
+        principal.setPassword(user.getPassword());
         principal.setPermission(getAuthorities(user));
         return principal;
     }
 
-    private Set<GrantedAuthority> getAuthorities(User user) {
-        Set<GrantedAuthority> authorities = new HashSet<>();
+    private List<GrantedAuthority> getAuthorities(User user) {
+        List<GrantedAuthority> authorities = new ArrayList<>();
         UserUtils.getPermissionSet(user).stream()
                 .map(p -> new SimpleGrantedAuthority(p))
                 .forEach(authorities::add);

@@ -9,6 +9,7 @@ import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.LoginLogUtils;
 import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -84,8 +85,7 @@ public class Oauth2Controller {
         //将用户信息缓存到数据权限模块
         dataRuleHandler.refreshUser(principal.getId());
 
-
-        return Response.successJson((Object) accessToken);
+        return Response.successJson(new Token(accessToken,null));
     }
 
 
@@ -152,5 +152,16 @@ public class Oauth2Controller {
         LoginLogUtils.recordLogoutLoginLog(UserUtils.getUser().getUsername(), "退出成功");
         oAuthService.revokeToken(accessToken);
         return Response.successJson("退出成功");
+    }
+}
+
+@Data
+class Token {
+    String accessToken;
+    String refreshToken;
+
+    public Token(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
     }
 }

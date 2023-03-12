@@ -34,7 +34,7 @@ import java.util.Properties;
  * @description: 定时任务配置 * @date: 2018/8/16 10:44
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-@Configuration
+//@Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 public class QuartzConfig implements ApplicationRunner {
 

@@ -1,6 +1,7 @@
 package com.sunseagear.common.utils;
 
 import com.sunseagear.common.utils.entity.Principal;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -25,6 +26,10 @@ public class UserUtils {
      * 获取当前登录者对象
      */
     public static Principal getPrincipal() {
+        Authentication authentication = getAuthentication();
+        if (authentication instanceof AnonymousAuthenticationToken){
+            return null;
+        }
         return (Principal) getAuthentication().getPrincipal();
     }
 

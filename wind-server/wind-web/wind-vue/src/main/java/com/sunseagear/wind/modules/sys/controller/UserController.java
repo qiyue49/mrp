@@ -222,6 +222,7 @@ public class UserController extends BaseBeanController<User> {
      * @return
      */
     @GetMapping(value = "info")
+    @PreAuthorize("hasAuthority('sys:user:list')")
     public String info() {
         User user = UserUtils.getUser();
         if (user == null) {

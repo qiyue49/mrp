@@ -10,10 +10,12 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -22,12 +24,14 @@ public class SpringSecurityConfig {
 
     @Autowired
     com.sunseagear.wind.modules.sys.service.impl.UserDetailsService userDetailsService;
+    @Autowired
+    private JwtAuthFilter authFilter;
 
-    @Bean
-    //authentication
-    public UserDetailsService userDetailsService() {
-        return userDetailsService;
-    }
+//    @Bean
+//    //authentication
+//    public UserDetailsService userDetailsService() {
+//        return userDetailsService;
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -35,13 +39,19 @@ public class SpringSecurityConfig {
             try {
                 authorize
                         // 放行登录接口
-                        .requestMatchers("/json/oss/**", "/json/**", "/sso/oauth2/").permitAll()
+                        .requestMatchers("/json/oss/**", "/json/**", "/sso/oauth2/**").permitAll()
                         // 放行资源目录
                         .requestMatchers("/static/**", "/resources/**").permitAll()
                         // 其余的都需要权限校验
                         .anyRequest().authenticated()
+                        .and()
+                        .sessionManagement()
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        .and()
+                        .authenticationProvider(authenticationProvider())
+                        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
                         // 防跨站请求伪造
-                        .and().csrf(csrf -> csrf.disable());
+                        .csrf(csrf -> csrf.disable());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -57,7 +67,7 @@ public class SpringSecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setUserDetailsService(userDetailsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
     }

@@ -28,8 +28,8 @@ import java.util.List;
 public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper, ScheduleJob>
         implements IScheduleJobService, QuartzInitCallback {
 
-    @Autowired
-    private QuartzManager quartzManager;
+//    @Autowired
+    private QuartzManager quartzManager = new QuartzManager();
 
     @Override
     public void updateCron(String jobId) {
