@@ -58,7 +58,7 @@ service.interceptors.response.use(
         // Do something before request is sent
         if (store.userStore.token) {
           // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-          originalRequest.headers.access_token = getToken()
+          originalRequest.headers.accessToken = getToken()
         }
         return axios.request(originalRequest)
       } else if (res.code === 100008 || res.code === 100009) {

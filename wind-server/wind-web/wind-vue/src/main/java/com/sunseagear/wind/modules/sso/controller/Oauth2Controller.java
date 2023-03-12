@@ -78,64 +78,37 @@ public class Oauth2Controller {
         oAuthService.addAccessToken(accessToken, principal);
 
         //生成Refresh Token
-//        OAuthIssuer oauthIssuerImpl = new OAuthIssuerImpl(new MD5Generator());
-//        final String refreshToken = oauthIssuerImpl.refreshToken();
-//        oAuthService.addRefreshToken(refreshToken, principal);
+        final String refreshToken = jwtHelper.createRefreshToken(dataMap, username);
+        oAuthService.addRefreshToken(refreshToken, principal);
 
         //将用户信息缓存到数据权限模块
         dataRuleHandler.refreshUser(principal.getId());
 
-        return Response.successJson(new Token(accessToken,null));
+        return Response.successJson(new Token(accessToken, refreshToken));
     }
 
 
     @RequestMapping("/refresh_token")
     @ResponseBody
-    public HttpEntity refreshToken(HttpServletRequest request) {
-/*
-        try {
-            //构建OAuth请求
-            OAuthTokenRequest oauthRequest = new OAuthTokenRequest(request);
-
-            //检查提交的客户端id是否正确
-            if (!oAuthService.checkClientId(oauthRequest.getClientId())) {
-                return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_CLIENT);
-            }
-
-            String refreshToken = oauthRequest.getParam(OAuth.OAUTH_REFRESH_TOKEN);
-            // 检查验证类型，此处只检查AUTHORIZATION_CODE类型，其他的还有PASSWORD或REFRESH_TOKEN
-            if (oauthRequest.getParam(OAuth.OAUTH_GRANT_TYPE).equals(GrantType.REFRESH_TOKEN.toString())) {
-                if (!oAuthService.checkRefreshToken(refreshToken)) {
-                    return ResponseUtils.getErrResponse(HttpServletResponse.SC_UNAUTHORIZED, ResponseError.INVALID_REFRESH_TOKEN);
-                }
-            }
+    public String refreshToken(HttpServletRequest request) {
+            String refreshToken = request.getParameter("refresh_token");
 
             //生成Access Token
             Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
-            Map<String, String> dataMap = new HashMap<String, String>();
+            Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("id", principal.getId());
             dataMap.put("username", principal.getUsername());
             dataMap.put("realname", principal.getRealname());
             dataMap.put("tenantId", principal.getTenantId());
             dataMap.put("roleId", principal.getRoleId());
-            final String accessToken = JWTHelper.sign(dataMap, shiroConfigProperties.getJwtTokenSecret(), Long.parseLong(oAuthService.getExpireIn() + ""));
-            oAuthService.addAccessToken(accessToken, oAuthService.getPrincipalByRefreshToken(refreshToken));
+            final String accessToken = jwtHelper.createToken(dataMap, principal.getUsername());
+            oAuthService.addAccessToken(accessToken, principal);
 
-            //生成OAuth响应
-            OAuthResponse response = OAuthASResponse
-                    .tokenResponse(HttpServletResponse.SC_OK)
-                    .setAccessToken(accessToken)
-                    .setRefreshToken(refreshToken)
-                    .setExpiresIn(String.valueOf(oAuthService.getExpireIn()))
-                    .buildJSONMessage();
+            //生成Refresh Token
+//            final String refreshToken = jwtHelper.createRefreshToken(dataMap, principal.getUsername());
+//            oAuthService.addRefreshToken(refreshToken, principal);
 
-            //根据OAuthResponse生成ResponseEntity
-            return new ResponseEntity(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
-        } catch (OAuthProblemException e) {
-            //构建错误响应
-            return ResponseUtils.getErrResponse(HttpServletResponse.SC_BAD_REQUEST, ResponseError.INVALID_REFRESH_TOKEN, e.getDescription());
-        }*/
-        return null;
+            return Response.successJson(new Token(accessToken, refreshToken));
     }
 
     /**

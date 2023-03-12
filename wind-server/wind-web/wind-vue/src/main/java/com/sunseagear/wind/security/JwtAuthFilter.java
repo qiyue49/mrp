@@ -1,7 +1,10 @@
 package com.sunseagear.wind.security;
 
+import com.sunseagear.common.http.Response;
+import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.JWTHelper;
+import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.FilterChain;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Date;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -30,6 +34,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("access_token");
+        if (jwtService.isTokenExpired(token)){
+            ServletUtils.printJson(response, Response.error(ResponseError.INVALID_ACCESS_TOKEN, "TOKEN过期"));
+        }
 
         if (!StringUtils.isEmpty(token) && UserUtils.getPrincipal() == null) {
             UserDetails userDetails = oAuthService.getPrincipalByAccessToken(token);
