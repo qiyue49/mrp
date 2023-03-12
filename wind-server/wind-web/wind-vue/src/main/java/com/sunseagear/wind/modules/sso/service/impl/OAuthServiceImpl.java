@@ -47,7 +47,7 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void addRefreshToken(String refreshToken, Principal principal) {
-        CacheUtils.setCacheObject(REFRESH_TOKEN_PRE + refreshToken, principal, getExpireIn(), TimeUnit.MILLISECONDS);
+        CacheUtils.setCacheObject(REFRESH_TOKEN_PRE + refreshToken, principal, getRefreshExpireIn(), TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -111,6 +111,10 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public Integer getExpireIn() {
         return JWTHelper.getExpireIn();
+    }
+
+    public static int getRefreshExpireIn() {
+        return JWTHelper.getRefreshExpireIn();
     }
 
     @Override

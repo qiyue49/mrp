@@ -5,6 +5,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.common.helper.JWTHelper;
+import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.LoginLogUtils;
 import com.sunseagear.wind.utils.UserUtils;
@@ -95,6 +96,9 @@ public class Oauth2Controller {
 
             //生成Access Token
             Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
+            if (principal == null) {
+                return Response.error(ResponseError.INVALID_REFRESH_TOKEN, "REFRESH_TOKEN过期");
+            }
             Map<String, Object> dataMap = new HashMap<>();
             dataMap.put("id", principal.getId());
             dataMap.put("username", principal.getUsername());
@@ -104,11 +108,11 @@ public class Oauth2Controller {
             final String accessToken = jwtHelper.createToken(dataMap, principal.getUsername());
             oAuthService.addAccessToken(accessToken, principal);
 
-            //生成Refresh Token
-//            final String refreshToken = jwtHelper.createRefreshToken(dataMap, principal.getUsername());
-//            oAuthService.addRefreshToken(refreshToken, principal);
+            //生成Refresh Token，只有长时间无任何操作才会过期，过期就立即登出
+            final String refreshTokenNew = jwtHelper.createRefreshToken(dataMap, principal.getUsername());
+            oAuthService.addRefreshToken(refreshTokenNew, principal);
 
-            return Response.successJson(new Token(accessToken, refreshToken));
+            return Response.successJson(new Token(accessToken, refreshTokenNew));
     }
 
     /**
