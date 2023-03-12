@@ -29,8 +29,8 @@ export const userStore = defineStore('user', () => {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       userLogin(username.trim(), password).then(response => {
-        const data = response.data
-        setToken(data.access_token)
+        const data = response.data.data
+        setToken(data.accessToken)
         refreshToken.value = data.refresh_token
         setRefreshToken(refreshToken)
         resolve(response)

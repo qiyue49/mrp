@@ -1,6 +1,7 @@
 package com.sunseagear.common.utils.entity;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -11,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Data
 public class Principal implements UserDetails, Serializable {
@@ -31,7 +32,7 @@ public class Principal implements UserDetails, Serializable {
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastAccessTime;
 
-    private Set<GrantedAuthority> permission;
+    private List<GrantedAuthority> permission;
     /**
      * 登录IP
      */
@@ -82,6 +83,7 @@ public class Principal implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permission;
     }

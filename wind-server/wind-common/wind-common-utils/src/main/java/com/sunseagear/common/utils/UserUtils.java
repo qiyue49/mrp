@@ -30,6 +30,9 @@ public class UserUtils {
         if (authentication instanceof AnonymousAuthenticationToken){
             return null;
         }
+        if (authentication == null){
+            return null;
+        }
         return (Principal) getAuthentication().getPrincipal();
     }
 
