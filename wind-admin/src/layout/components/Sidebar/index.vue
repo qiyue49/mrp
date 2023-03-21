@@ -49,6 +49,126 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+ :deep(.el-sub-menu.is-active > .el-sub-menu__title) {
+  background-color: #0242A3 !important;
+   border-radius: 20px 0 0 20px;
+   position: relative;
+   color: #fff;
+   height: 40px;
+  }
+ :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
+  content: 's';
+   position: absolute;
+   right: 0;
+   color: #F5C265;
+   background-color: #F5C265;
+   height: 40px;
+  }
+ :deep(.el-menu-item.is-active) {
+   color: #0243A3;
+   background-color: #F3F5F8;
+   height: 40px;
+  //  display: block;
+  //  padding-left: 0;
+   line-height: 40px;
+  //  padding: 0 !important;
+  //  width: 100px;
+  }
+ :deep(.el-menu-item) {
+   height: 40px;
+  //  display: block;
+  //  padding-left: 0;
+   line-height: 40px;
+  //  padding: 0 !important;
+  //  width: 100px;
+  position: relative;
+  }
+ :deep(.el-menu-item.is-active::after) {
+   content: '>';
+   position: absolute;
+   right: 10px;
+   color: #0243A3;
+  //  background-color: #F5C265;
+   height: 40px;
+  }
+ :deep(.el-menu-item.is-active::before) {
+   content: url(../../../assets/img/daohang1.png);
+   position: absolute;
+   left: -30px;
+   color: #0243A3;
+  //  background-color: #F5C265;
+  //  height: 40px;
+  }
+  :deep(.el-menu.el-menu--inline){
+    padding-left: 80px !important;
+    // padding-right: 20px !important;
+  }
+  :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
+    content: url(../../../assets/img/daohang2.png);
+    overflow: hidden;
+   position: absolute;
+  //  background-image: url('../../../assets/img/lanxian.svg');
+  //  background-size: 100% 100%;
+  //  display: block;
+    // width: 36px;
+    // height: 36px;
+    // padding-left: 40px !important;
+    // padding-right: 20px !important;
+    position: absolute;
+    left: -60px;
+  }
+  :deep(.el-menu.el-menu--inline > .el-menu-item ::after){
+    content: url(../../../assets/img/shuxian.svg);
+   position: absolute;
+  //  background-image: url('../../../assets/img/lanxian.svg');
+  //  background-size: 100% 100%;
+  //  display: block;
+    width: 0;
+    height: 36px;
+    // padding-left: 40px !important;
+    // padding-right: 20px !important;
+    position: absolute;
+    left: -80px;
+  }
+  :deep(.el-menu.el-menu--inline > .el-menu-item > span){
+    padding-left: 40px !important;
+    // padding-right: 20px !important;
+    position: absolute;
+    right: 50px;
+  }
+  :deep(.el-menu-item > span){
+    // padding-left: 40px !important;
+    // padding-right: 20px !important;
+    // margin-right: 100px !important
+  }
+//对应子级，父级的样式
+.el-submenu.is-active > .el-submenu__title {
+  background: rgb(206, 169, 181) !important;
+}
+.el-submenu.is-active > .el-submenu__title::after {
+  background: rgb(206, 169, 181) !important;
+  content: 's';
+   position: absolute;
+   right: 0;
+   color: #F5C265;
+   background-color: #F5C265;
+   height: 40px;
+}
+//当前选中子级的样式
+.is-active{
+  // background-color: #0242A3 !important;
+  border-radius: 20px 0 0 20px;
+   position: relative;
+   color: #fff !important;
+}
+// .is-active::after{
+//   content: 's';
+//    position: absolute;
+//    right: 0;
+//    color: #F5C265;
+//    background-color: #F5C265;
+//    height: 40px;
+// }
 .scrollbar-left{
   margin-left: 20px;
 }

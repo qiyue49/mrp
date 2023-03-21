@@ -4,12 +4,8 @@
       <div class="filter-item">
         <span>标题:</span>
         <el-input v-model="listQuery.title" placeholder="请输入标题" />
-      </div>
-      <div class="filter-item">
         <span>用户:</span>
         <el-input v-model="listQuery.userId" placeholder="请输入用户" />
-      </div>
-      <div class="filter-item">
         <span>类型:</span>
         <el-select v-model="listQuery.type" clearable placeholder="请选择类型" style="width: 200px">
           <el-option
@@ -18,13 +14,14 @@
             :label="item.label"
             :value="item.value" />
         </el-select>
-      </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      </div>
+      <btn-group/>
+      <!-- <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button>
+      </el-button> -->
     </div>
 
     <el-table
@@ -88,10 +85,11 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import eventForm from './eventForm'
 import Pagination from '@/components/Pagination'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'EventList',
-  components: { eventForm, Pagination },
+  components: { eventForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

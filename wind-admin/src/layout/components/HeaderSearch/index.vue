@@ -1,12 +1,12 @@
 <template>
-  <div class="all">
+  <!-- <div class="all">
     <div class="serc">
       <img src="@/assets/img/searc.png" alt=""/>
       <input v-model="input" placeholder="请输入内容"/>
     </div>
     <span>搜索</span>
-  </div>
-  <!-- <div :class="{'show':show}" class="header-search">
+  </div> -->
+  <div :class="{'show':show}" class="header-search">
     <svg-icon class="search-icon" icon-class="search" @click.stop="click" />
     <el-select
       ref="headerSearchSelect"
@@ -21,7 +21,7 @@
     >
       <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title" />
     </el-select>
-  </div> -->
+  </div>
 </template>
 
 <script>

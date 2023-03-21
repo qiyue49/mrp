@@ -15,18 +15,15 @@
           <div class="filter-item">
             <span>姓名:</span>
             <el-input v-model="listQuery.realname" placeholder="请输入姓名" @keyup.enter="handleFilter" />
-          </div>
-          <div class="filter-item">
             <span>用户名:</span>
             <el-input v-model="listQuery.username" placeholder="请输入用户名" @keyup.enter="handleFilter" />
-          </div>
-          <div class="filter-item">
             <span>手机号码:</span>
             <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
+            <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
           </div>
-          <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-          <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-          <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+          <!-- <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button> -->
+          <btn-group/>
         </div>
 
         <el-table
@@ -120,10 +117,11 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
 import Pagination from '@/components/Pagination/index.vue'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'UserList',
-  components: { Pagination, userForm },
+  components: { Pagination, userForm, BtnGroup },
   directives: {
     waves, permission
   },

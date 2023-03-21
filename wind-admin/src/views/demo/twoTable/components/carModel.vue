@@ -2,9 +2,12 @@
   <div id="dictComponent">
     <div>
       <div class="filter-container">
-        <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
+        <div class="filter-item">
+          <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+        <!-- <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
+        </div>
+        <btn-group/>
       </div>
 
       <el-table
@@ -49,13 +52,14 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import carModelForm from './carModelForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'CarModel',
   directives: {
     waves, permission
   },
-  components: { Pagination, carModelForm },
+  components: { Pagination, carModelForm, BtnGroup },
   data() {
     return {
       dictGroup: {},

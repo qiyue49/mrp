@@ -12,11 +12,11 @@
             :value="item.value"
           />
         </el-select>
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+        <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
       </div>
-
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
-      <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
+      <btn-group/>
     </div>
 
     <el-table
@@ -89,10 +89,11 @@
 import { fetchLoginLogList, deleteLoginLog, batchDeleteLoginLog, exportLoginLog } from '@/api/monitor/log/login'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'ScheduleJobLogList',
-  components: { Pagination },
+  components: { Pagination, BtnGroup },
   directives: {
     waves
   },

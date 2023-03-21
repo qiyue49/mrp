@@ -4,12 +4,11 @@
       <div class="filter-item">
         <span>用户名:</span>
         <el-input v-model="listQuery.username" placeholder="请输入用户名" />
-      </div>
-      <div class="filter-item">
         <span>IP:</span>
         <el-input v-model="listQuery.loginIp" placeholder="请输入IP" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <btn-group/>
     </div>
 
     <el-table
@@ -68,10 +67,11 @@
 import { fetchMonitorUserOnlineList } from '@/api/monitor/user/online'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'MonitorUserOnlineList',
-  components: { Pagination },
+  components: { Pagination, BtnGroup },
   directives: {
     waves
   },

@@ -26,6 +26,8 @@ export function logout(token) {
 export function refreshToken(refresh_token) {
   const data = {
     grant_type: 'refresh_token',
+    client_id: 'cloud-upms',
+    client_secret: 'cloud-upms',
     refresh_token
   }
   return request({

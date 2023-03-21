@@ -3,13 +3,15 @@
     <div class="f1">
       <div class="f1_1">
         <div class="left">
-          <img src="../../../assets/img/avatar.png" alt=""/>
+          <img src="../../../assets/img/yan.png" alt=""/>
           <div>
             <span class="left_top">1568</span>
             <span class="left_boom">访问次数</span>
           </div>
         </div>
-        <div class="right">...</div>
+        <div class="right">
+          <img src="../../../assets/img/geng32.png" alt=""/>
+        </div>
       </div>
     </div>
     <div class="f2">
@@ -17,7 +19,8 @@
       </div>
     </div>
     <div class="f3">
-      <span>查看数据详情</span>
+      查看数据详情
+      <!-- <span>查看数据详情</span> -->
     </div>
   </div></template>
 
@@ -38,6 +41,13 @@ export default {
           trigger: 'axis',
           formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
+        grid: {
+          left: '-5%',
+          right: '5%',
+          bottom: '5%',
+          top: '5%',
+          containLabel: true
+        },
         xAxis: {
           show: false, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
           type: 'category',
@@ -52,7 +62,7 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [0, 932, 901, 934, 1290, 1330, 0],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -89,7 +99,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border-radius: 20px;
+    border-radius: 10px;
     .f1{
         padding: 0 20px;
         width: 100%;
@@ -101,6 +111,9 @@ export default {
             display: flex;
             align-items: center;
             color: #fff;
+            img{
+              border-radius: 10px;
+            }
             div{
                 margin-left: 20px;
                 display: flex;
@@ -119,17 +132,19 @@ export default {
     .f2{
         width: 100%;
         padding: 0 -40px;
-        canvas{
-            height: 500px;
-        }
+        height: 450px;
     }
     .f3{
-        color: #C24229;
-        padding: 0 30px;
+        color: #1762F2;
+        background-color: #fff;
+        border-radius: 20px;
+        width: 80%;
         text-align: center;
+        padding: 10px 0;
         span{
         background-color: #fff;
         border-radius: 20px;
+        width: 80%;
         padding: 10px 40px;
         }
     }

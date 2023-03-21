@@ -1,29 +1,43 @@
 <template>
-  <div style="margin: 50px">
+  <div>
+    <div class="tit">返回上一级</div>
+    <div style="color:#0243A3">新增：</div>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
-      <el-form-item label="标题" prop="title">
-        <el-input v-model="temp.title" />
-      </el-form-item>
-      <el-form-item label="类型" prop="type">
-        <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-          <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="发布时间" prop="publishDate">
-        <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
-      </el-form-item>
-      <el-form-item label="作者" prop="author">
-        <system-user v-model="temp.author" />
-      </el-form-item>
-      <el-form-item label="状态">
-        <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-          <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-        </el-select>
-      </el-form-item>
-      <el-form-item label="重要程度">
-        <el-rate v-model="temp.level" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
-      </el-form-item>
-      <el-form-item label="内容">
+      <div class="flexdi">
+        <el-form-item prop="title">
+          <span>标题：</span>
+          <el-input v-model="temp.title" />
+        </el-form-item>
+        <el-form-item prop="type">
+          <div>类型：</div>
+          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+          </el-select>
+        </el-form-item>
+      </div>
+      <div class="flexdi">
+        <el-form-item prop="publishDate">
+          <div>发布时间：</div>
+          <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
+        </el-form-item>
+        <el-form-item prop="author">
+          <div>作者：</div>
+          <system-user v-model="temp.author" />
+        </el-form-item>
+        <el-form-item>
+          <div>状态：</div>
+          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="重要程度：">
+          <!-- <div>重要程度：</div> -->
+          <el-rate v-model="temp.level" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
+        </el-form-item>
+      </div>
+
+      <el-form-item>
+        <div>内容：</div>
         <Tinymce ref="editor" v-model="temp.content" type="textarea" placeholder="Please input" />
 
       </el-form-item>
@@ -165,4 +179,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.flexdi{
+  display: flex;
+}
+</style>
 

@@ -4,25 +4,21 @@
       <div class="filter-item">
         <span>租户标识:</span>
         <el-input v-model="listQuery.tenantId" placeholder="请输入租户标识" />
-      </div>
-      <div class="filter-item">
         <span>联系人:</span>
         <el-input v-model="listQuery.contact" placeholder="请输入联系人" />
-      </div>
-      <div class="filter-item">
         <span>电话:</span>
         <el-input v-model="listQuery.phone" placeholder="请输入电话" />
-      </div>
-      <div class="filter-item">
         <span>租户名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入租户名称" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button v-permission="['sys:tenant:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <btn-group/>
+      <!-- <el-button v-permission="['sys:tenant:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button>
+      </el-button> -->
+      <!-- <btn-group/> -->
     </div>
 
     <el-table
@@ -84,10 +80,13 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import tenantForm from './tenantForm'
 import Pagination from '@/components/Pagination'
+// import BtnGroup from '@/components/btn/BtnGroup'
+import BtnGroup from '../../../components/btn/BtnGroup.vue'
+// import BtnGroup from '../../../components/btn/BtnGroup.vue'
 
 export default {
   name: 'TenantList',
-  components: { tenantForm, Pagination },
+  components: { tenantForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

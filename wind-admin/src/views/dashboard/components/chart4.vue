@@ -1,12 +1,12 @@
 <template>
   <div class="all">
     <div class="btn">
-      <span>本年</span>
-      <span>本季度</span>
-      <span>本月</span>
-      <span>本周</span>
+      <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">本年</span>
+      <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">本季度</span>
+      <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">本月</span>
+      <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">本周</span>
     </div>
-    <div ref="$chart1" style="width: 100%;height: 80%"></div>
+    <div ref="$chart1" style="width: 100%;height: 90%"></div>
   </div>
 
 </template>
@@ -15,7 +15,9 @@
 export default {
   name: 'Chart4',
   data() {
-    return {}
+    return {
+      isclick: 1
+    }
   },
   mounted() {
     this.echartsInit()
@@ -40,6 +42,12 @@ export default {
         //     saveAsImage: { show: true }
         //   }
         // },
+        grid: {
+          left: '0',
+          right: '0',
+          bottom: '0',
+          containLabel: true
+        },
         legend: {
           data: ['入院人数', '出院人数', '花费'],
           x: 'right',
@@ -48,7 +56,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             axisPointer: {
               type: 'shadow'
             }
@@ -69,8 +77,8 @@ export default {
             type: 'value',
             name: '花费',
             min: 0,
-            max: 25,
-            interval: 5,
+            max: 5000,
+            interval: 1000,
             axisLabel: {
               formatter: '{value}'
             }
@@ -80,6 +88,7 @@ export default {
           {
             name: '入院人数',
             type: 'bar',
+            barWidth: 15,
             itemStyle: {
               normal: {
                 color: '#0243A3',
@@ -92,12 +101,13 @@ export default {
               }
             },
             data: [
-              2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3
+              2.0, 4.9, 7.0, 232, 25.6, 76.7, 135.6, 162.2, 32.6, 200, 64, 33
             ]
           },
           {
             name: '出院人数',
             type: 'bar',
+            barWidth: 15,
             itemStyle: {
               normal: {
                 color: '#C24229',
@@ -110,26 +120,31 @@ export default {
               }
             },
             data: [
-              2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3
+              190.0, 50.9, 90, 26.4, 287, 70.7, 1756, 1822, 487, 188, 60, 23
             ]
           },
           {
             name: '花费',
             type: 'line',
+            // lineWidth: 100,
             yAxisIndex: 1,
             smooth: true,
             showSymbol: false,
             itemStyle: {
               normal: {
-                color: '#FFBF49'
+                color: '#FFBF49',
+                lineStyle: {
+                  width: 3
+                }
               }
+
             },
             tooltip: {
               valueFormatter: function (value) {
                 return value + ' °C'
               }
             },
-            data: [2.0, 2.2, 3.3, 4.5, 6.3, 10.2, 20.3, 23.4, 23.0, 16.5, 12.0, 6.2]
+            data: [200, 202, 303, 2000, 4003, 1002, 20.3, 23.4, 23.0, 1605, 12.0, 602]
           }
         ]
       })
@@ -142,12 +157,27 @@ export default {
 .all{
     background-color: #fff;
     padding: 20px;
+    padding-bottom: 0;
     // display: flex;
     // flex-direction: column;
     // align-items: center;
-    margin-top: 20px;
-    border-radius: 20px;
+    // margin-top: 20px;
+    border-radius: 10px;
     height: 100%;
     width: 100%;
+    .btn{
+      border-left: 1px solid #EEF0F4;
+      border-top-left-radius: 5px;
+      span{
+        border-right: 1px solid #EEF0F4;
+        border-top: 1px solid #EEF0F4;
+        border-bottom: 1px solid #EEF0F4;
+        padding: 5px 10px;
+      }
+      .clickbtn{
+        background-color: #1762F2;
+        color: #fff;
+      }
+    }
 }
 </style>
