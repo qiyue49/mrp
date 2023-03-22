@@ -1,55 +1,163 @@
 <template>
-  <div class="all">
-    <VueSlickCarousel v-bind="settings">
-
-      <div v-for="(item,index) in 10" :key="index" class="content">
-        <span>{{ item }}</span>
-      </div>
-      <!-- <template #prevArrow="arrowOption">
-        <div class="custom-arrow">
-          {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
+  <div class="container">
+    <swiper
+      :modules="modules"
+      :slides-per-view="5"
+      :space-between="50"
+      navigation
+      @swiper="onSwiper"
+      @slideChange="onSlideChange"
+    >
+      <swiper-slide v-for="item in data" :key="item.id">
+        <div :class="click==item.id?'selectbtn':'btn'" @click="select(item)">
+          <span>{{ item.con }}</span>
+          <span>{{ item.tit }}</span>
         </div>
-      </template> -->
-      <!-- <template #nextArrow="arrowOption">
-        <div class="custom-arrow">
-          {{ arrowOption.currentSlide }}/{{ arrowOption.slideCount }}
-        </div>
-      </template> -->
-    </VueSlickCarousel>
+      </swiper-slide>
+    </swiper>
   </div>
 </template>
-
 <script>
-import VueSlickCarousel from 'vue-slick-carousel'
-import 'vue-slick-carousel/dist/vue-slick-carousel.css'
-import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+// import Swiper core and required modules
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+
+// Import Swiper Vue.js components
+import { Swiper, SwiperSlide } from 'swiper/vue'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import 'swiper/css/scrollbar'
+
+// Import Swiper styles
 export default {
-  components: { VueSlickCarousel },
+  components: {
+    Swiper,
+    SwiperSlide
+  },
+  setup() {
+    const onSwiper = (swiper) => {
+      console.log(swiper)
+    }
+    const onSlideChange = () => {
+      console.log('slide change')
+    }
+    return {
+      onSwiper,
+      onSlideChange,
+      modules: [Navigation, Pagination, Scrollbar, A11y]
+    }
+  },
   data() {
     return {
-      settings: {
-        dots: false,
-        arrows: true,
-        infinite: true,
-        initialSlide: 1,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        swipeToSlide: true
-        // centerPadding:'100px',
-        // centerMode:true
-        // focusOnSelect: true,
-        // infinite: true,
-        // slidesToShow: 3,
-        // slidesToScroll: 1,
-        // speed: 500
-        // ,variableWidth:true
-      }
+      click: 1,
+      data: [
+        { id: 1, con: 16, tit: '周四' },
+        { id: 2, con: 16, tit: '周四' },
+        { id: 3, con: 16, tit: '周四' },
+        { id: 4, con: 16, tit: '周四' },
+        { id: 5, con: 16, tit: '周四' },
+        { id: 6, con: 16, tit: '周四' },
+        { id: 7, con: 16, tit: '周四' },
+        { id: 8, con: 16, tit: '周四' }
+      ]
+    }
+  },
+  methods: {
+    select(item) {
+      this.click = item.id
     }
   }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.container{
+    position: relative;
+    margin: 20px 0;
+    width: 75% !important;
+  }
+  :deep(.swiper) {
+    position: initial;
+    .swiper-wrapper{
+      transition: all 1s !important;
+    }
+    .swiper-slide {
+      margin: 10px !important;
+//     // padding: 10px 20px;
+    width: 15% !important;
+      // height: 50px;
+      // background-color: #27bb9a;
+    }
+    .swiper-button-prev {
+      left: -50px;
+    }
+    .swiper-button-next {
+      right: -50px;
+    }
+    .swiper-button-prev,
+    .swiper-button-next {
+      width: 20px;
+      height: 20px;
+      // background-color: #27ba9b;
+      // color: #1762F2 ;
+      top: 55px;
+      &::after {
+        font-size: 15px;
+        color: #1762F2;
+        font-weight: 900;
+      }
+    }
+    .swiper-button-disabled{
+      background-color:#ccc;
+      cursor:not-allowed;
+      pointer-events:initial;
+    }
+  }
 
+// .swiper{
+//   width: 75%;
+//   :deep(.swiper-button-prev){
+//     // top: 0 !important;
+//     left: -10px !important;
+//   }
+//   .swiper-wrapper{
+//     width: 70% !important;
+//   }
+//   .swiper-slide{
+//     margin: 10px !important;
+//     // padding: 10px 20px;
+//     width: 15% !important;
+//   }
+// }
+.btn{
+  background-color: #F3F5F8;
+  display: inline-block;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+.selectbtn{
+  background-color: #1762F2;
+  color: #fff;
+  display: inline-block;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+}
+// .all{
+//   width: 100%;
+//   overflow: hidden;
+//   margin: 20px 0;
+//   display: flex;
+//   div{
+//     padding: 20px;
+//     border: 1px solid ;
+//   }
+// }
 </style>

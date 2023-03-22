@@ -1,23 +1,19 @@
 <template>
   <div class="navbar">
-    <!-- <div @click="cc">{{ visitedViews }}</div> -->
-    <div class="topleft">
-      <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <!-- <span v-if="visitedViews[0].meta.title">{{ visitedViews[0].meta.title }}</span> -->
-    </div>
+    <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <top-menu v-if="topMenu" class="topmenu-container" />
 
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search />
-        <!-- <full-screen class="right-menu-item hover-effect" /> -->
-        <!-- <dark-theme class="right-menu-item hover-effect" /> -->
-        <!-- <setting class="right-menu-item hover-effect" /> -->
+        <search class="right-menu-item hover-effect" />
+        <full-screen class="right-menu-item hover-effect" />
+        <dark-theme class="right-menu-item hover-effect" />
+        <setting class="right-menu-item hover-effect" />
       </template>
-      <div><img style="width:40px" :src="avatarUrl+'?imageView2/1/w/80/h/80'" class="user-avatar" /></div>
+
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <span>张子瑞</span>
+          <img :src="avatarUrl+'?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom"></i>
         </div>
         <template #dropdown>
@@ -66,10 +62,6 @@ export default {
     Search
   },
   computed: {
-    visitedViews() {
-      // const name = this.$store.tagsViewStore.visitedViews.filter((item) => item.path == this.$route.path)
-      return this.$store.tagsViewStore.visitedViews.filter((item) => item.path == this.$route.path)
-    },
     device() {
       return this.$store.appStore.device
     },
@@ -90,12 +82,6 @@ export default {
     }
   },
   methods: {
-    cc() {
-      console.log('dsd', this.$store.tagsViewStore.visitedViews)
-      console.log('dsdssss', this.$store.permissionStore.routes)
-      console.log('当前', this.$route.path)
-      console.log('当前sssss', this.$store.tagsViewStore.visitedViews.filter((item) => item.path == this.$route.path)[0].meta.title)
-    },
     fullScreen() {
       this.$store.settingStore.changeSetting('fullScreen', {
         key: 'fullScreen',
@@ -104,7 +90,6 @@ export default {
     },
     toggleSideBar() {
       this.$store.appStore.toggleSideBar()
-      console.log('点击', this.$store.appStore.sidebar.opened)
     },
     async logout() {
       await this.$store.userStore.logout()

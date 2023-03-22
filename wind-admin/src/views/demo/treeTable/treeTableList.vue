@@ -1,13 +1,16 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.name" placeholder="请输入名称" class="filter-item" @keyup.enter="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button>
+      <div class="filter-item">
+        <el-input v-model="listQuery.name" placeholder="请输入名称" class="filter-item" @keyup.enter="handleFilter" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
+        <!-- <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button> -->
+      </div>
+      <btn-group/>
     </div>
 
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
@@ -48,10 +51,11 @@ import { deleteTreeTable, fetchTreeTableList } from '@/api/demo/treeTable/treeTa
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import treeTableForm from './treeTableForm'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'TreeTable',
-  components: { treeTableForm },
+  components: { treeTableForm, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

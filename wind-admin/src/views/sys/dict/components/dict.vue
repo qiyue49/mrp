@@ -5,9 +5,10 @@
         <div class="filter-item">
           <span>字典标签或值:</span>
           <el-input v-model="listQuery.keyword" placeholder="请输入字典标签或值" @keyup.enter="handleFilter" />
-        </div>
         <el-button v-permission="['sys:dict:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+        </div>
+        <btn-group/>
+        <!-- <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
       </div>
 
       <el-table :key="tableKey" v-loading="listLoading" :data="list" border fit highlight-current-row :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
@@ -57,10 +58,11 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import { store } from '@/stores'
 import Pagination from '@/components/Pagination/index.vue'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'SysDictComponent',
-  components: { Pagination },
+  components: { Pagination, BtnGroup },
   directives: {
     waves, permission
   },

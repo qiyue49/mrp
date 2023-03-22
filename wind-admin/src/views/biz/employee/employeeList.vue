@@ -15,8 +15,6 @@
           <div class="filter-item">
             <span>姓名:</span>
             <el-input v-model="listQuery.name" placeholder="请输入姓名" />
-          </div>
-          <div class="filter-item">
             <span>性别:</span>
             <el-radio
               v-for="item in dictList('sex')"
@@ -25,13 +23,14 @@
               :label="item.value">
               {{ item.label }}
             </el-radio>
+            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+              搜索
+            </el-button>
           </div>
-          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-            搜索
-          </el-button>
-          <el-button v-permission="['biz:employee:employee:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          <btn-group/>
+          <!-- <el-button v-permission="['biz:employee:employee:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
             新增
-          </el-button>
+          </el-button> -->
         </div>
 
         <el-table
@@ -91,10 +90,11 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import employeeForm from './employeeForm'
 import Pagination from '@/components/Pagination'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'EmployeeList',
-  components: { employeeForm, Pagination },
+  components: { employeeForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

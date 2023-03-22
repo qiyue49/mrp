@@ -4,17 +4,16 @@
       <div class="filter-item">
         <span>配置名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入配置名称" />
-      </div>
-      <div class="filter-item">
-        <span>配置编码:</span>
+         <span>配置编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入配置编码" />
-      </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-permission="['sys:config:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      </div>
+      <btn-group/>
+      <!-- <el-button v-permission="['sys:config:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button>
+      </el-button> -->
     </div>
     <el-table
       :key="tableKey"
@@ -69,10 +68,11 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import configForm from './configForm'
 import Pagination from '@/components/Pagination/index.vue'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'Config',
-  components: { Pagination, configForm },
+  components: { Pagination, configForm, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

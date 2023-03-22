@@ -2,15 +2,16 @@
   <div class="all">
     <div class="tit">
       <div class="left">
-        <span>访问总量</span>
-        <span>新增访问</span>
-        <span>活跃访问</span>
-        <span>流量访问</span>
+        <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">访问总量</span>
+        <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">新增访问</span>
+        <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">活跃访问</span>
+        <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">流失访问</span>
+
       </div>
       <div class="right">
-        <span>半年</span>
-        <span>本月</span>
-        <span>本周</span>
+        <span :class="{'clickbtn' : isclick1 ==1}" @click="isclick1 = 1">半年</span>
+        <span :class="{'clickbtn' : isclick1 ==2}" @click="isclick1 = 2">本月</span>
+        <span :class="{'clickbtn' : isclick1 ==3}" @click="isclick1 = 3">本周</span>
       </div>
     </div>
     <div ref="$chart1" style="width: 100%;height: 100%">
@@ -21,7 +22,10 @@
 export default {
   name: 'BoomMedd',
   data() {
-    return {}
+    return {
+      isclick: 1,
+      isclick1: 1
+    }
   },
   mounted() {
     this.echartsInit()
@@ -34,8 +38,14 @@ export default {
           trigger: 'axis',
           formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
+        grid: {
+		        left: '0',
+		        right: '0',
+		        bottom: '0',
+		        containLabel: true
+		    },
         xAxis: {
-          show: false, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
+          show: true, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
           type: 'category',
           boundaryGap: false,
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -48,7 +58,7 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [820, 932, 901, 934, 1290, 1330, 1320],
+            data: [0, 1500, 90, 94, 1290, 1330, 320],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -73,7 +83,8 @@ export default {
               normal: {
                 color: '#1E6ADB', // 改变折线点的颜色
                 lineStyle: {
-                  color: '#1E6ADB' // 改变折线颜色
+                  color: '#1E6ADB', // 改变折线颜色,
+                  width: 3
                 }
               }
             }
@@ -87,11 +98,34 @@ export default {
 
 <style lang="scss" scoped>
 .all{
+  padding: 20px;
     background-color: #fff;
     margin-left: 20px;
+    border-radius: 10px;
     .tit{
        display: flex;
        justify-content: space-between;
+       .left{
+        border-left: 1px solid #EEF0F4;
+        span{
+        border-right: 1px solid #EEF0F4;
+        border-top: 1px solid #EEF0F4;
+        border-bottom: 1px solid #EEF0F4;
+        padding: 5px 10px;
+      }
+      .clickbtn{
+        background-color: #1762F2;
+        color: #fff;
+      }
+       }
+       .right{
+        span{
+        padding: 5px 10px;
+      }
+      .clickbtn{
+        color: #1762F2;
+      }
+       }
     }
 }
 </style>

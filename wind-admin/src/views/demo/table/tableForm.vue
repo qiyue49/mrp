@@ -1,5 +1,8 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="title" destroy-on-close>
+  <el-dialog v-model="dialogFormVisible" destroy-on-close>
+    <div class="tit">
+      新建
+    </div>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
@@ -159,4 +162,21 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+// :deep(.el-dialog__header){
+
+// }
+:deep(.el-dialog){
+  .el-dialog__header{
+    background-color: #000 !important;
+  }
+  .el-dialog__body{
+    .tit{
+  display: flex;
+  justify-content: center;
+}
+  }
+
+}
+</style>
 

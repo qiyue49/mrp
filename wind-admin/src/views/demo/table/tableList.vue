@@ -1,19 +1,23 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
+      <div class="filter-item">
+        <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
+      </div>
+      <btn-group/>
+
       <el-button v-permission="['test:table:table:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
+      <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
         导入
       </el-button>
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleExport">
         导出
-      </el-button>
+      </el-button> -->
     </div>
 
     <el-table
@@ -45,6 +49,11 @@
       <el-table-column label="创建时间" min-width="150px">
         <template #default="scope">
           <span>{{ parseTime(scope.row.publishDate, '{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="重要程度" min-width="150px">
+        <template #default="scope">
+          <span>☆☆☆☆☆☆☆</span>
         </template>
       </el-table-column>
       <el-table-column label="阅读数" min-width="95">
@@ -84,6 +93,17 @@
     <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
     <table-form ref="form" @refresh-list="getList" />
+    <el-dialog
+    class="deletedialog"
+      v-model="dialogVisible"
+      :show-close="false"
+      :before-close="handleClose">
+      <div>您确定删除该条数据吗？</div>
+      <div class="btn">
+        <span @click="dialogVisible = false">取消</span>
+        <span @click="hdelete">确定</span>
+      </div>
+    </el-dialog>
 
   </div>
 </template>
@@ -98,10 +118,11 @@ import Pagination from '@/components/Pagination'
 import Sortable from 'sortablejs'
 import Import from '@/components/Import/import'
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'ComplexTable',
-  components: { SvgIcon, Import, tableForm, Pagination },
+  components: { SvgIcon, Import, tableForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {
@@ -117,7 +138,9 @@ export default {
         title: undefined,
         type: undefined
       },
-      downloadLoading: false
+      downloadLoading: false,
+      dialogVisible: false,
+      rowid: undefined
     }
   },
   created() {
@@ -188,13 +211,18 @@ export default {
       })
     },
     handleDelete(row) {
-      deleteTable(row.id).then(response => {
+      this.dialogVisible = true
+      this.rowid = row.id
+    },
+    hdelete() {
+      deleteTable(this.rowid).then(response => {
         if (response.data.code === 0) {
           this.getList()
           this.$message.success(response.data.msg)
         } else {
           this.$message.error(response.data.msg)
         }
+        this.dialogVisible = false
       })
     },
     handleCreate() {
@@ -224,3 +252,24 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+:deep(.el-dialog.deletedialog){
+  width: 300px;
+  .el-dialog__body{
+    display: flex;
+    align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  .btn{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 50px;
+    >:last-child{
+      // background-color: #000;
+      color: #0243A3;
+    }
+  }
+  }
+}
+</style>

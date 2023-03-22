@@ -5,7 +5,7 @@ import {
   getToken,
   removeRefreshToken,
   removeToken,
-  setRefreshToken as saveRefreshToken,
+  setRefreshToken,
   setToken as saveToken
 } from '@/utils/auth'
 import { defineStore } from 'pinia'
@@ -23,21 +23,16 @@ export const userStore = defineStore('user', () => {
     token.value = tokenParam
     saveToken(tokenParam)
   }
-  function setRefreshToken(tokenParam) {
-    refreshToken.value = tokenParam
-    saveRefreshToken(tokenParam)
-  }
 
   // user login
   function login(userInfo) {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       userLogin(username.trim(), password).then(response => {
-        if (response.code === 0) {
-          const data = response.data.data
-          setToken(data.accessToken)
-          setRefreshToken(data.refreshToken)
-        }
+        const data = response.data
+        setToken(data.access_token)
+        refreshToken.value = data.refresh_token
+        setRefreshToken(refreshToken)
         resolve(response)
       }).catch(error => {
         reject(error)
@@ -53,11 +48,11 @@ export const userStore = defineStore('user', () => {
 
         if (data.roles && data.roles.length > 0) { // 验证返回的roles是否是一个非空数组
           roles.value = data.roles
-          userInfo.value = data
-          resolve(data)
         } else {
           reject(response)
         }
+        userInfo.value = data
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
@@ -109,5 +104,5 @@ export const userStore = defineStore('user', () => {
   //   })
   // }
 
-  return { userInfo, token, refreshToken, roles, login, getInfo, logout, setToken, setRefreshToken }
+  return { userInfo, token, refreshToken, roles, login, getInfo, logout, setToken }
 })

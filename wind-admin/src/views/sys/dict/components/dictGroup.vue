@@ -5,9 +5,10 @@
         <div class="filter-item">
           <span>分组名称或编码:</span>
           <el-input v-model="listQuery.keyword" placeholder="请输入分组名称或编码" @keyup.enter="handleFilter" />
-        </div>
         <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button v-permission="['sys:dict:group:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+        </div>
+        <btn-group/>
+        <!-- <el-button v-permission="['sys:dict:group:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
       </div>
 
       <el-table
@@ -63,10 +64,11 @@ import { fetchDictGroupList, createDictGroup, deleteDictGroup, updateDictGroup }
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'SysDictGroupComponent',
-  components: { Pagination },
+  components: { Pagination, BtnGroup },
   directives: {
     waves, permission
   },

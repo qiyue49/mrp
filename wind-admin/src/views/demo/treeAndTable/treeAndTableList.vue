@@ -15,14 +15,13 @@
           <div class="filter-item">
             <span>部门名称:</span>
             <el-input v-model="listQuery.name" placeholder="请输入部门名称" />
-          </div>
-          <div class="filter-item">
             <span>类型:</span>
             <el-input v-model="listQuery.type" placeholder="请输入类型" />
+            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+              搜索
+            </el-button>
           </div>
-          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-            搜索
-          </el-button>
+          <btn-group/>
           <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
             新增
           </el-button>
@@ -59,6 +58,9 @@
               <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
                 删除
               </el-button>
+              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="danger" text icon="Delete" @click="handleall(row)">
+                更多
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -78,10 +80,11 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import treeAndTableForm from './treeAndTableForm'
 import Pagination from '@/components/Pagination'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'TreeAndTableList',
-  components: { treeAndTableForm, Pagination },
+  components: { treeAndTableForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

@@ -4,13 +4,12 @@
       <div class="filter-item">
         <span>角色名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入角色名称" @keyup.enter="handleFilter" />
-      </div>
-      <div class="filter-item">
         <span>角色编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入角色编码" @keyup.enter="handleFilter" />
+        <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       </div>
-      <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+      <btn-group/>
+      <!-- <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
     </div>
 
     <el-table style="border:none" v-loading="listLoading" :data="list" border fit highlight-current-row :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
@@ -61,10 +60,11 @@ import permission from '@/directive/permission/permission'
 import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'RoleList',
-  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList },
+  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList, BtnGroup },
   directives: {
     waves, permission
   },

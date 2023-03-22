@@ -4,17 +4,17 @@
       <div class="filter-item">
         <span>资源编号:</span>
         <el-input v-model="listQuery.resourceCode" placeholder="请输入资源编号" />
-      </div>
-      <div class="filter-item">
         <span>数据权限名称:</span>
         <el-input v-model="listQuery.scopeName" placeholder="请输入数据权限名称" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <btn-group/>
+
+      <!-- <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button>
+      </el-button> -->
     </div>
 
     <el-table
@@ -71,10 +71,11 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import dataRuleForm from './dataRuleForm'
 import Pagination from '@/components/Pagination'
+import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'DataRuleList',
-  components: { dataRuleForm, Pagination },
+  components: { dataRuleForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {
