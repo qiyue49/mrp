@@ -65,12 +65,14 @@
           </el-table-column>
           <el-table-column label="操作" width="230">
             <template #default="{row}">
-              <el-button v-permission="['biz:employee:employee:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+              <!-- <el-button v-permission="['biz:employee:employee:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
                 编辑
               </el-button>
               <el-button v-permission="['biz:employee:employee:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
                 删除
-              </el-button>
+              </el-button> -->
+              <edit-btn v-permission="['biz:employee:employee:update']" @click="handleUpdate(row)"/>
+              <delete-btn v-permission="['biz:employee:employee:delete']" @click="handleDelete(row)"/>
             </template>
           </el-table-column>
         </el-table>
@@ -91,10 +93,12 @@ import permission from '@/directive/permission/permission'
 import employeeForm from './employeeForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'EmployeeList',
-  components: { employeeForm, Pagination, BtnGroup },
+  components: { employeeForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
   directives: { waves, permission },
   data() {
     return {

@@ -27,9 +27,11 @@
         <el-table-column prop="remarks" label="备注" width="160" />
         <el-table-column label="操作" width="180">
           <template #default="scope">
-            <el-button v-permission="['sys:dict:group:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+            <!-- <el-button v-permission="['sys:dict:group:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
             <el-button v-permission="['sys:dict:group:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button>
+            </el-button> -->
+            <edit-btn v-permission="['sys:dict:group:update']" @click="handleUpdate(scope.row)"/>
+            <delete-btn v-permission="['sys:dict:group:delete']" @click="handleDelete(scope.row)"/>
           </template>
         </el-table-column>
       </el-table>
@@ -65,10 +67,12 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'SysDictGroupComponent',
-  components: { Pagination, BtnGroup },
+  components: { Pagination, BtnGroup, EditBtn, DeleteBtn },
   directives: {
     waves, permission
   },

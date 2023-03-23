@@ -100,7 +100,7 @@ export default {
         box-sizing: border-box;
     }
 .all{
-    background-color: #0243A3;
+    background-color: #1762F2;
     padding: 20px 0;
     display: flex;
     flex-direction: column;

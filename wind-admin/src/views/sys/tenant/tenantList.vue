@@ -25,11 +25,11 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      border
       fit
       highlight-current-row
-      style="width: 100%;"
-      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
+      class="cc"
+      style="width: 100%;border: 1 solid red !important;"
+      :header-cell-style="{background:'#F4F7FC',color:'#0243A3'}">
       <el-table-column label="租户标识" min-width="150px">
         <template #default="{row}">
           <span>{{ row.tenantId }}</span>
@@ -57,12 +57,14 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <el-button v-permission="['sys:tenant:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <!-- <el-button v-permission="['sys:tenant:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
-          </el-button>
-          <el-button v-permission="['sys:tenant:delete']" size="small" type="danger" text icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
+          </el-button> -->
+          <edit-btn v-permission="['sys:tenant:update']" @click="handleUpdate(row)"/>
+          <!-- <el-button v-permission="['sys:tenant:delete']" size="small" type="danger" text icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
             删除
-          </el-button>
+          </el-button> -->
+          <delete-btn v-permission="['sys:tenant:delete']" @click="handleDelete(row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -82,11 +84,13 @@ import tenantForm from './tenantForm'
 import Pagination from '@/components/Pagination'
 // import BtnGroup from '@/components/btn/BtnGroup'
 import BtnGroup from '../../../components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 // import BtnGroup from '../../../components/btn/BtnGroup.vue'
 
 export default {
   name: 'TenantList',
-  components: { tenantForm, Pagination, BtnGroup },
+  components: { tenantForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
   directives: { waves, permission },
   data() {
     return {
@@ -146,3 +150,15 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+*{
+  // border: none !important;
+}
+.cc{
+  border: 1 solid red !important;
+}
+  .el-table{
+  border: 1 solid red !important;
+}
+
+</style>

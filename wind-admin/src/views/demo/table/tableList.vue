@@ -71,9 +71,10 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <!-- <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
-          </el-button>
+          </el-button> -->
+          <edit-btn v-permission="['test:table:table:detail']" @click="handleUpdate(row)"/>
           <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdateView(row)">
             编辑(新页签)
           </el-button>
@@ -83,9 +84,10 @@
           <el-button v-if="row.status!='draft'" size="small" @click="handleModifyStatus(row,'draft')">
             草稿
           </el-button>
-          <el-button v-permission="['test:table:table:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+          <!-- <el-button v-permission="['test:table:table:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button>
+          </el-button> -->
+          <delete-btn v-permission="['test:table:table:delete']" @click="handleDelete(row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -119,10 +121,12 @@ import Sortable from 'sortablejs'
 import Import from '@/components/Import/import'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'ComplexTable',
-  components: { SvgIcon, Import, tableForm, Pagination, BtnGroup },
+  components: { SvgIcon, Import, tableForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
   directives: { waves, permission },
   data() {
     return {

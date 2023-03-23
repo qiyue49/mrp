@@ -94,7 +94,7 @@ export default {
         box-sizing: border-box;
     }
 .all{
-    background-color: #C24229;
+    background-color: #D34D25;
     padding: 20px 0;
     display: flex;
     flex-direction: column;

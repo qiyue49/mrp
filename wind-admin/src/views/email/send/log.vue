@@ -69,8 +69,9 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-          </el-button>
+          <!-- <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
+          </el-button> -->
+          <delete-btn @click="handleDelete(scope.row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -112,11 +113,12 @@ import { fetchTemplateList } from '@/api/email/template'
 import { unescape } from '@/utils/index'
 import waves from '@/directive/waves'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 const jsonData = '{}'
 
 export default {
   name: 'EmailSendlogList',
-  components: { Pagination, BtnGroup },
+  components: { Pagination, BtnGroup, DeleteBtn },
   directives: {
     waves
   },

@@ -38,6 +38,7 @@ body {
 
 .el-table {
   width: 100%;
+  border: none !important;
 }
 
 .el-table .el-table__cell {

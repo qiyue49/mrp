@@ -20,8 +20,10 @@
       </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button v-permission="['sys:organization:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sys:organization:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          <!-- <el-button v-permission="['sys:organization:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['sys:organization:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
+          <edit-btn v-permission="['sys:organization:update']" @click="handleUpdate(scope.row)"/>
+          <delete-btn v-permission="['sys:organization:delete']" @click="handleDelete(scope.row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -37,9 +39,11 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import OrganizationForm from './organizationForm' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 export default {
   name: 'OrganizationList',
-  components: { OrganizationForm, BtnGroup },
+  components: { OrganizationForm, BtnGroup, EditBtn, DeleteBtn },
   directives: {
     waves, permission
   },

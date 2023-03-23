@@ -38,12 +38,14 @@
       </el-table-column>
       <el-table-column label="操作" min-width="230">
         <template #default="{row}">
-          <el-button v-permission="['biz:company:company:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+          <!-- <el-button v-permission="['biz:company:company:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
           <el-button v-permission="['biz:company:company:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button>
+          </el-button> -->
+          <edit-btn v-permission="['biz:company:company:update']" @click="handleUpdate(row)"/>
+          <delete-btn v-permission="['biz:company:company:delete']" @click="handleDelete(row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -61,10 +63,13 @@ import permission from '@/directive/permission/permission'
 import companyForm from './companyForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../../components/btn/components/EditBtn.vue'
+// import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'CompanyView',
-  components: { companyForm, Pagination, BtnGroup },
+  components: { companyForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
   directives: { waves, permission },
   emits: ['refreshSub'],
   data() {

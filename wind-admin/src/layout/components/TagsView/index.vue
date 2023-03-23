@@ -236,7 +236,7 @@ a{
       margin-left: 5px;
       margin-top: 4px;
       background-color: #ffffff;
-      border-radius: 20px;
+      border-radius: 5px;
       .close {
         width: 16px;
         height: 16px;
@@ -245,7 +245,7 @@ a{
         text-align: center;
         transition: all .3s cubic-bezier(.645, .045, .355, 1);
         transform-origin: 100% 50%;
-        color: #0243A3;
+        color: #1762F2;
         &:before {
           transform: scale(.6);
           display: inline-block;
@@ -263,9 +263,9 @@ a{
         margin-right: 15px;
       }
       &.active {
-        background-color: #0243A3;
-        border-color: #0243A3;
-        border-radius: 20px;
+        background-color: #1762F2;
+        border-color: #1762F2;
+        border-radius: 5px;
         .close {
         width: 16px;
         height: 16px;

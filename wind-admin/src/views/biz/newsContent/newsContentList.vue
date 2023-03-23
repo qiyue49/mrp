@@ -49,12 +49,14 @@
       </el-table-column>
       <el-table-column label="操作" min-width="230px">
         <template #default="{row}">
-          <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+          <!-- <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
           <el-button v-permission="['biz:newsContent:newscontent:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button>
+          </el-button> -->
+          <edit-btn v-permission="['biz:newsContent:newscontent:update']" @click="handleUpdate(row)"/>
+          <delete-btn v-permission="['biz:newsContent:newscontent:delete']" @click="handleDelete(row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -73,10 +75,12 @@ import permission from '@/directive/permission/permission'
 import newsContentForm from './newsContentForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'NewsContentList',
-  components: { newsContentForm, Pagination, BtnGroup },
+  components: { newsContentForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
   directives: { waves, permission },
   data() {
     return {

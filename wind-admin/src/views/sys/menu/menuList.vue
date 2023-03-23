@@ -44,8 +44,10 @@
       </el-table-column>
       <el-table-column min-width="150" label="操作">
         <template #default="scope">
-          <el-button v-permission="['sys:menu:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sys:menu:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          <!-- <el-button v-permission="['sys:menu:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['sys:menu:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
+          <edit-btn v-permission="['sys:menu:update']" @click="handleUpdate(scope.row)"/>
+          <delete-btn v-permission="['sys:menu:delete']" @click="handleDelete(scope.row)"/>
           <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="primary" text icon="Coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
         </template>
       </el-table-column>
@@ -64,13 +66,15 @@ import permission from '@/directive/permission/permission'
 import MenuForm from './menuForm'
 import MenuGenButton from './menuGenButton'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'MenuComponent',
   directives: {
     waves, permission
   },
-  components: { MenuGenButton, MenuForm, BtnGroup },
+  components: { MenuGenButton, MenuForm, BtnGroup, EditBtn, DeleteBtn },
   data() {
     return {
       expandAll: true,

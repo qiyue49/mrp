@@ -46,12 +46,14 @@
       </el-table-column>
       <el-table-column min-width="150" label="操作">
         <template #default="{row}">
-          <el-button v-permission="['sys:config:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <!-- <el-button v-permission="['sys:config:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
             编辑
           </el-button>
           <el-button v-if="!row.isSys" v-permission="['sys:config:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button>
+          </el-button> -->
+          <edit-btn v-permission="['sys:config:update']" @click="handleUpdate(row)"/>
+          <delete-btn v-if="!row.isSys" v-permission="['sys:config:delete']" @click="handleDelete(row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -69,10 +71,12 @@ import waves from '@/directive/waves' // waves directive
 import configForm from './configForm'
 import Pagination from '@/components/Pagination/index.vue'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'Config',
-  components: { Pagination, configForm, BtnGroup },
+  components: { Pagination, configForm, BtnGroup, EditBtn, DeleteBtn },
   directives: { waves, permission },
   data() {
     return {

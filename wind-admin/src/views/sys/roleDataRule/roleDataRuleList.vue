@@ -54,12 +54,14 @@
         </el-table-column>
         <el-table-column label="操作" width="230">
           <template #default="{row}">
-            <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+            <!-- <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
               编辑
             </el-button>
             <el-button v-permission="['sys:datarule:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
               删除
-            </el-button>
+            </el-button> -->
+            <edit-btn v-permission="['sys:datarule:update']" @click="handleUpdate(row)"/>
+            <delete-btn v-permission="['sys:datarule:delete']" @click="handleDelete(row)"/>
           </template>
         </el-table-column>
       </el-table>
@@ -87,10 +89,12 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import dataRuleForm from '../dataRule/dataRuleForm'
 import Pagination from '@/components/Pagination'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'RoleDataRuleList',
-  components: { dataRuleForm, Pagination },
+  components: { dataRuleForm, Pagination, EditBtn, DeleteBtn },
   directives: { waves, permission },
   data() {
     return {

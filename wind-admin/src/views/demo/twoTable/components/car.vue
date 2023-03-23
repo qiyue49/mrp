@@ -33,9 +33,11 @@
         />
         <el-table-column label="操作" width="180">
           <template #default="scope">
-            <el-button v-permission="['test:car:car:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+            <!-- <el-button v-permission="['test:car:car:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
             <el-button v-permission="['test:car:car:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button>
+            </el-button> -->
+            <edit-btn v-permission="['test:car:car:detail']" @click="handleUpdate(scope.row)"/>
+            <delete-btn v-permission="['test:car:car:delete']" @click="handleDelete(scope.row)"/>
           </template>
         </el-table-column>
       </el-table>
@@ -54,13 +56,15 @@ import waves from '@/directive/waves' // 水波纹指令
 import carForm from './carForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'Car',
   directives: {
     waves, permission
   },
-  components: { Pagination, carForm, BtnGroup },
+  components: { Pagination, carForm, BtnGroup, EditBtn, DeleteBtn },
   emits: ['refreshCarModel'],
   data() {
     return {

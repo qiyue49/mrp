@@ -1,8 +1,8 @@
 <template>
   <!-- <div> -->
   <div>
-    <img src="../../../assets/img/daochu.svg" alt=""/>
-    导出</div>
+    <img src="../../../assets/img/shanchu.svg" alt=""/>
+    删除</div>
   <!-- </div> -->
 </template>
 
@@ -14,19 +14,20 @@ export default {
 
 <style lang="scss" scoped>
 div{
-  margin-right: 10px;
-  padding: 5PX 10px;
+  padding: 0 5px;
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    // margin-bottom: 10px;
     background-color: #fff;
-    color: #FFC700;
-    border: 1px solid #FFC700;
+    color: #F31313;
+    border: 1px solid #F31313;
     border-radius: 5px;
     // margin-top: 10px;
+    display: inline-block;
+    font-size: 12px;
     img{
-      width: 15px;
-      margin-right: 5px;
+      width: 12px;
+    //   margin-right: 5px;
     }
 }
 </style>

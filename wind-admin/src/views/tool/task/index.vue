@@ -66,8 +66,10 @@
           <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
           <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="primary" text icon="Refresh" @click="handleRefresh(scope.row)">刷新</el-button>
           <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="primary" text icon="ArrowRight" @click="runAJobNow(scope.row)">执行一次</el-button>
-          <el-button v-permission="['task:schedule:job:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['task:schedule:job:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          <!-- <el-button v-permission="['task:schedule:job:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['task:schedule:job:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
+          <edit-btn v-permission="['task:schedule:job:detail']" @click="handleUpdate(scope.row)"/>
+          <delete-btn v-permission="['task:schedule:job:delete']" @click="handleDelete(scope.row)"/>
         </template>
       </el-table-column>
     </el-table>
@@ -163,10 +165,12 @@ import { fetchScheduleList, createSchedule, deleteSchedule, batchDeleteSchedule,
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'SysScheduleList',
-  components: { BtnGroup },
+  components: { BtnGroup, EditBtn, DeleteBtn },
   directives: {
     waves, permission
   },

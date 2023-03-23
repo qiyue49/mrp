@@ -34,9 +34,11 @@
             <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Setting" @click="toSetMenu(row)">设置菜单</el-button>
             <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Operation" @click="toSetPermission(row)">设置权限</el-button>
             <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Finished" @click="toSetDataRule(row)">数据权限</el-button>
-            <el-button v-permission="['sys:role:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">编辑</el-button>
+            <!-- <el-button v-permission="['sys:role:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">编辑</el-button>
             <el-button v-permission="['sys:role:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">删除
-            </el-button>
+            </el-button> -->
+            <edit-btn v-permission="['sys:role:detail']" @click="handleUpdate(row)"/>
+            <delete-btn v-permission="['sys:role:delete']" @click="handleDelete(row)"/>
           </span>
         </template>
       </el-table-column>
@@ -61,10 +63,12 @@ import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
+import EditBtn from '../../../components/btn/components/EditBtn.vue'
+import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'RoleList',
-  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList, BtnGroup },
+  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList, BtnGroup, EditBtn, DeleteBtn },
   directives: {
     waves, permission
   },

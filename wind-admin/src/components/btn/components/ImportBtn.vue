@@ -14,6 +14,7 @@ export default {
 
 <style lang="scss" scoped>
 div{
+  margin-right: 10px;
   padding: 5PX 10px;
     display: flex;
     align-items: center;
