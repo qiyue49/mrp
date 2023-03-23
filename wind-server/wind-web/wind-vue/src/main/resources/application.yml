@@ -75,11 +75,6 @@ mybatis-plus:
 logging:
   config: classpath:log/logback-${spring.profiles.active}.xml
 
-#shiro
-shiro:
-  # 接口过滤，过滤的接口不需要进行shiro权限验证
-  filter-chain-definitions: /json/oss/**=anon;/json/**=anon;/jcaptcha*=anon;/sso/oauth2/revoke_token=authc;/sso/oauth2/**=anon;/**=authc
-
 #beetl配置
 beetlsql:
   enabled: false
