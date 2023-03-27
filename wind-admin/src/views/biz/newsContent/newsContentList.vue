@@ -5,13 +5,12 @@
         <span>内容标题:</span>
         <el-input v-model="listQuery.newsContentTitle" placeholder="请输入内容标题" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
+          搜索
+        </el-button>
+        <el-button v-permission="['biz:newsContent:newscontent:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button v-permission="['biz:newsContent:newscontent:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button> -->
     </div>
 
     <el-table
@@ -75,12 +74,10 @@ import permission from '@/directive/permission/permission'
 import newsContentForm from './newsContentForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'NewsContentList',
-  components: { newsContentForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { newsContentForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

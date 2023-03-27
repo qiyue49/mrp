@@ -1,10 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <!-- <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button> -->
-      <btn-group/>
+      </el-button>
     </div>
 
     <el-table
@@ -60,12 +59,9 @@ import permission from '@/directive/permission/permission'
 import productForm from './productForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../../components/btn/components/EditBtn.vue'
-// import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 export default {
   name: 'ProductView',
-  components: { productForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { productForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

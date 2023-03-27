@@ -1,10 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <!-- <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button> -->
-      <btn-group/>
+      </el-button>
     </div>
 
     <el-table
@@ -83,11 +82,9 @@ import waves from '@/directive/waves' // waves directive
 import expandTableForm from './expandTableForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 export default {
   name: 'ExpandTableList',
-  components: { expandTableForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { expandTableForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

@@ -7,9 +7,8 @@
         <span>模版编码:</span>
         <el-input v-model="listQuery.code" class="filter-item" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
     </div>
 
     <el-table
@@ -74,12 +73,10 @@ import waves from '@/directive/waves' // 水波纹指令
 import { getDictList } from '@/utils/dict'
 import Pagination from '@/components/Pagination/index.vue'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'TemplateList',
-  components: { Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { Pagination, BtnGroup },
   directives: {
     waves, permission
   },

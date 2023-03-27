@@ -13,12 +13,11 @@
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
+        <el-button v-permission="['sys:tenant:add']" class="filter-item" type="danger" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button v-permission="['sys:tenant:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button> -->
-      <!-- <btn-group/> -->
+
     </div>
 
     <el-table
@@ -57,11 +56,11 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['sys:tenant:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <!-- <el-button v-permission="['sys:tenant:update']" size="small" plain type="EditBtn" @click="handleUpdate(row)">
             编辑
           </el-button> -->
           <edit-btn v-permission="['sys:tenant:update']" @click="handleUpdate(row)"/>
-          <!-- <el-button v-permission="['sys:tenant:delete']" size="small" type="danger" text icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
+          <!-- <el-button v-permission="['sys:tenant:delete']" size="small" type="DeleteBtn" class="delete-text-btn" @click="handleDelete(row)">
             删除
           </el-button> -->
           <delete-btn v-permission="['sys:tenant:delete']" @click="handleDelete(row)"/>
@@ -84,13 +83,10 @@ import tenantForm from './tenantForm'
 import Pagination from '@/components/Pagination'
 // import BtnGroup from '@/components/btn/BtnGroup'
 import BtnGroup from '../../../components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
-// import BtnGroup from '../../../components/btn/BtnGroup.vue'
 
 export default {
   name: 'TenantList',
-  components: { tenantForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { tenantForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

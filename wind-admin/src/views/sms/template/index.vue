@@ -7,9 +7,8 @@
         <span>模版编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
         <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sms:template:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button v-permission="['sms:template:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
     </div>
 
     <el-table
@@ -96,12 +95,10 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'SysTemplateList',
-  components: { Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { Pagination, BtnGroup },
   directives: {
     waves, permission
   },

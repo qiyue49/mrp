@@ -9,12 +9,11 @@
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
+        <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <btn-group/>
 
-      <!-- <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button> -->
     </div>
 
     <el-table
@@ -74,12 +73,10 @@ import permission from '@/directive/permission/permission'
 import dataRuleForm from './dataRuleForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'DataRuleList',
-  components: { dataRuleForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { dataRuleForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

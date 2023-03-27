@@ -7,9 +7,8 @@
         <el-button v-permission="['sys:organization:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
+      <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
-      <!-- <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
-      <btn-group/>
     </div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
       <el-table-column prop="name" label="名称" width="180" />
@@ -39,11 +38,9 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import OrganizationForm from './organizationForm' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 export default {
   name: 'OrganizationList',
-  components: { OrganizationForm, BtnGroup, EditBtn, DeleteBtn },
+  components: { OrganizationForm, BtnGroup },
   directives: {
     waves, permission
   },

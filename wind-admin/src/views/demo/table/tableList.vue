@@ -6,18 +6,16 @@
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
+        <el-button v-permission="['test:table:table:add']" class="filter-item" type="danger" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
+        <el-button v-waves :loading="downloadLoading" class="filter-item" type="warning" icon="Download" @click="handleImport">
+          导入
+        </el-button>
+        <el-button v-waves :loading="downloadLoading" class="filter-item" type="warning" plain icon="Download" @click="handleExport">
+          导出
+        </el-button>
       </div>
-      <btn-group/>
-
-      <el-button v-permission="['test:table:table:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button>
-      <!-- <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
-        导入
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleExport">
-        导出
-      </el-button> -->
     </div>
 
     <el-table
@@ -96,8 +94,8 @@
 
     <table-form ref="form" @refresh-list="getList" />
     <el-dialog
-    class="deletedialog"
       v-model="dialogVisible"
+      class="deletedialog"
       :show-close="false"
       :before-close="handleClose">
       <div>您确定删除该条数据吗？</div>
@@ -121,12 +119,10 @@ import Sortable from 'sortablejs'
 import Import from '@/components/Import/import'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'ComplexTable',
-  components: { SvgIcon, Import, tableForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { SvgIcon, Import, tableForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

@@ -9,7 +9,6 @@
         <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="Delete" @click="handleBatchDelete">删除</el-button>
         <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="Refresh" @click="handleRefreshTask">刷新任务</el-button>
       </div>
-      <btn-group/>
     </div>
 
     <el-table
@@ -165,12 +164,10 @@ import { fetchScheduleList, createSchedule, deleteSchedule, batchDeleteSchedule,
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'SysScheduleList',
-  components: { BtnGroup, EditBtn, DeleteBtn },
+  components: { BtnGroup },
   directives: {
     waves, permission
   },

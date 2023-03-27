@@ -4,10 +4,9 @@
       <div class="filter-container">
         <div class="filter-item">
           <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <!-- <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
+          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+          <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
         </div>
-        <btn-group/>
       </div>
 
       <el-table

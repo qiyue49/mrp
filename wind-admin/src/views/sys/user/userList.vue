@@ -20,10 +20,9 @@
             <span>手机号码:</span>
             <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
             <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+            <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+            <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
           </div>
-          <!-- <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-          <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button> -->
-          <btn-group/>
         </div>
 
         <el-table
@@ -120,12 +119,10 @@ import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
 import Pagination from '@/components/Pagination/index.vue'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'UserList',
-  components: { Pagination, userForm, BtnGroup, EditBtn, DeleteBtn },
+  components: { Pagination, userForm, BtnGroup },
   directives: {
     waves, permission
   },

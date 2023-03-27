@@ -20,7 +20,6 @@
         <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
       </div>
-      <btn-group/>
     </div>
 
     <el-table

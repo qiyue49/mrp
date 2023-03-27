@@ -5,9 +5,8 @@
         <span>菜单名称:</span>
         <el-input v-model="listQuery.keyword" placeholder="请输入菜单名称" @keyup.enter="handleFilter" />
         <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
     </div>
 
     <el-table v-loading="listLoading" :data="list" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
@@ -66,15 +65,13 @@ import permission from '@/directive/permission/permission'
 import MenuForm from './menuForm'
 import MenuGenButton from './menuGenButton'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'MenuComponent',
   directives: {
     waves, permission
   },
-  components: { MenuGenButton, MenuForm, BtnGroup, EditBtn, DeleteBtn },
+  components: { MenuGenButton, MenuForm, BtnGroup },
   data() {
     return {
       expandAll: true,

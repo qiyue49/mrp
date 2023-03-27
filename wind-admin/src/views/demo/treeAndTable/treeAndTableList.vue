@@ -20,11 +20,10 @@
             <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
               搜索
             </el-button>
+            <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+              新增
+            </el-button>
           </div>
-          <btn-group/>
-          <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-            新增
-          </el-button>
         </div>
 
         <el-table
@@ -83,12 +82,10 @@ import waves from '@/directive/waves' // waves directive
 import treeAndTableForm from './treeAndTableForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'TreeAndTableList',
-  components: { treeAndTableForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { treeAndTableForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

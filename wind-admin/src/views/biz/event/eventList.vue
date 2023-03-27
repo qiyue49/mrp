@@ -15,13 +15,12 @@
             :value="item.value" />
         </el-select>
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
+          搜索
+        </el-button>
+        <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button> -->
     </div>
 
     <el-table
@@ -88,12 +87,10 @@ import permission from '@/directive/permission/permission'
 import eventForm from './eventForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'EventList',
-  components: { eventForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { eventForm, Pagination, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

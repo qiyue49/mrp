@@ -1,10 +1,9 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <!-- <el-button v-permission="['biz:department:department:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['biz:department:department:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
-      </el-button> -->
-      <btn-group/>
+      </el-button>
     </div>
 
     <el-table :data="list" style="width: 100%;" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
@@ -48,12 +47,10 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import departmentForm from './departmentForm'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'Department',
-  components: { departmentForm, BtnGroup, EditBtn, DeleteBtn },
+  components: { departmentForm, BtnGroup },
   directives: { waves, permission },
   data() {
     return {

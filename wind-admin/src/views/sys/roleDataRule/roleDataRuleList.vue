@@ -89,12 +89,10 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import dataRuleForm from '../dataRule/dataRuleForm'
 import Pagination from '@/components/Pagination'
-import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'RoleDataRuleList',
-  components: { dataRuleForm, Pagination, EditBtn, DeleteBtn },
+  components: { dataRuleForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

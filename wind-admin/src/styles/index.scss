@@ -89,6 +89,28 @@ body {
   }
 
 }
+.el-button--EditBtn{
+  border-color: #1762F2;
+  color: #1762F2;
+}
+.el-button--EditBtn::before{
+  content: url('../assets/img/bianji.svg');
+}
+.el-button--DeleteBtn{
+  border-color: #F31313;
+  color: #F31313;
+}
+.el-button--DeleteBtn::before{
+  content: url('../assets/img/shanchu.svg');
+}
+// .el-button--addbtn{
+//   border-color: #F31313;
+//   color: #F31313;
+//   background-color: #D34D25;
+// }
+// .el-button--addbtn::before{
+//   content: url('../assets/img/add.svg');
+// }
 
 
 

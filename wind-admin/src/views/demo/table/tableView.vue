@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="tit">返回上一级</div>
-    <div style="color:#0243A3">新增：</div>
+    <div style="color:#1762F2;fontSize:1.2rem">新 增 ：</div>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <div class="flexdi">
         <el-form-item prop="title">
@@ -180,6 +180,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.tinymce-container{
+  width: 100% !important;
+}
 .flexdi{
   display: flex;
 }

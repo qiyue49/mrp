@@ -5,13 +5,12 @@
         <span>名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入名称" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
+          搜索
+        </el-button>
+        <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <btn-group/>
-      <!-- <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button> -->
     </div>
 
     <el-table
@@ -63,13 +62,10 @@ import permission from '@/directive/permission/permission'
 import companyForm from './companyForm'
 import Pagination from '@/components/Pagination'
 import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../../components/btn/components/EditBtn.vue'
-// import EditBtn from '../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'CompanyView',
-  components: { companyForm, Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { companyForm, Pagination, BtnGroup },
   directives: { waves, permission },
   emits: ['refreshSub'],
   data() {

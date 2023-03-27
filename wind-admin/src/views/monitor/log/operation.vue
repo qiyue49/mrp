@@ -9,7 +9,6 @@
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button class="filter-item" type="danger" icon="Document" @click="handleBatchDelete">删除</el-button>
       </div>
-      <btn-group/>
     </div>
     <el-table
       ref="multipleTable"
