@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <div class="filter-item">
-        <el-input v-model="listQuery.name" placeholder="请输入名称" class="filter-item" @keyup.enter="handleFilter" />
+        <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
         <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
           查询
         </el-button>
@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
+    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
       <el-table-column label="机构名称" min-width="150px">
         <template #default="{row}">
           <span>{{ row.name }}</span>

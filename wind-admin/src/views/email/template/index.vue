@@ -3,9 +3,9 @@
     <div class="filter-container">
       <div class="filter-item">
         <span>模版名称:</span>
-        <el-input v-model="listQuery.name" class="filter-item" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
+        <el-input v-model="listQuery.name" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
         <span>模版编码:</span>
-        <el-input v-model="listQuery.code" class="filter-item" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
+        <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
         <el-button class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
@@ -15,11 +15,10 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width: 100%"
-      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
+      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
     >
       <el-table-column label="模版名称">
         <template #default="scope">

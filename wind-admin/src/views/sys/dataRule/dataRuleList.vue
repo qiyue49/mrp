@@ -20,11 +20,10 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width: 100%;"
-      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
+      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
       <el-table-column label="资源编号" min-width="150px">
         <template #default="{row}">
           <span>{{ row.resourceCode }}</span>

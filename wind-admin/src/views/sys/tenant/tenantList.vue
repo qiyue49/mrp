@@ -28,7 +28,7 @@
       highlight-current-row
       class="cc"
       style="width: 100%;border: 1 solid red !important;"
-      :header-cell-style="{background:'#F4F7FC',color:'#0243A3'}">
+      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
       <el-table-column label="租户标识" min-width="150px">
         <template #default="{row}">
           <span>{{ row.tenantId }}</span>

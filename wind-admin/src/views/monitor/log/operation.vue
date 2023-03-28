@@ -15,10 +15,9 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      border
       fit
       highlight-current-row
-      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
+      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />

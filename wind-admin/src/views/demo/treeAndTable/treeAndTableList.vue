@@ -3,7 +3,7 @@
     <el-col :span="6">
       <div>
         <div class="filter-container left-tree-list">
-          <el-table :data="treeList" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}" @row-click="getListByTreeId">
+          <el-table :data="treeList" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}" @row-click="getListByTreeId">
             <el-table-column prop="name" label="名称" sortable />
           </el-table>
         </div>
@@ -30,9 +30,9 @@
           :key="tableKey"
           v-loading="listLoading"
           :data="list"
-          border
           fit
           highlight-current-row
+          :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
           style="width: 100%;">
           <el-table-column label="部门名称" min-width="150px">
             <template #default="{row}">

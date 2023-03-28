@@ -41,7 +41,7 @@ body {
 
 .el-table {
   width: 100%;
-  border: none !important;
+  // border: none !important;
   .el-table__cell {
     text-align: center;
   }
@@ -78,10 +78,10 @@ body {
     // margin-bottom: 10px;
   }
   .filter-item:not(.el-button) {
-    margin-left: 30px;
+    // margin-left: 30px;
     span {
       font-size: 14px;
-      margin-right: 12px;
+      margin: 0 12px;
     }
     div {
       width: 200px;
@@ -190,4 +190,31 @@ body {
     margin: 0 !important;
   }
 }
-
+.is-plain{
+  background-color: #fff;
+}
+:deep(header){
+  background-color: red !important;
+}
+:deep(.el-dialog__header){
+  background-color: red !important;
+}
+:global(.el-dialog__header){
+  background-color: red !important;
+  margin: 0;
+}
+.el-dialog{
+  border-radius: 10px !important;
+}
+.dialog-title .el-dialog__header {
+  border-radius: 10px 10px 0 0;
+  background-color: #F1F5FF;
+  margin-right: 0px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 5px solid #1762F2;
+  color: #282828;
+  .el-dialog__title, .el-dialog__headerbtn .el-dialog__close {
+    color: #C8CCD7;
+  }
+}
