@@ -357,7 +357,7 @@ export default {
             this.$message.success('更新成功')
             this.getList()
           } else {
-            this.$message.error(data.errmsg)
+            this.$message.error(data.msg)
           }
         })
       })
@@ -371,10 +371,10 @@ export default {
         runAJobNow(row).then(response => {
           const data = response.data
           if (data.code === 0) {
-            this.$message.success('更新成功')
+            this.$message.success('执行成功')
             this.getList()
           } else {
-            this.$message.error(data.errmsg)
+            this.$message.error(data.msg)
           }
         })
       })

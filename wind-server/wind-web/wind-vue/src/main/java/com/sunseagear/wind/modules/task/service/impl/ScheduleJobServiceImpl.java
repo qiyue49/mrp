@@ -38,6 +38,9 @@ public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper,
             if (scheduleJob == null) {
                 return;
             }
+            if (scheduleJob.getJobStatus().equals(ScheduleJob.STATUS_DISABLE)) {
+                return;
+            }
             quartzManager.updateJobCron(ScheduleJobUtils.entityToData(scheduleJob));
             super.insertOrUpdate(scheduleJob);
         } catch (SchedulerException e) {

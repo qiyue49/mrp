@@ -246,6 +246,6 @@ public class QuartzManager {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-        scheduler.deleteJobs(java.util.Arrays.asList((JobKey[])jobKeys.toArray()));
+        scheduler.deleteJobs(jobKeys.stream().toList());
     }
 }
