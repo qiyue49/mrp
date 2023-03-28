@@ -18,6 +18,9 @@ import java.util.Date;
 @TableName("task_schedule_job")
 public class ScheduleJob extends AbstractEntity<String> {
 
+    public static final String STATUS_ENABLE = "1";
+    public static final String STATUS_DISABLE = "0";
+
     /**
      * 任务主键
      */

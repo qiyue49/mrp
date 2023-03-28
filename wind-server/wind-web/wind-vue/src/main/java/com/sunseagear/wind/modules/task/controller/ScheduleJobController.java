@@ -117,6 +117,13 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @Log(logType = LogType.OTHER, title = "任务更新")
     @PreAuthorize("hasAuthority('task:schedule:job:refresh:job')")
     public String updateCron(@PathVariable("id") String id) {
+        ScheduleJob scheduleJob = scheduleJobService.selectById(id);
+        if (scheduleJob == null) {
+            return Response.failJson("出错了 定时任务未找到");
+        }
+        if (scheduleJob.getJobStatus().equals(ScheduleJob.STATUS_DISABLE)) {
+            return Response.failJson("该定时任务未开启");
+        }
         scheduleJobService.updateCron(id);
         return Response.ok("任务更新成功");
     }
@@ -126,6 +133,12 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PreAuthorize("hasAuthority('task:schedule:job:change:job:status')")
     public String runAJobNow(ScheduleJob scheduleJob, HttpServletRequest request,
                              HttpServletResponse response) {
+        if (scheduleJob == null) {
+            return Response.failJson("出错了");
+        }
+        if (scheduleJob.getJobStatus().equals(ScheduleJob.STATUS_DISABLE)) {
+            return Response.failJson("请开启该定时任后在执行");
+        }
         scheduleJobService.runAJobNow(scheduleJob.getId());
         return Response.ok("任务启动成功");
     }
