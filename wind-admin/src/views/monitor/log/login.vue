@@ -12,8 +12,8 @@
             :value="item.value"
           />
         </el-select>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+        <el-button :loading="downloadLoading" class="filter-item" type="warning" icon="Upload" plain @click="handleDownload">导出</el-button>
         <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
       </div>
     </div>
@@ -74,9 +74,8 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <!-- <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-          </el-button> -->
-          <delete-btn @click="handleDelete(scope.row)"/>
+          <el-button size="small" type="error" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -89,12 +88,10 @@
 import { fetchLoginLogList, deleteLoginLog, batchDeleteLoginLog, exportLoginLog } from '@/api/monitor/log/login'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'ScheduleJobLogList',
-  components: { Pagination, BtnGroup, DeleteBtn },
+  components: { Pagination },
   directives: {
     waves
   },

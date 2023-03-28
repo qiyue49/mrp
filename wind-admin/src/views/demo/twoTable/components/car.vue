@@ -4,8 +4,8 @@
       <div class="filter-container">
         <div class="filter-item">
           <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入品牌名称或编码" @keyup.enter="handleFilter" />
-          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-          <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+          <el-button class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
         </div>
       </div>
 
@@ -32,11 +32,9 @@
         />
         <el-table-column label="操作" width="180">
           <template #default="scope">
-            <!-- <el-button v-permission="['test:car:car:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button v-permission="['test:car:car:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button> -->
-            <edit-btn v-permission="['test:car:car:detail']" @click="handleUpdate(scope.row)"/>
-            <delete-btn v-permission="['test:car:car:delete']" @click="handleDelete(scope.row)"/>
+            <el-button v-permission="['test:car:car:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['test:car:car:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -54,16 +52,13 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import carForm from './carForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'Car',
   directives: {
     waves, permission
   },
-  components: { Pagination, carForm, BtnGroup, EditBtn, DeleteBtn },
+  components: { Pagination, carForm },
   emits: ['refreshCarModel'],
   data() {
     return {

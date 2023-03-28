@@ -5,9 +5,9 @@
         <span>内容标题:</span>
         <el-input v-model="listQuery.newsContentTitle" placeholder="请输入内容标题" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+          查询
         </el-button>
-        <el-button v-permission="['biz:newsContent:newscontent:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        <el-button v-permission="['biz:newsContent:newscontent:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -48,14 +48,12 @@
       </el-table-column>
       <el-table-column label="操作" min-width="230px">
         <template #default="{row}">
-          <!-- <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:newsContent:newscontent:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['biz:newsContent:newscontent:delete']" size="small" plain icon="Delete" type="error" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <edit-btn v-permission="['biz:newsContent:newscontent:update']" @click="handleUpdate(row)"/>
-          <delete-btn v-permission="['biz:newsContent:newscontent:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,11 +71,9 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import newsContentForm from './newsContentForm'
 import Pagination from '@/components/Pagination'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'NewsContentList',
-  components: { newsContentForm, Pagination, BtnGroup },
+  components: { newsContentForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

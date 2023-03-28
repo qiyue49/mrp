@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button class="filter-item" icon="Plus" type="danger" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -56,14 +56,12 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <edit-btn v-permission="['test:expandtable:expandtable:detail']" @click="handleUpdate(row)"/>
-          <delete-btn v-permission="['test:expandtable:expandtable:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,10 +79,9 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import expandTableForm from './expandTableForm'
 import Pagination from '@/components/Pagination'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
 export default {
   name: 'ExpandTableList',
-  components: { expandTableForm, Pagination, BtnGroup },
+  components: { expandTableForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-waves v-permission="['biz:company:company:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -34,14 +34,12 @@
       </el-table-column>
       <el-table-column label="操作" min-width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['biz:company:company:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['biz:company:company:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
             编辑
-          </el-button> -->
-          <edit-btn v-permission="['biz:company:company:update']" @click="handleUpdate(row)"/>
-          <!-- <el-button v-permission="['biz:company:company:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
+          </el-button>
+          <el-button v-permission="['biz:company:company:delete']" plain type="error" icon="Delete" size="small" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <delete-btn v-permission="['biz:company:company:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -58,10 +56,9 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import productForm from './productForm'
 import Pagination from '@/components/Pagination'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
 export default {
   name: 'ProductView',
-  components: { productForm, Pagination, BtnGroup },
+  components: { productForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

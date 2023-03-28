@@ -15,9 +15,9 @@
             :value="item.value" />
         </el-select>
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+          查询
         </el-button>
-        <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        <el-button v-permission="['biz:event:event:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -61,14 +61,12 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['biz:event:event:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['biz:event:event:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:event:event:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['biz:event:event:delete']" plain type="error" size="small" icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <edit-btn v-permission="['biz:event:event:update']" @click="handleUpdate(row)"/>
-          <delete-btn v-permission="['biz:event:event:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -86,11 +84,9 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import eventForm from './eventForm'
 import Pagination from '@/components/Pagination'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'EventList',
-  components: { eventForm, Pagination, BtnGroup },
+  components: { eventForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

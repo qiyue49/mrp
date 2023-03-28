@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-permission="['biz:department:department:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['biz:department:department:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -24,14 +24,12 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['biz:department:department:update']" type="primary" text size="small" icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['biz:department:department:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
             编辑
-          </el-button> -->
-          <edit-btn v-permission="['biz:department:department:update']" @click="handleUpdate(row)"/>
-          <!-- <el-button v-permission="['biz:department:department:delete']" type="danger" text size="small" icon="Delete" @click="handleDelete(row)">
+          </el-button>
+          <el-button v-permission="['biz:department:department:delete']" plain type="error" icon="Delete" size="small" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <delete-btn v-permission="['biz:department:department:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -46,11 +44,9 @@ import { deleteDepartment, fetchDepartmentList } from '@/api/biz/department/depa
 import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import departmentForm from './departmentForm'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'Department',
-  components: { departmentForm, BtnGroup },
+  components: { departmentForm },
   directives: { waves, permission },
   data() {
     return {

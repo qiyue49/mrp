@@ -6,8 +6,8 @@
         <el-input v-model="listQuery.requestUri" placeholder="请输入URI" />
         <span>操作IP:</span>
         <el-input v-model="listQuery.operationIp" placeholder="请输入操作IP" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" type="danger" icon="Document" @click="handleBatchDelete">删除</el-button>
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+        <el-button class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
       </div>
     </div>
     <el-table
@@ -70,8 +70,7 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <!-- <el-button size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
-          <delete-btn @click="handleDelete(scope.row)"/>
+          <el-button size="small" type="error" plain icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -84,12 +83,10 @@
 import { fetchOperationLogList, deleteOperationLog, batchDeleteOperationLog } from '@/api/monitor/log/operation'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-import DeleteBtn from '../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'ScheduleJobLogList',
-  components: { Pagination, BtnGroup, DeleteBtn },
+  components: { Pagination },
   directives: {
     waves
   },

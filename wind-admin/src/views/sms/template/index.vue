@@ -6,8 +6,8 @@
         <el-input v-model="listQuery.name" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
         <span>模版编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
-        <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button v-permission="['sms:template:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+        <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+        <el-button v-permission="['sms:template:add']" class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
     </div>
 
@@ -43,11 +43,9 @@
       </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <!-- <el-button v-permission="['sms:template:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sms:template:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-          </el-button> -->
-          <edit-btn v-permission="['sms:template:detail']" @click="handleUpdate(scope.row)"/>
-          <delete-btn v-permission="['sms:template:delete']" @click="handleDelete(scope.row)"/>
+          <el-button v-permission="['sms:template:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['sms:template:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -94,11 +92,9 @@ import { fetchList, createTemplate, deleteTemplate, updateTemplate } from '@/api
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'SysTemplateList',
-  components: { Pagination, BtnGroup },
+  components: { Pagination },
   directives: {
     waves, permission
   },

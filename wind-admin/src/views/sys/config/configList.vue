@@ -6,10 +6,10 @@
         <el-input v-model="listQuery.name" placeholder="请输入配置名称" />
         <span>配置编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入配置编码" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
+          查询
         </el-button>
-        <el-button v-permission="['sys:config:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        <el-button v-permission="['sys:config:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -45,14 +45,12 @@
       </el-table-column>
       <el-table-column min-width="150" label="操作">
         <template #default="{row}">
-          <!-- <el-button v-permission="['sys:config:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['sys:config:update']" size="small" type="primary" icon="EditPen" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-if="!row.isSys" v-permission="['sys:config:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+          <el-button v-if="!row.isSys" v-permission="['sys:config:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <edit-btn v-permission="['sys:config:update']" @click="handleUpdate(row)"/>
-          <delete-btn v-if="!row.isSys" v-permission="['sys:config:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -69,11 +67,9 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import configForm from './configForm'
 import Pagination from '@/components/Pagination/index.vue'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'Config',
-  components: { Pagination, configForm, BtnGroup },
+  components: { Pagination, configForm },
   directives: { waves, permission },
   data() {
     return {

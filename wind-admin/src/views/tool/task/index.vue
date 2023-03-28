@@ -4,8 +4,8 @@
       <div class="filter-item">
         <span>任务名称:</span>
         <el-input v-model="listQuery.jobName" type="primary" placeholder="请输入任务名称" @keyup.enter="handleFilter" />
-        <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="Edit" @click="handleCreate">新增</el-button>
+        <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">查询</el-button>
+        <el-button v-permission="['task:schedule:job:add']" type="danger" class="filter-item" icon="Plus" @click="handleCreate">新增</el-button>
         <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="Delete" @click="handleBatchDelete">删除</el-button>
         <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="Refresh" @click="handleRefreshTask">刷新任务</el-button>
       </div>
@@ -59,16 +59,14 @@
         </template>
       </el-table-column>
 
-      <el-table-column label="操作">
+      <el-table-column min-width="300" label="操作">
         <template #default="scope">
-          <el-button v-if="scope.row.jobStatus==0" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
-          <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="primary" text size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
-          <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="primary" text icon="Refresh" @click="handleRefresh(scope.row)">刷新</el-button>
-          <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="primary" text icon="ArrowRight" @click="runAJobNow(scope.row)">执行一次</el-button>
-          <!-- <el-button v-permission="['task:schedule:job:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['task:schedule:job:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
-          <edit-btn v-permission="['task:schedule:job:detail']" @click="handleUpdate(scope.row)"/>
-          <delete-btn v-permission="['task:schedule:job:delete']" @click="handleDelete(scope.row)"/>
+          <el-button v-if="scope.row.jobStatus==0" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
+          <el-button v-if="scope.row.jobStatus==1" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
+          <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="primary" plain icon="Refresh" @click="handleRefresh(scope.row)">刷新</el-button>
+          <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="primary" plain icon="ArrowRight" @click="runAJobNow(scope.row)">执行一次</el-button>
+          <el-button v-permission="['task:schedule:job:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['task:schedule:job:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -163,11 +161,9 @@
 import { fetchScheduleList, createSchedule, deleteSchedule, batchDeleteSchedule, updateSchedule, refreshTask, refreshSchedule, changeJobStatus, runAJobNow } from '@/api/tool/task/schedule'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
 
 export default {
   name: 'SysScheduleList',
-  components: { BtnGroup },
   directives: {
     waves, permission
   },

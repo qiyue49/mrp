@@ -19,9 +19,9 @@
             <el-input v-model="listQuery.username" placeholder="请输入用户名" @keyup.enter="handleFilter" />
             <span>手机号码:</span>
             <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
-            <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-            <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-            <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+            <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+            <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
+            <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" icon="Upload" type="warning" plain @click="handleDownload">导出</el-button>
           </div>
         </div>
 
@@ -62,14 +62,12 @@
               <span>{{ scope.row.organization.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作">
+          <el-table-column min-width="350" label="操作">
             <template #default="scope">
-              <!-- <el-button v-permission="['sys:user:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-              <el-button v-permission="['sys:user:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
-              <edit-btn v-permission="['sys:user:update']" @click="handleUpdate(scope.row)"/>
-              <delete-btn v-permission="['sys:user:delete']" @click="handleDelete(scope.row)"/>
-              <el-button v-permission="['sys:user:role']" size="small" type="primary" text icon="User" @click="toAssignRoles(scope.row)">设置角色</el-button>
-              <el-button v-permission="['sys:user:change:password']" size="small" type="primary" text icon="Refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
+              <el-button v-permission="['sys:user:update']" size="small" type="primary" plain icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+              <el-button v-permission="['sys:user:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button v-permission="['sys:user:role']" size="small" type="primary" plain icon="User" @click="toAssignRoles(scope.row)">设置角色</el-button>
+              <el-button v-permission="['sys:user:change:password']" size="small" type="primary" plain icon="Refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -118,11 +116,9 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
 import Pagination from '@/components/Pagination/index.vue'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'UserList',
-  components: { Pagination, userForm, BtnGroup },
+  components: { Pagination, userForm },
   directives: {
     waves, permission
   },

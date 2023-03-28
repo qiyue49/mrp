@@ -10,10 +10,10 @@
         <el-input v-model="listQuery.phone" placeholder="请输入电话" />
         <span>租户名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入租户名称" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
+          查询
         </el-button>
-        <el-button v-permission="['sys:tenant:add']" class="filter-item" type="danger" @click="handleCreate">
+        <el-button v-permission="['sys:tenant:add']" class="filter-item" icon="Plus" type="danger" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -56,14 +56,12 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['sys:tenant:update']" size="small" plain type="EditBtn" @click="handleUpdate(row)">
+          <el-button v-permission="['sys:tenant:update']" size="small" icon="EditPen" plain type="primary" @click="handleUpdate(row)">
             编辑
-          </el-button> -->
-          <edit-btn v-permission="['sys:tenant:update']" @click="handleUpdate(row)"/>
-          <!-- <el-button v-permission="['sys:tenant:delete']" size="small" type="DeleteBtn" class="delete-text-btn" @click="handleDelete(row)">
+          </el-button>
+          <el-button v-permission="['sys:tenant:delete']" size="small" plain type="error" icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <delete-btn v-permission="['sys:tenant:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -81,12 +79,10 @@ import waves from '@/directive/waves' // waves directive
 import permission from '@/directive/permission/permission'
 import tenantForm from './tenantForm'
 import Pagination from '@/components/Pagination'
-// import BtnGroup from '@/components/btn/BtnGroup'
-import BtnGroup from '../../../components/btn/BtnGroup.vue'
 
 export default {
   name: 'TenantList',
-  components: { tenantForm, Pagination, BtnGroup },
+  components: { tenantForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

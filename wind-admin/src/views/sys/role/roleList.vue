@@ -6,8 +6,8 @@
         <el-input v-model="listQuery.name" placeholder="请输入角色名称" @keyup.enter="handleFilter" />
         <span>角色编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入角色编码" @keyup.enter="handleFilter" />
-        <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <!-- <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button> -->
+        <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+      <el-button v-permission="['sys:role:add']" class="filter-item" icon="Plus" type="danger" @click="handleCreate">新增</el-button>
       </div>
     </div>
 
@@ -30,14 +30,12 @@
       <el-table-column min-width="200" label="操作">
         <template #default="{row}">
           <span v-if="row.tenantId === tenantId">
-            <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Setting" @click="toSetMenu(row)">设置菜单</el-button>
-            <el-button v-permission="['sys:role:update']" size="small" type="primary" text icon="Operation" @click="toSetPermission(row)">设置权限</el-button>
-            <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Finished" @click="toSetDataRule(row)">数据权限</el-button>
-            <!-- <el-button v-permission="['sys:role:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">编辑</el-button>
-            <el-button v-permission="['sys:role:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">删除
-            </el-button> -->
-            <edit-btn v-permission="['sys:role:detail']" @click="handleUpdate(row)"/>
-            <delete-btn v-permission="['sys:role:delete']" @click="handleDelete(row)"/>
+            <el-button v-permission="['sys:role:update']" size="small" type="primary" plain icon="Setting" @click="toSetMenu(row)">设置菜单</el-button>
+            <el-button v-permission="['sys:role:update']" size="small" type="primary" plain icon="Operation" @click="toSetPermission(row)">设置权限</el-button>
+            <el-button v-permission="['sys:datarule:update']" size="small" type="primary" plain icon="Finished" @click="toSetDataRule(row)">数据权限</el-button>
+            <el-button v-permission="['sys:role:detail']" size="small" type="primary" plain icon="EditPen" @click="handleUpdate(row)">编辑</el-button>
+            <el-button v-permission="['sys:role:delete']" size="small" plain type="error" @click="handleDelete(row)">删除
+            </el-button>
           </span>
         </template>
       </el-table-column>
@@ -61,11 +59,9 @@ import permission from '@/directive/permission/permission'
 import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'RoleList',
-  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList, BtnGroup },
+  components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList },
   directives: {
     waves, permission
   },

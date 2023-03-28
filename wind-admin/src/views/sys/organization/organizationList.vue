@@ -4,10 +4,10 @@
       <div class="filter-item">
         <!-- <span>名称:</span> -->
         <el-input v-model="listQuery.name" placeholder="请输入查询标题" @keyup.enter="handleFilter" />
-        <el-button v-permission="['sys:organization:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+        <el-button v-permission="['sys:organization:list']" icon="Search" v-waves class="filter-item" type="primary" @click="handleFilter">
+          查询
         </el-button>
-      <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+      <el-button v-permission="['sys:organization:add']" class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
     </div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" border :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
@@ -19,10 +19,8 @@
       </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <!-- <el-button v-permission="['sys:organization:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sys:organization:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除</el-button> -->
-          <edit-btn v-permission="['sys:organization:update']" @click="handleUpdate(scope.row)"/>
-          <delete-btn v-permission="['sys:organization:delete']" @click="handleDelete(scope.row)"/>
+          <el-button v-permission="['sys:organization:update']" size="small" type="primary" plain icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+          <el-button v-permission="['sys:organization:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -37,10 +35,9 @@ import { fetchOrganizationList, deleteOrganization } from '@/api/sys/organizatio
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import OrganizationForm from './organizationForm' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
 export default {
   name: 'OrganizationList',
-  components: { OrganizationForm, BtnGroup },
+  components: { OrganizationForm },
   directives: {
     waves, permission
   },

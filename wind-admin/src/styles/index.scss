@@ -112,5 +112,82 @@ body {
 //   content: url('../assets/img/add.svg');
 // }
 
-
+.el-button--primary.is-plain, .el-button--primary.is-text, .el-button--primary.is-link {
+  --el-button-text-color: var(--el-color-primary);
+  --el-button-bg-color: #fff;
+  --el-button-border-color: #1762F2;
+  --el-button-hover-text-color: var(--el-color-white);
+  --el-button-hover-bg-color: var(--el-color-primary);
+  --el-button-hover-border-color: var(--el-color-primary);
+  --el-button-active-text-color: var(--el-color-white);
+}
+// .el-button.el-button--primary.el-button--small.is-plain::before{
+//   content: '';
+//   margin-right: 5px;
+//   display: inline-block;
+//   width: 12px;
+//   height: 12px;
+//   background:url('../assets/img/bianji.svg');
+//   background-size:cover;
+// }
+.el-button.el-button--error.el-button--small.is-plain{
+  --el-button-text-color: var(--el-color-error);
+  --el-button-bg-color: #fff;
+  --el-button-border-color: var(--el-color-error);
+  --el-button-hover-text-color: var(--el-color-white);
+  --el-button-hover-bg-color: var(--el-color-error);
+  --el-button-hover-border-color: var(--el-color-error);
+  --el-button-active-text-color: var(--el-color-white);
+}
+// .el-button.el-button--error.el-button--small.is-plain::before{
+//   content: '';
+//   margin-right: 5px;
+//   display: inline-block;
+//   width: 12px;
+//   height: 12px;
+//   background:url('../assets/img/shanchu.svg');
+//   background-size:cover;
+// }
+.el-button--danger.is-plain, .el-button--danger.is-text, .el-button--danger.is-link {
+  --el-button-text-color: var(--el-color-danger);
+  --el-button-bg-color: #fff;
+  --el-button-border-color: #D34D25;
+  --el-button-hover-text-color: var(--el-color-white);
+  --el-button-hover-bg-color: var(--el-color-danger);
+  --el-button-hover-border-color: var(--el-color-danger);
+  --el-button-active-text-color: var(--el-color-white);
+}
+// .el-button.el-button--warning::before{
+//   content: '';
+//   margin-right: 5px;
+//   display: inline-block;
+//   width: 14px;
+//   height: 14px;
+//   background:url('../assets/img/daoru.svg');
+//   background-size:cover;
+// }
+// .el-button.el-button--warning.is-plain::before{
+//   content: '';
+//   margin-right: 5px;
+//   display: inline-block;
+//   width: 14px;
+//   height: 14px;
+//   background:url('../assets/img/daochu.svg');
+//   background-size:cover;
+// }
+// .el-button.el-button--danger::before{
+//   content: '';
+//   margin-right: 5px;
+//   display: inline-block;
+//   width: 14px;
+//   height: 14px;
+//   background:url('../assets/img/add.svg');
+//   background-size:cover;
+// }
+.el-button{
+  // width: 20px;
+  span{
+    margin: 0 !important;
+  }
+}
 

@@ -4,15 +4,15 @@
       <div class="filter-item">
         <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+          查询
         </el-button>
-        <el-button v-permission="['test:table:table:add']" class="filter-item" type="danger" icon="Plus" @click="handleCreate">
+        <el-button v-permission="['test:table:table:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
           新增
         </el-button>
-        <el-button v-waves :loading="downloadLoading" class="filter-item" type="warning" icon="Download" @click="handleImport">
+        <el-button v-waves :loading="downloadLoading" class="filter-item" icon="Download" type="warning" @click="handleImport">
           导入
         </el-button>
-        <el-button v-waves :loading="downloadLoading" class="filter-item" type="warning" plain icon="Download" @click="handleExport">
+        <el-button v-waves :loading="downloadLoading" class="filter-item" icon="Upload" type="warning" plain @click="handleExport">
           导出
         </el-button>
       </div>
@@ -67,25 +67,23 @@
           </el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="操作" width="230">
+      <el-table-column label="操作" min-width="300">
         <template #default="{row}">
-          <!-- <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" icon="EditPen" plain @click="handleUpdate(row)">
             编辑
-          </el-button> -->
-          <edit-btn v-permission="['test:table:table:detail']" @click="handleUpdate(row)"/>
-          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdateView(row)">
+          </el-button>
+          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" plain icon="EditPen" @click="handleUpdateView(row)">
             编辑(新页签)
           </el-button>
-          <el-button v-if="row.status!='published'" size="small" type="success" @click="handleModifyStatus(row,'published')">
+          <el-button v-if="row.status!='published'" size="small" plain type="success" @click="handleModifyStatus(row,'published')">
             发布
           </el-button>
-          <el-button v-if="row.status!='draft'" size="small" @click="handleModifyStatus(row,'draft')">
+          <el-button v-if="row.status!='draft'" plain type="primary" size="small" @click="handleModifyStatus(row,'draft')">
             草稿
           </el-button>
-          <!-- <el-button v-permission="['test:table:table:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['test:table:table:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <delete-btn v-permission="['test:table:table:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -118,11 +116,9 @@ import Pagination from '@/components/Pagination'
 import Sortable from 'sortablejs'
 import Import from '@/components/Import/import'
 import SvgIcon from '@/components/SvgIcon/index.vue'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'ComplexTable',
-  components: { SvgIcon, Import, tableForm, Pagination, BtnGroup },
+  components: { SvgIcon, Import, tableForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

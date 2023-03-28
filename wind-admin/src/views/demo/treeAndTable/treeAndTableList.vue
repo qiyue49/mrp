@@ -17,10 +17,10 @@
             <el-input v-model="listQuery.name" placeholder="请输入部门名称" />
             <span>类型:</span>
             <el-input v-model="listQuery.type" placeholder="请输入类型" />
-            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-              搜索
+            <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
+              查询
             </el-button>
-            <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+            <el-button class="filter-item" icon="Plus" type="danger" @click="handleCreate">
               新增
             </el-button>
           </div>
@@ -51,15 +51,13 @@
           </el-table-column>
           <el-table-column label="操作" width="230">
             <template #default="{row}">
-              <!-- <el-button v-permission="['test:treeandtable:treeandtable:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+              <el-button v-permission="['test:treeandtable:treeandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
                 编辑
               </el-button>
-              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
                 删除
-              </el-button> -->
-              <edit-btn v-permission="['test:treeandtable:treeandtable:detail']" @click="handleUpdate(row)"/>
-              <delete-btn v-permission="['test:treeandtable:treeandtable:delete']" @click="handleDelete(row)"/>
-              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="danger" text icon="Delete" @click="handleall(row)">
+              </el-button>
+              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="danger" plain icon="More" @click="handleall(row)">
                 更多
               </el-button>
             </template>
@@ -81,11 +79,9 @@ import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import treeAndTableForm from './treeAndTableForm'
 import Pagination from '@/components/Pagination'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'TreeAndTableList',
-  components: { treeAndTableForm, Pagination, BtnGroup },
+  components: { treeAndTableForm, Pagination },
   directives: { waves, permission },
   data() {
     return {

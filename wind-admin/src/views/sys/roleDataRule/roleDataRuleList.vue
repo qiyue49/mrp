@@ -10,10 +10,10 @@
           <span>数据权限名称:</span>
           <el-input v-model="listQuery.scopeName" placeholder="请输入数据权限名称" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
+          查询
         </el-button>
-        <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        <el-button v-permission="['sys:datarule:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -54,14 +54,12 @@
         </el-table-column>
         <el-table-column label="操作" width="230">
           <template #default="{row}">
-            <!-- <el-button v-permission="['sys:datarule:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+            <el-button v-permission="['sys:datarule:update']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
               编辑
             </el-button>
-            <el-button v-permission="['sys:datarule:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+            <el-button v-permission="['sys:datarule:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
               删除
-            </el-button> -->
-            <edit-btn v-permission="['sys:datarule:update']" @click="handleUpdate(row)"/>
-            <delete-btn v-permission="['sys:datarule:delete']" @click="handleDelete(row)"/>
+            </el-button>
           </template>
         </el-table-column>
       </el-table>

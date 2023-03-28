@@ -5,8 +5,8 @@
         <div class="filter-item">
           <span>分组名称或编码:</span>
           <el-input v-model="listQuery.keyword" placeholder="请输入分组名称或编码" @keyup.enter="handleFilter" />
-          <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-          <el-button v-permission="['sys:dict:group:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+          <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+          <el-button v-permission="['sys:dict:group:add']" class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
         </div>
       </div>
 
@@ -26,11 +26,9 @@
         <el-table-column prop="remarks" label="备注" width="160" />
         <el-table-column label="操作" width="180">
           <template #default="scope">
-            <!-- <el-button v-permission="['sys:dict:group:update']" size="small" type="primary" text icon="Edit" @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button v-permission="['sys:dict:group:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button> -->
-            <edit-btn v-permission="['sys:dict:group:update']" @click="handleUpdate(scope.row)"/>
-            <delete-btn v-permission="['sys:dict:group:delete']" @click="handleDelete(scope.row)"/>
+            <el-button v-permission="['sys:dict:group:update']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['sys:dict:group:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -65,13 +63,10 @@ import { fetchDictGroupList, createDictGroup, deleteDictGroup, updateDictGroup }
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-import EditBtn from '../../../../components/btn/components/EditBtn.vue'
-import DeleteBtn from '../../../../components/btn/components/DeleteBtn.vue'
 
 export default {
   name: 'SysDictGroupComponent',
-  components: { Pagination, BtnGroup, EditBtn, DeleteBtn },
+  components: { Pagination },
   directives: {
     waves, permission
   },

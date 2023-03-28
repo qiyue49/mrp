@@ -3,10 +3,10 @@
     <div class="filter-container">
       <div class="filter-item">
         <el-input v-model="listQuery.name" placeholder="请输入名称" class="filter-item" @keyup.enter="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          搜索
+        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
+          查询
         </el-button>
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        <el-button class="filter-item" icon="Plus" type="danger" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -30,14 +30,12 @@
       </el-table-column>
       <el-table-column label="操作" width="230">
         <template #default="{row}">
-          <!-- <el-button v-permission="['test:treetable:treetable:detail']" size="small" type="primary" text icon="Edit" @click="handleUpdate(row)">
+          <el-button v-permission="['test:treetable:treetable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['test:treetable:treetable:delete']" size="small" type="danger" text icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['test:treetable:treetable:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
             删除
-          </el-button> -->
-          <edit-btn v-permission="['test:treetable:treetable:detail']" @click="handleUpdate(row)"/>
-          <delete-btn v-permission="['test:treetable:treetable:delete']" @click="handleDelete(row)"/>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -52,11 +50,9 @@ import { deleteTreeTable, fetchTreeTableList } from '@/api/demo/treeTable/treeTa
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // waves directive
 import treeTableForm from './treeTableForm'
-import BtnGroup from '@/components/btn/BtnGroup.vue'
-
 export default {
   name: 'TreeTable',
-  components: { treeTableForm, BtnGroup },
+  components: { treeTableForm },
   directives: { waves, permission },
   data() {
     return {
