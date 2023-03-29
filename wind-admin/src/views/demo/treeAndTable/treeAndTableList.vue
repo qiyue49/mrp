@@ -1,10 +1,10 @@
 <template>
-  <el-row>
+  <el-row :gutter="20">
     <el-col :span="6">
       <div>
         <div class="filter-container left-tree-list">
-          <el-table :data="treeList" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}" @row-click="getListByTreeId">
-            <el-table-column prop="name" label="名称" sortable />
+          <el-table :data="treeList" row-key="id" lazy :load="load" highlight-current-row @row-click="getListByTreeId">
+            <el-table-column style="color:red;" prop="name" label="名称" sortable />
           </el-table>
         </div>
       </div>
@@ -57,7 +57,7 @@
               <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
                 删除
               </el-button>
-              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="danger" plain icon="More" @click="handleall(row)">
+              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="warning" plain icon="More" @click="handleall(row)">
                 更多
               </el-button>
             </template>
@@ -166,3 +166,96 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+
+.filter-container.left-tree-list{
+  :deep(.current-row) {
+  color: #fff !important;
+  background-color: #1762F2 !important;
+  position: relative;
+  .el-table__placeholder::before{
+    content: url('../../../assets/img/baiyuan.svg');
+  }
+}
+// :deep(.current-row::before) {
+//   content: '';
+//   position: absolute;
+//   width: 10px;
+//   height: 10px;
+//   background-color: #fff;
+// }
+:deep(.el-table__placeholder::before){
+content: url('../../../assets/img/huiyuan.svg');
+}
+:deep(.el-table__expand-icon){
+  .el-icon{
+    position: relative;
+  }
+  .el-icon::before{
+    position: absolute;
+    content: url('../../../assets/img/fkyou.svg');
+    // width: 15px;
+  //   content: '';
+  // margin-right: 5px;
+  // display: inline-block;
+  // width: 20px;
+  // height: 20px;
+  // background:url('../../../assets/img/fkyou.svg');
+  // background-size:50%;
+  }
+}
+.el-table__body tr.current-row > td.el-table__cell{
+  background-color: #1762F2 !important;
+  position: relative;
+}
+:deep(.el-table__body tr.current-row > td.el-table__cell) {
+    background-color: #1762F2 !important;
+}
+:deep(.el-table__body tr.current-row>td.el-table__cell) {
+    background-color: #1762F2 !important;
+}
+:deep(.el-table__body tr.current-row > td.el-table__cell::before){
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 6px;
+  height: 40px;
+  top: 0;
+  // color: ;
+  background-color: #FFC700;
+}
+.el-table{
+  border: none !important;
+}
+// .el-table:not(:has(.current-row)) {
+//     --el-table-border-color: var(--el-border-color-lighter);
+//     --el-table-border: 1px solid var(--el-table-border-color);
+//     --el-table-text-color: var(--el-text-color-regular);
+//     --el-table-header-text-color: var(--el-text-color-secondary);
+//     --el-table-row-hover-bg-color: var(--el-fill-color-light);
+//     --el-table-current-row-bg-color: var(--el-color-primary-light-9);
+//     --el-table-header-bg-color: var(--el-bg-color);
+//     --el-table-fixed-box-shadow: var(--el-box-shadow-light);
+//     --el-table-bg-color: var(--el-fill-color-blank);
+//     --el-table-tr-bg-color: var(--el-fill-color-blank);
+//     --el-table-expanded-cell-bg-color: var(--el-fill-color-blank);
+//     --el-table-fixed-left-column: inset 10px 0 10px -10px rgba(0, 0, 0, 0.15);
+//     --el-table-fixed-right-column: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+// }
+  .el-table:has(> .current-row) {
+    --el-table-border-color: var(--el-border-color-lighter);
+    --el-table-border: 1px solid var(--el-table-border-color);
+    --el-table-text-color: var(--el-text-color-regular);
+    --el-table-header-text-color: var(--el-text-color-secondary);
+    --el-table-row-hover-bg-color: #1762F2;
+    --el-table-current-row-bg-color: #1762F2;
+    --el-table-header-bg-color: var(--el-bg-color);
+    --el-table-fixed-box-shadow: var(--el-box-shadow-light);
+    --el-table-bg-color: var(--el-fill-color-blank);
+    --el-table-tr-bg-color: var(--el-fill-color-blank);
+    --el-table-expanded-cell-bg-color: var(--el-fill-color-blank);
+    --el-table-fixed-left-column: inset 10px 0 10px -10px rgba(0, 0, 0, 0.15);
+    --el-table-fixed-right-column: inset -10px 0 10px -10px rgba(0, 0, 0, 0.15);
+}
+}
+</style>

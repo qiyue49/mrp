@@ -55,23 +55,23 @@ export default {
  :deep(.el-sub-menu.is-active > .el-sub-menu__title) {
   background-color: #1762F2 !important;
    border-radius: 10px;
-   position: relative;
+  //  position: relative;
    color: #fff;
    height: 40px;
    z-index: 10;
    width: 170px;
-   display: flex;
-   align-items: center;
+  //  display: flex;
+  //  align-items: center;
   }
- :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
-  content: url(../../../assets/img/sanjiao-xia.svg);
-  background-color: transparent !important;
-  //  position: relative;
-   color: #fff;
-   z-index: 10;
-   height: 55px;
-   margin-left: 30px;
-  }
+//  :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
+//   content: url(../../../assets/img/sanjiao-xia.svg);
+//   background-color: transparent !important;
+//   //  position: relative;
+//    color: #fff;
+//    z-index: 10;
+//    height: 55px;
+//    margin-left: 30px;
+//   }
 //  :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
 //   content: 's';
 //    position: absolute;
@@ -81,8 +81,8 @@ export default {
 //    height: 40px;
 //   }
  :deep(.el-menu-item.is-active) {
-   color: #0243A3;
-   background-color: #F3F5F8;
+   color: #1762F2;
+   background-color: #ffffff;
    height: 40px;
   //  display: block;
   //  padding-left: 0;
@@ -107,35 +107,38 @@ export default {
 //   //  background-color: #F5C265;
 //    height: 40px;
 //   }
- :deep(.el-menu-item.is-active::before) {
-   content: url(../../../assets/img/daohang1.png);
-   position: absolute;
-   left: -28px;
-   top: -10px;
-   z-index: 5;
-   color: #0243A3;
-  //  background-color: #F5C265;
-  //  height: 40px;
-  }
+//  :deep(.el-menu-item.is-active::before) {
+//    content: url(../../../assets/img/shuxian2.png);
+//    position: absolute;
+//   //  left: -28px;
+//   //  top: -200px;
+//   top: -48px;
+//   left: 42px;
+//    z-index: 5;
+//    color: #0243A3;
+//   //  background-color: #F5C265;
+//   //  height: 40px;
+//   }
   :deep(.el-menu.el-menu--inline){
     // padding-right: 20px !important;
     // padding-right: 20px !important;
   }
-  :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
-    content: url(../../../assets/img/daohang2.png);
-    overflow: hidden;
-   position: absolute;
-    position: absolute;
-    left: -60px;
-  }
-  :deep(.el-menu.el-menu--inline > .el-menu-item ::after){
-    content: url(../../../assets/img/shuxian.svg);
-   position: absolute;
-    width: 0;
-    height: 36px;
-    position: absolute;
-    left: -80px;
-  }
+  // :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
+  //   content: url(../../../assets/img/shuxian1.png);
+  //   overflow: hidden;
+  //  position: absolute;
+  //   // position: absolute;
+  //   // left: -60px;
+  // }
+  // :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
+  //   content: url(../../../assets/img/shuxian1.png);
+  //  position: absolute;
+  //   // width: 0;
+  //   // height: 36px;
+  //   position: absolute;
+  //   // left: -80px;
+  //   top: -50px;
+  // }
   :deep(.el-menu.el-menu--inline > .el-menu-item > span){
     padding-left: 40px !important;
     // padding-right: 20px !important;
@@ -167,6 +170,9 @@ export default {
    position: relative;
    color: #fff !important;
    margin-right: 20px;
+}
+.el-sub-menu{
+  margin-right: 20px;
 }
 .scrollbar-left{
   margin-left: 20px;
@@ -206,6 +212,29 @@ export default {
   border-radius: 20px 0 0 20px;
 }
 }
-
+:deep(.el-sub-menu){
+  .el-menu.el-menu--inline{
+    .el-menu-item{
+      .el-icon{
+        position: relative;
+      }
+      .el-icon::before{
+        position: absolute;
+        top: -50px;
+        content: url(../../../assets/img/shuxian1.png);
+      }
+    }
+    .el-menu-item.is-active{
+      .el-icon{
+        position: relative;
+      }
+      .el-icon::before{
+        position: absolute;
+        top: -50px;
+        content: url(../../../assets/img/shuxian2.png);
+      }
+    }
+  }
+}
 </style>
 

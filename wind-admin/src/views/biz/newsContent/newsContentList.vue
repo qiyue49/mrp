@@ -23,7 +23,7 @@
       style="width: 100%;"
       :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
     >
-      <el-table-column label="内容标题" min-width="150px">
+      <el-table-column show-overflow-tooltip label="内容标题" width="150px">
         <template #default="{row}">
           <span>{{ row.newsContentTitle }}</span>
         </template>
@@ -38,10 +38,10 @@
           <span>{{ parseTime( row.newsReleaseTime, '{y}-{m}-{d}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="相关图片" min-width="150px">
+      <el-table-column class-name="imgflx" label="相关图片" min-width="150px">
         <template #default="{row}">
           <div v-for="(img,index) in row.img" :key="index">
-            <el-image :src="img" :preview-src-list="row.img" style="width: 75px; height: 75px" />
+            <el-image class="imgs" :src="img" :preview-src-list="row.img" style="width: 75px; height: 75px" />
           </div>
         </template>
       </el-table-column>
@@ -104,6 +104,7 @@ export default {
     getList() {
       this.listLoading = true
       fetchNewsContentList(this.listQuery).then(response => {
+        console.log('列表', response)
         this.list = response.data.data
         this.list.forEach(item => {
           if (item.img !== undefined && item.img !== '') {
@@ -143,6 +144,21 @@ export default {
   }
 }
 </script>
-<style scoped>
-
+<style lang="scss" scoped>
+.imgs{
+  border-radius: 10px;
+}
+.imgflx{
+  .cell{
+    display: flex;
+    div:not(:first-child){
+       margin-left: 10px;
+      }
+    div{
+      // width: 75px;
+      // height: 75px;
+      display: inline-block;
+    }
+  }
+}
 </style>

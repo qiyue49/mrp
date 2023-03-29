@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="f3">
-      查看数据详情
+      查 看 数 据 详 情
       <!-- <span>查看数据详情</span> -->
     </div>
   </div></template>
@@ -67,17 +67,17 @@ export default {
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: 'rgba(245, 194, 101, 0.41)'
+                color: 'rgba(255, 199, 0, 0.41)'
               }, {
                 offset: 1,
-                color: 'rgba(245, 194, 101, 0.02)'
+                color: 'rgba(249, 196, 81, 0)'
               }])
             },
             itemStyle: {
               normal: {
-                color: '#F5C265', // 改变折线点的颜色
+                color: '#FFC700', // 改变折线点的颜色
                 lineStyle: {
-                  color: '#F5C265' // 改变折线颜色
+                  color: '#FFC700' // 改变折线颜色
                 }
               }
             }

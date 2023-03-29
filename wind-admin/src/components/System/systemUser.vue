@@ -3,7 +3,7 @@
     <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
       <el-button slot="append" icon="Search" @click="show" />
     </el-input>
-    <el-dialog v-model="dialogFormVisible" title="选择用户" destroy-on-close append-to-body>
+    <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" title="选择用户" destroy-on-close append-to-body>
       <div>
         <div class="filter-container">
           <el-input v-model="listQuery.realname" class="filter-item" placeholder="请输入姓名" @keyup.enter="handleFilter" />

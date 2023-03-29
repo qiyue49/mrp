@@ -35,7 +35,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 :deep(.elcard){
-    // background-color: #F3F5F8;
+    background-color: #F3F5F8;
   }
 </style>
 

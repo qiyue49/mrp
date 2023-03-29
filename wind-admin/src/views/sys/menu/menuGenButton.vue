@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="generateButtonDialogFormVisible" title="生成按钮" width="60%" :close-on-click-modal="false">
+  <el-dialog v-model="generateButtonDialogFormVisible" custom-class="dialog-title" title="生成按钮" width="60%" :close-on-click-modal="false">
     <el-form ref="generateButtonDataForm" :rules="generateButtonRules" :model="generateButtonTemp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
       <el-form-item label="父级权限" prop="parentPermission">
         <el-input v-model="generateButtonTemp.parentPermission" />

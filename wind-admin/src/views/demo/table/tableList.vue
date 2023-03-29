@@ -51,7 +51,7 @@
       </el-table-column>
       <el-table-column label="重要程度" min-width="150px">
         <template #default="scope">
-          <span>☆☆☆☆☆☆☆</span>
+          <span v-for="item in scope.row.level" :key="item">☆</span>
         </template>
       </el-table-column>
       <el-table-column label="阅读数" min-width="95">
@@ -75,7 +75,7 @@
           <el-button v-permission="['test:table:table:detail']" size="small" type="primary" plain icon="EditPen" @click="handleUpdateView(row)">
             编辑(新页签)
           </el-button>
-          <el-button v-if="row.status!='published'" size="small" plain type="success" @click="handleModifyStatus(row,'published')">
+          <el-button v-if="row.status!='published'" size="small" plain type="warning" @click="handleModifyStatus(row,'published')">
             发布
           </el-button>
           <el-button v-if="row.status!='draft'" plain type="primary" size="small" @click="handleModifyStatus(row,'draft')">
@@ -146,7 +146,7 @@ export default {
   methods: {
     statusFilter(status) {
       const statusMap = {
-        published: 'success',
+        published: 'info',
         draft: 'info',
         deleted: 'danger'
       }
@@ -155,6 +155,7 @@ export default {
     getList() {
       this.listLoading = true
       fetchTableList(this.listQuery).then(response => {
+        console.log('综合表格', response)
         this.list = response.data.data
         this.total = response.data.total
         this.setSort()

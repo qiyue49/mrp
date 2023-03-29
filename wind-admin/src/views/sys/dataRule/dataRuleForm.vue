@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false" append-to-body>
+  <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title" :close-on-click-modal="false" append-to-body>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
       <el-form-item label="数据权限名称" prop="scopeName">
         <el-input v-model="temp.scopeName" />

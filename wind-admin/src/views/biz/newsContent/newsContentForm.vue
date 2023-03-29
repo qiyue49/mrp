@@ -1,9 +1,9 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px">
       <el-row :gutter="40">
         <el-col :span="24">
-          <el-form-item label="内容标题" prop="newsContentTitle">
+          <el-form-item label="标题名称" prop="newsContentTitle">
             <el-input v-model="temp.newsContentTitle" />
           </el-form-item>
         </el-col>
@@ -145,6 +145,7 @@ export default {
       })
       getNewsContent(id).then(response => {
         if (response.data.code === 0) {
+          console.log('回显数据', response)
           this.temp = response.data.data
         } else {
           this.dialogFormVisible = false
@@ -171,3 +172,36 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+:deep(.el-form-item){
+  display: flex;
+  flex-direction: column;
+}
+:deep(.tinymce-container){
+  width: 100% !important;
+}
+:deep(.el-input__wrapper){
+  border: 1px solid #E7ECF3;
+  // border-radius: 20px;
+}
+:deep(.el-input){
+  // border: 5px solid red;
+  // border-radius: 20px;
+}
+// :deep(.el-input__inner){
+//   border: 5px solid red;
+//   border-radius: 20px;
+// }
+// *{
+//   border-color: red !important;
+// }
+// :deep(.el-input){
+//   .el-input__wrapper{
+//     input{
+
+//       border-color: red !important;
+//     }
+
+//   }
+// }
+</style>

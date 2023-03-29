@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="title">
+  <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="margin-left:50px;margin-right:50px;">
       <el-form-item label="上级部门" prop="parentIds">
         <el-cascader

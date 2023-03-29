@@ -91,7 +91,7 @@ export default {
             barWidth: 15,
             itemStyle: {
               normal: {
-                color: '#0243A3',
+                color: '#1762F2',
                 barBorderRadius: [30, 30, 0, 0]
               }
             },
@@ -110,7 +110,7 @@ export default {
             barWidth: 15,
             itemStyle: {
               normal: {
-                color: '#C24229',
+                color: '#D34D25',
                 barBorderRadius: [30, 30, 0, 0]
               }
             },
@@ -132,7 +132,7 @@ export default {
             showSymbol: false,
             itemStyle: {
               normal: {
-                color: '#FFBF49',
+                color: '#FFC700',
                 lineStyle: {
                   width: 3
                 }

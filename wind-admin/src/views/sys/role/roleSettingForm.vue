@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormMenuVisible" title="设置权限" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormMenuVisible" custom-class="dialog-title" title="设置权限" :close-on-click-modal="false">
     <el-form ref="dataForm" :model="menuTemp" label-position="left" label-width="120px">
       <el-form-item label="操作权限">
         <el-scrollbar style="height: 60vh">
