@@ -12,6 +12,7 @@
       <el-form>
         <el-row :gutter="20">
           <el-input v-model="name" suffix-icon="Search" placeholder="请输入图标名称" @input="filterIcons"/>
+          <span @click="cc">xxxxxxxxxxx</span>
           <el-scrollbar height="400px" style="margin-top:20px; width: 100%">
             <el-row>
               <el-col
@@ -57,6 +58,9 @@ export default {
     }
   },
   methods: {
+    cc() {
+      console.log('图标', this.iconList)
+    },
     show() {
       this.iconFormVisible = true
     },

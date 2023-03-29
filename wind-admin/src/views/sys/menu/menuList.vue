@@ -9,7 +9,7 @@
       </div>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" row-key="id" border lazy :load="load" :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}">
+    <el-table v-loading="listLoading" :data="list" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
       <el-table-column ming-width="150" label="名称">
         <template #default="scope">
           <span>{{ scope.row.name }}</span>

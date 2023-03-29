@@ -32,7 +32,7 @@
                 <span>Jel Chibuzo</span>
                 <span class="tits">呼吸内科</span>
               </div>
-              <div>擅长看呼吸系统疾病，特别是下呼吸道疾病以</div>
+              <div style="color:#999BAF">擅长看呼吸系统疾病，特别是下呼吸道疾病以</div>
             </div>
             <span class="yu">+预约</span>
           </div>
@@ -105,10 +105,10 @@ export default {
     .title{
       // background-color: #6C99FF;
       width: 100%;
-      background-image: url("../../assets/img/blue-bg.png");
+      background-image: url("../../assets/img/lanbg.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
-      padding: 10px;
+      padding: 20px;
       padding-bottom: 0;
       border-radius: 10px;
       color: #FFFFFF;

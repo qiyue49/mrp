@@ -3,7 +3,7 @@
     <div>
       <div class="filter-container">
         <div class="filter-item">
-          <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
+          <el-input v-model="listQuery.keyword" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
           <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
           <el-button class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
         </div>
@@ -13,11 +13,10 @@
         :key="tableKey"
         v-loading="listLoading"
         :data="list"
-        border
         fit
         highlight-current-row
         style="width: 100%"
-        :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
+        :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
       >
         <el-table-column
           prop="name"

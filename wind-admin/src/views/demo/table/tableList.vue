@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <div class="filter-item">
-        <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
+        <el-input v-model="listQuery.title" placeholder="标题" @keyup.enter="handleFilter" />
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           查询
         </el-button>
@@ -23,11 +23,11 @@
       :key="tableKey"
       v-loading="listLoading"
       :data="list"
-      border
       fit
       highlight-current-row
       style="width: 100%;"
-      :header-cell-style="{background:'#EEF3FB',color:'#0243A3'}"
+      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
+      :row-style="{borderBottom:'4px solid #1762F2'}"
     >
       <el-table-column label="拖拽" width="80">
         <template #default="{}">
@@ -96,7 +96,8 @@
       class="deletedialog"
       :show-close="false"
       :before-close="handleClose">
-      <div>您确定删除该条数据吗？</div>
+      <img src="../../../assets/img/jingshi.svg" alt=""/>
+      <div style="fontWeight:900;">您确定删除该条数据吗？</div>
       <div class="btn">
         <span @click="dialogVisible = false">取消</span>
         <span @click="hdelete">确定</span>
@@ -249,9 +250,19 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+:deep(.el-table__row){
+  border: none !important;
+}
 :deep(.el-dialog.deletedialog){
-  width: 300px;
+  width: 500px;
+  position: relative;
+  img{
+    position: absolute;
+    top: -40%;
+  }
   .el-dialog__body{
+    margin-top: 20px;
+    font-weight: 900;
     display: flex;
     align-items: center;
   flex-direction: column;

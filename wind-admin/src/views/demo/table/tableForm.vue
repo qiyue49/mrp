@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="新建" v-model="dialogFormVisible" destroy-on-close>
+  <el-dialog v-model="dialogFormVisible" title="新建" custom-class="dialog-title" destroy-on-close>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />

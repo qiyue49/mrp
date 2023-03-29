@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" title="导入" width="30%" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" title="导入" width="30%" :close-on-click-modal="false">
     <el-upload
       v-loading="uploadLoading"
       :data="uploadData"
@@ -12,17 +12,22 @@
       drag
       :multiple="false">
       <i class="el-icon-upload"></i>
+      <img src="../../assets/img/shangchuan.svg" alt=""/>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <div slot="tip" class="el-upload__tip">请按照模板上传数据</div>
     </el-upload>
-    <template #footer>
+    <div class="tips">注：请按照模板上传数据</div>
+    <div class="footer">
       <el-button @click="dialogFormVisible = false">
         取消
       </el-button>
       <el-button type="primary" @click="handleTemplate">
         下载模板
       </el-button>
-    </template>
+    </div>
+    <!-- <template #footer>
+
+    </template> -->
   </el-dialog>
 </template>
 
@@ -139,6 +144,26 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+.tips{
+  color: #FFC700;
+  margin-top: 10px;
+}
+:deep(.el-upload){
+  // background-color: red !important;
+  .el-upload-dragger{
+  background-color: #F3F5F8 !important;
+  border: none;
+  .el-upload__text{
+    font-weight: 900;
+    // font-size: 1.1rem;
+  }
+}
+}
+.footer{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 30px;
+}
 </style>

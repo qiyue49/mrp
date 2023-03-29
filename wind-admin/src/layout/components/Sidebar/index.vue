@@ -50,7 +50,7 @@ export default {
 </script>
 <style scoped lang="scss">
 :deep(.el-icon.el-sub-menu__icon-arrow){
-  display:none;
+  // display:none;
 }
  :deep(.el-sub-menu.is-active > .el-sub-menu__title) {
   background-color: #1762F2 !important;
@@ -99,14 +99,14 @@ export default {
   //  width: 100px;
   position: relative;
   }
- :deep(.el-menu-item.is-active::after) {
-   content: '>';
-   position: absolute;
-   right: 10px;
-   color: #0243A3;
-  //  background-color: #F5C265;
-   height: 40px;
-  }
+//  :deep(.el-menu-item.is-active::after) {
+//    content: '>';
+//    position: absolute;
+//    right: 10px;
+//    color: #0243A3;
+//   //  background-color: #F5C265;
+//    height: 40px;
+//   }
  :deep(.el-menu-item.is-active::before) {
    content: url(../../../assets/img/daohang1.png);
    position: absolute;
@@ -118,7 +118,7 @@ export default {
   //  height: 40px;
   }
   :deep(.el-menu.el-menu--inline){
-    padding-left: 80px !important;
+    // padding-right: 20px !important;
     // padding-right: 20px !important;
   }
   :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
@@ -166,6 +166,7 @@ export default {
   border-radius: 20px 0 0 20px;
    position: relative;
    color: #fff !important;
+   margin-right: 20px;
 }
 .scrollbar-left{
   margin-left: 20px;
@@ -178,7 +179,7 @@ export default {
 }
 .el-menu-item.is-active, li.el-menu-item.is-active {
    background-color: #1762F2 !important;
-   border-radius: 20px 0 0 20px;
+   border-radius: 10px;
    position: relative;
    color: #fff;
 }
