@@ -4,6 +4,7 @@ import com.sunseagear.common.quartz.QuartzManager;
 import com.sunseagear.common.quartz.callback.QuartzInitCallback;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.StringUtils;
+import jakarta.activation.DataSource;
 import org.quartz.Scheduler;
 import org.quartz.ee.servlet.QuartzInitializerListener;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -34,7 +34,7 @@ import java.util.Properties;
  * @description: 定时任务配置 * @date: 2018/8/16 10:44
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-//@Configuration
+@Configuration
 @AutoConfigureAfter({DataSourceAutoConfiguration.class})
 public class QuartzConfig implements ApplicationRunner {
 
@@ -70,7 +70,7 @@ public class QuartzConfig implements ApplicationRunner {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         String dataSourceBean = env.getProperty("quartz.data-source");
         if (StringUtils.isEmpty(dataSourceBean) || dataSourceBean.equals("default")) {
-            schedulerFactoryBean.setDataSource(dataSource);
+            schedulerFactoryBean.setDataSource((javax.sql.DataSource) dataSource);
         } else {
            /* dataSource = SpringContextHolder.getBean(dataSourceBean);
             if (dataSource != null) {
@@ -108,18 +108,19 @@ public class QuartzConfig implements ApplicationRunner {
 
     /*
      * quartz初始化监听器
+     * TODO 当quartz框架支持jakartaEE时打开以下代码的注释
      */
-    @Bean
-    @ConditionalOnProperty(name = "quartz.open-cluster", havingValue = "true")
-    public QuartzInitializerListener executorListener() {
-        return new QuartzInitializerListener();
-    }
+//    @Bean
+//    @ConditionalOnProperty(name = "quartz.open-cluster", havingValue = "true")
+//    public QuartzInitializerListener executorListener() {
+//        return new QuartzInitializerListener();
+//    }
 
     /*
      * 通过SchedulerFactoryBean获取Scheduler的实例
      */
-    //@Bean
-    //@ConditionalOnProperty(name = "quartz.open-cluster", havingValue = "true")
+    @Bean
+    @ConditionalOnProperty(name = "quartz.open-cluster", havingValue = "true")
     public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) throws IOException {
         return schedulerFactoryBean.getScheduler();
     }
