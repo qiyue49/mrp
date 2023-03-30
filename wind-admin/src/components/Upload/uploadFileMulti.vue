@@ -1,6 +1,7 @@
 <template>
   <el-upload
     ref="upload"
+    v-model:file-list="fileList"
     class="upload-demo"
     :data="uploadData"
     :headers="myHeaders"
@@ -10,7 +11,6 @@
     :on-success="handleSuccess"
     :on-error="handleError"
     :before-upload="beforeUpload"
-    :file-list="fileList"
     :auto-upload="false">
     <template #trigger>
       <el-button size="small" type="primary">选取文件</el-button>
@@ -27,7 +27,7 @@ import { getToken } from '@/utils/auth'
 export default {
   name: 'UploadFileMulti',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -57,6 +57,7 @@ export default {
       default: false
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
@@ -72,7 +73,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         if (this.isNull(val)) {
@@ -138,7 +139,7 @@ export default {
     },
     emitInput(val) {
       this.flag = true
-      this.$emit('input', val)
+      this.$emit('update:modelValue', val)
       this.$nextTick(() => {
         this.flag = false
       })
