@@ -188,6 +188,7 @@ export default {
       this.templateList.forEach(item => {
         if (item.code === val) {
           this.template = item
+          console.log('this.template', this.template)
           this.template.templateContent = unescape(this.template.templateContent)
         }
       })

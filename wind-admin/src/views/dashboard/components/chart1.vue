@@ -51,14 +51,14 @@ export default {
           containLabel: true
         },
         xAxis: {
-          show: false, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
+          show: false,
           type: 'category',
           boundaryGap: false,
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
           type: 'value',
-          show: false // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
+          show: false
         },
         series: [
           {
@@ -77,9 +77,9 @@ export default {
             },
             itemStyle: {
               normal: {
-                color: '#FFC700', // 改变折线点的颜色
+                color: '#FFC700',
                 lineStyle: {
-                  color: '#FFC700' // 改变折线颜色
+                  color: '#FFC700'
                 }
               }
             }
