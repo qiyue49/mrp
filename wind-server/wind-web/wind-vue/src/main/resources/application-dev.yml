@@ -52,6 +52,20 @@ oss:
     bucket-name:
     #外部访问域名
     domain: http://xxxxx.oss-cn-beijing.aliyuncs.com
+  tencent:
+    #腾讯云api密钥secretId
+    secret-id:
+    #腾讯云api密钥secretKey
+    secret-key:
+    #腾讯云api存储桶所属地域
+    region:
+    #腾讯云api存储桶空间名称
+    bucket-name:
+    #腾讯云api存储桶访问域名
+    domain:
+    #腾讯云api上传文件前缀路径(eg:images/) 设置自己的主目录
+    prefix:
+
 
 #短信配置
 sms:

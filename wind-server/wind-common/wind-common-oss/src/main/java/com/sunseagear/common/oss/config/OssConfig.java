@@ -16,7 +16,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "oss")
 public class OssConfig {
 
-    //使用的上传存储空间,local本地,aliyun:阿里云
+    //使用的上传存储空间,local本地,aliyun:阿里云,tencent:腾讯云
     String clientType = "";
     //默认上传目录
     String baseDir = "";
@@ -31,4 +31,6 @@ public class OssConfig {
     private AliyunConfig aliyun;
 
     private LocalConfig local;
+
+    private TencentConfig tencent;
 }

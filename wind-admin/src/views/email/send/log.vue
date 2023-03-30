@@ -90,7 +90,7 @@
         </el-form-item>
         <el-form-item label="变量值" prop="data">
           模板变量的json字符串
-          <json-editor ref="jsonEditor" v-model="temp.data" />
+          <el-input ref="jsonEditor" v-model="temp.data" type="textarea" />
           模板内容:{{ template.templateContent }}
         </el-form-item>
       </el-form>

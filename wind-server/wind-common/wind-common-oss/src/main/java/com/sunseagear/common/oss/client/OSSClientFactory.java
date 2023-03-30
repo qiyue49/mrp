@@ -13,6 +13,8 @@ public final class OSSClientFactory {
             ossClient = new LocalClient();
         } else if (Constants.CLIENTA_ALIYUN.equals(clientType)) {
             ossClient = new AliyunOSSClient();
+        } else if(Constants.CLIENTA_TENCENT.equals(clientType)) {
+            ossClient = new TencentCOS();
         } else {
             return null;
         }
