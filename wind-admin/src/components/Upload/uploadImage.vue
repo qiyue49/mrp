@@ -48,7 +48,7 @@ export default {
       default: 4
     }
   },
-  emits: ['input'],
+  emits: ['update:modelValue'],
   data() {
     return {
       imageList: [],
@@ -92,18 +92,20 @@ export default {
       this.emitInput(this.imageList)
     },
     emitInput(val) {
-      this.$emit('input', JSON.stringify(val))
+      this.$emit('update:modelValue', JSON.stringify(val))
     },
     handleAvatarSuccess(response, file) {
+      this.imageList = this.imageList.map(item => {
+        return { name: item.name, url: item.response.data }
+      })
       if (response.code === 0) {
-        this.imageList.push(response.data)
+        // this.imageList.push(response.data)
         this.emitInput(this.imageList)
       } else {
         this.$message.error(response.msg)
       }
     },
     handleError(response) {
-      console.log(response)
       if (response.msg) {
         this.$message.error(response.msg)
       } else {
