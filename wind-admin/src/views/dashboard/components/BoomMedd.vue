@@ -63,27 +63,27 @@ export default {
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: 'rgba(26, 98, 206, 0.31)'
+                color: 'rgba(23, 98, 242, 0.31)'
               },
               {
                 offset: 0.25,
-                color: 'rgba(32, 101, 206, 0.25)'
+                color: 'rgba(23, 98, 242, 0.25)'
               },
               {
                 offset: 0.5,
-                color: 'rgba(61, 119, 208, 0.02)'
+                color: 'rgba(23, 98, 242, 0.02)'
               },
               {
                 offset: 1,
-                color: 'rgba(72, 126, 208, 0)'
+                color: 'rgba(23, 98, 242, 0)'
               }
               ])
             },
             itemStyle: {
               normal: {
-                color: '#1E6ADB', // 改变折线点的颜色
+                color: '#1762F2', // 改变折线点的颜色
                 lineStyle: {
-                  color: '#1E6ADB', // 改变折线颜色,
+                  color: '#1762F2', // 改变折线颜色,
                   width: 3
                 }
               }

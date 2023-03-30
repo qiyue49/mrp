@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" title="新建" custom-class="dialog-title" destroy-on-close>
+  <el-dialog v-model="dialogFormVisible" width="800px" title="新建" custom-class="dialog-title" destroy-on-close>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
@@ -9,12 +9,18 @@
           <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
         </el-select>
       </el-form-item>
-      <el-form-item label="发布时间" prop="publishDate">
-        <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
-      </el-form-item>
-      <el-form-item label="作者" prop="author">
-        <system-user v-model="temp.author" />
-      </el-form-item>
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <el-form-item label="发布时间" prop="publishDate">
+            <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="16">
+          <el-form-item label="作者" prop="author">
+            <system-user v-model="temp.author" />
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-form-item label="状态">
         <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
           <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
@@ -178,6 +184,13 @@ background-color: #000 !important;
 }
   }
 
+}
+:deep(.el-form-item){
+  display: flex;
+  flex-direction: column;
+}
+.formflex{
+  display: flex;
 }
 </style>
 

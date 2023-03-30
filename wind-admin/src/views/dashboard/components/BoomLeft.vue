@@ -86,7 +86,7 @@ export default {
         {
           value: 900,
           itemStyle: {
-            color: '#C24229'
+            color: '#D34D25'
           }
         },
         801, 900, 125, 160, 411]
@@ -212,10 +212,7 @@ export default {
               // 颜色样式部分
               normal: {
                 barBorderRadius: 7,
-                color: new this.$echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                  { offset: 0, color: '#3977E6' },
-                  { offset: 1, color: '#37BBF8' }
-                ])
+                color: '#1762F2'
               }
             }
           }
@@ -239,6 +236,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  *{
+    box-sizing: border-box;
+  }
 .all{
     background-color: #fff;
     padding: 20px;
@@ -246,6 +246,7 @@ export default {
     border-radius: 10px;
     .left{
         .f1{
+          padding: 0 10px;
             display: flex;
                 background-color: #F3F5F8;
                 margin-top: 10px;

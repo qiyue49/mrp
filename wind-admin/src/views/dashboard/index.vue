@@ -137,7 +137,7 @@ export default {
     }
     .lists{
       width: 100%;
-      overflow: auto;
+      overflow: hidden;
       // height: 50%;
       flex: 1;
       .list{

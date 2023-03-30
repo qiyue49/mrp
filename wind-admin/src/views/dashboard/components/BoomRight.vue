@@ -8,7 +8,7 @@
         <img src="../../../assets/img/genglan.png" alt=""/>
       </span>
     </div>
-    <div class="f2">飞廉系统开发进度</div>
+    <div class="f2">飞 廉 系 统 开 发 进 度</div>
     <el-progress :percentage="50" color="#C24229"/>
     <div class="f3">
       <span>参与者：</span>
@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="f4">
-      <div>邀请参与者</div>
+      <div>邀 请 参 与 者</div>
     </div>
   </div>
 </template>

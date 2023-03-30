@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="f3">
-      查看数据详情
+      查 看 数 据 详 情
       <!-- <span>查看数据详情</span> -->
     </div>
   </div></template>
@@ -34,18 +34,14 @@ export default {
   },
   mounted() {
     this.echartsInit()
-    window.addEventListener('resize', function () {
-      this.charts.resize()
-    })
   },
   methods: {
     echartsInit() {
-      this.charts = this.$echarts.init(this.$refs.$chart1)
-      this.charts.setOption({
+      this.$echarts.init(this.$refs.$chart1).setOption({
         tooltip: {
           show: true,
           trigger: 'axis',
-          formatter: '{b0}: {c0}'
+          formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
         grid: {
           left: '-5%',
@@ -68,22 +64,22 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [0, 932, 5000, 9, 12090, 10000, 1320],
+            data: [0, 932, 901, 934, 1290, 1330, 0],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: 'rgba(245, 194, 101, 0.41)'
+                color: 'rgba(255, 199, 0, 0.41)'
               }, {
                 offset: 1,
-                color: 'rgba(245, 194, 101, 0.02)'
+                color: 'rgba(249, 196, 81, 0)'
               }])
             },
             itemStyle: {
               normal: {
-                color: '#F5C265', // 改变折线点的颜色
+                color: '#FFC700', // 改变折线点的颜色
                 lineStyle: {
-                  color: '#F5C265' // 改变折线颜色
+                  color: '#FFC700' // 改变折线颜色
                 }
               }
             }

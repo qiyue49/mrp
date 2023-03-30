@@ -75,7 +75,7 @@
 
     <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-    <el-dialog v-model="dialogFormVisible" title="发送邮件" width="70%">
+    <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" title="发送邮件" width="70%">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
         <el-form-item label="Email" prop="email">
           <el-input

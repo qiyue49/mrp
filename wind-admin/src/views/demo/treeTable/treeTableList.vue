@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
+    <el-table highlight-current-row v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
       <el-table-column label="机构名称" min-width="150px">
         <template #default="{row}">
           <span>{{ row.name }}</span>
@@ -114,3 +114,28 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+:deep(.current-row) {
+  // color: #fff !important;
+  background-color: #fff !important;
+  color: #1762F2 !important;
+  position: relative;
+}
+:deep(.el-table__expand-icon){
+  .el-icon{
+    position: relative;
+  }
+  .el-icon::before{
+    position: absolute;
+    content: url('../../../assets/img/fkyou.svg');
+    // width: 15px;
+  //   content: '';
+  // margin-right: 5px;
+  // display: inline-block;
+  // width: 20px;
+  // height: 20px;
+  // background:url('../../../assets/img/fkyou.svg');
+  // background-size:50%;
+  }
+}
+</style>
