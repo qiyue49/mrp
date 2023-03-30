@@ -31,7 +31,7 @@ import defaultImg from '@/assets/img/default_img.jpg' // 水波纹指令
 export default {
   name: 'UploadFile',
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -61,6 +61,7 @@ export default {
       default: false
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
@@ -86,7 +87,7 @@ export default {
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         try {
@@ -108,7 +109,7 @@ export default {
   },
   methods: {
     emitInput(val) {
-      this.$emit('input', val)
+      this.$emit('update:modelValue', val)
     },
     handleSuccess(response, file) {
       if (response.code === 0) {
