@@ -42,8 +42,8 @@ app.use(VueBMap)
 // 初始化图标
 app.config.globalProperties.$icons = []
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-  console.log('图标key', key)
-  console.log('图标com', component)
+  // console.log('图标key', key)
+  // console.log('图标com', component)
   app.config.globalProperties.$icons.push(key)
   app.component(key, component)
 }

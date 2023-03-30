@@ -7,10 +7,21 @@
         :collapse="isCollapse"
         :unique-opened="false"
         :collapse-transition="false"
-        active-text-color="#fff"
         mode="vertical"
         router
       >
+        <!-- <el-sub-menu v-for="item in menus" :key="item.id" :route="item.path" :class="{'isclick':item.id ===idd}" :index="item.id+''">
+          <template #title>
+            <el-icon><Setting /></el-icon>
+            <span>{{ item.meta.title }}</span>
+          </template>
+          <el-menu-item v-for="subItem in item.children" :key="subItem.id" :route="subItem.path" :index="subItem.id+''" @click="cc(item.id)">
+            <template #title>
+              <img src="../../../assets/img/shuxian1.png" alt=""/>
+              <span>{{ subItem.meta.title }}</span>
+            </template>
+          </el-menu-item>
+        </el-sub-menu> -->
         <sidebar-item v-for="item in menus" :key="item.id" :menu="item" />
       </el-menu>
     </el-scrollbar>
@@ -24,6 +35,11 @@ import SidebarItem from './SidebarItem'
 export default {
   name: 'Sidebar',
   components: { SidebarItem, Logo },
+  data() {
+    return {
+      idd: null
+    }
+  },
   computed: {
     menus() {
       return this.$store.permissionStore.menus
@@ -45,12 +61,25 @@ export default {
     isCollapse() {
       return !this.sidebar.opened
     }
+  },
+  mounted() {
+    console.log('导航', this.$store.permissionStore.menus)
+  },
+  methods: {
+    cc(id) {
+      this.idd = id
+    }
   }
 }
 </script>
 <style scoped lang="scss">
-:deep(.el-icon.el-sub-menu__icon-arrow){
-  // display:none;
+:deep(.el-menu.el-menu--vertical){
+padding: 0 20px;
+
+}
+.isclick{
+  background-color: #1762F2 !important;
+   border-radius: 10px;
 }
  :deep(.el-sub-menu.is-active > .el-sub-menu__title) {
   background-color: #1762F2 !important;
@@ -58,183 +87,16 @@ export default {
   //  position: relative;
    color: #fff;
    height: 40px;
-   z-index: 10;
-   width: 170px;
-  //  display: flex;
-  //  align-items: center;
+   z-index: 15;
   }
-//  :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
-//   content: url(../../../assets/img/sanjiao-xia.svg);
-//   background-color: transparent !important;
-//   //  position: relative;
-//    color: #fff;
-//    z-index: 10;
-//    height: 55px;
-//    margin-left: 30px;
-//   }
-//  :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
-//   content: 's';
-//    position: absolute;
-//    right: 0;
-//    color: #F5C265;
-//    background-color: #F5C265;
-//    height: 40px;
-//   }
- :deep(.el-menu-item.is-active) {
-   color: #1762F2;
-   background-color: #ffffff;
-   height: 40px;
-  //  display: block;
-  //  padding-left: 0;
-   line-height: 40px;
-  //  padding: 0 !important;
-  //  width: 100px;
-  }
- :deep(.el-menu-item) {
-   height: 40px;
-  //  display: block;
-  //  padding-left: 0;
-   line-height: 40px;
-  //  padding: 0 !important;
-  //  width: 100px;
-  position: relative;
-  }
-//  :deep(.el-menu-item.is-active::after) {
-//    content: '>';
-//    position: absolute;
-//    right: 10px;
-//    color: #0243A3;
-//   //  background-color: #F5C265;
-//    height: 40px;
-//   }
-//  :deep(.el-menu-item.is-active::before) {
-//    content: url(../../../assets/img/shuxian2.png);
-//    position: absolute;
-//   //  left: -28px;
-//   //  top: -200px;
-//   top: -48px;
-//   left: 42px;
-//    z-index: 5;
-//    color: #0243A3;
-//   //  background-color: #F5C265;
-//   //  height: 40px;
-//   }
   :deep(.el-menu.el-menu--inline){
-    // padding-right: 20px !important;
-    // padding-right: 20px !important;
-  }
-  // :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
-  //   content: url(../../../assets/img/shuxian1.png);
-  //   overflow: hidden;
-  //  position: absolute;
-  //   // position: absolute;
-  //   // left: -60px;
-  // }
-  // :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
-  //   content: url(../../../assets/img/shuxian1.png);
-  //  position: absolute;
-  //   // width: 0;
-  //   // height: 36px;
-  //   position: absolute;
-  //   // left: -80px;
-  //   top: -50px;
-  // }
-  :deep(.el-menu.el-menu--inline > .el-menu-item > span){
-    padding-left: 40px !important;
-    // padding-right: 20px !important;
-    position: absolute;
-    right: 50px;
-  }
-  :deep(.el-menu-item > span){
-    // padding-left: 40px !important;
-    // padding-right: 20px !important;
-    // margin-right: 100px !important
-  }
-//对应子级，父级的样式
-.el-submenu.is-active > .el-submenu__title {
-  background: rgb(206, 169, 181) !important;
-}
-// .el-submenu.is-active > .el-submenu__title::after {
-//   background: rgb(206, 169, 181) !important;
-//   content: 's';
-//    position: absolute;
-//    right: 0;
-//    color: #F5C265;
-//    background-color: #F5C265;
-//    height: 40px;
-// }
-//当前选中子级的样式
-.is-active{
-  // background-color: #0242A3 !important;
-  border-radius: 20px 0 0 20px;
-   position: relative;
-   color: #fff !important;
-   margin-right: 20px;
-}
-.el-sub-menu{
-  margin-right: 20px;
-}
-.scrollbar-left{
-  margin-left: 20px;
-}
-.el-menu {
-  border-right: 0px;
-}
-.el-menu-item{
-  height: 40px;
-}
-.el-menu-item.is-active, li.el-menu-item.is-active {
-   background-color: #1762F2 !important;
-   border-radius: 10px;
-   position: relative;
-   color: #fff;
-}
-// .el-menu-item.is-active, li.el-menu-item.is-active::after {
-//    content: 's';
-//    position: absolute;
-//    right: 0;
-//    color: #F5C265;
-//    background-color: #F5C265;
-//    height: 40px;
-//   //  width: 10px;
-// }
-.el-sub-menu.is-active.is-opened{
-  .el-menu.el-menu--inline{
-    .el-menu-item.is-active{
-  background: #1762F2 !important;
-  border-radius: 20px 0 0 20px;
-}
-  }
-}
-.el-sub-menu__title{
-.is-active{
-  background: #1762F2 !important;
-  border-radius: 20px 0 0 20px;
-}
-}
-:deep(.el-sub-menu){
-  .el-menu.el-menu--inline{
-    .el-menu-item{
-      .el-icon{
-        position: relative;
-      }
-      .el-icon::before{
-        position: absolute;
-        top: -50px;
-        content: url(../../../assets/img/shuxian1.png);
-      }
-    }
-    .el-menu-item.is-active{
-      .el-icon{
-        position: relative;
-      }
-      .el-icon::before{
-        position: absolute;
-        top: -50px;
-        content: url(../../../assets/img/shuxian2.png);
+    .el-sub-menu.is-active{
+      .el-sub-menu__title{
+         background-color: #fff !important;
+         color: black;
+         z-index: 5;
       }
     }
   }
-}
 </style>
 
