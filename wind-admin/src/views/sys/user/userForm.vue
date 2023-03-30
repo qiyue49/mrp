@@ -15,7 +15,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="头像" prop="portrait">
-            <upload-image v-model="temp.portrait" />
+            <upload-image v-model="temp.portrait" :max-count="1" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
