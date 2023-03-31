@@ -64,6 +64,7 @@ public class QiniuOSSClient extends AbstractOSSClient {
         Configuration configuration = new Configuration();
         configuration.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;
         uploadManager = new UploadManager(configuration);
+        bucketManager = new BucketManager(auth,configuration);
     }
 
     @Override
@@ -85,17 +86,17 @@ public class QiniuOSSClient extends AbstractOSSClient {
             if (!res.isOK()) {
                 throw new RuntimeException("上传七牛出错：" + res.toString());
             }
+            return domain + "/" + filepath;
         } catch (Exception e) {
             throw new OSSException("上传文件失败，请核对七牛配置信息");
         }
-        return domain + "/" + path;
     }
 
     @Override
     public void delete(String filename) {
         try {
             filename = filename.replace(domain + "/", "");
-            bucketManager.delete(bucketName, filename);
+            Response response = bucketManager.delete(bucketName, filename);
             log.info("删除" + bucketName + "下的文件"  + filename + "成功");
         } catch (Exception e) {
             throw new OSSException("删除文件失败", e);

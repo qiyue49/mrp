@@ -112,7 +112,7 @@ public class TencentCOS extends AbstractOSSClient{
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, key, inputStream, objectMetadata);
             //执行上传并返回结果信息
             PutObjectResult putObjectResult = client.putObject(putObjectRequest);
-            return domain + key;
+            return domain + "/" + key;
         } catch (IOException e) {
             log.error("上传腾讯云COS服务器异常." + e.getMessage(), e);
             throw new OSSException("上传文件失败", e);

@@ -4,13 +4,14 @@ import com.sunseagear.common.oss.OSSUploadHelper;
 import com.sunseagear.common.oss.config.OssConfig;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
-import com.sunseagear.common.utils.ArrayUtils;
-import com.sunseagear.common.utils.IpUtils;
-import com.sunseagear.common.utils.StringUtils;
-import com.sunseagear.common.utils.UserUtils;
+import com.sunseagear.common.oss.exception.OSSException;
+import com.sunseagear.common.utils.*;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,6 +35,7 @@ import java.util.List;
  */
 @Component("attachmentHelper")
 @EnableConfigurationProperties({OssConfig.class})
+@Slf4j
 public class AttachmentHelper {
 
     @Autowired
@@ -93,6 +93,32 @@ public class AttachmentHelper {
         attachment.setBasePath(directory);
         attachmentService.insert(attachment);
         return attachment;
+    }
+
+    /**
+     * 文件名为带服务器地址的全路径地址例如：http:xxx-oss-xxx/xxx/xxx.jpg
+     * @param fileName 文件OSS带域名地址的路径
+     */
+    public void deleteFile(HttpServletRequest request,String fileName) {
+        try {
+            uploadHelper.delete(request,fileName);
+        } catch (IOException e) {
+            log.error("删除文件失败");
+            throw new OSSException("删除文件失败", e);
+        }
+    }
+    /**
+     *文 件名为带服务器地址的全路径地址例如：http:xxx-oss-xxx/xxx/xxx.jpg
+     * @param fileName 文件OSS带域名地址的路径
+     */
+    public void deleteFile(String fileName) {
+        HttpServletRequest request = ServletUtils.getRequest();
+        try {
+            uploadHelper.delete(request,fileName);
+        } catch (IOException e) {
+            log.error("删除文件失败");
+            throw new OSSException("删除文件失败", e);
+        }
     }
 
 }
