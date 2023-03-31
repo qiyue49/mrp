@@ -56,7 +56,8 @@ public class TencentCOS extends AbstractOSSClient{
         secretKey = p.getString("tencent.oss.secret-key");
         region = p.getString("tencent.oss.region");
         bucketName = p.getString("tencent.oss.bucket-name");
-        domain = p.getString("aliyun.oss.domain");
+        domain = p.getString("tencent.oss.domain");
+        prefix = p.getString("tencent.oss.prefix");
         //初始化用户身份信息(secretId,secretKey)
         COSCredentials cosCredentials = new BasicCOSCredentials(secretId, secretKey);
         //设置bucket的区域
@@ -99,11 +100,7 @@ public class TencentCOS extends AbstractOSSClient{
         try {
             String fileType = path.substring(path.lastIndexOf("."));
             String fileName = new Date().getTime() +fileType;
-            Calendar cal = Calendar.getInstance();
-            int year = cal.get(Calendar.YEAR);
-            int month = cal.get(Calendar.MONTH) + 1;
-            int day = cal.get(Calendar.DATE);
-            String key = prefix + year + "/" + month + "/" + day + "/" + fileName;
+            String key = prefix + fileName;
             // 创建上传Object的Metadata
             ObjectMetadata objectMetadata = new ObjectMetadata();
             objectMetadata.setContentLength(inputStream.available());

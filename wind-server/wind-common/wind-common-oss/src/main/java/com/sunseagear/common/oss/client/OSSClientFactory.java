@@ -15,7 +15,9 @@ public final class OSSClientFactory {
             ossClient = new AliyunOSSClient();
         } else if(Constants.CLIENTA_TENCENT.equals(clientType)) {
             ossClient = new TencentCOS();
-        } else {
+        } else if(Constants.CLIENTA_QINIU.equals(clientType)) {
+            ossClient = new QiniuOSSClient();
+        }  else {
             return null;
         }
         return ossClient;

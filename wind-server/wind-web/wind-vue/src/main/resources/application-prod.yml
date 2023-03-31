@@ -65,5 +65,16 @@ oss:
     domain:
     #腾讯云api上传文件前缀路径(eg:images/) 设置自己的主目录
     prefix:
+  qiniu:
+    #七牛云密钥accessKey
+    access-key:
+    #七牛云密钥secretKey
+    secret-key:
+    #七牛云存储桶空间名称
+    bucket-name:
+    #七牛云存储桶访问域名
+    domain:
+    #七牛云存储桶上传文件前缀路径(eg:images/) 设置自己的主目录
+    prefix:
 
 

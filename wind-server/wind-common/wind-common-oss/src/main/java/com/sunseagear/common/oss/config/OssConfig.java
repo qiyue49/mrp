@@ -33,4 +33,6 @@ public class OssConfig {
     private LocalConfig local;
 
     private TencentConfig tencent;
+
+    private QiniuConfig qiniu;
 }
