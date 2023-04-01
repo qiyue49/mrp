@@ -5,8 +5,6 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
 
-export const title = '帝江'
-
 // https://vitejs.dev/config/
 export default ({ mode }) => {
   // 获取 .env 环境配置文件

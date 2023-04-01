@@ -94,6 +94,21 @@ body {
 
 .header-cell {
   background: #F4F7FC;
-  color: #1762F2;
-  border-top: 4px solid #1762F2;
+  color: var(--el-color-primary);
+  border-top: 3px solid var(--el-color-primary);
+}
+
+.el-dialog{
+  border-radius: 10px !important;
+}
+.dialog-title .el-dialog__header {
+  border-radius: 10px 10px 0 0;
+  margin-right: 0px;
+  display: flex;
+  justify-content: center;
+  border-bottom: 3px solid var(--el-color-primary);
+  .el-dialog__title {
+    color: var(--el-color-primary);
+  }
+
 }

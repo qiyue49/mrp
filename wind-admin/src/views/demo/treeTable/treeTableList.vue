@@ -126,14 +126,6 @@ export default {
   .el-icon::before{
     position: absolute;
     content: url('../../../assets/img/fkyou.svg');
-    // width: 15px;
-  //   content: '';
-  // margin-right: 5px;
-  // display: inline-block;
-  // width: 20px;
-  // height: 20px;
-  // background:url('../../../assets/img/fkyou.svg');
-  // background-size:50%;
   }
 }
 </style>

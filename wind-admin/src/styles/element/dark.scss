@@ -1,15 +1,21 @@
-$--colors: (
-  "primary": (
-    "base": #f8b358,
-  ),
-);
-
 @forward "element-plus/theme-chalk/src/dark/var.scss" with (
   $colors: (
     "primary": (
-    "base": #f8b358,
+    "base": #1762F2,
   ),
+  "success": (
+    "base": #21ba45,
+  ),
+  "warning": (
+    "base": #FFC700,
+  ),
+  "danger": (
+    "base": #F31313,
+  ),
+  "info": (
+    "base": #909399,
+  )
   )
 );
 
-@use 'element-plus/theme-chalk/dark/css-vars.css' as *;
+@use "element-plus/theme-chalk/src/dark/css-vars.scss" as *;

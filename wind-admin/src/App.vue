@@ -18,14 +18,3 @@ export default {
 
 }
 </script>
-// <style lang="scss">
-//  .dialog-title .el-dialog__header {
-//    background-color: #3CA1FF;
-//    margin-right: 0px;
-//    display: flex;
-//    justify-content: center;
-//    .el-dialog__title, .el-dialog__headerbtn .el-dialog__close {
-//      color: #ffffff;
-//    }
-//  }
-// </style>

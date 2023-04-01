@@ -54,7 +54,7 @@ export default {
   height: 40px;
 }
 .el-menu-item.is-active {
-  background-color: #1762F2 !important;
+  background-color: var(--el-color-primary) !important;
   border-radius: 10px;
   color: #fff;
   height: 40px;

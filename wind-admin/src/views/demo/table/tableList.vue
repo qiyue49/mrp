@@ -25,7 +25,6 @@
       highlight-current-row
       style="width: 100%;"
       header-cell-class-name="header-cell"
-      :row-style="{borderBottom:'4px solid #1762F2'}"
     >
       <el-table-column label="拖拽" width="80">
         <template #default="{}">

@@ -12,7 +12,7 @@
         <el-main>
           <app-main />
         </el-main>
-<!--         <el-footer>Footer</el-footer>-->
+        <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
   </div>
@@ -80,6 +80,5 @@ export default {
 .el-main {
   padding-top: 0px;
   min-height: calc(100vh - 109px);
-  background-color: #F3F5F8;
 }
 </style>

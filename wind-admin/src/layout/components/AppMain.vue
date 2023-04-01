@@ -3,8 +3,8 @@
     <router-view v-slot="{ Component, route }">
       <transition name="router-fade" mode="out-in">
         <keep-alive :include="cachedViews">
-          <el-card :class="{'elcard': true}">
-            <component :is="Component" :key="route.fullPath" class="ccc" />
+          <el-card>
+            <component :is="Component" :key="route.fullPath"/>
           </el-card>
         </keep-alive>
       </transition>
@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { useRoute } from 'vue-router'
 export default {
   name: 'AppMain',
   computed: {
@@ -26,14 +25,13 @@ export default {
     key() {
       return this.$route.path
     }
-  },
-  mounted() {
-    const route = useRoute()
-    console.log('dsasa', route)
   }
 }
 </script>
 <style lang="scss" scoped>
+.app-main{
+  margin-top: 30px;
+}
 :deep(.elcard){
     // background-color: #F3F5F8;
   }
