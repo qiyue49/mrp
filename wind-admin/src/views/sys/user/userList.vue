@@ -15,14 +15,18 @@
           <div class="filter-item">
             <span>姓名:</span>
             <el-input v-model="listQuery.realname" placeholder="请输入姓名" @keyup.enter="handleFilter" />
+          </div>
+          <div class="filter-item">
             <span>用户名:</span>
             <el-input v-model="listQuery.username" placeholder="请输入用户名" @keyup.enter="handleFilter" />
+          </div>
+          <div class="filter-item">
             <span>手机号码:</span>
             <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
-            <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-            <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
-            <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" icon="Upload" type="warning" plain @click="handleDownload">导出</el-button>
           </div>
+          <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+          <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+          <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
         </div>
 
         <el-table
@@ -64,7 +68,7 @@
           <el-table-column min-width="350" label="操作">
             <template #default="scope">
               <el-button v-permission="['sys:user:update']" size="small" type="primary" plain icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-              <el-button v-permission="['sys:user:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+              <el-button v-permission="['sys:user:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
               <el-button v-permission="['sys:user:role']" size="small" type="primary" plain icon="User" @click="toAssignRoles(scope.row)">设置角色</el-button>
               <el-button v-permission="['sys:user:change:password']" size="small" type="primary" plain icon="Refresh" @click="handleModifyPassword(scope.row)">重置密码</el-button>
             </template>

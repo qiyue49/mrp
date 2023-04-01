@@ -49,7 +49,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.el-menu-item{
+  height: 40px;
+}
+.el-menu-item.is-active {
+  background-color: #1762F2 !important;
+  border-radius: 10px;
+  color: #fff;
+  height: 40px;
+  z-index: 10;
+}
+
 a {
   text-decoration: none;
   color: var(--el-text-color-primary);

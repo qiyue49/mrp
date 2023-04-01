@@ -4,20 +4,25 @@
       <div class="filter-item">
         <span>租户标识:</span>
         <el-input v-model="listQuery.tenantId" placeholder="请输入租户标识" />
+      </div>
+      <div class="filter-item">
         <span>联系人:</span>
         <el-input v-model="listQuery.contact" placeholder="请输入联系人" />
+      </div>
+      <div class="filter-item">
         <span>电话:</span>
         <el-input v-model="listQuery.phone" placeholder="请输入电话" />
+      </div>
+      <div class="filter-item">
         <span>租户名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入租户名称" />
-        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-permission="['sys:tenant:add']" class="filter-item" icon="Plus" type="danger" @click="handleCreate">
-          新增
-        </el-button>
       </div>
-
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button v-permission="['sys:tenant:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
 
     <el-table
@@ -26,8 +31,6 @@
       :data="list"
       fit
       highlight-current-row
-      class="cc"
-      style="width: 100%;border: 1 solid red !important;"
       :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
       <el-table-column label="租户标识" min-width="150px">
         <template #default="{row}">
@@ -59,7 +62,7 @@
           <el-button v-permission="['sys:tenant:update']" size="small" icon="EditPen" plain type="primary" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['sys:tenant:delete']" size="small" plain type="error" icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
+          <el-button v-permission="['sys:tenant:delete']" size="small" plain type="danger" icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
             删除
           </el-button>
         </template>
@@ -142,15 +145,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-*{
-  // border: none !important;
-}
-.cc{
-  border: 1 solid red !important;
-}
-  .el-table{
-  border: 1 solid red !important;
-}
-
-</style>

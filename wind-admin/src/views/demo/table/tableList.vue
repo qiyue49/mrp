@@ -1,21 +1,19 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <div class="filter-item">
-        <el-input v-model="listQuery.title" placeholder="标题" @keyup.enter="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-permission="['test:table:table:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-          新增
-        </el-button>
-        <el-button v-waves :loading="downloadLoading" class="filter-item" icon="Download" type="warning" @click="handleImport">
-          导入
-        </el-button>
-        <el-button v-waves :loading="downloadLoading" class="filter-item" icon="Upload" type="warning" plain @click="handleExport">
-          导出
-        </el-button>
-      </div>
+      <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button v-permission="['test:table:table:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
+        导入
+      </el-button>
+      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleExport">
+        导出
+      </el-button>
     </div>
 
     <el-table
@@ -81,7 +79,7 @@
           <el-button v-if="row.status!='draft'" plain type="primary" size="small" @click="handleModifyStatus(row,'draft')">
             草稿
           </el-button>
-          <el-button v-permission="['test:table:table:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['test:table:table:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

@@ -4,11 +4,13 @@
       <div class="filter-item">
         <span>URI:</span>
         <el-input v-model="listQuery.requestUri" placeholder="请输入URI" />
+      </div>
+      <div class="filter-item">
         <span>操作IP:</span>
         <el-input v-model="listQuery.operationIp" placeholder="请输入操作IP" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-        <el-button class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button class="filter-item" type="danger" icon="Document" @click="handleBatchDelete">删除</el-button>
     </div>
     <el-table
       ref="multipleTable"
@@ -69,7 +71,7 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" type="error" plain icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

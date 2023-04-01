@@ -1,4 +1,5 @@
 @use './element/index.scss';
+
 html {
   width: 100%;
   height: 100%;
@@ -18,10 +19,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-*{
-  // box-sizing: border-box;
-}
-
 #app {
   width: 100vw;
   height: 100vh;
@@ -31,8 +28,10 @@ body {
 
 .left-tree-list {
   margin-top: 1px;
+
   .el-table {
     width: 100%;
+
     thead {
       display: none;
     }
@@ -41,25 +40,27 @@ body {
 
 .el-table {
   width: 100%;
-  // border: none !important;
+  border: none !important;
+
   .el-table__cell {
     text-align: center;
   }
+
   .el-input {
     width: 60%;
   }
 }
 
 .el-form {
-  margin-left:50px;
-  margin-right:80px;
+  margin-left: 50px;
+  margin-right: 80px;
 }
 
-.el-form-item__content>div:first-child {
+.el-form-item__content > div:first-child {
   width: 100%;
 }
 
-.icon{
+.icon {
   width: 16px;
   height: 16px;
   padding: 8px;
@@ -68,153 +69,25 @@ body {
 
 .filter-container {
   padding-bottom: 10px;
-  display: flex;
-  justify-content: space-between;
 
   .filter-item {
     margin-left: 10px;
     display: inline-block;
     vertical-align: middle;
-    // margin-bottom: 10px;
+    margin-bottom: 10px;
   }
+
   .filter-item:not(.el-button) {
-    // margin-left: 30px;
+    margin-left: 30px;
+
     span {
       font-size: 14px;
       margin: 0 12px;
     }
+
     div {
       width: 200px;
     }
   }
 
-}
-.el-button--EditBtn{
-  border-color: #1762F2;
-  color: #1762F2;
-}
-.el-button--EditBtn::before{
-  content: url('../assets/img/bianji.svg');
-}
-.el-button--DeleteBtn{
-  border-color: #F31313;
-  color: #F31313;
-}
-.el-button--DeleteBtn::before{
-  content: url('../assets/img/shanchu.svg');
-}
-// .el-button--addbtn{
-//   border-color: #F31313;
-//   color: #F31313;
-//   background-color: #D34D25;
-// }
-// .el-button--addbtn::before{
-//   content: url('../assets/img/add.svg');
-// }
-
-.el-button--primary.is-plain, .el-button--primary.is-text, .el-button--primary.is-link {
-  --el-button-text-color: var(--el-color-primary);
-  --el-button-bg-color: #fff;
-  --el-button-border-color: #1762F2;
-  --el-button-hover-text-color: var(--el-color-white);
-  --el-button-hover-bg-color: var(--el-color-primary);
-  --el-button-hover-border-color: var(--el-color-primary);
-  --el-button-active-text-color: var(--el-color-white);
-}
-// .el-button.el-button--primary.el-button--small.is-plain::before{
-//   content: '';
-//   margin-right: 5px;
-//   display: inline-block;
-//   width: 12px;
-//   height: 12px;
-//   background:url('../assets/img/bianji.svg');
-//   background-size:cover;
-// }
-.el-button.el-button--error.el-button--small.is-plain{
-  --el-button-text-color: var(--el-color-error);
-  --el-button-bg-color: #fff;
-  --el-button-border-color: var(--el-color-error);
-  --el-button-hover-text-color: var(--el-color-white);
-  --el-button-hover-bg-color: var(--el-color-error);
-  --el-button-hover-border-color: var(--el-color-error);
-  --el-button-active-text-color: var(--el-color-white);
-}
-// .el-button.el-button--error.el-button--small.is-plain::before{
-//   content: '';
-//   margin-right: 5px;
-//   display: inline-block;
-//   width: 12px;
-//   height: 12px;
-//   background:url('../assets/img/shanchu.svg');
-//   background-size:cover;
-// }
-.el-button--danger.is-plain, .el-button--danger.is-text, .el-button--danger.is-link {
-  --el-button-text-color: var(--el-color-danger);
-  --el-button-bg-color: #fff;
-  --el-button-border-color: #D34D25;
-  --el-button-hover-text-color: var(--el-color-white);
-  --el-button-hover-bg-color: var(--el-color-danger);
-  --el-button-hover-border-color: var(--el-color-danger);
-  --el-button-active-text-color: var(--el-color-white);
-}
-// .el-button.el-button--warning::before{
-//   content: '';
-//   margin-right: 5px;
-//   display: inline-block;
-//   width: 14px;
-//   height: 14px;
-//   background:url('../assets/img/daoru.svg');
-//   background-size:cover;
-// }
-// .el-button.el-button--warning.is-plain::before{
-//   content: '';
-//   margin-right: 5px;
-//   display: inline-block;
-//   width: 14px;
-//   height: 14px;
-//   background:url('../assets/img/daochu.svg');
-//   background-size:cover;
-// }
-// .el-button.el-button--danger::before{
-//   content: '';
-//   margin-right: 5px;
-//   display: inline-block;
-//   width: 14px;
-//   height: 14px;
-//   background:url('../assets/img/add.svg');
-//   background-size:cover;
-// }
-.el-button{
-  // width: 20px;
-  span{
-    margin: 0 !important;
-  }
-}
-.is-plain{
-  background-color: #fff;
-}
-:deep(header){
-  background-color: red !important;
-}
-:deep(.el-dialog__header){
-  background-color: red !important;
-}
-:global(.el-dialog__header){
-  background-color: red !important;
-  margin: 0;
-}
-.el-dialog{
-  border-radius: 10px !important;
-}
-.dialog-title .el-dialog__header {
-  border-radius: 10px 10px 0 0;
-  background-color: #F1F5FF;
-  margin-right: 0px;
-  display: flex;
-  justify-content: center;
-  border-bottom: 5px solid #1762F2;
-  color: #282828;
-  .el-dialog__title, .el-dialog__headerbtn .el-dialog__close {
-    color: #C8CCD7;
-  }
 }

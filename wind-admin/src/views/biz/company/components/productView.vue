@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-waves v-permission="['biz:company:company:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
+      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -36,7 +36,7 @@
           <el-button v-permission="['biz:company:company:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:company:company:delete']" plain type="error" icon="Delete" size="small" @click="handleDelete(row)">
+          <el-button v-permission="['biz:company:company:delete']" plain type="danger" icon="Delete" size="small" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

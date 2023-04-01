@@ -4,8 +4,12 @@
       <div class="filter-item">
         <span>手机号码:</span>
         <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>模板编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入模板编码" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>发送状态:</span>
         <el-select v-model="listQuery.status" placeholder="请选择发送状态">
           <el-option label="全部状态" value="" />
@@ -16,10 +20,11 @@
             :value="item.value"
           />
         </el-select>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-        <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
       </div>
+
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
     </div>
 
     <el-table
@@ -77,7 +82,7 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" type="error" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>

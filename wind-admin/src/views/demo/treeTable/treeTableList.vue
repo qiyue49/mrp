@@ -1,15 +1,13 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <div class="filter-item">
-        <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
-        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button class="filter-item" icon="Plus" type="danger" @click="handleCreate">
-          新增
-        </el-button>
-      </div>
+      <el-input v-model="listQuery.name" placeholder="请输入名称" class="filter-item" @keyup.enter="handleFilter" />
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
 
     <el-table highlight-current-row v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" lazy :load="load" :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
@@ -33,7 +31,7 @@
           <el-button v-permission="['test:treetable:treetable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['test:treetable:treetable:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
+          <el-button v-permission="['test:treetable:treetable:delete']" size="small" icon="Delete" plain type="danger" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

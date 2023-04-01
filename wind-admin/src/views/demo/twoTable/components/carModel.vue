@@ -2,11 +2,9 @@
   <div id="dictComponent">
     <div>
       <div class="filter-container">
-        <div class="filter-item">
-          <el-input v-model="listQuery.keyword" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
-          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-          <el-button class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
-        </div>
+        <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入汽车型号标签或值" @keyup.enter="handleFilter" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
       <el-table
@@ -31,7 +29,7 @@
         <el-table-column label="操作" width="180">
           <template #default="scope">
             <el-button v-permission="['test:car:carModel:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button v-permission="['test:car:carModel:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除
+            <el-button v-permission="['test:car:carModel:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除
             </el-button>
           </template>
         </el-table-column>

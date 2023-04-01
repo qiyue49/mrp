@@ -4,13 +4,13 @@
       <div class="filter-item">
         <span>名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入名称" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-waves v-permission="['biz:company:company:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-          新增
-        </el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
 
     <el-table
@@ -39,7 +39,7 @@
           <el-button v-permission="['biz:company:company:update']" plain type="primary" icon="EditPen" size="small" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:company:company:delete']" plain type="error" icon="Delete" size="small" @click="handleDelete(row)">
+          <el-button v-permission="['biz:company:company:delete']" plain type="danger" icon="Delete" size="small" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

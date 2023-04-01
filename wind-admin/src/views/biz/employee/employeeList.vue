@@ -15,6 +15,8 @@
           <div class="filter-item">
             <span>姓名:</span>
             <el-input v-model="listQuery.name" placeholder="请输入姓名" />
+          </div>
+          <div class="filter-item">
             <span>性别:</span>
             <el-radio
               v-for="item in dictList('sex')"
@@ -23,15 +25,14 @@
               :label="item.value">
               {{ item.label }}
             </el-radio>
-            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-              查询
-            </el-button>
-            <el-button v-permission="['biz:employee:employee:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-              新增
-            </el-button>
           </div>
+          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+            搜索
+          </el-button>
+          <el-button v-permission="['biz:employee:employee:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+            新增
+          </el-button>
         </div>
-
         <el-table
           ref="table"
           :key="tableKey"
@@ -67,7 +68,7 @@
               <el-button v-permission="['biz:employee:employee:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
                 编辑
               </el-button>
-              <el-button v-permission="['biz:employee:employee:delete']" size="small" plain icon="Delete" type="error" @click="handleDelete(row)">
+              <el-button v-permission="['biz:employee:employee:delete']" size="small" plain icon="Delete" type="danger" @click="handleDelete(row)">
                 删除
               </el-button>
             </template>

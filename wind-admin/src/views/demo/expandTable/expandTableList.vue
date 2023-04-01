@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button class="filter-item" icon="Plus" type="danger" @click="handleCreate">
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -58,7 +58,7 @@
           <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

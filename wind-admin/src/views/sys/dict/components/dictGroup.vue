@@ -5,9 +5,9 @@
         <div class="filter-item">
           <span>分组名称或编码:</span>
           <el-input v-model="listQuery.keyword" placeholder="请输入分组名称或编码" @keyup.enter="handleFilter" />
-          <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-          <el-button v-permission="['sys:dict:group:add']" class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
         </div>
+        <el-button v-permission="['sys:dict:group:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:dict:group:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
       <el-table
@@ -26,7 +26,7 @@
         <el-table-column label="操作" width="180">
           <template #default="scope">
             <el-button v-permission="['sys:dict:group:update']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button v-permission="['sys:dict:group:delete']" size="small" plain type="error" icon="Delete" @click="handleDelete(scope.row)">删除
+            <el-button v-permission="['sys:dict:group:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除
             </el-button>
           </template>
         </el-table-column>

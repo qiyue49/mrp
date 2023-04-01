@@ -4,15 +4,17 @@
       <div class="filter-item">
         <span>配置名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入配置名称" />
+      </div>
+      <div class="filter-item">
         <span>配置编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入配置编码" />
-        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-permission="['sys:config:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-          新增
-        </el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button v-permission="['sys:config:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
     <el-table
       :key="tableKey"
@@ -47,7 +49,7 @@
           <el-button v-permission="['sys:config:update']" size="small" type="primary" icon="EditPen" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-if="!row.isSys" v-permission="['sys:config:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
+          <el-button v-if="!row.isSys" v-permission="['sys:config:delete']" size="small" icon="Delete" plain type="danger" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

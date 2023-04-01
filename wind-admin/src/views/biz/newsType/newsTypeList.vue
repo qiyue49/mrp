@@ -4,13 +4,13 @@
       <div class="filter-item">
         <span>新闻类型名称:</span>
         <el-input v-model="listQuery.newsTypeName" placeholder="请输入新闻类型名称" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-permission="['biz:newsType:newstype:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-          新增
-        </el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button v-permission="['biz:newsType:newstype:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
 
     <el-table
@@ -33,7 +33,7 @@
           <el-button v-permission="['biz:newsType:newstype:update']" icon="EditPen" type="primary" plain size="small" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:newsType:newstype:delete']" plain type="error" size="small" icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['biz:newsType:newstype:delete']" plain type="danger" size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

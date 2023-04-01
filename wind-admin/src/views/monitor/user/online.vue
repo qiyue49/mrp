@@ -4,10 +4,12 @@
       <div class="filter-item">
         <span>用户名:</span>
         <el-input v-model="listQuery.username" placeholder="请输入用户名" />
+      </div>
+      <div class="filter-item">
         <span>IP:</span>
         <el-input v-model="listQuery.loginIp" placeholder="请输入IP" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
     </div>
 
     <el-table

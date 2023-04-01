@@ -4,16 +4,13 @@
       <div class="filter-item">
         <span>资源编号:</span>
         <el-input v-model="listQuery.resourceCode" placeholder="请输入资源编号" />
+      </div>
+      <div class="filter-item">
         <span>数据权限名称:</span>
         <el-input v-model="listQuery.scopeName" placeholder="请输入数据权限名称" />
-        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-permission="['sys:datarule:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-          新增
-        </el-button>
       </div>
-
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button v-permission="['sys:datarule:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
     <el-table
@@ -49,7 +46,7 @@
           <el-button v-permission="['sys:datarule:update']" size="small" type="primary" icon="EditPen" plain @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['sys:datarule:delete']" size="small" plain icon="Delete" type="error" @click="handleDelete(row)">
+          <el-button v-permission="['sys:datarule:delete']" size="small" plain icon="Delete" type="danger" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

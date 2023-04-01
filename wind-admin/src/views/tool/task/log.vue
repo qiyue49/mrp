@@ -4,8 +4,12 @@
       <div class="filter-item">
         <span>任务名称:</span>
         <el-input v-model="listQuery.jobName" placeholder="请输入任务名称" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>执行类:</span>
         <el-input v-model="listQuery.executeClass" placeholder="请输入执行类" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>状态:</span>
         <el-select v-model="listQuery.status" placeholder="请选择状态">
           <el-option label="全部状态" value="" />
@@ -16,9 +20,10 @@
             :value="item.value"
           />
         </el-select>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-        <el-button v-waves class="filter-item" type="danger" icon="Delete" @click="handleBathDelete">删除</el-button>
       </div>
+
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button v-waves class="filter-item" type="danger" icon="Delete" @click="handleBathDelete">删除</el-button>
     </div>
 
     <el-table
@@ -76,7 +81,7 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" type="error" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>

@@ -4,11 +4,13 @@
       <div class="filter-item">
         <span>角色名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入角色名称" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>角色编码:</span>
         <el-input v-model="listQuery.code" placeholder="请输入角色编码" @keyup.enter="handleFilter" />
-        <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-      <el-button v-permission="['sys:role:add']" class="filter-item" icon="Plus" type="danger" @click="handleCreate">新增</el-button>
       </div>
+      <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
     <el-table style="border:none" v-loading="listLoading" :data="list" fit highlight-current-row :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
@@ -34,7 +36,7 @@
             <el-button v-permission="['sys:role:update']" size="small" type="primary" plain icon="Operation" @click="toSetPermission(row)">设置权限</el-button>
             <el-button v-permission="['sys:datarule:update']" size="small" type="primary" plain icon="Finished" @click="toSetDataRule(row)">数据权限</el-button>
             <el-button v-permission="['sys:role:detail']" size="small" type="primary" plain icon="EditPen" @click="handleUpdate(row)">编辑</el-button>
-            <el-button v-permission="['sys:role:delete']" size="small" plain type="error" @click="handleDelete(row)">删除
+            <el-button v-permission="['sys:role:delete']" size="small" plain type="danger" @click="handleDelete(row)">删除
             </el-button>
           </span>
         </template>

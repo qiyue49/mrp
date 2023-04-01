@@ -13,7 +13,7 @@
         <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
           查询
         </el-button>
-        <el-button v-permission="['sys:datarule:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
+        <el-button v-permission="['sys:datarule:add']" icon="Plus" class="filter-item" type="primary" @click="handleCreate">
           新增
         </el-button>
       </div>
@@ -56,7 +56,7 @@
             <el-button v-permission="['sys:datarule:update']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
               编辑
             </el-button>
-            <el-button v-permission="['sys:datarule:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(row)">
+            <el-button v-permission="['sys:datarule:delete']" size="small" icon="Delete" plain type="danger" @click="handleDelete(row)">
               删除
             </el-button>
           </template>

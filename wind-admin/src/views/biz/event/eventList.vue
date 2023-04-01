@@ -4,8 +4,12 @@
       <div class="filter-item">
         <span>标题:</span>
         <el-input v-model="listQuery.title" placeholder="请输入标题" />
+      </div>
+      <div class="filter-item">
         <span>用户:</span>
         <el-input v-model="listQuery.userId" placeholder="请输入用户" />
+      </div>
+      <div class="filter-item">
         <span>类型:</span>
         <el-select v-model="listQuery.type" clearable placeholder="请选择类型" style="width: 200px">
           <el-option
@@ -14,15 +18,14 @@
             :label="item.label"
             :value="item.value" />
         </el-select>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-          查询
-        </el-button>
-        <el-button v-permission="['biz:event:event:add']" icon="Plus" class="filter-item" type="danger" @click="handleCreate">
-          新增
-        </el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        搜索
+      </el-button>
+      <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
-
     <el-table
       ref="table"
       :key="tableKey"
@@ -63,7 +66,7 @@
           <el-button v-permission="['biz:event:event:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
             编辑
           </el-button>
-          <el-button v-permission="['biz:event:event:delete']" plain type="error" size="small" icon="Delete" @click="handleDelete(row)">
+          <el-button v-permission="['biz:event:event:delete']" plain type="danger" size="small" icon="Delete" @click="handleDelete(row)">
             删除
           </el-button>
         </template>

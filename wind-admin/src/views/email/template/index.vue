@@ -3,14 +3,15 @@
     <div class="filter-container">
       <div class="filter-item">
         <span>模版名称:</span>
-        <el-input v-model="listQuery.name" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
-        <span>模版编码:</span>
-        <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-        <el-button class="filter-item" type="danger" icon="Plus" @click="handleCreate">新增</el-button>
+        <el-input v-model="listQuery.name" class="filter-item" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
       </div>
+      <div class="filter-item">
+        <span>模版编码:</span>
+        <el-input v-model="listQuery.code" class="filter-item" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
+      </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
-
     <el-table
       :key="tableKey"
       v-loading="listLoading"
@@ -33,7 +34,7 @@
       <el-table-column label="操作" width="160">
         <template #default="scope">
           <el-button v-permission="['email:template:update']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['email:template:delete']" size="small" icon="Delete" plain type="error" @click="handleDelete(scope.row)">删除
+          <el-button v-permission="['email:template:delete']" size="small" icon="Delete" plain type="danger" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>

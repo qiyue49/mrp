@@ -4,24 +4,27 @@
       <div class="filter-item">
         <span>Email:</span>
         <el-input v-model="listQuery.email" placeholder="请输入Email" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>主题:</span>
         <el-input v-model="listQuery.subject" placeholder="请输入主题" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
         <span>发送状态:</span>
         <el-select v-model="listQuery.status" placeholder="请选择发送状态">
           <el-option label="全部状态" value="" />
           <el-option
-            v-for="item in statusOptions"
-            :key="'filter_status'+ item.label "
-            :label="item.label"
-            :value="item.value"
+              v-for="item in statusOptions"
+              :key="'filter_status'+ item.label "
+              :label="item.label"
+              :value="item.value"
           />
         </el-select>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
-        <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
       </div>
+      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
     </div>
-
     <el-table
       ref="multipleTable"
       :key="tableKey"
@@ -67,7 +70,7 @@
 
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" type="error" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
