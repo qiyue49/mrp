@@ -20,7 +20,7 @@
             <div class="times">
               <span class="timess">23</span>
               <span>℃</span>
-              </div>
+            </div>
           </div>
         </div>
         <calen-dar class="calen-dar"/>
