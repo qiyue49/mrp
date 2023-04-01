@@ -19,7 +19,7 @@
       :data="list"
       fit
       highlight-current-row
-      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
+      header-cell-class-name="header-cell"
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" />

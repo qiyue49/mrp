@@ -3,7 +3,7 @@
     <el-col :span="6">
       <div>
         <div class="filter-container left-tree-list">
-          <el-table :data="treeList" row-key="id" highlight-current-row :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}" @row-click="submitForm">
+          <el-table :data="treeList" row-key="id" highlight-current-row header-cell-class-name="header-cell" @row-click="submitForm">
             <el-table-column prop="name" label="名称" />
           </el-table>
         </div>
@@ -36,7 +36,7 @@
           fit
           highlight-current-row
           style="width: 100%"
-          :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
+          header-cell-class-name="header-cell"
         >
           <el-table-column min-width="150" label="姓名">
             <template #default="scope">

@@ -31,7 +31,7 @@
       :data="list"
       fit
       highlight-current-row
-      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
+      header-cell-class-name="header-cell">
       <el-table-column label="租户标识" min-width="150px">
         <template #default="{row}">
           <span>{{ row.tenantId }}</span>

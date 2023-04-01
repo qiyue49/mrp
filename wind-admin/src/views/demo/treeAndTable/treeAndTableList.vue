@@ -34,7 +34,7 @@
           :data="list"
           fit
           highlight-current-row
-          :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
+          header-cell-class-name="header-cell"
           style="width: 100%;">
           <el-table-column label="部门名称" min-width="150px">
             <template #default="{row}">

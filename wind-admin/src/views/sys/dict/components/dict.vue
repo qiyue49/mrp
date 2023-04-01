@@ -10,7 +10,7 @@
         <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
-      <el-table :key="tableKey" v-loading="listLoading" :data="list" fit highlight-current-row :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}">
+      <el-table :key="tableKey" v-loading="listLoading" :data="list" fit highlight-current-row header-cell-class-name="header-cell">
         <el-table-column prop="label" label="字典标签" width="160" />
         <el-table-column prop="value" label="字典值" width="160" />
         <el-table-column prop="remarks" label="备注" width="160" />

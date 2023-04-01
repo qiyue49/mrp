@@ -22,7 +22,7 @@
       :data="list"
       highlight-current-row
       style="width: 100%;"
-      :header-cell-style="{background:'#F4F7FC',color:'#1762F2',borderTop:'4px solid #1762F2'}"
+      header-cell-class-name="header-cell"
     >
       <el-table-column min-width="150" label="配置名称">
         <template #default="{row}">
