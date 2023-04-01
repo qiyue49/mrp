@@ -59,23 +59,6 @@ export default {
   //  display: flex;
   //  align-items: center;
 }
-//  :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
-//   content: url(../../../assets/img/sanjiao-xia.svg);
-//   background-color: transparent !important;
-//   //  position: relative;
-//    color: #fff;
-//    z-index: 10;
-//    height: 55px;
-//    margin-left: 30px;
-//   }
-//  :deep(.el-sub-menu.is-active > .el-sub-menu__title::after) {
-//   content: 's';
-//    position: absolute;
-//    right: 0;
-//    color: #F5C265;
-//    background-color: #F5C265;
-//    height: 40px;
-//   }
 :deep(.el-menu-item.is-active) {
   color: #1762F2;
   background-color: #ffffff;
@@ -95,70 +78,16 @@ export default {
   //  width: 100px;
   position: relative;
 }
-//  :deep(.el-menu-item.is-active::after) {
-//    content: '>';
-//    position: absolute;
-//    right: 10px;
-//    color: #0243A3;
-//   //  background-color: #F5C265;
-//    height: 40px;
-//   }
-//  :deep(.el-menu-item.is-active::before) {
-//    content: url(../../../assets/img/shuxian2.png);
-//    position: absolute;
-//   //  left: -28px;
-//   //  top: -200px;
-//   top: -48px;
-//   left: 42px;
-//    z-index: 5;
-//    color: #0243A3;
-//   //  background-color: #F5C265;
-//   //  height: 40px;
-//   }
-:deep(.el-menu.el-menu--inline){
-  // padding-right: 20px !important;
-  // padding-right: 20px !important;
-}
-// :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
-//   content: url(../../../assets/img/shuxian1.png);
-//   overflow: hidden;
-//  position: absolute;
-//   // position: absolute;
-//   // left: -60px;
-// }
-// :deep(.el-menu.el-menu--inline > .el-menu-item ::before){
-//   content: url(../../../assets/img/shuxian1.png);
-//  position: absolute;
-//   // width: 0;
-//   // height: 36px;
-//   position: absolute;
-//   // left: -80px;
-//   top: -50px;
-// }
 :deep(.el-menu.el-menu--inline > .el-menu-item > span){
   padding-left: 40px !important;
   // padding-right: 20px !important;
   position: absolute;
   right: 50px;
 }
-:deep(.el-menu-item > span){
-  // padding-left: 40px !important;
-  // padding-right: 20px !important;
-  // margin-right: 100px !important
-}
 //对应子级，父级的样式
 .el-submenu.is-active > .el-submenu__title {
   background: rgb(206, 169, 181) !important;
 }
-// .el-submenu.is-active > .el-submenu__title::after {
-//   background: rgb(206, 169, 181) !important;
-//   content: 's';
-//    position: absolute;
-//    right: 0;
-//    color: #F5C265;
-//    background-color: #F5C265;
-//    height: 40px;
-// }
 //当前选中子级的样式
 .is-active{
   // background-color: #0242A3 !important;
@@ -185,15 +114,6 @@ export default {
   position: relative;
   color: #fff;
 }
-// .el-menu-item.is-active, li.el-menu-item.is-active::after {
-//    content: 's';
-//    position: absolute;
-//    right: 0;
-//    color: #F5C265;
-//    background-color: #F5C265;
-//    height: 40px;
-//   //  width: 10px;
-// }
 .el-sub-menu.is-active.is-opened{
   .el-menu.el-menu--inline{
     .el-menu-item.is-active{
@@ -206,30 +126,6 @@ export default {
   .is-active{
     background: #1762F2 !important;
     border-radius: 20px 0 0 20px;
-  }
-}
-:deep(.el-sub-menu){
-  .el-menu.el-menu--inline{
-    .el-menu-item{
-      .el-icon{
-        position: relative;
-      }
-      .el-icon::before{
-        position: absolute;
-        top: -50px;
-        content: url(../../../assets/img/shuxian1.png);
-      }
-    }
-    .el-menu-item.is-active{
-      .el-icon{
-        position: relative;
-      }
-      .el-icon::before{
-        position: absolute;
-        top: -50px;
-        content: url(../../../assets/img/shuxian2.png);
-      }
-    }
   }
 }
 </style>
