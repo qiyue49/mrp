@@ -32,8 +32,5 @@ export default {
 .app-main{
   margin-top: 30px;
 }
-:deep(.elcard){
-    // background-color: #F3F5F8;
-  }
 </style>
 

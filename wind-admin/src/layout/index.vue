@@ -12,7 +12,7 @@
         <el-main>
           <app-main />
         </el-main>
-        <el-footer>Footer</el-footer>
+        <el-footer>{{ title }} </el-footer>
       </el-container>
     </el-container>
   </div>
@@ -35,6 +35,9 @@ export default {
     },
     device() {
       return this.$store.appStore.device
+    },
+    title() {
+      return this.$store.settingStore.title
     },
     classObj() {
       return {

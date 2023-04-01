@@ -11,7 +11,6 @@
       </div>
       <img src="../../assets/img/login1.png" alt=""/>
     </div>
-    <!-- <div class="medd"></div> -->
     <div class="right">
       <div class="right_con">
         <div class="tit">
@@ -19,10 +18,9 @@
         </div>
         <el-form
           ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-          label-position="left">
+          label-position="top">
 
-          <el-form-item prop="username">
-            <p>用户名：</p>
+          <el-form-item label="用户名" prop="username">
             <el-input
               ref="username"
               v-model="loginForm.username"
@@ -34,9 +32,9 @@
               autocomplete="on"
             />
           </el-form-item>
-          <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
-            <el-form-item prop="password">
-              <p>密码：</p>
+          <el-form-item label="密码" prop="password">
+
+            <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
               <el-input
                 :key="passwordType"
                 ref="password"
@@ -50,21 +48,23 @@
                 @keyup="checkCapslock"
                 @blur="capsTooltip = false"
                 @keyup.enter="handleLogin"
-              />
-              <span class="show-pwd" @click="showPwd">
-                <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-              </span>
-            </el-form-item>
-          </el-tooltip>
-          <el-form-item v-if="errorTime >= 3" prop="identify">
-            验证码
+              >
+                <template #suffix>
+                  <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" @click="showPwd"/>
+                </template>
+              </el-input>
+            </el-tooltip>
+
+          </el-form-item>
+          <el-form-item v-if="errorTime >= 3" label="验证码" prop="identify">
+
             <el-row>
               <el-col :span="18">
                 <el-input
                   ref="username"
                   v-model="loginForm.identify"
                   prefix-icon="Postcard"
-                  :placeholder="验证码"
+                  placeholder="验证码"
                   name="identify"
                   type="text"
                   tabindex="3" />
@@ -100,7 +100,7 @@ export default {
   margin: 0;
 }
 .all{
-  background-image: url(../../assets/img/login2.png);
+  background-image: url(@/assets/img/login2.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: fixed;
@@ -110,7 +110,7 @@ export default {
   top: 0;
     display: flex;
     width: 100%;
-    height: 100bh;
+    height: 100vh;
     .left{
     width:50%;
     display: flex;
@@ -158,8 +158,9 @@ export default {
   height: 100%;
   background-color: #C24229;
 }
-.right{
-    width:50%;
+
+  .right {
+    width: 50%;
     // background-color: #0243A3;
     // padding: 200px;
     display: flex;
@@ -167,35 +168,39 @@ export default {
     justify-content: center;
     flex-direction: column;
 
-    .right_con{
+    .right_con {
       background-color: #fff;
       padding: 40px;
       border-radius: 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-       .tit{
+
+      .tit {
         font-size: 32px;
         font-weight: 500;
       }
-      .el-form{
-     
-      .el-form-item{
-        p{
-          font-weight: 900;
-          margin: 20px 0;
-        }
-        .el-form-item__content{
-          .el-input{
-            .el-input__wrapper{
-              border-radius: 0;
+
+      .el-form {
+
+        .el-form-item {
+          p {
+            font-weight: 900;
+            margin: 20px 0;
+          }
+
+          .el-form-item__content {
+            .el-input {
+              .el-input__wrapper {
+                border-radius: 0;
+              }
+
+              border-radius: 30px !important;
             }
-        border-radius: 30px !important;
-      }
+          }
         }
       }
     }
-    }
-}
+  }
 }
 </style>

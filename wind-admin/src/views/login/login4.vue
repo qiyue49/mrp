@@ -57,7 +57,7 @@
                       ref="username"
                       v-model="loginForm.identify"
                       prefix-icon="Postcard"
-                      :placeholder="验证码"
+                      placeholder="验证码"
                       name="identify"
                       type="text"
                       tabindex="3" />

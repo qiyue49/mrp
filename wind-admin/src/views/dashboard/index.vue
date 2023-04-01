@@ -79,8 +79,6 @@ export default {
 .top{
   display: flex;
   height: 80vh;
-  // overflow: hidden;
-  margin-top: -20px;
   .top_left{
     width: 65%;
     .top_left_top{
