@@ -122,8 +122,20 @@ export default {
                 display: flex;
                 flex-direction: column;
                 .left_top{
-                    font-size: 1.5rem;
                     font-weight: 500;
+                    font-size: 28px;
+                    font-family: DIN-Medium, DIN;
+                    font-weight: 500;
+                    color: #FFFFFF;
+                    letter-spacing: 2px;
+
+                }
+                .left_boom{
+                  font-size: 16px;
+                  font-family: PingFangSC-Medium, PingFang SC;
+                  font-weight: 500;
+                  color: #FFFFFF;
+                  letter-spacing: 4px;
                 }
             }
             img{

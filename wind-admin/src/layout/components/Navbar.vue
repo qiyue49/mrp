@@ -155,9 +155,14 @@ a{
       display: inline-block;
       padding: 0 8px;
       height: 100%;
-      font-size: 18px;
-      color: #5a5e66;
+      font-size: 30px;
+      color:#6B738D !important;
       vertical-align: text-bottom;
+
+      :deep .svg-icon{
+        width: 30px !important;
+        height: 30px !important;
+      }
 
       &.hover-effect {
         cursor: pointer;

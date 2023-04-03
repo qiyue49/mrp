@@ -213,6 +213,9 @@ span{
     cursor: pointer;
     font-size: 18px;
     vertical-align: middle;
+    width: 32px !important;
+    height: 31px !important;
+    margin-top: 14px;
   }
 
   .header-search-select {
