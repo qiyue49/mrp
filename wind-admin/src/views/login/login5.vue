@@ -11,7 +11,9 @@
               <img src="../../assets/img/login4.png" alt="" class="img2"/>
             </div>
           </div>
-          <img src="../../assets/img/login1.png" alt="" class="img-person"/>
+          <div class="image-box">
+            <img src="../../assets/img/login1.png" alt="" class="img-person"/>
+          </div>
         </div>
       </div>
       <div class="right">
@@ -24,8 +26,9 @@
             ref="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
             label-position="top"
             :model="loginForm"
+            hide-required-asterisk
           >
-            <el-form-item label="用户名" prop="username" class="label-box">
+            <el-form-item label="用户名" prop="username" class="label-box" >
               <el-input
                 ref="username"
                 v-model="loginForm.username"
@@ -62,7 +65,7 @@
               </el-tooltip>
 
             </el-form-item>
-            <el-form-item label="验证码" prop="identify" class="label-box">
+            <el-form-item v-if="errorTime >= 3" label="验证码" prop="identify" class="label-box">
 
               <el-row>
                 <el-col :span="18">
@@ -75,7 +78,7 @@
                     type="text"
                     tabindex="3" />
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="6" style="line-height:60px">
                   <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
                 </el-col>
               </el-row>
@@ -120,16 +123,19 @@ export default {
   height: 100vh;
     .all-box{
       width: 100%;
+      height: 100%;
       display: flex;
     }
     .left{
     width:50%;
+    height: 100%;
     margin-top: 130px;
     position: relative;
     text-align: center;
     .left-contain{
       position: absolute;
       right: 0;
+      height: 100%;
     }
     .left-f1{
       position: relative;
@@ -153,9 +159,17 @@ export default {
       color: #fff;
     }
 
-    .img-person{
+    .image-box{
+      height: calc(100% - 502px);
+      .img-person{
       margin-right: 15px;
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      height: auto;
     }
+    }
+
     img{
       // width: 100%;
       // height: 100vh;
@@ -169,6 +183,7 @@ export default {
 
   .right {
     width: 50%;
+    height: 100%;
     position: relative;
     .right-con{
     width: 65%;
@@ -179,7 +194,7 @@ export default {
     height: auto;
     background-color: #fff;
     border-radius: 30px;
-    padding: 46px 50px 100px 50px;
+    padding: 46px 50px 117px 50px;
     box-sizing: border-box;
     .tit {
         font-size: 32px;
@@ -201,7 +216,7 @@ export default {
          }
       }
 
-        .el-form--label-top .el-form-item :deep .el-form-item__label {
+        .el-form--label-top .el-form-item :deep(.el-form-item__label)  {
           color: #252631;
           font-size: 24px !important;
           font-weight: 600 !important;
@@ -210,7 +225,7 @@ export default {
           // margin-top: 45px;
         }
 
-        :deep .el-icon svg {
+        :deep(.el-icon svg) {
           width: 20px;
           height: 23px;
         }
@@ -221,9 +236,9 @@ export default {
           margin-bottom: 45px;
         }
 
-        :deep .el-button{
+        :deep(.el-button){
           width: 100%;
-          height: 80px;
+          height: 60px;
           background: #1762F2;
           box-shadow: 0px 0px 22px 0px rgb(23 98 242 / 21%);
           border-radius: 40px;
@@ -234,7 +249,7 @@ export default {
           letter-spacing: 10px;
         }
 
-        :deep .el-input__inner{
+        :deep(.el-input__inner) {
                 font-size: 20px;
                 font-family: PingFangSC-Medium, PingFang SC;
                 font-weight: 500;
@@ -245,8 +260,8 @@ export default {
 
         .el-form-item__content{
           .el-input{
-            height: 80px;
-            :deep .el-input__wrapper{
+            height: 60px;
+            :deep(.el-input__wrapper){
               border-radius: 40px !important;
             }
           }

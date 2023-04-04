@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon icon-class="fullscreen" @click="click" />
+    <svg-icon icon-class="quanping" @click="click" />
   </div>
 </template>
 

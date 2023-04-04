@@ -139,19 +139,25 @@ export default {
                 }
             }
             img{
-                width: 50px;
+              width: 66px;
+              height: 64px;
+              background: linear-gradient(180deg, #FFFFFF 0%, #D8E5FF 100%);
+              box-shadow: 0px 4px 0px 0px #f4f6ff;
+              border-radius: 16px;
             }
         }
         .right{
           img{
+            margin-top: 8px;
           }
         }
     }
     }
     .f2{
         width: 100%;
-        padding: 0 -40px;
+        // padding: 0 -40px;
         height: 450px;
+        margin-top: 20px;
     }
     .f3{
         color: #1762F2;
@@ -160,6 +166,11 @@ export default {
         width: 80%;
         text-align: center;
         padding: 10px 0;
+        font-size: 14px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        letter-spacing: 3px;
+        margin-bottom: 30px;
         span{
         background-color: #fff;
         border-radius: 20px;

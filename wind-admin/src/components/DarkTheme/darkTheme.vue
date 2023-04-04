@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon :icon-class="isDark ? 'eye' : 'eye-open'" @click="toggleDark()" />
+    <svg-icon :icon-class="yejian ? 'yejian' : 'yejian'" @click="toggleDark()" />
   </div>
 </template>
 
