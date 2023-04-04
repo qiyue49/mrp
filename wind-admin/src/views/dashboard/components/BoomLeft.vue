@@ -189,7 +189,7 @@ export default {
             type: 'bar',
             data: barData,
             barWidth: 10,
-            barCategoryGap: '42%',
+            barCategoryGap: '30%',
             // barGap: 100,
             smooth: true,
             valueAnimation: true,
@@ -246,6 +246,7 @@ export default {
     display: flex;
     border-radius: 10px;
     .left{
+      width: 30%;
         .f1{
 
           &:first-child{
@@ -257,7 +258,6 @@ export default {
           margin-top: 20px;
           border-radius: 10px;
           align-items: center;
-          height: 27%;
             img{
                 width: 50px;
                 height: 50px;
@@ -281,6 +281,8 @@ export default {
               font-weight: 600;
               color: #252631;
               letter-spacing: 1px;
+              display: inline-block;
+              margin-left: 4px;
             }
         }
     }
