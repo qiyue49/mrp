@@ -2,15 +2,17 @@
   <div class="all">
     <div class="all-box">
       <div class="left">
-        <span class="left_f2">欢迎使用飞廉系统</span>
-        <div class="left_f1">
-          <img src="../../assets/img/login3.png" alt=""/>
-          <div><img src="../../assets/img/login4.png" alt="" class="img1"/>
-            <span>为中小企业提供便捷服务，提升企业影响力</span>
-            <img src="../../assets/img/login4.png" alt="" class="img2"/>
+        <div class="left-contain">
+          <span class="left-f2">欢迎使用飞廉系统</span>
+          <div class="left-f1">
+            <img src="../../assets/img/login3.png" alt=""/>
+            <div><img src="../../assets/img/login4.png" alt="" class="img1"/>
+              <span>为中小企业提供便捷服务，提升企业影响力</span>
+              <img src="../../assets/img/login4.png" alt="" class="img2"/>
+            </div>
           </div>
+          <img src="../../assets/img/login1.png" alt="" class="img-person"/>
         </div>
-        <img src="../../assets/img/login1.png" alt=""/>
       </div>
       <div class="right">
         <div class="right-con">
@@ -117,20 +119,19 @@ export default {
   width: 100%;
   height: 100vh;
     .all-box{
-      width: 1625px;
-      margin: 0 auto;
+      width: 100%;
       display: flex;
     }
     .left{
     width:50%;
     margin-top: 130px;
+    position: relative;
     text-align: center;
-    // display: flex;
-    // flex-direction: column;
-    // align-items: center;
-    // justify-content: space-around;
-    // padding: 60px 0;
-    .left_f1{
+    .left-contain{
+      position: absolute;
+      right: 0;
+    }
+    .left-f1{
       position: relative;
       color: #FFC700;
       font-size: 26px;
@@ -146,10 +147,14 @@ export default {
         top: 30%;
       }
     }
-    .left_f2{
+    .left-f2{
       font-size: 52px;
       font-weight: 900;
       color: #fff;
+    }
+
+    .img-person{
+      margin-right: 15px;
     }
     img{
       // width: 100%;
@@ -164,10 +169,13 @@ export default {
 
   .right {
     width: 50%;
+    position: relative;
     .right-con{
-    width: 75%;
+    width: 65%;
     margin-top: 137px;
-    margin-left: 203px;
+    position: absolute;
+    right: 10%;
+    // margin-left: 203px;
     height: auto;
     background-color: #fff;
     border-radius: 30px;
