@@ -62,7 +62,7 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [0, 932, 901, 934, 1290, 1330, 0],
+            data: [0, 100, 601, 234, 290, 598, 265],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{

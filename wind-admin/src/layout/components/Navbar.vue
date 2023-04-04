@@ -109,10 +109,15 @@ a{
   text-decoration: none;
 }
 
-.navbar{
-  height: 86px;
-  background: #FFFFFF;
-  box-shadow: 0px 2px 4px 0px rgba(2,67,163,0.05);
+.navbar {
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+  .topleft{
+    // display: flex;
+    // align-items: center;
+  }
   .hamburger-container {
     line-height: 46px;
     height: 100%;
@@ -140,11 +145,11 @@ a{
 
   .right-menu {
     float: right;
-    height: 86px;
-    line-height: 86px;
+    height: 100%;
+    // line-height: 50px;
     display: flex;
     align-items: center;
-    margin-right: 20px;
+
     &:focus {
       outline: none;
     }
@@ -158,8 +163,8 @@ a{
       vertical-align: text-bottom;
 
       :deep .svg-icon{
-        width: 30px !important;
-        height: 30px !important;
+        width: 23px !important;
+        height: 23px !important;
       }
 
       &.hover-effect {
@@ -180,10 +185,9 @@ a{
         position: relative;
         .user-avatar {
           cursor: pointer;
-          width: 60px;
-          height: 60px;
+          width: 40px;
+          height: 40px;
           border-radius: 10px;
-          margin-top: 13px;
         }
 
         .el-icon-caret-bottom {
@@ -197,97 +201,5 @@ a{
     }
   }
 }
-// .navbar {
-//   height: 50px;
-//   overflow: hidden;
-//   position: relative;
-//   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-//   .topleft{
-//     // display: flex;
-//     // align-items: center;
-//   }
-//   .hamburger-container {
-//     line-height: 46px;
-//     height: 100%;
-//     float: left;
-//     cursor: pointer;
-//     transition: background .3s;
-//     -webkit-tap-highlight-color:transparent;
-
-//     &:hover {
-//       background: rgba(0, 0, 0, .025)
-//     }
-//   }
-
-//   .breadcrumb-container {
-//     float: left;
-//   }
-//   .topmenu-container {
-//     position: absolute;
-//     left: 50px;
-//   }
-//   .errLog-container {
-//     display: inline-block;
-//     vertical-align: top;
-//   }
-
-//   .right-menu {
-//     float: right;
-//     height: 100%;
-//     // line-height: 50px;
-//     display: flex;
-//     align-items: center;
-
-//     &:focus {
-//       outline: none;
-//     }
-
-//     .right-menu-item {
-//       display: inline-block;
-//       padding: 0 8px;
-//       height: 100%;
-//       font-size: 30px;
-//       color:#6B738D !important;
-//       vertical-align: text-bottom;
-
-//       :deep .svg-icon{
-//         width: 30px !important;
-//         height: 30px !important;
-//       }
-
-//       &.hover-effect {
-//         cursor: pointer;
-//         transition: background .3s;
-
-//         &:hover {
-//           background: rgba(0, 0, 0, .025)
-//         }
-//       }
-//     }
-
-//     .avatar-container {
-//       margin-right: 30px;
-//       line-height: 35px;
-//       .avatar-wrapper {
-//         margin-top: 5px;
-//         position: relative;
-//         .user-avatar {
-//           cursor: pointer;
-//           width: 40px;
-//           height: 40px;
-//           border-radius: 10px;
-//         }
-
-//         .el-icon-caret-bottom {
-//           cursor: pointer;
-//           position: absolute;
-//           right: -20px;
-//           top: 25px;
-//           font-size: 12px;
-//         }
-//       }
-//     }
-//   }
-// }
 </style>
 

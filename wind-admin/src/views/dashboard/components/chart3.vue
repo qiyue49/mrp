@@ -26,15 +26,19 @@ export default {
           borderRadius: '10',
           textStyle: {
             fontSize: 14,
-            fontWeight: 'normal',
             color: '#252631',
+            fontFamily: 'PingFangSC-Semibold',
+            fontWeight: '600',
+            letterSpacing: '2px',
             width: 30,
             height: 60
           },
           subtextStyle: {
             fontSize: 14,
-            fontWeight: 'normal',
             color: '#252631',
+            fontFamily: 'PingFangSC-Semibold',
+            fontWeight: '600',
+            letterSpacing: '2px',
             width: 30,
             height: 60
           }
@@ -68,7 +72,7 @@ export default {
               label: {
                 show: true,
                 fontSize: 14,
-                fontWeight: 'bold'
+                fontWeight: '600'
               }
             },
             labelLine: {

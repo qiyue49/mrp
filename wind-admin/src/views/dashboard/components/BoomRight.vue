@@ -41,15 +41,30 @@ export default {
       display: flex;
       width: 100%;
       justify-content: space-between;
+      align-items: center;
+
+      span{
+        font-size: 16px;
+        font-family: DIN-Bold, DIN;
+        font-weight: bold;
+        color: #252631;
+        letter-spacing: 2px;
+        img{
+          margin-right: 8px;
+        }
+      }
     }
     .f2{
-      margin-top: 20px;
       text-align: center;
-      font-weight: 900;
-      font-size: 16px;
+      font-size: 20px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      color: #252631;
+      letter-spacing: 5px;
+      margin-top: 15px;
     }
     .el-progress{
-      margin-top: 20px;
+      margin-top: 41px;
     }
     .f3{
       display: flex;
@@ -57,7 +72,12 @@ export default {
       margin-top: 20px;
       span{
         // flex: 1;
-        width: 60px;
+        width: 80px;
+        font-size: 14px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #252631;
+        letter-spacing: 2px;
       }
      div{
       display: flex;

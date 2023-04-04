@@ -6,7 +6,7 @@
       <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">本月</span>
       <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">本周</span>
     </div>
-    <div ref="$chart1" style="width: 100%;height: 90%"></div>
+    <div ref="$chart1" style="width: 100%;height: 90%;margin-top: -30px;"></div>
   </div>
 
 </template>
@@ -56,6 +56,9 @@ export default {
         xAxis: [
           {
             type: 'category',
+            axisTick: {
+              show: false // 不显示坐标轴刻度线
+            },
             data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             axisPointer: {
               type: 'shadow'
@@ -75,7 +78,7 @@ export default {
           },
           {
             type: 'value',
-            name: '花费',
+            // name: '花费',
             min: 0,
             max: 5000,
             interval: 1000,
@@ -126,6 +129,7 @@ export default {
           {
             name: '花费',
             type: 'line',
+            // type: 'bar',
             // lineWidth: 100,
             yAxisIndex: 1,
             smooth: true,
@@ -172,7 +176,12 @@ export default {
         border-right: 1px solid #EEF0F4;
         border-top: 1px solid #EEF0F4;
         border-bottom: 1px solid #EEF0F4;
-        padding: 5px 10px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        width: 100px;
+        display: inline-block;
+        border-radius: 7px 0px 0px 6px;
+        text-align: center;
       }
       .clickbtn{
         background-color: #1762F2;

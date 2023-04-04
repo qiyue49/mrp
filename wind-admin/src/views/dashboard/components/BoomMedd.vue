@@ -39,15 +39,19 @@ export default {
           formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
         grid: {
-		        left: '0',
-		        right: '0',
-		        bottom: '0',
-		        containLabel: true
+		      left: '0',
+          right: '0',
+		      bottom: '0',
+		      containLabel: true
 		    },
         xAxis: {
-          show: true, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
+          axisTick: {
+            show: false // 不显示坐标轴刻度线
+          },
+          // show: true, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
           type: 'category',
-          boundaryGap: false,
+          // boundaryGap: false,
+          boundaryGap: ['0', '0.5'], // 坐标轴两边留白策略
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
@@ -58,7 +62,7 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [0, 1500, 90, 94, 1290, 1330, 320],
+            data: [450, 800, 90, 94, 790, 330, 320],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -111,7 +115,12 @@ export default {
         border-right: 1px solid #EEF0F4;
         border-top: 1px solid #EEF0F4;
         border-bottom: 1px solid #EEF0F4;
-        padding: 5px 10px;
+        padding-top:10px;
+        padding-bottom: 10px;
+        width: 90px;
+        border-radius: 7px 0px 0px 6px;
+        display: inline-block;
+        text-align: center;
       }
       .clickbtn{
         background-color: #1762F2;
@@ -121,9 +130,15 @@ export default {
        .right{
         span{
         padding: 5px 10px;
+        font-size: 14px;
+        font-family: PingFangSC-Medium, PingFang SC;
+        font-weight: 500;
+        color: #252631;
+        letter-spacing: 2px;
       }
       .clickbtn{
         color: #1762F2;
+        font-weight: 600;
       }
        }
     }

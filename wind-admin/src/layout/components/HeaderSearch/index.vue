@@ -213,8 +213,8 @@ span{
     cursor: pointer;
     font-size: 18px;
     vertical-align: middle;
-    width: 32px !important;
-    height: 31px !important;
+    width: 23px !important;
+    height: 23px !important;
     margin-top: 14px;
   }
 

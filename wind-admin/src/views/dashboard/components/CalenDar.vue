@@ -10,8 +10,8 @@
     >
       <swiper-slide v-for="item in data" :key="item.id">
         <div :class="click==item.id?'selectbtn':'btn'" @click="select(item)">
-          <span>{{ item.con }}</span>
-          <span>{{ item.tit }}</span>
+          <span class="text">{{ item.con }}</span>
+          <span class="week">{{ item.tit }}</span>
         </div>
       </swiper-slide>
     </swiper>
@@ -75,8 +75,8 @@ export default {
 <style lang="scss" scoped>
 .container{
     position: relative;
-    margin: 20px 0;
-    width: 75% !important;
+    // margin: 20px 0;
+    width: 85% !important;
   }
   :deep(.swiper) {
     position: initial;
@@ -91,10 +91,10 @@ export default {
       // background-color: #27bb9a;
     }
     .swiper-button-prev {
-      left: -50px;
+      left: -35px;
     }
     .swiper-button-next {
-      right: -50px;
+      right: -35px;
     }
     .swiper-button-prev,
     .swiper-button-next {
@@ -113,6 +113,19 @@ export default {
       background-color:#ccc;
       cursor:not-allowed;
       pointer-events:initial;
+    }
+
+    .text{
+      font-size: 20px;
+      font-family: DINAlternate-Bold, DINAlternate;
+      font-weight: bold;
+    }
+
+    .week{
+      font-size: 14px;
+      font-family: PingFangSC-Semibold, PingFang SC;
+      font-weight: 600;
+      letter-spacing: 2px;
     }
   }
 

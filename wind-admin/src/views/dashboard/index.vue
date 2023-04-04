@@ -13,26 +13,29 @@
       </div>
       <div class="top_right" style="marginLeft:20px">
         <div class="title">
-          <span class="tit">早上好欢迎进入飞廉系统</span>
-          <div>晴</div>
+          <span class="tit">早上好，欢迎进入飞廉系统</span>
+          <div class="weather">晴</div>
           <div class="time">
-            <span>2月16   星期四  </span>
+            <div class="text">
+              <span>2月16</span>
+              <span>星期四</span>
+            </div>
             <div class="times">
               <span class="timess">23</span>
-              <span>℃</span>
+              <span class="temp">℃</span>
             </div>
           </div>
         </div>
         <calen-dar class="calen-dar"/>
         <div class="lists">
-          <div v-for="item in 10" :key="item" class="list">
+          <div v-for="item in 6" :key="item" class="list">
             <img src="../../assets/img/OIP-C.jpg" alt=""/>
             <div class="con">
               <div>
                 <span>Jel Chibuzo</span>
                 <span class="tits">呼吸内科</span>
               </div>
-              <div style="color:#999BAF">擅长看呼吸系统疾病，特别是下呼吸道疾病以</div>
+              <div class="show-text" style="color:#999BAF">擅长看呼吸系统疾病，特别是下呼吸道疾病以擅长看呼吸系统疾病</div>
             </div>
             <span class="yu">+预约</span>
           </div>
@@ -89,29 +92,46 @@ export default {
     .top_left_boom{
       // width: 100%;
       margin-top: 2%;
-      height: 53%;
+      height: 52%;
     }
   }
   .top_right{
     background-color: #fff;
-    padding: 20px;
+    // padding: 20px;
+    padding: 30px 29px 31px 25px;
     width: 35%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
     .title{
       // background-color: #6C99FF;
       width: 100%;
       background-image: url("../../assets/img/lanbg.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-      padding: 20px;
-      padding-bottom: 0;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      box-sizing: border-box;
+      padding-top: 22px;
+      padding-left: 21px;
+      padding-bottom: 10px;
       border-radius: 10px;
       color: #FFFFFF;
+      margin-left: 6px;
       .tit{
-        font-size: 1.5rem;
+        font-size: 24px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #FFFFFF;
+        letter-spacing: 4px;
+      }
+
+      .weather{
+        font-size: 18px;
+        font-family: PingFangSC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #FFFFFF;
+        letter-spacing: 3px;
       }
       .time{
         margin-top: -10px;
@@ -119,32 +139,54 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        .text{
+          font-size: 16px;
+          font-family: PingFangSC-Semibold, PingFang SC;
+          font-weight: 600;
+          color: #FFFFFF;
+          letter-spacing: 2px;
+          span{
+            &:first-child{
+              display: inline-block;
+              margin-right: 16px;
+            }
+
+          }
+        }
         .times{
           display: flex;
           align-items: center;
           .timess{
-            font-size: 40px;
-            // font-weight: 500;
+            font-size: 48px;
+            font-family: DINAlternate-Bold, DINAlternate;
+            font-weight: 600;
+            color: #FFFFFF;
+            letter-spacing: 4px;
+          }
+          .temp{
+            font-size: 28px;
+            font-family: DINAlternate-Bold, DINAlternate;
+            font-weight: bold;
+            color: #FFFFFF;
+            letter-spacing: 2px;
           }
         }
       }
     }
     .calen-dar{
-      margin: 20px;
-      margin-top: 0;
+      margin-top: 20px;
     }
     .lists{
       width: 100%;
       overflow: hidden;
       // height: 50%;
-      flex: 1;
       .list{
       display: flex;
-      justify-content: space-between;
       height: 60px;
-      margin-top: 10px;
+      margin-top: 32px;
       overflow: auto;
       align-items: center;
+      position: relative;
       // padding: 10px 0;
       img{
         // width: 10%;
@@ -155,6 +197,8 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-around;
+        margin-left: 15px;
+        width: 62%;
         .tits{
           border: 1px solid #FFC700;
           color: #FFC700;
@@ -165,6 +209,12 @@ export default {
           border-radius: 3px;
         }
       }
+      .show-text{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-top: 9px;
+      }
       .yu{
         background-color: #1762F2;
         border-radius: 20px;
@@ -172,6 +222,9 @@ export default {
         height: 30px;
         line-height: 30px;
         color: #fff;
+        position:absolute;
+        right: 5px;
+        box-sizing: border-box;
       }
     }
     }

@@ -83,5 +83,7 @@ export default {
 .el-main {
   padding-top: 0px;
   min-height: calc(100vh - 109px);
+  box-sizing: border-box;
+  width: 100%;
 }
 </style>

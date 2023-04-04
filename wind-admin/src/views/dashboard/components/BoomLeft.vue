@@ -5,27 +5,27 @@
         <img src="../../../assets/img/bz1.png" alt=""/>
         <div>
           <span>
-            <span style="color:#1762F2;fontSize:1.5rem">620</span>
-            单</span>
-          <span>订单总数</span>
+            <span style="color:#1762F2;font-size:18px;font-weight: 500;">620</span>
+            <span class="price">单</span></span>
+          <span class="common">订单总数</span>
         </div>
       </div>
       <div class="f1">
         <img src="../../../assets/img/bz2.png" alt=""/>
         <div>
           <span>
-            <span style="color:#D34D25;fontSize:1.5rem">620</span>
-            单</span>
-          <span>销售总量</span>
+            <span style="color:#D34D25;font-size:18px;font-weight: 500;">620</span>
+            <span class="price">单</span></span>
+          <span class="common">销售总量</span>
         </div>
       </div>
       <div class="f1">
         <img src="../../../assets/img/bz3.png" alt=""/>
         <div>
           <span>
-            <span style="color:#FFC700;fontSize:1.5rem">620</span>
-            单</span>
-          <span>总销售额</span>
+            <span style="color:#FFC700;font-size:18px;font-weight: 500;">620</span>
+            <span class="price">单</span></span>
+          <span class="common">总销售额</span>
         </div>
       </div>
     </div>
@@ -189,7 +189,8 @@ export default {
             type: 'bar',
             data: barData,
             barWidth: 10,
-            barGap: 10,
+            barCategoryGap: '42%',
+            // barGap: 100,
             smooth: true,
             valueAnimation: true,
             // Y轴数字显示部分
@@ -246,12 +247,17 @@ export default {
     border-radius: 10px;
     .left{
         .f1{
+
+          &:first-child{
+            margin-top: 0;
+          }
           padding: 0 10px;
-            display: flex;
-                background-color: #F3F5F8;
-                margin-top: 10px;
-                border-radius: 5px;
-                align-items: center;
+          display: flex;
+          background-color: #F3F5F8;
+          margin-top: 20px;
+          border-radius: 10px;
+          align-items: center;
+          height: 27%;
             img{
                 width: 50px;
                 height: 50px;
@@ -260,6 +266,21 @@ export default {
                 padding: 10px;
                 display: flex;
                 flex-direction: column;
+            }
+            .common{
+              font-size: 12px;
+              font-family: PingFangSC-Medium, PingFang SC;
+              font-weight: 500;
+              color: #252631;
+              letter-spacing: 2px;
+            }
+
+            .price{
+              font-size: 10px;
+              font-family: PingFangSC-Semibold, PingFang SC;
+              font-weight: 600;
+              color: #252631;
+              letter-spacing: 1px;
             }
         }
     }

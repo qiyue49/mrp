@@ -38,7 +38,6 @@ export default {
   width: 20px;
   height: 20px;
   margin-left: 30px;
-  margin-top: 32px;
 }
 
 .hamburger.is-active {
