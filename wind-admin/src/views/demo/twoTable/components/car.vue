@@ -38,7 +38,7 @@
 
       <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-      <car-form ref="form" @getList="getList" />
+      <car-form ref="form" @get-list="getList" />
     </div>
   </div>
 </template>

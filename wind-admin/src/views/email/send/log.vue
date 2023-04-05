@@ -14,10 +14,10 @@
         <el-select v-model="listQuery.status" placeholder="请选择发送状态">
           <el-option label="全部状态" value="" />
           <el-option
-              v-for="item in statusOptions"
-              :key="'filter_status'+ item.label "
-              :label="item.label"
-              :value="item.value"
+            v-for="item in statusOptions"
+            :key="'filter_status'+ item.label "
+            :label="item.label"
+            :value="item.value"
           />
         </el-select>
       </div>

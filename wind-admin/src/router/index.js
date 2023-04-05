@@ -107,7 +107,7 @@ export const constantRoutes = [
         meta: { title: '修改密码', icon: 'el-icon-user', noCache: true }
       }
     ]
-  },
+  }
   // { path: '/:path(.*)', redirect: '/404' }
 ]
 

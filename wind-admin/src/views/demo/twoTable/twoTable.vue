@@ -7,7 +7,7 @@
             <span>汽车品牌</span>
           </template>
           <div class="item">
-            <car @refreshCarModel="refreshCarModel" />
+            <car @refresh-car-model="refreshCarModel" />
           </div>
         </el-card>
 

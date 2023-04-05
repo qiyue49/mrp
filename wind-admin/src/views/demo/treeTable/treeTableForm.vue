@@ -38,6 +38,7 @@ import { createTreeTable, updateTreeTable, getTreeTable } from '@/api/demo/treeT
 
 export default {
   name: 'TreeTableForm',
+  emits: ['refreshList'],
   data() {
     return {
       rules: {

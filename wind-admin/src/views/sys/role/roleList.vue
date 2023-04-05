@@ -13,7 +13,7 @@
       <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
-    <el-table style="border:none" v-loading="listLoading" :data="list" fit highlight-current-row header-cell-class-name="header-cell">
+    <el-table v-loading="listLoading" style="border:none" :data="list" fit highlight-current-row header-cell-class-name="header-cell">
       <el-table-column min-width="150" label="角色名称">
         <template #default="{row}">
           <span>{{ row.name }}</span>

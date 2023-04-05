@@ -91,7 +91,7 @@
           </template>
         </el-dialog>
 
-        <el-dialog custom-class="dialog-title" class="setname" v-model="dialogFormRolesVisible" title="设置角色">
+        <el-dialog v-model="dialogFormRolesVisible" custom-class="dialog-title" class="setname" title="设置角色">
           <el-transfer
             v-model="userRoleIds"
             :filterable="true"

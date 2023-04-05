@@ -10,7 +10,7 @@
       </el-button>
     </div>
 
-    <el-table highlight-current-row v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
+    <el-table v-loading="listLoading" highlight-current-row :data="list" style="width: 100%;" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
       <el-table-column label="机构名称" min-width="150px">
         <template #default="{row}">
           <span>{{ row.name }}</span>

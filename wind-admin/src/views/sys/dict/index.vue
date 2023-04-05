@@ -7,7 +7,7 @@
             <span>字典分组</span>
           </template>
           <div class="item">
-            <dict-group @refreshDicts="onRefreshDicts" />
+            <dict-group @refresh-dicts="onRefreshDicts" />
           </div>
         </el-card>
 

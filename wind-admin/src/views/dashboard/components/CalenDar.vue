@@ -6,7 +6,7 @@
       :space-between="50"
       navigation
       @swiper="onSwiper"
-      @slideChange="onSlideChange"
+      @slide-change="onSlideChange"
     >
       <swiper-slide v-for="item in data" :key="item.id">
         <div :class="click==item.id?'selectbtn':'btn'" @click="select(item)">
