@@ -10,7 +10,7 @@ public class WebSocketConfig {
     /*
      * 如果使用tomcat打包，注释掉@Bean，否则会有冲突
      * */
-//    @Bean
+    @Bean
     public ServerEndpointExporter serverEndpointExporter() {
 
         return new ServerEndpointExporter();
