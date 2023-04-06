@@ -69,11 +69,6 @@
             </dependency>
             <dependency>
                 <groupId>com.sunseagear</groupId>
-                <artifactId>wind-common-query</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.sunseagear</groupId>
                 <artifactId>wind-common-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
