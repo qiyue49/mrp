@@ -2,7 +2,7 @@
   <div class="all">
     <div class="left">
       <div class="f1">
-        <img src="../../../assets/img/bz1.png" alt=""/>
+        <img src="../../../assets/img/dashboard/shopCart.png" alt=""/>
         <div>
           <span>
             <span style="color:#1762F2;font-size:18px;font-weight: 500;">620</span>
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="f1">
-        <img src="../../../assets/img/bz2.png" alt=""/>
+        <img src="../../../assets/img/dashboard/sell.png" alt=""/>
         <div>
           <span>
             <span style="color:#D34D25;font-size:18px;font-weight: 500;">620</span>
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="f1">
-        <img src="../../../assets/img/bz3.png" alt=""/>
+        <img src="../../../assets/img/dashboard/price.png" alt=""/>
         <div>
           <span>
             <span style="color:#FFC700;font-size:18px;font-weight: 500;">620</span>
@@ -35,23 +35,23 @@
     </div>
   </div></template>
 <script>
-import bz11 from '../../../assets/img/bz11.png'
-import bz22 from '../../../assets/img/bz22.png'
-import bz33 from '../../../assets/img/bz33.png'
+import listOne from '../../../assets/img/dashboard/listOne.png'
+import topTwo from '../../../assets/img/dashboard/topTwo.png'
+import topThree from '../../../assets/img/dashboard/topThree.png'
 export default {
   name: 'Chart1',
   data() {
     return {
       rankIconsSize: 25,
       data: {
-        first: '../../../assets/img/bz3.png',
-        second: '../../../assets/img/bz3.png',
-        third: '../../../assets/img/bz3.png',
-        fourth: '../../../assets/img/bz3.png',
-        fifth: '../../../assets/img/bz3.png',
-        sixth: '../../../assets/img/bz3.png',
-        seventh: '../../../assets/img/bz3.png',
-        eighth: '../../../assets/img/bz3.png'
+        first: '../../../assets/img/dashboard/price.png',
+        second: '../../../assets/img/dashboard/price.png',
+        third: '../../../assets/img/dashboard/price.png',
+        fourth: '../../../assets/img/dashboard/price.png',
+        fifth: '../../../assets/img/dashboard/price.png',
+        sixth: '../../../assets/img/dashboard/price.png',
+        seventh: '../../../assets/img/dashboard/price.png',
+        eighth: '../../../assets/img/dashboard/price.png'
       },
       dataTitle: 'rrrr',
       data1: [
@@ -137,32 +137,32 @@ export default {
             align: 'left', // 文字左排序
             rich: {
               a1: {
-                backgroundColor: { image: bz11 },
+                backgroundColor: { image: listOne },
                 width: this.rankIconsSize,
                 height: this.rankIconsSize
               },
               a2: {
-                backgroundColor: { image: bz22 },
+                backgroundColor: { image: topTwo },
                 width: this.rankIconsSize,
                 height: this.rankIconsSize
               },
               a3: {
-                backgroundColor: { image: bz33 },
+                backgroundColor: { image: topThree },
                 width: this.rankIconsSize,
                 height: this.rankIconsSize
               },
               a4: {
-                backgroundColor: { image: bz33 },
+                backgroundColor: { image: topThree },
                 width: this.rankIconsSize,
                 height: this.rankIconsSize
               },
               a5: {
-                backgroundColor: { image: bz33 },
+                backgroundColor: { image: topThree },
                 width: this.rankIconsSize,
                 height: this.rankIconsSize
               },
               a6: {
-                backgroundColor: { image: bz33 },
+                backgroundColor: { image: topThree },
                 width: this.rankIconsSize,
                 height: this.rankIconsSize
               }

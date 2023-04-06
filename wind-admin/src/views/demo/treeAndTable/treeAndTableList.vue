@@ -10,66 +10,68 @@
       </div>
     </el-col>
     <el-col :span="18">
-      <div class="app-container">
-        <div class="filter-container">
-          <div class="filter-item">
-            <span>部门名称:</span>
-            <el-input v-model="listQuery.name" placeholder="请输入部门名称" />
+      <el-card class="el-card">
+        <div class="app-container">
+          <div class="filter-container">
+            <div class="filter-item">
+              <span>部门名称:</span>
+              <el-input v-model="listQuery.name" placeholder="请输入部门名称" />
+            </div>
+            <div class="filter-item">
+              <span>类型:</span>
+              <el-input v-model="listQuery.type" placeholder="请输入类型" />
+            </div>
+            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+              搜索
+            </el-button>
+            <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+              新增
+            </el-button>
           </div>
-          <div class="filter-item">
-            <span>类型:</span>
-            <el-input v-model="listQuery.type" placeholder="请输入类型" />
-          </div>
-          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-            搜索
-          </el-button>
-          <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-            新增
-          </el-button>
+
+          <el-table
+            :key="tableKey"
+            v-loading="listLoading"
+            :data="list"
+            fit
+            highlight-current-row
+            header-cell-class-name="header-cell"
+            style="width: 100%;">
+            <el-table-column label="部门名称" min-width="150px">
+              <template #default="{row}">
+                <span>{{ row.name }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="类型" min-width="150px">
+              <template #default="{row}">
+                <span>{{ row.type }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="标签" min-width="150px">
+              <template #default="{row}">
+                <span>{{ row.tag }}</span>
+              </template>
+            </el-table-column>
+            <el-table-column label="操作" width="230">
+              <template #default="{row}">
+                <el-button v-permission="['test:treeandtable:treeandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
+                  编辑
+                </el-button>
+                <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" icon="Delete" plain type="danger" @click="handleDelete(row)">
+                  删除
+                </el-button>
+                <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="warning" plain icon="More" @click="handleall(row)">
+                  更多
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+
+          <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+          <tree-and-table-form ref="form" @refresh-list="getList" />
         </div>
-
-        <el-table
-          :key="tableKey"
-          v-loading="listLoading"
-          :data="list"
-          fit
-          highlight-current-row
-          header-cell-class-name="header-cell"
-          style="width: 100%;">
-          <el-table-column label="部门名称" min-width="150px">
-            <template #default="{row}">
-              <span>{{ row.name }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="类型" min-width="150px">
-            <template #default="{row}">
-              <span>{{ row.type }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="标签" min-width="150px">
-            <template #default="{row}">
-              <span>{{ row.tag }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" width="230">
-            <template #default="{row}">
-              <el-button v-permission="['test:treeandtable:treeandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
-                编辑
-              </el-button>
-              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" icon="Delete" plain type="danger" @click="handleDelete(row)">
-                删除
-              </el-button>
-              <el-button v-permission="['test:treeandtable:treeandtable:delete']" size="small" type="warning" plain icon="More" @click="handleall(row)">
-                更多
-              </el-button>
-            </template>
-          </el-table-column>
-        </el-table>
-
-        <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-        <tree-and-table-form ref="form" @refresh-list="getList" />
-      </div>
+      </el-card>
     </el-col>
   </el-row>
 </template>

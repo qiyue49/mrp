@@ -1,59 +1,61 @@
 <template>
-  <div>
-    <div class="filter-container">
-      <div class="filter-item">
-        <span>菜单名称:</span>
-        <el-input v-model="listQuery.keyword" placeholder="请输入菜单名称" @keyup.enter="handleFilter" />
+  <el-card class="el-card">
+    <div>
+      <div class="filter-container">
+        <div class="filter-item">
+          <span>菜单名称:</span>
+          <el-input v-model="listQuery.keyword" placeholder="请输入菜单名称" @keyup.enter="handleFilter" />
+        </div>
+        <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
-      <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+
+      <el-table v-loading="listLoading" :data="list" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
+        <el-table-column ming-width="150" label="名称">
+          <template #default="scope">
+            <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="150" label="前端地址">
+          <template #default="scope">
+            <span>{{ scope.row.path }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="150" label="前端组件">
+          <template #default="scope">
+            <span>{{ scope.row.component }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="80" label="排序">
+          <template #default="scope">
+            <el-input v-model="scope.row.sort" @change="handleChangeSort(scope.row.id, scope.row.sort)" />
+          </template>
+        </el-table-column>
+        <el-table-column min-width="150" label="图标">
+          <template #default="scope">
+            <component :is="scope.row.icon" class="icon"/>
+            <span>{{ scope.row.icon }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="100" label="是否可用">
+          <template #default="scope">
+            <span>{{ dictLabel(scope.row.enabled, 'sf') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="150" label="操作">
+          <template #default="scope">
+            <el-button v-permission="['sys:menu:update']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['sys:menu:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+            <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="primary" plain icon="Coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <menu-form ref="form" @refresh-list="getList" />
+
+      <menu-gen-button ref="genButtonFrom" @refresh-list="getList" />
     </div>
-
-    <el-table v-loading="listLoading" :data="list" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
-      <el-table-column ming-width="150" label="名称">
-        <template #default="scope">
-          <span>{{ scope.row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" label="前端地址">
-        <template #default="scope">
-          <span>{{ scope.row.path }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" label="前端组件">
-        <template #default="scope">
-          <span>{{ scope.row.component }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="80" label="排序">
-        <template #default="scope">
-          <el-input v-model="scope.row.sort" @change="handleChangeSort(scope.row.id, scope.row.sort)" />
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" label="图标">
-        <template #default="scope">
-          <component :is="scope.row.icon" class="icon"/>
-          <span>{{ scope.row.icon }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="100" label="是否可用">
-        <template #default="scope">
-          <span>{{ dictLabel(scope.row.enabled, 'sf') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="150" label="操作">
-        <template #default="scope">
-          <el-button v-permission="['sys:menu:update']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sys:menu:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
-          <el-button v-if="scope.row.type === '2'" v-permission="['sys:menu:generate:button']" size="small" type="primary" plain icon="Coordinate" @click="handleGenerateButton(scope.row)">生成按钮</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <menu-form ref="form" @refresh-list="getList" />
-
-    <menu-gen-button ref="genButtonFrom" @refresh-list="getList" />
-  </div>
+  </el-card>
 </template>
 
 <script>

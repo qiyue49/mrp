@@ -5,14 +5,14 @@
         <div class="left-contain">
           <span class="left-f2">欢迎使用飞廉系统</span>
           <div class="left-f1">
-            <img src="../../assets/img/login3.png" alt=""/>
-            <div><img src="../../assets/img/login4.png" alt="" class="img1"/>
+            <img src="../../assets/img/login/login5/bottomPicture.png" alt=""/>
+            <div><img src="../../assets/img/login/login5/yellowDot.png" alt="" class="img1"/>
               <span>为中小企业提供便捷服务，提升企业影响力</span>
-              <img src="../../assets/img/login4.png" alt="" class="img2"/>
+              <img src="../../assets/img/login/login5/yellowDot.png" alt="" class="img2"/>
             </div>
           </div>
           <div class="image-box">
-            <img src="../../assets/img/login1.png" alt="" class="img-person"/>
+            <img src="../../assets/img/login/login5/picture.png" alt="" class="img-person"/>
           </div>
         </div>
       </div>
@@ -110,7 +110,7 @@ export default {
   margin: 0;
 }
 .all{
-  background-image: url(@/assets/img/login2.png);
+  background-image: url(@/assets/img/login/login5/BG.png);
   background-size: 100% 100%;
   background-repeat: no-repeat;
   position: fixed;
@@ -160,7 +160,7 @@ export default {
     }
 
     .image-box{
-      height: calc(100% - 502px);
+      height: calc(100% - 55%);
       .img-person{
       margin-right: 15px;
       max-height: 100%;
@@ -194,7 +194,7 @@ export default {
     height: auto;
     background-color: #fff;
     border-radius: 30px;
-    padding: 46px 50px 117px 50px;
+    padding: 46px 50px 10% 50px;
     box-sizing: border-box;
     .tit {
         font-size: 32px;
@@ -253,9 +253,7 @@ export default {
                 font-size: 20px;
                 font-family: PingFangSC-Medium, PingFang SC;
                 font-weight: 500;
-                color: #BAC4D5;
                 line-height: 28px;
-                letter-spacing: 5px;
         }
 
         .el-form-item__content{

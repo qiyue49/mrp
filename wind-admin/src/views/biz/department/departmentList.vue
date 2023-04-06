@@ -1,42 +1,44 @@
 <template>
-  <div class="app-container">
-    <div class="filter-container">
-      <el-button v-permission="['biz:department:department:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button>
+  <el-card class="el-card">
+    <div class="app-container">
+      <div class="filter-container">
+        <el-button v-permission="['biz:department:department:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
+      </div>
+
+      <el-table :data="list" style="width: 100%;" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
+        <el-table-column label="名称" min-width="150px">
+          <template #default="{row}">
+            <span>{{ row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="编码" min-width="150px">
+          <template #default="{row}">
+            <span>{{ row.code }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="用户" min-width="150px">
+          <template #default="{row}">
+            <span>{{ row.user.realname }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="230">
+          <template #default="{row}">
+            <el-button v-permission="['biz:department:department:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
+              编辑
+            </el-button>
+            <el-button v-permission="['biz:department:department:delete']" plain type="danger" icon="Delete" size="small" @click="handleDelete(row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <department-form ref="form" @refresh-list="getList" />
+
     </div>
-
-    <el-table :data="list" style="width: 100%;" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
-      <el-table-column label="名称" min-width="150px">
-        <template #default="{row}">
-          <span>{{ row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="编码" min-width="150px">
-        <template #default="{row}">
-          <span>{{ row.code }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="用户" min-width="150px">
-        <template #default="{row}">
-          <span>{{ row.user.realname }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="230">
-        <template #default="{row}">
-          <el-button v-permission="['biz:department:department:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-permission="['biz:department:department:delete']" plain type="danger" icon="Delete" size="small" @click="handleDelete(row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <department-form ref="form" @refresh-list="getList" />
-
-  </div>
+  </el-card>
 </template>
 
 <script>

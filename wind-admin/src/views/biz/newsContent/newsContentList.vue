@@ -1,67 +1,69 @@
 <template>
-  <div class="app-container">
-    <div class="filter-container">
-      <div class="filter-item">
-        <span>内容标题:</span>
-        <el-input v-model="listQuery.newsContentTitle" placeholder="请输入内容标题" />
+  <el-card class="el-card">
+    <div class="app-container">
+      <div class="filter-container">
+        <div class="filter-item">
+          <span>内容标题:</span>
+          <el-input v-model="listQuery.newsContentTitle" placeholder="请输入内容标题" />
+        </div>
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
+        <el-button v-permission="['biz:newsContent:newscontent:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button v-permission="['biz:newsContent:newscontent:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button>
+
+      <el-table
+        ref="table"
+        :key="tableKey"
+        v-loading="listLoading"
+        :data="list"
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        header-cell-class-name="header-cell"
+      >
+        <el-table-column show-overflow-tooltip label="内容标题" width="150px">
+          <template #default="{row}">
+            <span>{{ row.newsContentTitle }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="新闻类型" min-width="150px">
+          <template #default="{row}">
+            <span>{{ row.newsTypeName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="发布时间" min-width="150px">
+          <template #default="{row}">
+            <span>{{ parseTime( row.newsReleaseTime, '{y}-{m}-{d}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column class-name="imgflx" label="相关图片" min-width="150px">
+          <template #default="{row}">
+            <div v-for="(img,index) in row.img" :key="index">
+              <el-image class="imgs" :src="img" :preview-src-list="row.img" style="width: 75px; height: 75px" />
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="230px">
+          <template #default="{row}">
+            <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
+              编辑
+            </el-button>
+            <el-button v-permission="['biz:newsContent:newscontent:delete']" size="small" plain icon="Delete" type="danger" @click="handleDelete(row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+      <news-content-form ref="form" @refresh-list="getList" />
+
     </div>
-
-    <el-table
-      ref="table"
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      header-cell-class-name="header-cell"
-    >
-      <el-table-column show-overflow-tooltip label="内容标题" width="150px">
-        <template #default="{row}">
-          <span>{{ row.newsContentTitle }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="新闻类型" min-width="150px">
-        <template #default="{row}">
-          <span>{{ row.newsTypeName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="发布时间" min-width="150px">
-        <template #default="{row}">
-          <span>{{ parseTime( row.newsReleaseTime, '{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column class-name="imgflx" label="相关图片" min-width="150px">
-        <template #default="{row}">
-          <div v-for="(img,index) in row.img" :key="index">
-            <el-image class="imgs" :src="img" :preview-src-list="row.img" style="width: 75px; height: 75px" />
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" min-width="230px">
-        <template #default="{row}">
-          <el-button v-permission="['biz:newsContent:newscontent:update']" type="primary" icon="EditPen" plain size="small" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-permission="['biz:newsContent:newscontent:delete']" size="small" plain icon="Delete" type="danger" @click="handleDelete(row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-    <news-content-form ref="form" @refresh-list="getList" />
-
-  </div>
+  </el-card>
 </template>
 
 <script>

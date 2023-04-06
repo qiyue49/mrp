@@ -48,7 +48,7 @@
 <script>
 import Hamburger from '@/layout/components/Hamburger'
 import Search from '@/layout/components/HeaderSearch'
-import defaultAvatar from '@/assets/img/avatar.png'
+import defaultAvatar from '@/assets/img/dashboard/avatar.png'
 import Setting from './Settings'
 import TopMenu from '@/layout/components/TopMenu/topMenu'
 import FullScreen from '@/components/FullScreen/fullScreen'
@@ -146,7 +146,7 @@ a{
   .right-menu {
     float: right;
     height: 100%;
-    // line-height: 50px;
+    line-height: 10px;
     display: flex;
     align-items: center;
 
@@ -162,7 +162,7 @@ a{
       color:#6B738D !important;
       vertical-align: text-bottom;
 
-      :deep .svg-icon{
+      :deep(.svg-icon){
         width: 23px !important;
         height: 23px !important;
       }

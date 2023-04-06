@@ -1,50 +1,52 @@
 <template>
-  <div class="app-container">
-    <div class="filter-container">
-      <div class="filter-item">
-        <span>新闻类型名称:</span>
-        <el-input v-model="listQuery.newsTypeName" placeholder="请输入新闻类型名称" />
+  <el-card class="el-card">
+    <div class="app-container">
+      <div class="filter-container">
+        <div class="filter-item">
+          <span>新闻类型名称:</span>
+          <el-input v-model="listQuery.newsTypeName" placeholder="请输入新闻类型名称" />
+        </div>
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
+        <el-button v-permission="['biz:newsType:newstype:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button v-permission="['biz:newsType:newstype:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button>
+
+      <el-table
+        ref="table"
+        :key="tableKey"
+        v-loading="listLoading"
+        :data="list"
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        header-cell-class-name="header-cell"
+      >
+        <el-table-column label="新闻类型名称" min-width="150px">
+          <template #default="{row}">
+            <span>{{ row.newsTypeName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="230">
+          <template #default="{row}">
+            <el-button v-permission="['biz:newsType:newstype:update']" icon="EditPen" type="primary" plain size="small" @click="handleUpdate(row)">
+              编辑
+            </el-button>
+            <el-button v-permission="['biz:newsType:newstype:delete']" plain type="danger" size="small" icon="Delete" @click="handleDelete(row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+      <news-type-form ref="form" @refresh-list="getList" />
+
     </div>
-
-    <el-table
-      ref="table"
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      header-cell-class-name="header-cell"
-    >
-      <el-table-column label="新闻类型名称" min-width="150px">
-        <template #default="{row}">
-          <span>{{ row.newsTypeName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="230">
-        <template #default="{row}">
-          <el-button v-permission="['biz:newsType:newstype:update']" icon="EditPen" type="primary" plain size="small" @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-permission="['biz:newsType:newstype:delete']" plain type="danger" size="small" icon="Delete" @click="handleDelete(row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-    <news-type-form ref="form" @refresh-list="getList" />
-
-  </div>
+  </el-card>
 </template>
 
 <script>

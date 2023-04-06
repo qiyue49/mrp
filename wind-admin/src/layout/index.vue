@@ -85,5 +85,6 @@ export default {
   min-height: calc(100vh - 109px);
   box-sizing: border-box;
   width: 100%;
+  background: #F3F5F8;
 }
 </style>

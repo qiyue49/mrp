@@ -1,107 +1,109 @@
 <template>
-  <div class="app-container">
-    <div class="filter-container">
-      <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
-      <el-button v-permission="['test:table:table:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-        新增
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
-        导入
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleExport">
-        导出
-      </el-button>
-    </div>
-
-    <el-table
-      ref="dragTable"
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%;"
-      header-cell-class-name="header-cell"
-    >
-      <el-table-column label="拖拽" width="80">
-        <template #default="{}">
-          <svg-icon class="drag-handler" icon-class="drag" />
-        </template>
-      </el-table-column>
-      <el-table-column label="标题" min-width="150px">
-        <template #default="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="作者" min-width="110px">
-        <template #default="scope">
-          <span>{{ scope.row.user.realname }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="创建时间" min-width="150px">
-        <template #default="scope">
-          <span>{{ parseTime(scope.row.publishDate, '{y}-{m}-{d} {h}:{i}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="重要程度" min-width="150px">
-        <template #default="scope">
-          <span v-for="item in scope.row.level" :key="item">☆</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="阅读数" min-width="95">
-        <template #default="{row}">
-          <span v-if="row.readings" class="link-type">{{ row.readings }}</span>
-          <span v-else>0</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="状态" class-name="status-col" min-width="100">
-        <template #default="{row}">
-          <el-tag :type="statusFilter(row.status)">
-            {{ row.status }}
-          </el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" min-width="300">
-        <template #default="{row}">
-          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" icon="EditPen" plain @click="handleUpdate(row)">
-            编辑
-          </el-button>
-          <el-button v-permission="['test:table:table:detail']" size="small" type="primary" plain icon="EditPen" @click="handleUpdateView(row)">
-            编辑(新页签)
-          </el-button>
-          <el-button v-if="row.status!='published'" size="small" plain type="warning" @click="handleModifyStatus(row,'published')">
-            发布
-          </el-button>
-          <el-button v-if="row.status!='draft'" plain type="primary" size="small" @click="handleModifyStatus(row,'draft')">
-            草稿
-          </el-button>
-          <el-button v-permission="['test:table:table:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
-            删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <import ref="import" template-url="/test/table/table/template" import-url="/test/table/table/import" />
-    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-    <table-form ref="form" @refresh-list="getList" />
-    <el-dialog
-      v-model="dialogVisible"
-      class="deletedialog"
-      :show-close="false"
-      :before-close="handleClose">
-      <img src="../../../assets/img/jingshi.svg" alt=""/>
-      <div style="fontWeight:900;">您确定删除该条数据吗？</div>
-      <div class="btn">
-        <span @click="dialogVisible = false">取消</span>
-        <span @click="hdelete">确定</span>
+  <el-card class="el-card">
+    <div class="app-container">
+      <div class="filter-container">
+        <el-input v-model="listQuery.title" placeholder="标题" class="filter-item" @keyup.enter="handleFilter" />
+        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+          搜索
+        </el-button>
+        <el-button v-permission="['test:table:table:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+          新增
+        </el-button>
+        <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleImport">
+          导入
+        </el-button>
+        <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleExport">
+          导出
+        </el-button>
       </div>
-    </el-dialog>
 
-  </div>
+      <el-table
+        ref="dragTable"
+        :key="tableKey"
+        v-loading="listLoading"
+        :data="list"
+        fit
+        highlight-current-row
+        style="width: 100%;"
+        header-cell-class-name="header-cell"
+      >
+        <el-table-column label="拖拽" width="80">
+          <template #default="{}">
+            <svg-icon class="drag-handler" icon-class="drag" />
+          </template>
+        </el-table-column>
+        <el-table-column label="标题" min-width="150px">
+          <template #default="{row}">
+            <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="作者" min-width="110px">
+          <template #default="scope">
+            <span>{{ scope.row.user.realname }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="创建时间" min-width="150px">
+          <template #default="scope">
+            <span>{{ parseTime(scope.row.publishDate, '{y}-{m}-{d} {h}:{i}') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="重要程度" min-width="150px">
+          <template #default="scope">
+            <span v-for="item in scope.row.level" :key="item">☆</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="阅读数" min-width="95">
+          <template #default="{row}">
+            <span v-if="row.readings" class="link-type">{{ row.readings }}</span>
+            <span v-else>0</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="状态" class-name="status-col" min-width="100">
+          <template #default="{row}">
+            <el-tag :type="statusFilter(row.status)">
+              {{ row.status }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" min-width="300">
+          <template #default="{row}">
+            <el-button v-permission="['test:table:table:detail']" size="small" type="primary" icon="EditPen" plain @click="handleUpdate(row)">
+              编辑
+            </el-button>
+            <el-button v-permission="['test:table:table:detail']" size="small" type="primary" plain icon="EditPen" @click="handleUpdateView(row)">
+              编辑(新页签)
+            </el-button>
+            <el-button v-if="row.status!='published'" size="small" plain type="warning" @click="handleModifyStatus(row,'published')">
+              发布
+            </el-button>
+            <el-button v-if="row.status!='draft'" plain type="primary" size="small" @click="handleModifyStatus(row,'draft')">
+              草稿
+            </el-button>
+            <el-button v-permission="['test:table:table:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
+              删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <import ref="import" template-url="/test/table/table/template" import-url="/test/table/table/import" />
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+      <table-form ref="form" @refresh-list="getList" />
+      <el-dialog
+        v-model="dialogVisible"
+        class="deletedialog"
+        :show-close="false"
+        :before-close="handleClose">
+        <img src="../../../assets/img/jingshi.svg" alt=""/>
+        <div style="fontWeight:900;">您确定删除该条数据吗？</div>
+        <div class="btn">
+          <span @click="dialogVisible = false">取消</span>
+          <span @click="hdelete">确定</span>
+        </div>
+      </el-dialog>
+
+    </div>
+  </el-card>
 </template>
 
 <script>

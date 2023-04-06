@@ -1,91 +1,93 @@
 <template>
-  <div>
-    <div class="filter-container">
-      <div class="filter-item">
-        <span>模版名称:</span>
-        <el-input v-model="listQuery.name" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
+  <el-card class="el-card">
+    <div>
+      <div class="filter-container">
+        <div class="filter-item">
+          <span>模版名称:</span>
+          <el-input v-model="listQuery.name" placeholder="请输入模版名称" @keyup.enter="handleFilter" />
+        </div>
+        <div class="filter-item">
+          <span>模版编码:</span>
+          <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
+        </div>
+        <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sms:template:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
-      <div class="filter-item">
-        <span>模版编码:</span>
-        <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
-      </div>
-      <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button v-permission="['sms:template:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-    </div>
 
-    <el-table
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%"
-      header-cell-class-name="header-cell"
-    >
-      <el-table-column min-width="200" label="模版名称">
-        <template #default="scope">
-          <span>{{ scope.row.name }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="120" label="模版编码">
-        <template #default="scope">
-          <span>{{ scope.row.code }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="100" label="业务类型">
-        <template #default="scope">
-          <span>{{ dictLabel(scope.row.businessType, 'business_type') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="200" label="模版内容">
-        <template #default="scope">
-          <span>{{ scope.row.templateContent }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template #default="scope">
-          <el-button v-permission="['sms:template:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['sms:template:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除
+      <el-table
+        :key="tableKey"
+        v-loading="listLoading"
+        :data="list"
+        fit
+        highlight-current-row
+        style="width: 100%"
+        header-cell-class-name="header-cell"
+      >
+        <el-table-column min-width="200" label="模版名称">
+          <template #default="scope">
+            <span>{{ scope.row.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="120" label="模版编码">
+          <template #default="scope">
+            <span>{{ scope.row.code }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="100" label="业务类型">
+          <template #default="scope">
+            <span>{{ dictLabel(scope.row.businessType, 'business_type') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="200" label="模版内容">
+          <template #default="scope">
+            <span>{{ scope.row.templateContent }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="操作">
+          <template #default="scope">
+            <el-button v-permission="['sms:template:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['sms:template:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除
+            </el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+      <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title">
+        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
+          <el-form-item label="模版名称" prop="name">
+            <el-input v-model="temp.name" />
+          </el-form-item>
+          <el-form-item label="业务类型" prop="businessType">
+            <el-select v-model="temp.businessType" class="filter-item" placeholder="请选择业务类型">
+              <el-option
+                v-for="item in businessTypeOptions"
+                :key=" 'form_businessType_'+ item.value "
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
+          </el-form-item>
+          <el-form-item label="模版内容" prop="templateContent" placeholder="请填写您在服务商备案的模板ID或内容">
+            <el-input
+              v-model="temp.templateContent"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              type="textarea"
+              placeholder="请输入模版内容"
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
+            确定
           </el-button>
         </template>
-      </el-table-column>
-    </el-table>
+      </el-dialog>
 
-    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-    <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="模版名称" prop="name">
-          <el-input v-model="temp.name" />
-        </el-form-item>
-        <el-form-item label="业务类型" prop="businessType">
-          <el-select v-model="temp.businessType" class="filter-item" placeholder="请选择业务类型">
-            <el-option
-              v-for="item in businessTypeOptions"
-              :key=" 'form_businessType_'+ item.value "
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="模版内容" prop="templateContent" placeholder="请填写您在服务商备案的模板ID或内容">
-          <el-input
-            v-model="temp.templateContent"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="请输入模版内容"
-          />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
-          确定
-        </el-button>
-      </template>
-    </el-dialog>
-
-  </div>
+    </div>
+  </el-card>
 </template>
 
 <script>

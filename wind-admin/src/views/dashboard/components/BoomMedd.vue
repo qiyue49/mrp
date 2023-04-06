@@ -2,10 +2,16 @@
   <div class="all">
     <div class="tit">
       <div class="left">
-        <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">访问总量</span>
+        <el-radio-group v-model="radio1" size="large">
+          <el-radio-button label="访问总量" />
+          <el-radio-button label="新增访问" />
+          <el-radio-button label="活跃访问" />
+          <el-radio-button label="流失访问" />
+        </el-radio-group>
+        <!-- <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">访问总量</span>
         <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">新增访问</span>
         <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">活跃访问</span>
-        <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">流失访问</span>
+        <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">流失访问</span> -->
 
       </div>
       <div class="right">
@@ -19,12 +25,14 @@
   </div></template>
 
 <script>
+import { ref } from 'vue'
 export default {
   name: 'BoomMedd',
   data() {
     return {
       isclick: 1,
-      isclick1: 1
+      isclick1: 1,
+      radio1: ref('访问总量')
     }
   },
   mounted() {
@@ -35,8 +43,8 @@ export default {
       this.$echarts.init(this.$refs.$chart1).setOption({
         tooltip: {
           show: true,
-          trigger: 'axis',
-          formatter: '{b0}: {c0}<br />{b1}: {c1}'
+          trigger: 'axis'
+          // formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
         grid: {
 		      left: '0',
@@ -48,10 +56,15 @@ export default {
           axisTick: {
             show: false // 不显示坐标轴刻度线
           },
+          axisLabel: {
+            interval: 0,
+            rotate: 1
+          },
           // show: true, // 不显示坐标轴线、坐标轴刻度线和坐标轴上的文字
           type: 'category',
-          // boundaryGap: false,
-          boundaryGap: ['0', '0.5'], // 坐标轴两边留白策略
+          // boundaryGap: true,
+          boundaryGap: false,
+          // boundaryGap: ['0%', '5%'], // 坐标轴两边留白策略
           data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
         },
         yAxis: {
@@ -62,7 +75,7 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [450, 800, 90, 94, 790, 330, 320],
+            data: [540, 280, 400, 300, 796, 598, 500],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{

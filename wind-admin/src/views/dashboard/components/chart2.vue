@@ -52,7 +52,7 @@ export default {
           show: false,
           type: 'category',
           boundaryGap: false,
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+          data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'June', 'Aug', 'Sep']
         },
         yAxis: {
           type: 'value',
@@ -62,7 +62,7 @@ export default {
           {
             showSymbol: false,
             smooth: true,
-            data: [0, 100, 601, 234, 290, 598, 265],
+            data: [100, 230, 160, 630, 260, 300, 165, 598, 400],
             type: 'line',
             areaStyle: {
               color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{

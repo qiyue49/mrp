@@ -1,22 +1,30 @@
 <template>
   <div class="all">
     <div class="btn">
-      <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">本年</span>
+      <el-radio-group v-model="radio1" size="large">
+        <el-radio-button label="本年" />
+        <el-radio-button label="本季度" />
+        <el-radio-button label="本月" />
+        <el-radio-button label="本周" />
+      </el-radio-group>
+      <!-- <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">本年</span>
       <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">本季度</span>
       <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">本月</span>
-      <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">本周</span>
+      <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">本周</span> -->
     </div>
-    <div ref="$chart1" style="width: 100%;height: 90%;margin-top: -30px;"></div>
+    <div ref="$chart1" style="width: 100%;height: 90%;"></div>
   </div>
 
 </template>
 
 <script>
+import { ref } from 'vue'
 export default {
   name: 'Chart4',
   data() {
     return {
-      isclick: 1
+      isclick: 1,
+      radio1: ref('本年')
     }
   },
   mounted() {
@@ -59,7 +67,7 @@ export default {
             axisTick: {
               show: false // 不显示坐标轴刻度线
             },
-            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'June', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             axisPointer: {
               type: 'shadow'
             }
@@ -98,13 +106,13 @@ export default {
                 barBorderRadius: [30, 30, 0, 0]
               }
             },
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' ml'
-              }
-            },
+            // tooltip: {
+            //   valueFormatter: function (value) {
+            //     return value + ' ml'
+            //   }
+            // },
             data: [
-              2.0, 4.9, 7.0, 232, 25.6, 76.7, 135.6, 162.2, 32.6, 200, 64, 33
+              140, 160, 100, 210, 70, 140, 40, 160, 100, 30, 130, 130
             ]
           },
           {
@@ -117,13 +125,13 @@ export default {
                 barBorderRadius: [30, 30, 0, 0]
               }
             },
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' ml'
-              }
-            },
+            // tooltip: {
+            //   valueFormatter: function (value) {
+            //     return value + ' ml'
+            //   }
+            // },
             data: [
-              190.0, 50.9, 90, 26.4, 287, 70.7, 1756, 1822, 487, 188, 60, 23
+              120, 152, 102, 230, 115, 70, 30, 180, 87, 145, 170, 170
             ]
           },
           {
@@ -143,12 +151,12 @@ export default {
               }
 
             },
-            tooltip: {
-              valueFormatter: function (value) {
-                return value + ' °C'
-              }
-            },
-            data: [200, 202, 303, 2000, 4003, 1002, 20.3, 23.4, 23.0, 1605, 12.0, 602]
+            // tooltip: {
+            //   valueFormatter: function (value) {
+            //     return value + ' °C'
+            //   }
+            // },
+            data: [2140, 2280, 4103, 3160, 3159, 2440, 2200, 3000, 2843, 3053, 3900, 3892]
           }
         ]
       })
@@ -162,6 +170,7 @@ export default {
     background-color: #fff;
     padding: 20px;
     padding-bottom: 0;
+    position: relative;
     // display: flex;
     // flex-direction: column;
     // align-items: center;
@@ -172,6 +181,8 @@ export default {
     .btn{
       border-left: 1px solid #EEF0F4;
       border-top-left-radius: 5px;
+      z-index: 99;
+     position: absolute;
       span{
         border-right: 1px solid #EEF0F4;
         border-top: 1px solid #EEF0F4;

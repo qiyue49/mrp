@@ -215,7 +215,6 @@ span{
     vertical-align: middle;
     width: 23px !important;
     height: 23px !important;
-    margin-top: 14px;
   }
 
   .header-search-select {

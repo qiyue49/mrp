@@ -3,9 +3,7 @@
     <router-view v-slot="{ Component, route }">
       <transition name="router-fade" mode="out-in">
         <keep-alive :include="cachedViews">
-          <el-card class="el-card">
-            <component :is="Component" :key="route.fullPath"/>
-          </el-card>
+          <component :is="Component" :key="route.fullPath"/>
         </keep-alive>
       </transition>
     </router-view>
@@ -31,9 +29,6 @@ export default {
 <style lang="scss" scoped>
 .app-main{
   margin-top: 30px;
-  .el-card{
-   background: #F3F5F8;
-  }
 }
 </style>
 

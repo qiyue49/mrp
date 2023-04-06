@@ -1,158 +1,160 @@
 <template>
-  <div>
-    <div class="filter-container">
-      <div class="filter-item">
-        <span>任务名称:</span>
-        <el-input v-model="listQuery.jobName" type="primary" placeholder="请输入任务名称" @keyup.enter="handleFilter" />
+  <el-card class="el-card">
+    <div>
+      <div class="filter-container">
+        <div class="filter-item">
+          <span>任务名称:</span>
+          <el-input v-model="listQuery.jobName" type="primary" placeholder="请输入任务名称" @keyup.enter="handleFilter" />
+        </div>
+        <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="Edit" @click="handleCreate">新增</el-button>
+        <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="Delete" @click="handleBatchDelete">删除</el-button>
+        <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="Refresh" @click="handleRefreshTask">刷新任务</el-button>
       </div>
-      <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
-      <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="Edit" @click="handleCreate">新增</el-button>
-      <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="Delete" @click="handleBatchDelete">删除</el-button>
-      <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="Refresh" @click="handleRefreshTask">刷新任务</el-button>
+      <el-table
+        :key="tableKey"
+        v-loading="listLoading"
+        :data="list"
+        fit
+        highlight-current-row
+        style="width: 100%"
+        header-cell-class-name="header-cell"
+        @selection-change="handleSelectionChange"
+      >
+        <el-table-column type="selection" />
+        <el-table-column min-width="150" label="任务名称">
+          <template #default="scope">
+            <span>{{ scope.row.jobName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="120" label="任务分组">
+          <template #default="scope">
+            <span>{{ scope.row.jobGroup }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="100" label="执行类">
+          <template #default="scope">
+            <span>{{ scope.row.executeClass }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="80" label="方法名">
+          <template #default="scope">
+            <span>{{ scope.row.methodName }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="100" label="执行表达式">
+          <template #default="scope">
+            <span>{{ scope.row.cronExpression }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="80" label="任务状态">
+          <template #default="scope">
+            <span>{{ dictLabel(scope.row.jobStatus, 'sf') }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="80" label="是否同步">
+          <template #default="scope">
+            <span>{{ dictLabel(scope.row.isConcurrent, 'sf') }}</span>
+          </template>
+        </el-table-column>
+
+        <el-table-column min-width="300" label="操作">
+          <template #default="scope">
+            <el-button v-if="scope.row.jobStatus===0" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
+            <el-button v-if="scope.row.jobStatus===1" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
+            <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="primary" plain icon="Refresh" @click="handleRefresh(scope.row)">刷新</el-button>
+            <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="primary" plain icon="ArrowRight" @click="runAJobNow(scope.row)">执行一次</el-button>
+            <el-button v-permission="['task:schedule:job:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['task:schedule:job:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+      <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title">
+        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="任务名称" prop="jobName">
+                <el-input v-model="temp.jobName" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="任务分组" prop="jobGroup">
+                <el-input v-model="temp.jobGroup" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="加载方式" prop="loadWay">
+                <el-radio
+                  v-for="item in dictList('load_way')"
+                  :key="'type' + item.label"
+                  v-model="temp.loadWay"
+                  :label="item.value"
+                >
+                  {{ item.label }}
+                </el-radio>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="执行类" prop="executeClass">
+                <el-input v-model="temp.executeClass" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="方法名" prop="methodName">
+                <el-input v-model="temp.methodName" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="方法参数" prop="methodParams">
+                <el-input v-model="temp.methodParams" />
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row :gutter="20">
+            <el-col :span="12">
+              <el-form-item label="cron表达式" prop="cronExpression">
+                <el-input v-model="temp.cronExpression" />
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="是否同步" prop="isConcurrent">
+                <el-radio
+                  v-for="item in dictList('sf')"
+                  :key="'type' + item.label"
+                  v-model="temp.isConcurrent"
+                  :label="item.value"
+                >
+                  {{ item.label }}
+                </el-radio>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-form-item label="任务描述">
+            <el-input
+              v-model="temp.templateContent"
+              :autosize="{ minRows: 2, maxRows: 4}"
+              type="textarea"
+              placeholder="请输入任务描述"
+            />
+          </el-form-item>
+        </el-form>
+        <template #footer>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
+            确定
+          </el-button>
+        </template>
+      </el-dialog>
+
     </div>
-    <el-table
-      :key="tableKey"
-      v-loading="listLoading"
-      :data="list"
-      fit
-      highlight-current-row
-      style="width: 100%"
-      header-cell-class-name="header-cell"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column type="selection" />
-      <el-table-column min-width="150" label="任务名称">
-        <template #default="scope">
-          <span>{{ scope.row.jobName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="120" label="任务分组">
-        <template #default="scope">
-          <span>{{ scope.row.jobGroup }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="100" label="执行类">
-        <template #default="scope">
-          <span>{{ scope.row.executeClass }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="80" label="方法名">
-        <template #default="scope">
-          <span>{{ scope.row.methodName }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="100" label="执行表达式">
-        <template #default="scope">
-          <span>{{ scope.row.cronExpression }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="80" label="任务状态">
-        <template #default="scope">
-          <span>{{ dictLabel(scope.row.jobStatus, 'sf') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column min-width="80" label="是否同步">
-        <template #default="scope">
-          <span>{{ dictLabel(scope.row.isConcurrent, 'sf') }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column min-width="300" label="操作">
-        <template #default="scope">
-          <el-button v-if="scope.row.jobStatus===0" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
-          <el-button v-if="scope.row.jobStatus===1" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
-          <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="primary" plain icon="Refresh" @click="handleRefresh(scope.row)">刷新</el-button>
-          <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="primary" plain icon="ArrowRight" @click="runAJobNow(scope.row)">执行一次</el-button>
-          <el-button v-permission="['task:schedule:job:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-          <el-button v-permission="['task:schedule:job:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-
-    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-    <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 90%; margin-left:50px;">
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="任务名称" prop="jobName">
-              <el-input v-model="temp.jobName" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="任务分组" prop="jobGroup">
-              <el-input v-model="temp.jobGroup" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="加载方式" prop="loadWay">
-              <el-radio
-                v-for="item in dictList('load_way')"
-                :key="'type' + item.label"
-                v-model="temp.loadWay"
-                :label="item.value"
-              >
-                {{ item.label }}
-              </el-radio>
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="执行类" prop="executeClass">
-              <el-input v-model="temp.executeClass" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="方法名" prop="methodName">
-              <el-input v-model="temp.methodName" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="方法参数" prop="methodParams">
-              <el-input v-model="temp.methodParams" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-row :gutter="20">
-          <el-col :span="12">
-            <el-form-item label="cron表达式" prop="cronExpression">
-              <el-input v-model="temp.cronExpression" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="是否同步" prop="isConcurrent">
-              <el-radio
-                v-for="item in dictList('sf')"
-                :key="'type' + item.label"
-                v-model="temp.isConcurrent"
-                :label="item.value"
-              >
-                {{ item.label }}
-              </el-radio>
-            </el-form-item>
-          </el-col>
-        </el-row>
-        <el-form-item label="任务描述">
-          <el-input
-            v-model="temp.templateContent"
-            :autosize="{ minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="请输入任务描述"
-          />
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
-          确定
-        </el-button>
-      </template>
-    </el-dialog>
-
-  </div>
+  </el-card>
 </template>
 
 <script>
