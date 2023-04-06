@@ -1,11 +1,8 @@
 server:
-  port: 8082
+  port: 8083
 jasypt:
   encryptor:
-    # password: CodeSheep
-    ## 实现jasypt加密解密的类
-    ## 这里的类是自己定义的加密算法的类需要继承StringEncryptor类
-    bean: desencrypt
+    bean: jasyptEncrypt
 #spring
 spring:
   servlet:

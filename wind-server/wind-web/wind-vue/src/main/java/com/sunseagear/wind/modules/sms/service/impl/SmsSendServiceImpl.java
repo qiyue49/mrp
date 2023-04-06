@@ -3,7 +3,6 @@ package com.sunseagear.wind.modules.sms.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.sms.disruptor.SmsHelper;
 import com.sunseagear.common.utils.JsonUtils;
-import com.sunseagear.common.utils.mapper.JsonMapper;
 import com.sunseagear.wind.modules.sms.entity.SmsSendLog;
 import com.sunseagear.wind.modules.sms.entity.SmsTemplate;
 import com.sunseagear.wind.modules.sms.service.ISmsSendLogService;

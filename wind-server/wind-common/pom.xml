@@ -16,7 +16,6 @@
     <modules>
         <module>wind-common-base</module>
         <module>wind-common-datarule</module>
-        <module>wind-common-query</module>
         <module>wind-common-utils</module>
         <module>wind-common-oss</module>
         <module>wind-common-quartz</module>

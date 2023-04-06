@@ -1,16 +1,16 @@
 package com.sunseagear.wind.modules.email.service.impl;
 
 import com.alibaba.fastjson.JSON;
-import com.sunseagear.common.email.disruptor.EmailHelper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.email.disruptor.EmailHelper;
 import com.sunseagear.common.sms.exception.SmsException;
 import com.sunseagear.common.utils.JsonUtils;
-import com.sunseagear.common.utils.mapper.JsonMapper;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.entity.EmailTemplate;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
 import com.sunseagear.wind.modules.email.service.IEmailTemplateService;
+import jakarta.mail.internet.MimeMessage;
 import org.apache.commons.text.StringEscapeUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import jakarta.mail.internet.MimeMessage;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
