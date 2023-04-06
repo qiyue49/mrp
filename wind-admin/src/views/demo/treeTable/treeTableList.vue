@@ -42,7 +42,7 @@
       <tree-table-form ref="form" @refresh-list="getList" />
 
     </div>
-  </el-card>>
+  </el-card>
 </template>
 
 <script>

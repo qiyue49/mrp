@@ -9,7 +9,7 @@
           <navbar />
           <tag-view />
         </el-header>
-        <el-main>
+        <el-main :style="isDark ? 'background:#000' : ' background: #F3F5F8;'">
           <app-main />
         </el-main>
         <el-footer>{{ title }} </el-footer>
@@ -24,10 +24,25 @@ import AppMain from '@/layout/components/AppMain'
 import Sidebar from '@/layout/components/Sidebar/index'
 import Navbar from '@/layout/components/Navbar.vue'
 import TagView from '@/layout/components/TagsView/index.vue'
+import { useToggle } from '@vueuse/shared'
+import { useDark } from '@vueuse/core'
 
 export default {
   name: 'Layout',
   components: { TagView, Navbar, Sidebar, AppMain },
+  setup() {
+    const isDark = useDark({
+      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
+      storageKey: 'useDarkKEY',
+      // 暗黑class名字
+      valueDark: 'dark',
+      // 高亮class名字
+      valueLight: 'light'
+    })
+    return {
+      isDark
+    }
+  },
   mixins: [ResizeMixin],
   computed: {
     sidebar() {
@@ -66,6 +81,7 @@ export default {
     width: 64px !important;
   }
 }
+
 .el-aside {
   border-right: solid 1px var(--el-menu-border-color);
   overflow: auto;
@@ -73,18 +89,20 @@ export default {
   flex-shrink: 0;
   width: auto;
 }
+
 .el-header {
   padding: 0px;
   height: auto;
 }
+
 .el-footer {
   height: auto;
 }
+
 .el-main {
   padding-top: 0px;
   min-height: calc(100vh - 109px);
   box-sizing: border-box;
   width: 100%;
-  background: #F3F5F8;
 }
 </style>
