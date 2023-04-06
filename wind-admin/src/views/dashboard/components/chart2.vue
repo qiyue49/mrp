@@ -3,14 +3,14 @@
     <div class="f1">
       <div class="f1_1">
         <div class="left">
-          <img src="../../../assets/img/yan.png" alt=""/>
+          <img src="../../../assets/img/dashboard/visitNumber.png" alt=""/>
           <div>
             <span class="left_top">1568</span>
             <span class="left_boom">访问次数</span>
           </div>
         </div>
         <div class="right">
-          <img src="../../../assets/img/geng32.png" alt=""/>
+          <img src="../../../assets/img/dashboard/more.png" alt=""/>
         </div>
       </div>
     </div>

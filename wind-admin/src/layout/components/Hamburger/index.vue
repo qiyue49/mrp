@@ -1,6 +1,6 @@
 <template>
   <div @click="toggleClick">
-    <span><img src="../../../assets/img/bz4.svg" alt="" class="hamburger"/></span>
+    <span><img src="../../../assets/img/dashboard/navigation.svg" alt="" class="hamburger"/></span>
     <!-- <svg
       :class="{'is-active':isActive}"
       class="hamburger"

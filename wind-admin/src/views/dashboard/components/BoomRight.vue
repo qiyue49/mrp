@@ -2,10 +2,10 @@
   <div class="all">
     <div class="f1">
       <span>
-        <img src="../../../assets/img/lanquan.svg" alt=""/>
+        <img src="../../../assets/img/dashboard/ring.svg" alt=""/>
         2023年02月</span>
       <span>
-        <img src="../../../assets/img/genglan.png" alt=""/>
+        <img src="../../../assets/img/dashboard/moreBule.png" alt=""/>
       </span>
     </div>
     <div class="f2">飞 廉 系 统 开 发 进 度</div>
@@ -13,7 +13,7 @@
     <div class="f3">
       <span>参与者：</span>
       <div>
-        <img v-for="item in 6" :key="item" src="../../../assets/img/avatar.png" alt=""/>
+        <img v-for="item in 6" :key="item" src="../../../assets/img/dashboard/avatar.png" alt=""/>
       </div>
     </div>
     <div class="f4">

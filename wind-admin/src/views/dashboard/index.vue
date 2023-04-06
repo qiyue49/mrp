@@ -29,7 +29,7 @@
         <calen-dar class="calen-dar"/>
         <div class="lists">
           <div v-for="item in 6" :key="item" class="list">
-            <img src="../../assets/img/OIP-C.jpg" alt=""/>
+            <img src="../../assets/img/dashboard/doctor.jpg" alt=""/>
             <div class="con">
               <div>
                 <span>Jel Chibuzo</span>
@@ -108,7 +108,7 @@ export default {
     .title{
       // background-color: #6C99FF;
       width: 100%;
-      background-image: url("../../assets/img/lanbg.png");
+      background-image: url("../../assets/img/dashboard/weatherBackground.png");
       background-size: 100% 100%;
       background-repeat: no-repeat;
       box-sizing: border-box;
