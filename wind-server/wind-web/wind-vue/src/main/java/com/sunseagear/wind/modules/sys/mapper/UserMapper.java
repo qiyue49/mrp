@@ -12,11 +12,4 @@ import java.util.List;
 @Mapper
 public interface UserMapper extends BaseMapper<User> {
 
-    /**
-     * @param wrapper
-     * @return
-     * @title: selectUserList
-     * @description: 查找用户列表
-     * @return: List<User>
-     */
 }

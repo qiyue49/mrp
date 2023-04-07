@@ -14,9 +14,6 @@ spring:
 
   session:
     store-type: none
-  devtools:
-    restart:
-      enabled: true        #这里是为了热部署的，与mybatis是无关的
   cache:
     type: redis
 

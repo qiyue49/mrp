@@ -6,15 +6,14 @@ import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.FileUtils;
 import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.MessageUtils;
+import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
+import com.sunseagear.wind.utils.BASE64DecodedMultipartFile;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,6 +72,27 @@ public class OSSUploadJsonController {
         }
         base64 = String.format("data:image/%s;base64,%s", fileType, base64);
         return JsonUtils.successMessage((Object) base64);
+
+    }
+
+    @PostMapping("uploadBase")
+    public String uploadImg(HttpServletRequest request, String content, @RequestParam(required = false, defaultValue = "") String dir) {
+        if (!StringUtils.isEmpty(content)) {
+            MultipartFile multipartFile = BASE64DecodedMultipartFile.base64ToMultipart(content);
+            try {
+                return JsonUtils.successMessage((Object) attachmentHelper.upload(request, multipartFile, dir));
+            } catch (IOException e) {
+                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            } catch (InvalidExtensionException e) {
+                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            } catch (FileUploadBase.FileSizeLimitExceededException e) {
+                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            } catch (FileNameLengthLimitExceededException e) {
+                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            }
+        } else {
+            return JsonUtils.failMessage("图片不能为空");
+        }
 
     }
 }

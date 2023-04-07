@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.google.gson.annotations.JsonAdapter;
 import com.sunseagear.common.mvc.entity.DataEntity;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.StringUtils;
 import lombok.Data;
 
@@ -44,6 +46,7 @@ public class User extends DataEntity<String> {
     @Excel(name = "姓名", orderNum = "0")
     private String realname;
     // 头像
+    @JsonAdapter(JsonUtils.ContextUrlAdapter.class)
     private String portrait;
     // 密码
     private String password;
