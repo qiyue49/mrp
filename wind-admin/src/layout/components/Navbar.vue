@@ -19,11 +19,6 @@
           </div>
           <template #dropdown>
             <el-dropdown-menu>
-              <router-link to="/profile/index">
-                <el-dropdown-item>
-                  个人信息
-                </el-dropdown-item>
-              </router-link>
               <router-link to="/sys/user/info">
                 <el-dropdown-item>
                   修改信息

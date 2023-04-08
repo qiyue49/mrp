@@ -70,19 +70,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/profile/index',
-    component: Layout,
-    hidden: true,
-    children: [
-      {
-        path: '',
-        component: () => import('@/views/profile/index'),
-        name: 'Profile',
-        meta: { title: '个人中心', icon: 'el-icon-user', noCache: true }
-      }
-    ]
-  },
-  {
     path: '/sys/user/info',
     component: Layout,
     hidden: true,
