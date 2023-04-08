@@ -1,21 +1,23 @@
 <template>
-  <div>
-    <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
-      <el-form-item label="原密码" prop="oldPassword">
-        <el-input v-model.trim="userForm.oldPassword" :type="passwordType" placeholder="原密码" />
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input v-model.trim="userForm.password" :type="passwordType" placeholder="密码" />
-      </el-form-item>
-      <el-form-item label="确认密码" prop="passwordConfirm">
-        <el-input v-model.trim="userForm.passwordConfirm" :type="passwordType" placeholder="确认密码" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" :loading="loading" @click="submitForm('userForm')">保存</el-button>
-        <el-button @click="resetForm('userForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-card>
+    <div>
+      <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
+        <el-form-item label="原密码" prop="oldPassword">
+          <el-input v-model.trim="userForm.oldPassword" :type="passwordType" placeholder="原密码" />
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-input v-model.trim="userForm.password" :type="passwordType" placeholder="密码" />
+        </el-form-item>
+        <el-form-item label="确认密码" prop="passwordConfirm">
+          <el-input v-model.trim="userForm.passwordConfirm" :type="passwordType" placeholder="确认密码" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :loading="loading" @click="submitForm('userForm')">保存</el-button>
+          <el-button @click="resetForm('userForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-card>
 </template>
 <script>
 import { myUpdateChangePassword } from '@/api/sys/user'

@@ -5,7 +5,7 @@
         <div class="left">
           <img src="../../../assets/img/dashboard/totalNumber.png" alt=""/>
           <div>
-            <span class="left_top">1568</span>
+            <span class="left_top">{{ Math.round(count) }}</span>
             <span class="left_boom">总人数</span>
           </div>
         </div>
@@ -25,14 +25,23 @@
   </div></template>
 
 <script>
+import { useTransition, TransitionPresets } from '@vueuse/core'
+import { ref } from 'vue'
 export default {
   name: 'Chart1',
   data() {
     return {
-      charts: null
+      charts: null,
+      count: 0
     }
   },
   mounted() {
+    const number = ref(0)
+    this.count = useTransition(number, {
+      duration: 3000,
+      transition: TransitionPresets.easeOutExpo
+    })
+    number.value = 1680
     this.echartsInit()
   },
   methods: {

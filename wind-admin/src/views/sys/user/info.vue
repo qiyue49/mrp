@@ -1,27 +1,29 @@
 <template>
-  <div>
-    <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
-      <el-form-item label="姓名" prop="realname">
-        <el-input v-model="userForm.realname" />
-      </el-form-item>
-      <el-form-item label="用户名" prop="username">
-        <el-input v-model="userForm.username" />
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="userForm.email" />
-      </el-form-item>
-      <el-form-item label="手机号码" prop="phone">
-        <el-input v-model="userForm.phone" />
-      </el-form-item>
-      <el-form-item label="头像" prop="portrait">
-        <upload-image v-model="userForm.portrait" dir="avatar" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" :loading="loading" @click="submitForm('userForm')">保存</el-button>
-        <el-button @click="resetForm('userForm')">重置</el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+  <el-card>
+    <div>
+      <el-form ref="userForm" :model="userForm" :rules="rules" label-width="100px" class="demo-userForm">
+        <el-form-item label="姓名" prop="realname">
+          <el-input v-model="userForm.realname" />
+        </el-form-item>
+        <el-form-item label="用户名" prop="username">
+          <el-input v-model="userForm.username" />
+        </el-form-item>
+        <el-form-item label="邮箱" prop="email">
+          <el-input v-model="userForm.email" />
+        </el-form-item>
+        <el-form-item label="手机号码" prop="phone">
+          <el-input v-model="userForm.phone" />
+        </el-form-item>
+        <el-form-item label="头像" prop="portrait">
+          <upload-image v-model="userForm.portrait" dir="avatar" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" :loading="loading" @click="submitForm('userForm')">保存</el-button>
+          <el-button @click="resetForm('userForm')">重置</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+  </el-card>
 </template>
 <script>
 import uploadImage from '@/components/Upload/uploadImage'

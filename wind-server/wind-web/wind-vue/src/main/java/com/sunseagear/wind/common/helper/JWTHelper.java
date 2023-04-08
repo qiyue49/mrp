@@ -28,10 +28,6 @@ public class JWTHelper {
 
     public static final String SECRET = "5367566B59703373367639792F423F4528482B4D6251655468576D5A71347437";
 
-    private static int expireIn = 1000 * 60 * 30;
-    private static int refreshExpireIn = 1000 * 60 * 60;
-
-
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
@@ -72,6 +68,7 @@ public class JWTHelper {
                 .setExpiration(new Date(System.currentTimeMillis() + getExpireIn()))
                 .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
+
     public String createRefreshToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
                 .setClaims(claims)
@@ -87,10 +84,11 @@ public class JWTHelper {
     }
 
     public static int getExpireIn() {
-        return expireIn;
+        return Integer.valueOf(SysConfigHelper.getInstance().getSysConfig("tokenExpire").getValue()) * 60 * 1000 * 1000 * 60;
     }
+
     public static int getRefreshExpireIn() {
-        return refreshExpireIn;
+        return Integer.valueOf(SysConfigHelper.getInstance().getSysConfig("refreshTokenExpire").getValue()) * 60 * 1000;
     }
 
 }

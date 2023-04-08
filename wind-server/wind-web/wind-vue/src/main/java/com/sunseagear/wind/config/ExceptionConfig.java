@@ -2,6 +2,8 @@ package com.sunseagear.wind.config;
 
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.utils.ExceptionUtils;
+import com.sunseagear.wind.common.response.ResponseError;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +32,11 @@ public class ExceptionConfig {
      * @param ex
      * @return
      */
-    //@ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    @ExceptionHandler(ShiroException.class)
-//    public Object handle401(ShiroException ex) {
-//        return Response.error(401, ex.getMessage());
-//    }
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(ExpiredJwtException.class)
+    public Object handle401(ExpiredJwtException ex) {
+        return Response.error(ResponseError.EXPIRED_ACCESS_TOKEN, ex.getMessage());
+    }
 
     /**
      * 捕捉UnauthorizedException
@@ -62,7 +64,7 @@ public class ExceptionConfig {
     }
 
     private HttpStatus getStatus(HttpServletRequest request) {
-        Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
+        Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
         if (statusCode == null) {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }

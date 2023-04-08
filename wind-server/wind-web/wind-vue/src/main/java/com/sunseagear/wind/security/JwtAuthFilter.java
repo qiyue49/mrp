@@ -7,6 +7,7 @@ import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.UserUtils;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,8 +36,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("access_token");
         if (!StringUtils.isEmpty(token)){
-            if (jwtService.isTokenExpired(token)){
-                ServletUtils.printJson(response, Response.error(ResponseError.INVALID_ACCESS_TOKEN, "TOKEN过期"));
+//            if (jwtService.isTokenExpired(token)){
+//                ServletUtils.printJson(response, Response.error(ResponseError.INVALID_ACCESS_TOKEN, "TOKEN过期"));
+//            }
+            try{
+                jwtService.isTokenExpired(token);
+            }catch (ExpiredJwtException e){
+                ServletUtils.printJson(response, Response.error(ResponseError.EXPIRED_ACCESS_TOKEN, "TOKEN过期"));
+                return;
             }
 
             if (UserUtils.getPrincipal() == null) {

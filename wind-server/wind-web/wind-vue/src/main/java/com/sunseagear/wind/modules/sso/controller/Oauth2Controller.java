@@ -62,7 +62,7 @@ public class Oauth2Controller {
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return Response.failJson("用户名密码不能为空");
         }
-        try{
+        try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             //生成Access Token
             Principal principal = (Principal) authentication.getPrincipal();
@@ -84,11 +84,11 @@ public class Oauth2Controller {
 
             return Response.successJson(new Token(accessToken, refreshToken));
 
-        }catch (UsernameNotFoundException e){
+        } catch (UsernameNotFoundException e) {
             return Response.failJson("找不到用户");
-        }catch (BadCredentialsException e){
+        } catch (BadCredentialsException e) {
             return Response.failJson("用户名密码错误");
-        }catch (Exception e){
+        } catch (Exception e) {
             return Response.failJson("登录失败");
         }
     }
@@ -97,27 +97,27 @@ public class Oauth2Controller {
     @RequestMapping("/refreshToken")
     @ResponseBody
     public String refreshToken(HttpServletRequest request) {
-            String refreshToken = request.getParameter("refresh_token");
+        String refreshToken = request.getParameter("refresh_token");
 
-            //生成Access Token
-            Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
-            if (principal == null) {
-                return Response.error(ResponseError.INVALID_REFRESH_TOKEN, "REFRESH_TOKEN过期");
-            }
-            Map<String, Object> dataMap = new HashMap<>();
-            dataMap.put("id", principal.getId());
-            dataMap.put("username", principal.getUsername());
-            dataMap.put("realname", principal.getRealname());
-            dataMap.put("tenantId", principal.getTenantId());
-            dataMap.put("roleId", principal.getRoleId());
-            final String accessToken = jwtHelper.createToken(dataMap, principal.getUsername());
-            oAuthService.addAccessToken(accessToken, principal);
+        //生成Access Token
+        Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
+        if (principal == null) {
+            return Response.error(ResponseError.INVALID_REFRESH_TOKEN, "REFRESH_TOKEN过期");
+        }
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("id", principal.getId());
+        dataMap.put("username", principal.getUsername());
+        dataMap.put("realname", principal.getRealname());
+        dataMap.put("tenantId", principal.getTenantId());
+        dataMap.put("roleId", principal.getRoleId());
+        final String accessToken = jwtHelper.createToken(dataMap, principal.getUsername());
+        oAuthService.addAccessToken(accessToken, principal);
 
-            //生成Refresh Token，只有长时间无任何操作才会过期，过期就立即登出
-            final String refreshTokenNew = jwtHelper.createRefreshToken(dataMap, principal.getUsername());
-            oAuthService.addRefreshToken(refreshTokenNew, principal);
+        //生成Refresh Token，只有长时间无任何操作才会过期，过期就立即登出
+        final String refreshTokenNew = jwtHelper.createRefreshToken(dataMap, principal.getUsername());
+        oAuthService.addRefreshToken(refreshTokenNew, principal);
 
-            return Response.successJson(new Token(accessToken, refreshTokenNew));
+        return Response.successJson(new Token(accessToken, refreshTokenNew));
     }
 
     /**
@@ -130,7 +130,7 @@ public class Oauth2Controller {
     @RequestMapping("/revokeToken")
     @ResponseBody
     public String revokeToken(HttpServletRequest request) {
-        String accessToken = request.getHeader("access_token");
+        String accessToken = request.getHeader("accessToken");
         LoginLogUtils.recordLogoutLoginLog(UserUtils.getUser().getUsername(), "退出成功");
         oAuthService.revokeToken(accessToken);
         return Response.successJson("退出成功");
