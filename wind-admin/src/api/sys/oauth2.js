@@ -9,7 +9,7 @@ export function login(username, password) {
     password
   }
   return request({
-    url: '/sso/oauth2/access_token',
+    url: '/sso/oauth2/accessToken',
     method: 'post',
     data
   })
@@ -17,21 +17,18 @@ export function login(username, password) {
 
 export function logout(token) {
   return request({
-    url: '/sso/oauth2/revoke_token',
+    url: '/sso/oauth2/revokeToken',
     method: 'post',
     data: { access_token: token }
   })
 }
 
-export function refreshToken(refresh_token) {
+export function refreshToken(refreshToken) {
   const data = {
-    grant_type: 'refresh_token',
-    client_id: 'cloud-upms',
-    client_secret: 'cloud-upms',
-    refresh_token
+    refreshToken
   }
   return request({
-    url: '/sso/oauth2/refresh_token',
+    url: '/sso/oauth2/refreshToken',
     method: 'post',
     data
   })

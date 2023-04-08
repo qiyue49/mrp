@@ -54,7 +54,7 @@ public class Oauth2Controller {
      * @param request
      * @return
      */
-    @RequestMapping("/access_token")
+    @RequestMapping("/accessToken")
     @ResponseBody
     public String accessToken(HttpServletRequest request) {
         String username = request.getParameter("username");
@@ -94,7 +94,7 @@ public class Oauth2Controller {
     }
 
 
-    @RequestMapping("/refresh_token")
+    @RequestMapping("/refreshToken")
     @ResponseBody
     public String refreshToken(HttpServletRequest request) {
             String refreshToken = request.getParameter("refresh_token");
@@ -127,7 +127,7 @@ public class Oauth2Controller {
      * @return
      * @throws URISyntaxException
      */
-    @RequestMapping("/revoke_token")
+    @RequestMapping("/revokeToken")
     @ResponseBody
     public String revokeToken(HttpServletRequest request) {
         String accessToken = request.getHeader("access_token");
