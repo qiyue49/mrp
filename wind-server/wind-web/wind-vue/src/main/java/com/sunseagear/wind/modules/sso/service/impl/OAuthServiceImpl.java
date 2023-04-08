@@ -41,7 +41,7 @@ public class OAuthServiceImpl implements IOAuthService {
     public void addAccessToken(String accessToken, Principal principal) {
         CacheUtils.setCacheObject(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.MILLISECONDS);
         CacheUtils.addCacheSet(ACCESS_TOKEN_KEY, accessToken);
-        CacheUtils.expire(ACCESS_TOKEN_KEY, getExpireIn());//设置过期时间
+        CacheUtils.expire(ACCESS_TOKEN_KEY, getExpireIn(), TimeUnit.MILLISECONDS);//设置过期时间
 
     }
 

@@ -5,7 +5,7 @@ import {
   getToken,
   removeRefreshToken,
   removeToken,
-  setRefreshToken,
+  setRefreshToken as saveRefreshToken,
   setToken as saveToken
 } from '@/utils/auth'
 import { defineStore } from 'pinia'
@@ -23,6 +23,10 @@ export const userStore = defineStore('user', () => {
     token.value = tokenParam
     saveToken(tokenParam)
   }
+  function setRefreshToken(tokenParam) {
+    refreshToken.value = tokenParam
+    saveRefreshToken(tokenParam)
+  }
 
   // user login
   function login(userInfo) {
@@ -31,10 +35,7 @@ export const userStore = defineStore('user', () => {
       userLogin(username.trim(), password).then(response => {
         const data = response.data
         setToken(data.data.accessToken)
-        // setToken(data.access_token)
-        refreshToken.value = data.data.refreshToken
-        // refreshToken.value = data.refresh_token
-        setRefreshToken(refreshToken)
+        setRefreshToken(data.data.refreshToken)
         resolve(response)
       }).catch(error => {
         reject(error)

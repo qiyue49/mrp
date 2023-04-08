@@ -22,6 +22,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -36,22 +38,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("access_token");
         if (!StringUtils.isEmpty(token)){
-//            if (jwtService.isTokenExpired(token)){
-//                ServletUtils.printJson(response, Response.error(ResponseError.INVALID_ACCESS_TOKEN, "TOKEN过期"));
-//            }
-            try{
-                jwtService.isTokenExpired(token);
-            }catch (ExpiredJwtException e){
-                ServletUtils.printJson(response, Response.error(ResponseError.EXPIRED_ACCESS_TOKEN, "TOKEN过期"));
-                return;
-            }
+            Pattern pattern = Pattern.compile("/sso/oauth2/\\**");
+            //检索匹配器对象
+            Matcher matcher = pattern.matcher(request.getRequestURI());
+            if (!matcher.find()){
+                try{
+                    jwtService.isTokenExpired(token);
+                }catch (ExpiredJwtException e){
+                    e.printStackTrace();
+                    ServletUtils.printJson(response, Response.error(ResponseError.EXPIRED_ACCESS_TOKEN, "TOKEN过期"));
+                    return;
+                }
 
-            if (UserUtils.getPrincipal() == null) {
-                UserDetails userDetails = oAuthService.getPrincipalByAccessToken(token);
-                if (userDetails != null && jwtService.validateToken(token, userDetails)) {
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                if (UserUtils.getPrincipal() == null) {
+                    UserDetails userDetails = oAuthService.getPrincipalByAccessToken(token);
+                    if (userDetails != null && jwtService.validateToken(token, userDetails)) {
+                        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                        authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                        SecurityContextHolder.getContext().setAuthentication(authToken);
+                    }
                 }
             }
         }

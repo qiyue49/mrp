@@ -51,16 +51,29 @@ service.interceptors.response.use(
       if (res.code === 200004) {
         const refreshTokenData = getRefreshToken()
         const tokenResponse = await refreshToken(refreshTokenData)
-        const data = tokenResponse.data
-        store.userStore.setToken(data.access_token)
-        const originalRequest = response.config
-        originalRequest._retry = true
-        // Do something before request is sent
-        if (store.userStore.token) {
-          // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-          originalRequest.headers.access_token = getToken()
+        if (tokenResponse.data.code !== 0) {
+          ElMessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+            confirmButtonText: '重新登录',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }).then(() => {
+            store.userStore.logout().then(() => {
+              // this.$router.push(`/login`)
+              location.reload() // 为了重新实例化vue-router对象 避免bug
+            })
+          })
+        } else {
+          const data = tokenResponse.data.data
+          store.userStore.setToken(data.accessToken)
+          const originalRequest = response.config
+          originalRequest._retry = true
+          // Do something before request is sent
+          if (store.userStore.token) {
+            // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
+            originalRequest.headers.access_token = getToken()
+          }
+          return axios.request(originalRequest)
         }
-        return axios.request(originalRequest)
       } else if (res.code === 100008 || res.code === 100009) {
         // 请自行在引入 MessageBox
         ElMessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
@@ -69,6 +82,7 @@ service.interceptors.response.use(
           type: 'warning'
         }).then(() => {
           store.userStore.logout().then(() => {
+            // this.$router.push(`/login`)
             location.reload() // 为了重新实例化vue-router对象 避免bug
           })
         })

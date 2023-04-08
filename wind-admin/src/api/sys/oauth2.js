@@ -24,6 +24,6 @@ export function refreshToken(refreshToken) {
   return request({
     url: '/sso/oauth2/refreshToken',
     method: 'post',
-    refreshToken
+    data: { refreshToken }
   })
 }

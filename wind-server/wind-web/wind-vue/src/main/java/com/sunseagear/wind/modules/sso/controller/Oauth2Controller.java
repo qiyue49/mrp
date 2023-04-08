@@ -85,10 +85,13 @@ public class Oauth2Controller {
             return Response.successJson(new Token(accessToken, refreshToken));
 
         } catch (UsernameNotFoundException e) {
+            e.printStackTrace();
             return Response.failJson("找不到用户");
         } catch (BadCredentialsException e) {
+            e.printStackTrace();
             return Response.failJson("用户名密码错误");
         } catch (Exception e) {
+            e.printStackTrace();
             return Response.failJson("登录失败");
         }
     }
@@ -97,7 +100,7 @@ public class Oauth2Controller {
     @RequestMapping("/refreshToken")
     @ResponseBody
     public String refreshToken(HttpServletRequest request) {
-        String refreshToken = request.getParameter("refresh_token");
+        String refreshToken = request.getParameter("refreshToken");
 
         //生成Access Token
         Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
