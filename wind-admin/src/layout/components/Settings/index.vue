@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon icon-class="shezhi" @click="click" />
+    <svg-icon icon-class="set" @click="click" />
     <el-drawer v-model="show" size="500">
       <div class="drawer-container">
         <h3 class="drawer-title">系统布局配置</h3>

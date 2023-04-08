@@ -7,7 +7,7 @@
     <span>搜索</span>
   </div> -->
   <div :class="{'show':show}" class="header-search">
-    <svg-icon class="search-icon" icon-class="sousuo" @click.stop="click" />
+    <svg-icon class="search-icon" icon-class="searching" @click.stop="click" />
     <el-select
       ref="headerSearchSelect"
       v-model="search"
