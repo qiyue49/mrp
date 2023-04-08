@@ -59,9 +59,11 @@ public class RSACryptographyUtils {
         System.out.println("私钥：" + new String(Base64.getEncoder().encode(rsaPrivateKey.getEncoded())));
         System.out.println("私钥模：" + rsaPrivateKey.getModulus());
         System.out.println("私钥指数：" + rsaPrivateKey.getPrivateExponent());
-//        modulusString = String.valueOf(rsaPrivateKey.getModulus());
-//        publicExponentString = String.valueOf(rsaPublicKey.getPublicExponent());
-//        privateExponentString = String.valueOf(rsaPrivateKey.getPrivateExponent());
+
+        // 如果想用同一套秘钥加密多个内容请注释掉下面三行
+        modulusString = String.valueOf(rsaPrivateKey.getModulus());
+        publicExponentString = String.valueOf(rsaPublicKey.getPublicExponent());
+        privateExponentString = String.valueOf(rsaPrivateKey.getPrivateExponent());
 
     }
 
