@@ -43,7 +43,7 @@
             </el-form-item>
             <el-form-item label="密码" prop="password" class="label-box">
 
-              <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
+              <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" trigger="focus">
                 <el-input
                   :key="passwordType"
                   ref="password"
