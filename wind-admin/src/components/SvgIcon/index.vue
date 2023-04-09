@@ -1,6 +1,6 @@
 <template>
-  <svg aria-hidden="true" class="svg-icon" :fill="color" :style="{ width: size + 'px', height: size + 'px' }">
-    <use :xlink:href="symbolId" :fill="color" />
+  <svg aria-hidden="true" class="svg-icon" :style="{ width: size + 'px', height: size + 'px' }">
+    <use :xlink:href="symbolId" :fill="color" :stroke-width="strokeWidth" :stroke="color"/>
   </svg>
 </template>
 
@@ -21,6 +21,10 @@ export default {
     color: {
       type: String,
       default: 'black'
+    },
+    strokeWidth: {
+      type: Number,
+      default: 0
     },
     size: {
       type: [String, Number],
