@@ -1,5 +1,6 @@
 # 飞廉
 
+## 全新的2.0版本，全面支持springboot3.0 + vue3.0，全新设计的UI界面。
 * 这是一个经过无数商业项目千锤百炼的开发框架，供所有个人和组织免费使用。
 * 集成了平时开发需要的大量模块和组件：百度地图，即时通信websocket，OSS云存储，短信，邮件，定时任务，各类日志，多租户，动态配置的数据权限。
 * 配套文鳐移动端开发框架<a href="https://gitee.com/sunseagear/wenyao" target="_blank">（点击这里）</a>，能够快速进行服务器端和移动端的开发。
@@ -26,48 +27,45 @@
 
 <table border="0">
    <tr>
-      <td colspan="2">
-      登录页 (同时具备多种风格，总有一款适合你)<br>
-      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png" width="49%"/>
-      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login1.png" width="49%"/>
-      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login3.png" width="49%"/>
-      <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/login4.png" width="49%"/>
-      </td>
+   <td>
+   登录
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/login.png"/>
+   </td>
    </tr>
    <tr>
    <td>
    首页
-   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/home.png"/>
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/home.png"/>
    </td>
    <td>
    用户
-   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/user.png"/>
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/user.png"/>
    </td>
    </tr>
    <tr>
    <td>
    菜单
-   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/menu.png"/>
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/menu.png"/>
    </td>
    <td>
    权限
-   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/permission.png"/>
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/permission.png"/>
    </td>
    </tr>
    <tr>
    <td>
    数据规则配置
-   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/doc/summary/dataruleForm.png"/>
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/datarule.png"/>
    </td>
    <td>
    代码样例1
-   <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/expendTable.png"/>
+   <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/table.png"/>
    </td>
    </tr>
    <tr>
    <td>
    代码样例2
-   <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/websocket.png"/>
+   <img src="https://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/websocket.png"/>
    </td>
    </tr>
 </table>
@@ -105,10 +103,10 @@ https://gitee.com/sunseagear/wenyao
 ### 软件架构
 
 > * 整个系统采用前后端分离的模式
->* 后端基于SpringBoot2、Mybatis plus构建核心架构，技术结构来自于JeeWeb（该项目原作者已经不维护）
->* 前端采用vuejs，集成了element-vue-admin
+>* 后端基于SpringBoot3、Mybatis plus构建核心架构，技术结构来自于JeeWeb（该项目原作者已经不维护）
+>* 前端采用vuejs3.0，集成了element-plus
 >* 采用Oauth2协议进行统一的Token下发与鉴权，保证系统安全性
->* 采用Shiro进行权限动态管理，能够做到按钮级别的权限管控。
+>* spring security，能够做到按钮级别的权限管控。
 >* 支持Quartz定时任务
 >* 支持邮件定时发送
 >* 支持短信定时发送
@@ -134,6 +132,7 @@ https://gitee.com/sunseagear/wenyao
 
 ### 项目文件组成
 
+* Nginx配置文件
 * sql 为数据库脚本
 * wind-admin 为前端系统页面
 * wind-server 为后台系统
