@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon icon-class="dark" @click="toggleDark()" />
+    <svg-icon :icon-class="isDark ? 'weather-sun' : 'weather-moon'" color="#6B738D" @click="toggleDark()" />
   </div>
 </template>
 

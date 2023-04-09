@@ -1,5 +1,5 @@
 <template>
-  <svg aria-hidden="true" class="svg-icon" :style="{ width: size + 'px', height: size + 'px' }">
+  <svg aria-hidden="true" class="svg-icon" :fill="color" :style="{ width: size + 'px', height: size + 'px' }">
     <use :xlink:href="symbolId" :fill="color" />
   </svg>
 </template>
@@ -20,7 +20,7 @@ export default {
     },
     color: {
       type: String,
-      default: ''
+      default: 'black'
     },
     size: {
       type: [String, Number],

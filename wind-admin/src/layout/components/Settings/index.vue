@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg-icon icon-class="set" @click="click" />
+    <svg-icon icon-class="ui-settings" color="#6B738D" @click="click" />
     <el-drawer v-model="show" size="500">
       <div class="drawer-container">
         <h3 class="drawer-title">系统布局配置</h3>
