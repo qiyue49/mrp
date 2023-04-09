@@ -8,9 +8,10 @@
       <p>首先创建好白名单页面</p>
       <p>其次在router的index.js中constantRoutes数组中配置该页面的路由。本例中为/whiteList</p>
       <p>然后在src的permission.js中whiteList数组中添加该页面的路由。本例中为/whiteList</p>
-      <p>最后运行项目，直接在浏览器中输入对应网址，就能看到该页面。本例中为
+      <p>最后运行项目，直接在浏览器中输入对应网址，就能看到该页面。本例中为(如果是hash路由,需要在http://localhost:9527/whiteList改为http://localhost:9527/#/whiteList)
         <br/>
-        <a target="_blank" href="http://localhost:9527/#/whiteList?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOiIxIiwidGVuYW50SWQiOiIwMDAwMDAwMCIsImlkIjoiYzkxYTk4NmE3OTdhOGI2OWQ2ZTEzZTk0ZTJjNzg3NDAiLCJleHAiOjE2NjAxNDQ1NjUsInVzZXJuYW1lIjoiZGlob25nIiwicmVhbG5hbWUiOiLluJ3msZ8oaG9uZykifQ._CRfVpLDEAw2OogkTBHTq_4W6W5igjMAzBM2UwKFWa8">http://localhost:9527/#/whiteList?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOiIxIiwidGVuYW50SWQiOiIwMDAwMDAwMCIsImlkIjoiYzkxYTk4NmE3OTdhOGI2OWQ2ZTEzZTk0ZTJjNzg3NDAiLCJleHAiOjE2NjAxNDQ1NjUsInVzZXJuYW1lIjoiZGlob25nIiwicmVhbG5hbWUiOiLluJ3msZ8oaG9uZykifQ._CRfVpLDEAw2OogkTBHTq_4W6W5igjMAzBM2UwKFWa8
+        <a target="_blank" href="http://localhost:9527/whiteList?token=eyJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOiIwIiwidGVuYW50SWQiOiIwMDAwMDAwMCIsImlkIjoiNDAyOGVhODE1YTNkMmE4YzAxNWEzZDJmOGQyYTAwMDIiLCJ1c2VybmFtZSI6ImFkbWluIiwicmVhbG5hbWUiOiLns7vnu5_nrqHnkIblkZgiLCJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTAxMzQxMiwiZXhwIjoxNjgxMDE1MjEyfQ.In43IghBdWI4GtYtOfPcW6iOxBR_MN285p_K2m5v77g">
+          http://localhost:9527/whiteList?token=eyJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOiIwIiwidGVuYW50SWQiOiIwMDAwMDAwMCIsImlkIjoiNDAyOGVhODE1YTNkMmE4YzAxNWEzZDJmOGQyYTAwMDIiLCJ1c2VybmFtZSI6ImFkbWluIiwicmVhbG5hbWUiOiLns7vnu5_nrqHnkIblkZgiLCJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTAxMzQxMiwiZXhwIjoxNjgxMDE1MjEyfQ.In43IghBdWI4GtYtOfPcW6iOxBR_MN285p_K2m5v77g
         </a>
       </p>
       <h3>白名单页面需要注意什么</h3>
@@ -24,7 +25,7 @@
       <div>
         <el-select v-model="status" class="filter-item" placeholder="请选择登陆状态">
           <el-option
-            v-for="item in dictList('loginstatus')"
+            v-for="item in dictList('login_status')"
             :key="item.label + 'loginstatus'"
             :label="item.label"
             :value="item.value"

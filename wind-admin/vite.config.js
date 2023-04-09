@@ -15,7 +15,7 @@ export default ({ mode }) => {
     base: './',
     server: {
       host: '0.0.0.0',
-      port: 9528,
+      port: 9527,
       open: true, // 运行自动打开浏览器
       proxy: {
         [env.VITE_APP_BASE_API]: {
