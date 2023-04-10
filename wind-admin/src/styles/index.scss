@@ -94,7 +94,8 @@ body {
 }
 
 .header-cell {
-  background: #F4F7FC;
+  background: var(--el-color-bg);
+  // background: #F4F7FC;
   color: var(--el-color-primary);
   border-top: 3px solid var(--el-color-primary);
 }

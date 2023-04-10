@@ -3229,10 +3229,15 @@
   "resolved" "https://registry.npmmirror.com/text-table/-/text-table-0.2.0.tgz"
   "version" "0.2.0"
 
-"tinymce@^6.0.0 || ^5.5.1", "tinymce@^6.3.1":
-  "integrity" "sha512-+oCwXuTxAdJXVJ0130OxQz0JDNsqg3deuzgeUo8X5Vb27EzCJgXwO5eWvCxvkxpQo4oiHMVlM4tUIpTUHufHGQ=="
-  "resolved" "https://registry.npmjs.org/tinymce/-/tinymce-6.3.1.tgz"
-  "version" "6.3.1"
+"tinymce@^5.3.1":
+  "integrity" "sha512-pIo0yb9oncUXjB+aA06v/hmUTbY7MU5K2qvpP0XPo3ng2sAFR4DnX1QzDKBi0nEomjNKwYs/82cyBXO1KA9HNw=="
+  "resolved" "https://registry.npmmirror.com/tinymce/-/tinymce-5.3.1.tgz"
+  "version" "5.3.1"
+
+"tinymce@^6.0.0 || ^5.5.1":
+  "integrity" "sha512-+/cS2AM9l6p72IBs2uolHbGsBUztLs0WslqNgFaTXtmMksTNUOhh8p08xtA/fa03UGlWEC6/EJoeV95/QDXa2A=="
+  "resolved" "https://registry.npmmirror.com/tinymce/-/tinymce-6.4.1.tgz"
+  "version" "6.4.1"
 
 "tinypool@^0.2.4":
   "integrity" "sha512-Vs3rhkUH6Qq1t5bqtb816oT+HeJTXfwt2cbPH17sWHIYKTotQIFPk3tf2fgqRrVyMDVOc1EnPgzIxfIulXVzwQ=="
