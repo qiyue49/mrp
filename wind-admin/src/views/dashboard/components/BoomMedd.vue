@@ -1,5 +1,5 @@
 <template>
-  <div class="all">
+  <div class="all" :style="isDark ? 'background:#000' : 'background: #fff;'">
     <div class="tit">
       <div class="left">
         <el-radio-group v-model="radio1" size="large">
@@ -26,8 +26,22 @@
 
 <script>
 import { ref } from 'vue'
+import { useDark } from '@vueuse/core'
 export default {
   name: 'BoomMedd',
+  setup() {
+    const isDark = useDark({
+      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
+      storageKey: 'useDarkKEY',
+      // 暗黑class名字
+      valueDark: 'dark',
+      // 高亮class名字
+      valueLight: 'light'
+    })
+    return {
+      isDark
+    }
+  },
   data() {
     return {
       isclick: 1,
@@ -116,7 +130,6 @@ export default {
 <style lang="scss" scoped>
 .all{
   padding: 20px;
-    background-color: #fff;
     margin-left: 20px;
     border-radius: 10px;
     .tit{

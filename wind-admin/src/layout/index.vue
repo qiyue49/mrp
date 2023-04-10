@@ -24,7 +24,6 @@ import AppMain from '@/layout/components/AppMain'
 import Sidebar from '@/layout/components/Sidebar/index'
 import Navbar from '@/layout/components/Navbar.vue'
 import TagView from '@/layout/components/TagsView/index.vue'
-import { useToggle } from '@vueuse/shared'
 import { useDark } from '@vueuse/core'
 
 export default {

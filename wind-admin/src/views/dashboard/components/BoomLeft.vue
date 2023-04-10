@@ -1,5 +1,5 @@
 <template>
-  <div class="all">
+  <div class="all" :style="isDark ? 'background:#000' : 'background: #fff;'">
     <div class="left">
       <div class="f1">
         <img src="../../../assets/img/dashboard/shopCart.png" alt=""/>
@@ -38,8 +38,22 @@
 import listOne from '../../../assets/img/dashboard/listOne.png'
 import topTwo from '../../../assets/img/dashboard/topTwo.png'
 import topThree from '../../../assets/img/dashboard/topThree.png'
+import { useDark } from '@vueuse/core'
 export default {
   name: 'Chart1',
+  setup() {
+    const isDark = useDark({
+      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
+      storageKey: 'useDarkKEY',
+      // 暗黑class名字
+      valueDark: 'dark',
+      // 高亮class名字
+      valueLight: 'light'
+    })
+    return {
+      isDark
+    }
+  },
   data() {
     return {
       rankIconsSize: 25,
@@ -241,7 +255,6 @@ export default {
     box-sizing: border-box;
   }
 .all{
-    background-color: #fff;
     padding: 20px;
     display: flex;
     border-radius: 10px;

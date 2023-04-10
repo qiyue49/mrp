@@ -1,13 +1,27 @@
 <template>
-  <div class="all">
+  <div class="all" :style="isDark ? 'background:#000' : 'background: #fff;'">
     <div ref="$chart1" style="width: 100%;height: 100%"></div>
   </div>
 
 </template>
 
 <script>
+import { useDark } from '@vueuse/core'
 export default {
   name: 'Chart3',
+  setup() {
+    const isDark = useDark({
+      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
+      storageKey: 'useDarkKEY',
+      // 暗黑class名字
+      valueDark: 'dark',
+      // 高亮class名字
+      valueLight: 'light'
+    })
+    return {
+      isDark
+    }
+  },
   data() {
     return {}
   },
@@ -141,7 +155,6 @@ export default {
 
 <style lang="scss" scoped>
 .all{
-    background-color: #fff;
     // padding: -40px;
     display: flex;
     flex-direction: column;
