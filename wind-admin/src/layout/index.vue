@@ -9,7 +9,7 @@
           <navbar />
           <tag-view />
         </el-header>
-        <el-main :style="isDark ? 'background:#000' : ' background: #F3F5F8;'">
+        <el-main>
           <app-main />
         </el-main>
         <el-footer>{{ title }} </el-footer>
@@ -99,6 +99,7 @@ export default {
 }
 
 .el-main {
+  background: var(--ep-color-primary1);
   padding-top: 0px;
   min-height: calc(100vh - 109px);
   box-sizing: border-box;

@@ -1,5 +1,5 @@
 <template>
-  <div class="all" :style="isDark ? 'background:#000' : 'background: #fff;'">
+  <div class="all">
     <div class="left">
       <div class="f1">
         <img src="../../../assets/img/dashboard/shopCart.png" alt=""/>
@@ -38,22 +38,8 @@
 import listOne from '../../../assets/img/dashboard/listOne.png'
 import topTwo from '../../../assets/img/dashboard/topTwo.png'
 import topThree from '../../../assets/img/dashboard/topThree.png'
-import { useDark } from '@vueuse/core'
 export default {
   name: 'Chart1',
-  setup() {
-    const isDark = useDark({
-      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
-      storageKey: 'useDarkKEY',
-      // 暗黑class名字
-      valueDark: 'dark',
-      // 高亮class名字
-      valueLight: 'light'
-    })
-    return {
-      isDark
-    }
-  },
   data() {
     return {
       rankIconsSize: 25,
@@ -258,6 +244,7 @@ export default {
     padding: 20px;
     display: flex;
     border-radius: 10px;
+    background:var(--ep-color-primary2) ;
     .left{
       width: 30%;
         .f1{
@@ -267,7 +254,7 @@ export default {
           }
           padding: 0 10px;
           display: flex;
-          background-color: #F3F5F8;
+          background-color: var(--ep-color-primary1);
           margin-top: 20px;
           border-radius: 10px;
           align-items: center;
@@ -284,7 +271,7 @@ export default {
               font-size: 12px;
               font-family: PingFangSC-Medium, PingFang SC;
               font-weight: 500;
-              color: #252631;
+              color: var(--ep-color-commom);;
               letter-spacing: 2px;
             }
 
@@ -292,7 +279,7 @@ export default {
               font-size: 10px;
               font-family: PingFangSC-Semibold, PingFang SC;
               font-weight: 600;
-              color: #252631;
+              color: var(--ep-color-commom);
               letter-spacing: 1px;
               display: inline-block;
               margin-left: 4px;

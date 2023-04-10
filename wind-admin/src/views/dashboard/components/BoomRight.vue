@@ -1,5 +1,5 @@
 <template>
-  <div class="all" :style="isDark ? 'background:#000' : 'background: #fff;'">
+  <div class="all">
     <div class="f1">
       <span>
         <img src="../../../assets/img/dashboard/ring.svg" alt=""/>
@@ -23,21 +23,7 @@
 </template>
 
 <script>
-import { useDark } from '@vueuse/core'
 export default {
-  setup() {
-    const isDark = useDark({
-      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
-      storageKey: 'useDarkKEY',
-      // 暗黑class名字
-      valueDark: 'dark',
-      // 高亮class名字
-      valueLight: 'light'
-    })
-    return {
-      isDark
-    }
-  }
 
 }
 </script>
@@ -50,6 +36,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background:var(--ep-color-primary2) ;
     .f1{
       display: flex;
       width: 100%;

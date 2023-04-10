@@ -1,5 +1,20 @@
 @use './element/index.scss';
 
+:root {
+  --ep-color-primary1: #F3F5F8;
+  --ep-color-primary2: #ffffff;
+  --ep-color-primary3: #1762F2;
+  --ep-color-primary4: #D34D25;
+  --ep-color-commom: #252631
+  }
+  :root.dark {
+  --ep-color-primary1: #000;
+  --ep-color-primary2: #000;
+  --ep-color-primary3: #000;
+  --ep-color-primary4: #000;
+  --ep-color-commom: #ffffff
+  }
+
 html {
   width: 100%;
   height: 100%;

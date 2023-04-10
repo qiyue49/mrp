@@ -145,7 +145,7 @@ export default {
 //   }
 // }
 .btn{
-  background-color: #F3F5F8;
+  background-color: var(--ep-color-primary1);
   display: inline-block;
   padding: 10px;
   display: flex;

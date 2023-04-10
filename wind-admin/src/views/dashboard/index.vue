@@ -11,7 +11,7 @@
           <chart-4 style="width:100%"/>
         </div>
       </div>
-      <div class="top_right" :style="isDark ? 'background:#000' : 'background: #fff;'">
+      <div class="top_right">
         <div class="title">
           <span class="tit">早上好，欢迎进入飞廉系统</span>
           <div class="weather">晴</div>
@@ -51,7 +51,7 @@
 
 </template>
 <script>
-import { useFullscreen, useDark } from '@vueuse/core'
+import { useFullscreen } from '@vueuse/core'
 import chart1 from './components/chart1.vue'
 import chart2 from './components/chart2.vue'
 import Chart3 from './components/chart3.vue'
@@ -62,19 +62,6 @@ import BoomMedd from './components/BoomMedd.vue'
 import BoomRight from './components/BoomRight.vue'
 export default {
   name: 'DashBoard',
-  setup() {
-    const isDark = useDark({
-      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
-      storageKey: 'useDarkKEY',
-      // 暗黑class名字
-      valueDark: 'dark',
-      // 高亮class名字
-      valueLight: 'light'
-    })
-    return {
-      isDark
-    }
-  },
   components: { chart1, chart2, Chart3, Chart4, CalenDar, BoomLeft, BoomMedd, BoomRight },
   mounted() {
     this.$store.settingStore.setFun(this.toggleFullScreen)
@@ -110,6 +97,7 @@ export default {
   }
   .top_right{
     // padding: 20px;
+    background:var(--ep-color-primary2) ;
     padding: 30px 29px 31px 25px;
     margin-left: 20px;
     width: 35%;

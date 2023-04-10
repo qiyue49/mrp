@@ -1,5 +1,5 @@
 <template>
-  <div class="all" :style="isDark ? 'background:#000' : 'background: #1762F2;'">
+  <div class="all">
     <div class="f1">
       <div class="f1_1">
         <div class="left">
@@ -25,23 +25,10 @@
   </div></template>
 
 <script>
-import { useTransition, TransitionPresets, useDark } from '@vueuse/core'
+import { useTransition, TransitionPresets } from '@vueuse/core'
 import { ref } from 'vue'
 export default {
   name: 'Chart1',
-  setup() {
-    const isDark = useDark({
-      // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
-      storageKey: 'useDarkKEY',
-      // 暗黑class名字
-      valueDark: 'dark',
-      // 高亮class名字
-      valueLight: 'light'
-    })
-    return {
-      isDark
-    }
-  },
   data() {
     return {
       charts: null,
@@ -123,6 +110,7 @@ export default {
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
+    background: var(--ep-color-primary3);
     .f1{
         padding: 0 20px;
         width: 100%;
@@ -182,7 +170,7 @@ export default {
     }
     .f3{
         color: #1762F2;
-        background-color: #fff;
+        background-color: var(--ep-color-primary2);
         border-radius: 20px;
         width: 80%;
         text-align: center;
