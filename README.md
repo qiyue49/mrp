@@ -31,11 +31,15 @@
    登录
    <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/login.png"/>
    </td>
-   </tr>
-   <tr>
    <td>
    首页
    <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/home.png"/>
+   </td>
+   </tr>
+   <tr>
+   <td>
+   首页(夜间模式)
+   <img src="http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/dark.png"/>
    </td>
    <td>
    用户
