@@ -99,7 +99,7 @@ export default {
 }
 
 .el-main {
-  background: var(--ep-color-primary1);
+  background: var(--ep-color-background);
   padding-top: 0px;
   min-height: calc(100vh - 109px);
   box-sizing: border-box;

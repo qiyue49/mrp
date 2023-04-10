@@ -146,6 +146,6 @@ export default {
     flex-direction: column;
     align-items: center;
     border-radius: 10px;
-    background:var(--ep-color-primary2) ;
+    background:var(--ep-color-background2) ;
 }
 </style>

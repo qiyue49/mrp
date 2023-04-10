@@ -170,7 +170,7 @@ export default {
     padding: 20px;
     padding-bottom: 0;
     position: relative;
-    background:var(--ep-color-primary2) ;
+    background:var(--ep-color-background2) ;
     // display: flex;
     // flex-direction: column;
     // align-items: center;

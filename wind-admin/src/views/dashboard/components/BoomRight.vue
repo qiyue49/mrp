@@ -36,7 +36,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background:var(--ep-color-primary2) ;
+    background:var(--ep-color-background2) ;
     .f1{
       display: flex;
       width: 100%;

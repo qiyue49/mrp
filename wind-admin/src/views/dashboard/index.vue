@@ -97,7 +97,7 @@ export default {
   }
   .top_right{
     // padding: 20px;
-    background:var(--ep-color-primary2) ;
+    background:var(--ep-color-background2) ;
     padding: 30px 29px 31px 25px;
     margin-left: 20px;
     width: 35%;

@@ -128,24 +128,8 @@ export default {
       letter-spacing: 2px;
     }
   }
-
-// .swiper{
-//   width: 75%;
-//   :deep(.swiper-button-prev){
-//     // top: 0 !important;
-//     left: -10px !important;
-//   }
-//   .swiper-wrapper{
-//     width: 70% !important;
-//   }
-//   .swiper-slide{
-//     margin: 10px !important;
-//     // padding: 10px 20px;
-//     width: 15% !important;
-//   }
-// }
 .btn{
-  background-color: var(--ep-color-primary1);
+  background-color: var(--ep-color-background);
   display: inline-block;
   padding: 10px;
   display: flex;

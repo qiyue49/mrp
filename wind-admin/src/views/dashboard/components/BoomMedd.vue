@@ -118,7 +118,7 @@ export default {
   padding: 20px;
     margin-left: 20px;
     border-radius: 10px;
-    background:var(--ep-color-primary2) ;
+    background:var(--ep-color-background2) ;
     .tit{
        display: flex;
        justify-content: space-between;

@@ -244,7 +244,7 @@ export default {
     padding: 20px;
     display: flex;
     border-radius: 10px;
-    background:var(--ep-color-primary2) ;
+    background:var(--ep-color-background2) ;
     .left{
       width: 30%;
         .f1{
@@ -254,7 +254,7 @@ export default {
           }
           padding: 0 10px;
           display: flex;
-          background-color: var(--ep-color-primary1);
+          background-color: var(--ep-color-background);
           margin-top: 20px;
           border-radius: 10px;
           align-items: center;

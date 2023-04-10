@@ -170,7 +170,7 @@ export default {
     }
     .f3{
         color: #1762F2;
-        background-color: var(--ep-color-primary2);
+        background-color: var(--ep-color-background2);
         border-radius: 20px;
         width: 80%;
         text-align: center;
