@@ -8,7 +8,7 @@
         <el-button icon="Search" @click="show" />
       </template>
     </el-input>
-    <el-dialog v-model="iconFormVisible" custom-class="dialog-title" title="选择图标" :close-on-click-modal="false" append-to-body>
+    <el-dialog draggable  v-model="iconFormVisible" custom-class="dialog-title" title="选择图标" :close-on-click-modal="false" append-to-body>
       <el-form style="width: 90%; margin-left:9%;">
         <el-row :gutter="20">
           <el-input v-model="name" suffix-icon="Search" placeholder="请输入图标名称" @input="filterIcons"/>

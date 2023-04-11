@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" title="导入" width="30%" :close-on-click-modal="false">
+  <el-dialog draggable  v-model="dialogFormVisible" custom-class="dialog-title" title="导入" width="30%" :close-on-click-modal="false">
     <el-upload
       v-loading="uploadLoading"
       :data="uploadData"

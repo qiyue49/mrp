@@ -3,7 +3,7 @@
     <el-button :style="{background:color,borderColor:color}" icon="Upload" size="small" type="primary" @click=" dialogVisible=true">
       upload
     </el-button>
-    <el-dialog v-model="dialogVisible" append-to-body>
+    <el-dialog draggable  v-model="dialogVisible" append-to-body>
       <el-upload
         :multiple="true"
         :file-list="fileList"

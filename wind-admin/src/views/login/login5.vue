@@ -59,7 +59,7 @@
                   @keyup.enter="handleLogin"
                 >
                   <template #suffix>
-                    <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" @click="showPwd"/>
+                    <svg-icon :icon-class="passwordType === 'password' ? 'ui-eye' : 'ui-hide'" color="gray" @click="showPwd"/>
                   </template>
                 </el-input>
               </el-tooltip>

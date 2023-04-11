@@ -80,7 +80,7 @@
 
           <user-form ref="form" @refresh-list="getList" />
 
-          <el-dialog v-model="dialogFormPasswordVisible" custom-class="dialog-title" title="修改密码">
+          <el-dialog v-model="dialogFormPasswordVisible" draggable custom-class="dialog-title" title="修改密码">
             <el-form ref="dataModifyForm" :rules="modifyPasswordRules" :model="modifyPassword" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
               <el-form-item label="初始密码" prop="password">
                 <el-input v-model="modifyPassword.password" type="password" />
@@ -92,7 +92,7 @@
             </template>
           </el-dialog>
 
-          <el-dialog v-model="dialogFormRolesVisible" custom-class="dialog-title" class="setname" title="设置角色">
+          <el-dialog v-model="dialogFormRolesVisible" draggable custom-class="dialog-title" class="setname" title="设置角色">
             <el-transfer
               v-model="userRoleIds"
               :filterable="true"

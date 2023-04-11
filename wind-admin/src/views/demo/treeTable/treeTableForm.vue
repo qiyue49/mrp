@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" custom-class="dialog-title" :title="title" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" draggable custom-class="dialog-title" :title="title" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="上级" prop="parentIds">
         <el-cascader

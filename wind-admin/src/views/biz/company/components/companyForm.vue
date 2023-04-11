@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" :title="title" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" draggable :title="title" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="80px">
       <el-row :gutter="40">
         <el-col :span="12">
