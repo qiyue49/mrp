@@ -1,18 +1,13 @@
 <template>
   <div>
-    <full-screen class="right-menu-item hover-effect" />
-    点击全屏
-    <fullscreen v-model:fullscreen="fullscreen">
-      <iframe id="template-iframe" ref="iframe" :src="src" style="width: 100%; height: 100%" frameborder="no" scrolling="auto" :style="'height:' + height"></iframe>
-    </fullscreen>
+    <iframe id="template-iframe" ref="iframe" :src="src" style="width: 100%; height: 100%" frameborder="no" scrolling="auto" :style="'height:' + height"></iframe>
   </div>
 </template>
 
 <script>
-import FullScreen from '@/components/Screenfull/fullScreen'
+
 export default {
   name: 'FramePage',
-  components: { FullScreen },
   data() {
     return {
       height: document.documentElement.clientHeight - 94.5 + 'px;',

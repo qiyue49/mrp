@@ -114,20 +114,3 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-:deep(.current-row) {
-  // color: #fff !important;
-  background-color: #fff !important;
-  color: #1762F2 !important;
-  position: relative;
-}
-:deep(.el-table__expand-icon){
-  .el-icon{
-    position: relative;
-  }
-  .el-icon::before{
-    position: absolute;
-    content: url('../../../assets/img/fkyou.svg');
-  }
-}
-</style>

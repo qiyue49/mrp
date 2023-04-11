@@ -86,6 +86,9 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
     @Override
     public void deleteBatchIds(List<Serializable> idList) {
+        if (isDemo){
+            return;
+        }
         for (Serializable  treeId: idList) {
             deleteById(treeId);
         }

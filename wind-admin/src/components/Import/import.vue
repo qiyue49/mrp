@@ -12,7 +12,6 @@
       drag
       :multiple="false">
       <i class="el-icon-upload"></i>
-      <img src="../../assets/img/shangchuan.svg" alt=""/>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
       <div slot="tip" class="el-upload__tip">请按照模板上传数据</div>
     </el-upload>
@@ -143,27 +142,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.tips{
-  color: #FFC700;
-  margin-top: 10px;
-}
-:deep(.el-upload){
-  // background-color: red !important;
-  .el-upload-dragger{
-  background-color: #F3F5F8 !important;
-  border: none;
-  .el-upload__text{
-    font-weight: 900;
-    // font-size: 1.1rem;
-  }
-}
-}
-.footer{
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  margin-top: 30px;
-}
-</style>
