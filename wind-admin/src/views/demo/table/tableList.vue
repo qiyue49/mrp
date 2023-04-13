@@ -29,7 +29,7 @@
       >
         <el-table-column label="拖拽" width="80">
           <template #default="{}">
-            <svg-icon class="drag-handler" icon-class="drag" />
+            <svg-icon class="drag-handler" icon-class="ui-move" />
           </template>
         </el-table-column>
         <el-table-column label="标题" min-width="150px">

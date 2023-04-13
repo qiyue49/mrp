@@ -93,7 +93,7 @@ export default {
       this.title = '新增'
       this.dialogFormVisible = true
       this.$nextTick(() => {
-        // this.$refs['dataForm'].clearValidate()
+        this.$refs.dataForm.clearValidate()
       })
     },
     createData() {

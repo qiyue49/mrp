@@ -61,7 +61,7 @@
         <el-table-column min-width="300" label="操作">
           <template #default="scope">
             <el-button v-if="scope.row.jobStatus===0" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Play" @click="handleChangeJobStatus(scope.row, 'start', '启动')">开始</el-button>
-            <el-button v-if="scope.row.jobStatus===1" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Pause" class="delete-text-btn" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
+            <el-button v-if="scope.row.jobStatus===1" v-permission="['task:schedule:job:change:job:status']" type="primary" plain size="small" icon="Pause" @click="handleChangeJobStatus(scope.row, 'stop', '停止')">停止</el-button>
             <el-button v-permission="['task:schedule:job:refresh:job']" size="small" type="primary" plain icon="Refresh" @click="handleRefresh(scope.row)">刷新</el-button>
             <el-button v-permission="['task:schedule:job:change:job:status']" size="small" type="primary" plain icon="ArrowRight" @click="runAJobNow(scope.row)">执行一次</el-button>
             <el-button v-permission="['task:schedule:job:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>

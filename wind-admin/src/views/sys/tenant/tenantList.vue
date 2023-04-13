@@ -63,7 +63,7 @@
             <el-button v-permission="['sys:tenant:update']" size="small" icon="EditPen" plain type="primary" @click="handleUpdate(row)">
               编辑
             </el-button>
-            <el-button v-permission="['sys:tenant:delete']" size="small" plain type="danger" icon="Delete" class="delete-text-btn" @click="handleDelete(row)">
+            <el-button v-permission="['sys:tenant:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
               删除
             </el-button>
           </template>
