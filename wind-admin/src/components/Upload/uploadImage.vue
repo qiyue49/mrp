@@ -91,7 +91,7 @@ export default {
       const imageList = this.imageList.map(item => {
         return {
           name: item.name,
-          url: item.response.data
+          url: item.response ? item.response.data : item.url
         }
       })
       this.emitInput(imageList)
@@ -103,7 +103,7 @@ export default {
       const imageList = this.imageList.map(item => {
         return {
           name: item.name,
-          url: item.response.data
+          url: item.response ? item.response.data : item.url
         }
       })
       if (response.code === 0) {
