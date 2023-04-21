@@ -3,6 +3,7 @@ import { getToken } from '@/utils/auth'
 import { store } from '@/stores'
 import { ElMessage } from 'element-plus'
 import defaultSettings from '@/settings'
+import { isNull } from '@/utils'
 
 export const Layout = () => import('@/layout/index.vue')
 
@@ -113,9 +114,9 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken && whiteList.indexOf(to.path) === -1) {
     // 如果不是登录页并且没有缓存用户信息则需要拉取信息
-    if (to.path !== '/login' && store.userStore.userInfo === undefined) {
+    if (to.path !== '/login' && isNull(store.userStore.userInfo)) {
       await store.userStore.getInfo()
-      if (store.userStore.userInfo === undefined) {
+      if (isNull(store.userStore.userInfo)) {
         ElMessage.error('你的账号无法登陆')
         next('/login') // 否则全部重定向到登录页
         return
