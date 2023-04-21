@@ -60,7 +60,7 @@
         </el-table-column>
         <el-table-column label="操作" width="230">
           <template #default="{row}">
-            <el-button v-permission="['sys:tenant:update']" size="small" icon="EditPen" plain type="primary" @click="handleUpdate(row)">
+            <el-button v-permission="['sys:tenant:update']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(row)">
               编辑
             </el-button>
             <el-button v-permission="['sys:tenant:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">

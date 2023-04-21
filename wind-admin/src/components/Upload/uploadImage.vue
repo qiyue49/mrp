@@ -15,7 +15,7 @@
     >
       <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
     </el-upload>
-    <el-dialog draggable  v-model="dialogVisible" custom-class="dialog-title">
+    <el-dialog v-model="dialogVisible" custom-class="dialog-title">
       <img :src="dialogImageUrl" alt="Preview Image" />
     </el-dialog>
   </div>
@@ -88,19 +88,26 @@ export default {
       this.dialogVisible = true
     },
     remove() {
-      // this.imageList.splice(this.imageList.indexOf(uploadFile), 1)
-      this.emitInput(this.imageList)
+      const imageList = this.imageList.map(item => {
+        return {
+          name: item.name,
+          url: item.response.data
+        }
+      })
+      this.emitInput(imageList)
     },
     emitInput(val) {
       this.$emit('update:modelValue', JSON.stringify(val))
     },
     handleAvatarSuccess(response, file) {
-      this.imageList = this.imageList.map(item => {
-        return { name: item.name, url: item.response.data }
+      const imageList = this.imageList.map(item => {
+        return {
+          name: item.name,
+          url: item.response.data
+        }
       })
       if (response.code === 0) {
-        // this.imageList.push(response.data)
-        this.emitInput(this.imageList)
+        this.emitInput(imageList)
       } else {
         this.$message.error(response.msg)
       }

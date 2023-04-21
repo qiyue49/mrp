@@ -1,7 +1,7 @@
 <template>
   <!-- 富文本 -->
-  <div :class="{fullscreen:fullscreen}" class="tinymce-container" :style="{width:containerWidth}">
-    <editor :id="tinymceId" v-model="content" class="tinymce-textarea" :init="init" :disabled="disabled" @onClick="onClick"/>
+  <div class="tinymce-container">
+    <editor :id="tinymceId" v-model="content" class="tinymce-textarea" :init="init" :disabled="disabled"/>
     <!-- <div class="editor-custom-btn-container">
       <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
     </div> -->
@@ -51,7 +51,7 @@ export default {
     Editor
   },
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: ''
     },
@@ -71,8 +71,10 @@ export default {
      bullist numlist blockquote subscript superscript removeformat table image media charmap hr pagebreak insertdatetime'
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
+      tinymceId: this.id || 'vue-tinymce' + Date.parse(new Date()),
       // 初始化配置
       init: {
         language_url: '/static/tinymce-all-in-one/langs/zh_CN.js',
@@ -89,7 +91,7 @@ export default {
         font_formats:
             '微软雅黑=Microsoft YaHei,Helvetica Neue,PingFang SC,sans-serif;苹果苹方=PingFang SC,Microsoft YaHei,sans-serif;宋体=simsun,serif;仿宋体=FangSong,serif;黑体=SimHei,sans-serif;Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;',
         branding: false,
-        tinymceId: this.id,
+        tinymceId: this.tinymceId,
         // 此处为图片上传处理函数，这个直接用了base64的图片形式上传图片，
         // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
         images_upload_handler: (blobInfo, success, failure) => {
@@ -101,11 +103,12 @@ export default {
     }
   },
   watch: {
-    value(newValue) {
+    modelValue(newValue) {
       this.content = newValue
     },
     content(newValue) {
-      this.$emit('input', newValue)
+      console.log('newValue', newValue)
+      this.$emit('update:modelValue', newValue)
     }
   },
   mounted() {
