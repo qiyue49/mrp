@@ -90,8 +90,8 @@ export const constantRoutes = [
         meta: { title: '修改密码', icon: 'el-icon-user', noCache: true }
       }
     ]
-  }
-  // { path: '/:path(.*)', redirect: '/404' }
+  },
+  { path: '/:path(.*)', redirect: '/404' }
 ]
 
 // Nginx打包路由模式可以使hash也可以是history，但是tomcat打包只能是hash

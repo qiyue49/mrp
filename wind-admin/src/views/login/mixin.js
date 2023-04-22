@@ -94,11 +94,11 @@ export const mixin = {
           this.loading = true
           this.$store.userStore.login(this.loginForm)
             .then((res) => {
-              this.loading = false
               if (!this.$store.userStore.token) {
                 this.errorTime++
                 this.makeCode()
                 ElMessage.error(res.data.msg)
+                this.loading = false
                 return
               }
               const path = { path: this.redirect || '/', query: this.otherQuery }
