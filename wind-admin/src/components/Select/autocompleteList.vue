@@ -33,6 +33,7 @@ export default {
       }
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       attrValue: undefined,
@@ -78,7 +79,7 @@ export default {
       }
     },
     handleSelect(val) {
-      this.$emit('input', val[this.props.id])
+      this.$emit('update:modelValue', val[this.props.id])
     }
 
   }

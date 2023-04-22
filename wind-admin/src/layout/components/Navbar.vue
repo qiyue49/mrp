@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div>
-      <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+      <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggle-click="toggleSideBar" />
       <top-menu v-if="topMenu" class="topmenu-container" />
 
       <div class="right-menu">

@@ -22,10 +22,12 @@
     </div>
     <div ref="$chart1" style="width: 100%;height: 100%">
     </div>
-  </div></template>
+  </div>
+</template>
 
 <script>
 import { ref } from 'vue'
+
 export default {
   name: 'BoomMedd',
   data() {
@@ -47,11 +49,11 @@ export default {
           // formatter: '{b0}: {c0}<br />{b1}: {c1}'
         },
         grid: {
-		      left: '0',
+          left: '0',
           right: '0',
-		      bottom: '0',
-		      containLabel: true
-		    },
+          bottom: '0',
+          containLabel: true
+        },
         xAxis: {
           axisTick: {
             show: false // 不显示坐标轴刻度线
@@ -114,34 +116,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.all{
+.all {
   padding: 20px;
-    margin-left: 20px;
-    border-radius: 10px;
-    background:var(--ep-color-background2) ;
-    .tit{
-       display: flex;
-       justify-content: space-between;
-       .left{
-        // border-left: 1px solid #EEF0F4;
-        span{
+  margin-left: 20px;
+  border-radius: 10px;
+  background: var(--ep-color-background2);
+
+  .tit {
+    display: flex;
+    justify-content: space-between;
+
+    .left {
+      // border-left: 1px solid #EEF0F4;
+      span {
         border-right: 1px solid #EEF0F4;
         border-top: 1px solid #EEF0F4;
         border-bottom: 1px solid #EEF0F4;
-        padding-top:10px;
+        padding-top: 10px;
         padding-bottom: 10px;
         width: 90px;
         border-radius: 7px 0px 0px 6px;
         display: inline-block;
         text-align: center;
       }
-      .clickbtn{
+
+      .clickbtn {
         background-color: #1762F2;
         color: #fff;
       }
-       }
-       .right{
-        span{
+    }
+
+    .right {
+      span {
         padding: 5px 10px;
         font-size: 14px;
         font-family: PingFangSC-Medium, PingFang SC;
@@ -149,11 +155,12 @@ export default {
         color: #252631;
         letter-spacing: 2px;
       }
-      .clickbtn{
+
+      .clickbtn {
         color: #1762F2;
         font-weight: 600;
       }
-       }
     }
+  }
 }
 </style>

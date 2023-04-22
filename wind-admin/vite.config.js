@@ -34,6 +34,9 @@ export default ({ mode }) => {
     },
     plugins: [
       vue(),
+      eslintPlugin({
+        include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue'], cache: false, emitWarning: true, emitError: true
+      }),
       createSvgIconsPlugin({
         // 指定需要缓存的图标文件夹
         iconDirs: [resolve(process.cwd(), 'src/assets/icons/svg')],

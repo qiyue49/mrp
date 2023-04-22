@@ -84,8 +84,8 @@ export default {
     setVisibleNumber() {
       const width = document.body.getBoundingClientRect().width / 3
       this.visibleNumber = parseInt(width / 85)
-      console.log('width', width)
-      console.log('visibleNumber', this.visibleNumber)
+      // console.log('width', width)
+      // console.log('visibleNumber', this.visibleNumber)
     },
     click(menu) {
       if (isExternal(menu.path)) {
@@ -113,6 +113,7 @@ export default {
             return true
           }
         }
+        return false
       })
       return menu ? menu.id : menuList[0].id
     }

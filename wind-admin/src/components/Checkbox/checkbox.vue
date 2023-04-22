@@ -45,9 +45,7 @@ export default {
           return
         }
         this.checkList = val.split(',').filter(item => {
-          if (item !== '') {
-            return true
-          }
+          return item !== ''
         })
       }
     }
