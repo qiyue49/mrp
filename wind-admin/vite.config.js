@@ -4,6 +4,7 @@ import { loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
