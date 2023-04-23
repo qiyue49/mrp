@@ -1,197 +1,166 @@
 <template>
-  <div class="all">
-    <div class="center">
-      <div class="top">
-        <div class="title">{{ title }}</div>
-        <div class="fuTitle">
-          <span></span>
-          <p>提升中小企业影响力</p>
-          <span></span>
-        </div>
-      </div>
-      <div class="bottom">
-        <div>
-          <el-form ref="loginForm" :model="loginForm" :rules="loginRules" autocomplete="on" label-position="left">
-            <el-row :gutter="20" style="padding-left: 40px; padding-right: 40px">
-              <el-col :span="errorTime >= 3 ? 8 : 12">
-                <el-form-item prop="username">
-                  <el-input
-                    ref="username"
-                    v-model="loginForm.username"
-                    prefix-icon="User"
-                    placeholder="请输入用户名"
-                    name="username"
-                    type="text"
-                    tabindex="1"
-                    autocomplete="on"
-                  />
-                </el-form-item>
-              </el-col>
-              <el-col :span="errorTime >= 3 ? 8 : 12">
-                <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="right" manual>
-                  <el-form-item prop="password">
+  <div>
+    <el-row>
+      <el-col :span="10">
+        <el-form
+          ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+          label-position="left">
+
+          <div class="card">
+            <p class="title">登录</p>
+            <div class="input">
+              <el-form-item prop="username">
+                <el-row>
+                  <el-col :span="18">
                     <el-input
-                      :key="passwordType"
-                      ref="password"
-                      v-model="loginForm.password"
-                      prefix-icon="Lock"
-                      :type="passwordType"
-                      placeholder="请输入密码"
-                      name="password"
-                      tabindex="2"
+                      ref="username"
+                      v-model="loginForm.username"
+                      placeholder="请输入管理员姓名"
+                      name="username"
+                      type="text"
+                      size="large"
+                      tabindex="1"
                       autocomplete="on"
-                      @keyup="checkCapslock"
-                      @blur="capsTooltip = false"
-                      @keyup.enter="handleLogin"
                     />
-                    <span class="show-pwd" @click="showPwd">
-                      <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                    </span>
-                  </el-form-item>
-                </el-tooltip>
-              </el-col>
-              <el-col v-if="errorTime >= 3" :span="8">
-                <el-form-item prop="identify">
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+            <div class="input">
+              <el-tooltip :visible="capsTooltip" content="大写键已打开" placement="left" manual>
+                <el-form-item prop="password">
                   <el-row>
-                    <el-col :span="14">
+                    <el-col :span="18">
                       <el-input
-                        ref="username"
-                        v-model="loginForm.identify"
-                        prefix-icon="Postcard"
-                        :placeholder="验证码"
-                        name="identify"
-                        type="text"
-                        tabindex="3" />
-                    </el-col>
-                    <el-col :span="10">
-                      <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
+                        :key="passwordType"
+                        ref="password"
+                        v-model="loginForm.password"
+                        :type="passwordType"
+                        placeholder="请输入密码"
+                        name="password"
+                        tabindex="2"
+                        size="large"
+                        autocomplete="on"
+                        @keyup="checkCapslock"
+                        @blur="capsTooltip = false"
+                        @keyup.enter="handleLogin"
+                      />
+                      <span class="show-pwd" @click="showPwd">
+                        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+                      </span>
                     </el-col>
                   </el-row>
+
                 </el-form-item>
+              </el-tooltip>
 
-              </el-col>
-            </el-row>
-          </el-form>
+            </div>
+
+            <div v-if="errorTime >= 3" class="input">
+              <p>验证码</p>
+              <el-form-item prop="identify">
+                <el-row>
+                  <el-col :span="18">
+                    <el-input
+                      ref="identify"
+                      v-model="loginForm.identify"
+                      prefix-icon="Postcard"
+                      placeholder="验证码"
+                      name="identify"
+                      type="text"
+                      tabindex="3" />
+                  </el-col>
+                  <el-col :span="6">
+                    <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+
+            <div>
+              <el-form-item prop="username">
+                <el-row>
+                  <el-col :span="6">
+                    <el-button :loading="loading" color="#233A97" :dark="isDark" style="width:100%;margin-bottom:30px;" @click="handleLogin">
+                      登录
+                    </el-button>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+          </div>
+        </el-form>
+      </el-col>
+      <el-col :span="14" style="padding-top:30px">
+        <div class="app">
+          <img src="../../assets/img/login/login3/login_pic.png"/>
         </div>
-        <el-button :loading="loading" @click="handleLogin">
-          登录
-        </el-button>
+      </el-col>
+    </el-row>
 
-      </div>
-    </div>
   </div>
 </template>
+
 <script>
-import { mixin } from '@/views/login/mixin'
+import { mixin } from './mixin'
 
 export default {
-  name: 'Login3',
+  name: 'Login1',
   mixins: [mixin]
-
 }
 </script>
-<style lang="scss" scoped>
-.all {
-  width: 100%;
-  height: 100%;
-  background-image: url("@/assets/img/login/login3/login3.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  > .center {
-    width: 770px;
-    height: 450px;
-    // border: 1px solid red;
-    > div {
-      width: 100%;
-      height: 50%;
-      //    border: 1px solid blue;
+  <style lang="scss" scoped>
+  .app {
+    img{
+        width: auto;
+        height: auto;
     }
-    > .top {
-      .title {
-        width: 100%;
-        height: 50%;
-        //    border: 1px solid green;
-        color: #fff;
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
-        font-size: 55px;
-        font-weight: 800;
-      }
-      .fuTitle {
-        width: 100%;
-        height: 50%;
-        //    border: 1px solid green;
-        display: flex;
-        align-items: center;
-        color: #fff;
-        font-size: 30px;
-        font-weight: 400;
-        position: relative;
-        > p {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          margin: 0;
-        }
-        > span {
-          width: 100px;
-          position: absolute;
-          border-bottom: 2px solid #fff;
-        }
-        > span:nth-child(1) {
-          left: 110px;
-        }
-        > span:nth-child(3) {
-          right: 110px;
-        }
-      }
-    }
-    > .bottom {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
 
-      > div:nth-child(1) {
-        position: absolute;
-        width: 98%;
-        height: 57%;
-        background-image: url("@/assets/img/login/login3/login3-1.png");
-        background-size: 100% 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        > form {
-          width: 100%;
-          margin-top: 4%;
-        }
+  }
+
+  .login-form {
+    padding: 20px;
+    max-width: 100%;
+    margin: calc((100vh - 464px) / 2) 0 20% 20%;
+    overflow: hidden;
+  }
+
+  .card {
+    .title {
+        font-size: 44px;
+        font-family: SourceHanSansCN;
+        font-weight: bold;
+        color: #333333;
+    }
+
+    .show-pwd {
+      position: absolute;
+      right: 10px;
+      top: 0px;
+      font-size: 16px;
+      color: #889aa4;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .el-button {
+
+       border-radius: 25px;
+    }
+
+    .input {
+        margin-bottom: 36px;
+
+      p {
+        font-size: 16px;
+        color: #bbb7b7;
       }
-      > .el-button {
-        width: 20%;
-        position: absolute;
-        bottom: 20px;
-        background-color: transparent;
-        color: #fff;
+
+      :deep(.el-input__wrapper){
+        border-radius: 30px;
+        background: #F6F2F9;
       }
+
     }
   }
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    top: 0px;
-    font-size: 16px;
-    color: #889aa4;
-    cursor: pointer;
-    user-select: none;
-  }
-  .el-form-item {
-    margin-bottom: 0px;
-  }
-}
-</style>
+  </style>

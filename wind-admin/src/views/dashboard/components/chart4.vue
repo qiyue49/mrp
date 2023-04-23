@@ -101,10 +101,8 @@ export default {
             type: 'bar',
             barWidth: 15,
             itemStyle: {
-              normal: {
-                color: '#1762F2',
-                barBorderRadius: [30, 30, 0, 0]
-              }
+              color: '#1762F2',
+              borderRadius: [30, 30, 0, 0]
             },
             // tooltip: {
             //   valueFormatter: function (value) {
@@ -120,10 +118,8 @@ export default {
             type: 'bar',
             barWidth: 15,
             itemStyle: {
-              normal: {
-                color: '#D34D25',
-                barBorderRadius: [30, 30, 0, 0]
-              }
+              color: '#D34D25',
+              borderRadius: [30, 30, 0, 0]
             },
             // tooltip: {
             //   valueFormatter: function (value) {
@@ -143,11 +139,9 @@ export default {
             smooth: true,
             showSymbol: false,
             itemStyle: {
-              normal: {
-                color: '#FFC700',
-                lineStyle: {
-                  width: 3
-                }
+              color: '#FFC700',
+              lineStyle: {
+                width: 3
               }
 
             },

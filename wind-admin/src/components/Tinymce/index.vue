@@ -66,9 +66,7 @@ export default {
     },
     toolbar: {
       type: [String, Array],
-      default:
-        'styleselect formatselect fontselect fontsizeselect |\ code undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link codesample  fullscreen preview| alignleft aligncenter alignright alignjustify outdent indent formatpainter | \
-     bullist numlist blockquote subscript superscript removeformat table image media charmap hr pagebreak insertdatetime'
+      default: 'styleselect formatselect fontselect fontsizeselect |\ code undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link codesample  fullscreen preview| alignleft aligncenter alignright alignjustify outdent indent formatpainter |\ bullist numlist blockquote subscript superscript removeformat table image media charmap hr pagebreak insertdatetime'
     }
   },
   emits: ['update:modelValue'],

@@ -29,6 +29,7 @@ import { useDark } from '@vueuse/core'
 export default {
   name: 'Layout',
   components: { TagView, Navbar, Sidebar, AppMain },
+  mixins: [ResizeMixin],
   setup() {
     const isDark = useDark({
       // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改
@@ -42,7 +43,6 @@ export default {
       isDark
     }
   },
-  mixins: [ResizeMixin],
   computed: {
     sidebar() {
       return this.$store.appStore.sidebar

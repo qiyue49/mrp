@@ -36,6 +36,7 @@ export default {
       }
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       treeList: [],
@@ -83,7 +84,7 @@ export default {
       return ''
     },
     select(val) {
-      this.$emit('input', val)
+      this.$emit('update:modelValue', val)
     }
   }
 }

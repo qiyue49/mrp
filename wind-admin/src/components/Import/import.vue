@@ -1,5 +1,5 @@
 <template>
-  <el-dialog draggable  v-model="dialogFormVisible" custom-class="dialog-title" title="导入" width="30%" :close-on-click-modal="false">
+  <el-dialog v-model="dialogFormVisible" draggable custom-class="dialog-title" title="导入" width="30%" :close-on-click-modal="false">
     <el-upload
       v-loading="uploadLoading"
       :data="uploadData"
@@ -13,7 +13,9 @@
       :multiple="false">
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <div slot="tip" class="el-upload__tip">请按照模板上传数据</div>
+      <template #slot>
+        <div>请按照模板上传数据</div>
+      </template>
     </el-upload>
     <div class="tips">注：请按照模板上传数据</div>
     <div class="footer">

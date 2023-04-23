@@ -100,12 +100,10 @@ export default {
           data: data2,
           z: 1,
           itemStyle: {
-            normal: {
-              opacity: 0.4,
-              barBorderRadius: 5,
-              shadowBlur: 3,
-              shadowColor: '#111'
-            }
+            opacity: 0.4,
+            borderRadius: 5,
+            shadowBlur: 3,
+            shadowColor: '#111'
           }
         }, {
           name: 'Simulate Shadow',
@@ -117,16 +115,12 @@ export default {
           animationEasing: 'linear',
           animationDuration: 1200,
           lineStyle: {
-            normal: {
-              color: 'transparent'
-            }
+            color: 'transparent'
           },
           areaStyle: {
-            normal: {
-              color: '#08263a',
-              shadowBlur: 50,
-              shadowColor: '#000'
-            }
+            color: '#08263a',
+            shadowBlur: 50,
+            shadowColor: '#000'
           }
         }, {
           name: 'front',
@@ -135,9 +129,7 @@ export default {
           xAxisIndex: 1,
           z: 3,
           itemStyle: {
-            normal: {
-              barBorderRadius: 5
-            }
+            borderRadius: 5
           }
         }],
         animationEasing: 'elasticOut',

@@ -38,6 +38,7 @@ export default {
       }
     }
   },
+  emits: ['update:modelValue'],
   data() {
     return {
       attrValue: undefined,
@@ -60,7 +61,7 @@ export default {
   },
   methods: {
     change(val) {
-      this.$emit('input', this.attrValue)
+      this.$emit('update:modelValue', this.attrValue)
     }
 
   }

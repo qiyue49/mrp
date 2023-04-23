@@ -12,12 +12,14 @@ import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
 import VueBMap, { initBMapApiLoader } from 'vue-bmap-gl'
 import 'vue-bmap-gl/dist/style.css'
+import SlideVerify from 'vue3-slide-verify'
 
 const app = createApp(App)
 app.config.globalProperties.$echarts = echarts
 app.use(pinia)
 app.use(router)
 app.use(ElementPlus)
+app.use(SlideVerify)
 initBMapApiLoader({
   ak: '6C45Mk02tovos4GSlTqp0Vptp8MZjQv7',
   plugins: 'Lushu,TrackAnimation'

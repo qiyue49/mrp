@@ -85,11 +85,9 @@ export default {
               }])
             },
             itemStyle: {
-              normal: {
-                color: '#FFC700',
-                lineStyle: {
-                  color: '#FFC700'
-                }
+              color: '#FFC700',
+              lineStyle: {
+                color: '#FFC700'
               }
             }
           }

@@ -4,6 +4,7 @@ import { loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+import eslintPlugin from 'vite-plugin-eslint'
 
 // https://vitejs.dev/config/
 export default ({ mode }) => {
@@ -20,7 +21,7 @@ export default ({ mode }) => {
       proxy: {
         [env.VITE_APP_BASE_API]: {
           // 本地API地址
-          target: 'http://localhost:8082',
+          target: 'http://www.sunseagear.com:80/wind-vue',
           changeOrigin: true,
           rewrite: path => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         },
@@ -34,6 +35,9 @@ export default ({ mode }) => {
     },
     plugins: [
       vue(),
+      eslintPlugin({
+        include: ['src/**/*.js', 'src/**/*.vue', 'src/*.js', 'src/*.vue'], cache: false, emitWarning: true, emitError: true
+      }),
       createSvgIconsPlugin({
         // 指定需要缓存的图标文件夹
         iconDirs: [resolve(process.cwd(), 'src/assets/icons/svg')],
