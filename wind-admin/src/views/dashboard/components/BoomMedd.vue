@@ -99,12 +99,10 @@ export default {
               ])
             },
             itemStyle: {
-              normal: {
-                color: '#1762F2', // 改变折线点的颜色
-                lineStyle: {
-                  color: '#1762F2', // 改变折线颜色,
-                  width: 3
-                }
+              color: '#1762F2', // 改变折线点的颜色
+              lineStyle: {
+                color: '#1762F2', // 改变折线颜色,
+                width: 3
               }
             }
           }

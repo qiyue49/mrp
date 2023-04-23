@@ -195,25 +195,21 @@ export default {
             valueAnimation: true,
             // Y轴数字显示部分
             label: {
-              normal: {
-                show: true,
-                position: 'right',
-                valueAnimation: true,
-                offset: [5, -2],
-                textStyle: {
-                  color: '#333',
-                  fontSize: 13
-                }
-              }
+              show: true,
+              position: 'right',
+              valueAnimation: true,
+              offset: [5, -2],
+              color: '#333',
+              fontSize: 13
             },
             itemStyle: {
-              emphasis: {
-                barBorderRadius: 7
-              },
               // 颜色样式部分
-              normal: {
-                barBorderRadius: 7,
-                color: '#1762F2'
+              borderRadius: 7,
+              color: '#1762F2'
+            },
+            emphasis: {
+              itemStyle: {
+                borderRadius: 7
               }
             }
           }
