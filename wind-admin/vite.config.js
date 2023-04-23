@@ -21,7 +21,7 @@ export default ({ mode }) => {
       proxy: {
         [env.VITE_APP_BASE_API]: {
           // 本地API地址
-          target: 'http://localhost:8082',
+          target: 'http://www.sunseagear.com:80/wind-vue',
           changeOrigin: true,
           rewrite: path => path.replace(new RegExp('^' + env.VITE_APP_BASE_API), '')
         },

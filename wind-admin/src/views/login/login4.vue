@@ -1,152 +1,198 @@
 <template>
-  <div class="app">
-    <div class="card">
-      <div class="title">{{ title }}</div>
-      <div class="content">
-        <div class="left-img">
-          <img src="~@/assets/img/login/login4/left-img.png" alt="" />
-        </div>
-        <div class="right-content">
-          <h2 class="right-title">
-            登陆LOGIN
-          </h2>
-          <div class="input">
-            <el-form
-              ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
-              label-position="left">
+  <div class="contain">
+    <el-row>
+      <el-col :span="8">
+        <el-form
+          ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
+          label-position="left">
+
+          <div class="card">
+            <p class="title">欢迎进入千库人力资源平台<img src="../../assets/img/login/login1/icon.png"/></p>
+            <div class="input">
               <el-form-item prop="username">
-                <p>用户名</p>
-                <el-input
-                  ref="username"
-                  v-model="loginForm.username"
-                  placeholder="请输入用户名"
-                  prefix-icon="User"
-                  name="username"
-                  type="text"
-                  tabindex="1"
-                  autocomplete="on"
-                />
-              </el-form-item>
-              <el-tooltip v-model="capsTooltip" content="大写键已打开" placement="left" manual>
-                <el-form-item prop="password">
-                  密码
-                  <el-input
-                    :key="passwordType"
-                    ref="password"
-                    v-model="loginForm.password"
-                    :type="passwordType"
-                    placeholder="请输入密码"
-                    prefix-icon="Lock"
-                    name="password"
-                    tabindex="2"
-                    autocomplete="on"
-                    @keyup="checkCapslock"
-                    @blur="capsTooltip = false"
-                    @keyup.enter="handleLogin"
-                  />
-                  <span class="show-pwd" @click="showPwd">
-                    <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                  </span>
-                </el-form-item>
-              </el-tooltip>
-              <el-form-item v-if="errorTime >= 3" prop="identify">
-                验证码
                 <el-row>
                   <el-col :span="18">
                     <el-input
                       ref="username"
+                      v-model="loginForm.username"
+                      placeholder="手机号/邮箱/昵称"
+                      name="username"
+                      type="text"
+                      tabindex="1"
+                      autocomplete="on"
+                      size="large"
+                    />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+            <div class="input">
+              <el-tooltip :visible="capsTooltip" content="大写键已打开" placement="left" manual>
+                <el-form-item prop="password">
+                  <el-row>
+                    <el-col :span="18">
+                      <el-input
+                        :key="passwordType"
+                        ref="password"
+                        v-model="loginForm.password"
+                        :type="passwordType"
+                        placeholder="请输入您的密码"
+                        name="password"
+                        tabindex="2"
+                        autocomplete="on"
+                        size="large"
+                        @keyup="checkCapslock"
+                        @blur="capsTooltip = false"
+                        @keyup.enter="handleLogin"
+                      />
+                      <span class="show-pwd" @click="showPwd">
+                        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+                      </span>
+                    </el-col>
+                  </el-row>
+                </el-form-item>
+              </el-tooltip>
+
+            </div>
+
+            <div class="input">
+              <el-form-item prop="identify">
+                <el-row>
+                  <el-col :span="12">
+                    <el-input
+                      ref="identify"
                       v-model="loginForm.identify"
-                      prefix-icon="Postcard"
-                      placeholder="验证码"
+                      placeholder="请输入验证码"
                       name="identify"
                       type="text"
+                      size="large"
                       tabindex="3" />
                   </el-col>
                   <el-col :span="6">
                     <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
                   </el-col>
+                  <!-- <el-col :span="6">
+                    <img src="../../assets/img/login/login1/refresh.png"/>
+                  </el-col> -->
                 </el-row>
               </el-form-item>
+            </div>
 
-              <el-button
-                :loading="loading" type="primary" style="width:100%;margin-bottom:30px;"
-                @click="handleLogin">
-                登录
-              </el-button>
-            </el-form>
+            <div class="input">
+              <el-form-item>
+                <el-row>
+                  <el-col :span="6">
+                    <el-checkbox v-model="checked1" label="记住密码" size="large" />
+                  </el-col>
+                  <el-col :span="8">
+                    <el-checkbox v-model="checked2" label="记住我" size="large" />
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+
+            <div>
+              <el-form-item>
+                <el-row>
+                  <el-col :span="18">
+                    <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:5px;" size="large" @click="handleLogin">
+                      登陆
+                    </el-button>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
+            <div>
+              <el-form-item>
+                <el-row>
+                  <el-col :span="6">
+                    <el-link type="primary">忘记密码？</el-link>
+                  </el-col>
+                </el-row>
+              </el-form-item>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </el-form>
+      </el-col>
+      <!-- <el-col :span="18">
+        <div class="app"></div>
+      </el-col> -->
+    </el-row>
+
   </div>
 </template>
+
 <script>
-import { mixin } from '@/views/login/mixin'
+import { mixin } from './mixin'
 
 export default {
-  name: 'Login3',
+  name: 'Login1',
   mixins: [mixin]
 }
-
 </script>
-<style lang="scss" scoped>
-.app {
-  height: 100%;
-  background: url("@/assets/img/login/login4/operations-bgc.png") no-repeat;
-  background-position: top center;
-  background-size: 100% 100%;
-}
-.card {
-  position: relative;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 1000px;
-  height: 700px;
-  background-color: #fff;
-  border-radius: 30px;
-  .title {
-    height: 100px;
-    font-size: 40px;
-    color: #34a1ff;
-    display: flex;
-    align-items: center;
-    margin-left: 70px;
-    font-weight: 600;
+  <style lang="scss" scoped>
+
+  .contain{
+    background-image: url("@/assets/img/login/login1/login_pic.png");
+    width: 100%;
+    height: 100%;
+    background-size: 100% 100%;
   }
-  .content {
-    display: flex;
+
+  .login-form {
+    padding: 20px;
+    max-width: 100%;
+    margin: 16% 0 20% 20%;
+    overflow: hidden;
   }
-  .left-img {
-    width: 640px;
-    height: 450px;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  .right-content {
-    width: 460px;
-    padding-top: 60px;
-    .right-title {
-      font-size: 25px;
-      text-align: center;
-    }
-    .input {
-      margin: 0 25px;
-      .el-button {
-        margin-top: 50px;
-        width: 100%;
+
+  .card {
+    .title {
+      width: 303px;
+      display: flex;
+      font-size: 48px;
+      font-family: Microsoft YaHei;
+      font-weight: bold;
+      color: #B74DD7;
+      align-items: end;
+      box-sizing: border-box;
+      img{
+        width: 20px;
+        height: 10px;
+        margin-bottom: 10px;
+        margin-left: 5px;
       }
     }
+
+    .show-pwd {
+      position: absolute;
+      right: 10px;
+      top: 0px;
+      font-size: 16px;
+      color: #889aa4;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .el-button {
+      background: linear-gradient(90deg, #9224F0 0%, #B749AB 63%, #DC829E 100%);
+      border-radius: 10px 10px 10px 10px;
+      border-color: unset;
+    }
+    .el-button>sapn{
+      font-size: 20px;
+      font-family: Microsoft YaHei;
+      font-weight: 400;
+      color: #FEFEFE;
+    }
+
+    .input {
+
+      p {
+        font-size: 16px;
+        color: #bbb7b7;
+      }
+
+    }
   }
-  .show-pwd {
-    position: absolute;
-    right: 10px;
-    font-size: 16px;
-    color: #889aa4;
-    cursor: pointer;
-    user-select: none;
-  }
-}
-</style>
+  </style>
