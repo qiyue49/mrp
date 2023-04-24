@@ -5,7 +5,7 @@
         <el-button icon="Search" @click="show" />
       </template>
     </el-input>
-    <el-dialog v-model="dialogFormVisible" draggable custom-class="dialog-title" title="选择用户" destroy-on-close append-to-body>
+    <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="选择用户" destroy-on-close append-to-body>
       <div>
         <div class="filter-container">
           <el-input v-model="listQuery.realname" class="filter-item" placeholder="请输入姓名" @keyup.enter="handleFilter" />

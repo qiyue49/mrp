@@ -9,7 +9,7 @@
         <!--        <el-button icon="Delete" @click="clear" />-->
       </template>
     </el-input>
-    <el-dialog v-model="iconFormVisible" draggable custom-class="dialog-title" title="选择图标" :close-on-click-modal="false" append-to-body>
+    <el-dialog v-model="iconFormVisible" draggable class="dialog-title" title="选择图标" :close-on-click-modal="false" append-to-body>
       <el-form>
         <el-row :gutter="20">
           <el-input v-model="name" suffix-icon="Search" placeholder="请输入图标名称" clearable @input="filterIcons"/>

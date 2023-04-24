@@ -43,7 +43,7 @@
 
       <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
 
-      <el-dialog v-model="dialogFormVisible" draggable custom-class="dialog-title" :title="title" width="80%">
+      <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" :title="title" width="80%">
         <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
           <el-form-item label="模版名称" prop="name">
             <el-input v-model="temp.name" />

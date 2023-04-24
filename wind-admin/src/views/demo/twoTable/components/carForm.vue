@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" draggable custom-class="dialog-title" :title="title">
+  <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" :title="title">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
       <el-form-item label="汽车品牌" prop="name">
         <el-input v-model="temp.name" />

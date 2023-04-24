@@ -20,7 +20,7 @@
         <img :src="errGif" width="313" height="428" alt="Girl has dropped her ice cream." />
       </el-col>
     </el-row>
-    <el-dialog v-model="dialogVisible" draggable custom-class="dialog-title" title="随便看">
+    <el-dialog v-model="dialogVisible" draggable class="dialog-title" title="随便看">
       <img :src="ewizardClap" class="pan-img" />
     </el-dialog>
   </div>
