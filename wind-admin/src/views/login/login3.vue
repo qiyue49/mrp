@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <el-row>
+  <div class="login-box">
+    <el-row style="height:100%">
       <el-col :span="10">
         <el-form
           ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
           label-position="left">
 
           <div class="card">
-            <p class="title">登录</p>
+            <p class="title">{{ title }}</p>
             <div class="input">
               <el-form-item prop="username">
                 <el-row>
@@ -17,6 +17,7 @@
                       v-model="loginForm.username"
                       placeholder="请输入管理员姓名"
                       name="username"
+                      prefix-icon="User"
                       type="text"
                       size="large"
                       tabindex="1"
@@ -36,6 +37,7 @@
                         ref="password"
                         v-model="loginForm.password"
                         :type="passwordType"
+                        prefix-icon="Lock"
                         placeholder="请输入密码"
                         name="password"
                         tabindex="2"
@@ -44,10 +46,11 @@
                         @keyup="checkCapslock"
                         @blur="capsTooltip = false"
                         @keyup.enter="handleLogin"
-                      />
-                      <span class="show-pwd" @click="showPwd">
-                        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                      </span>
+                      >
+                        <template #suffix>
+                          <svg-icon :icon-class="passwordType === 'password' ? 'ui-eye' : 'ui-hide'" color="gray" @click="showPwd"/>
+                        </template>
+                      </el-input>
                     </el-col>
                   </el-row>
 
@@ -57,16 +60,16 @@
             </div>
 
             <div v-if="errorTime >= 3" class="input">
-              <p>验证码</p>
               <el-form-item prop="identify">
                 <el-row>
-                  <el-col :span="18">
+                  <el-col :span="14">
                     <el-input
                       ref="identify"
                       v-model="loginForm.identify"
                       prefix-icon="Postcard"
                       placeholder="验证码"
                       name="identify"
+                      size="large"
                       type="text"
                       tabindex="3" />
                   </el-col>
@@ -91,9 +94,8 @@
           </div>
         </el-form>
       </el-col>
-      <el-col :span="14" style="padding-top:30px">
+      <el-col :span="14" style="padding:100px">
         <div class="app">
-          <img src="../../assets/img/login/login3/login_pic.png"/>
         </div>
       </el-col>
     </el-row>
@@ -110,12 +112,18 @@ export default {
 }
 </script>
   <style lang="scss" scoped>
-  .app {
-    img{
-        width: auto;
-        height: auto;
-    }
 
+  .login-box{
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    .app {
+      min-width: 100%;
+      background-image: url('../../assets/img/login/login3/login_pic.png');
+      height: 100%;
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
   }
 
   .login-form {
