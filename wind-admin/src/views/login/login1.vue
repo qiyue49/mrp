@@ -1,11 +1,11 @@
 <template>
   <div class="all">
     <div class="left-text">
-      <p>欢迎您</p>
-      <p>—设计让生活更美好</p>
+      <!-- <p>欢迎您</p> -->
+      <p>{{ title }}</p>
     </div>
     <div class="right-text">
-      <div class="title">LOGO</div>
+      <div class="title">登录</div>
       <div style="margin-left:20px">
         <el-form ref="loginForm" :model="loginForm" :rules="loginRules" autocomplete="on">
 
@@ -15,7 +15,8 @@
                 <el-input
                   ref="username"
                   v-model="loginForm.username"
-                  placeholder="请输入手机号码"
+                  prefix-icon="User"
+                  placeholder="请输入用户名"
                   name="username"
                   type="text"
                   tabindex="1"
@@ -25,31 +26,54 @@
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item prop="username">
+          <el-form-item prop="password">
             <el-row>
               <el-col :span="20">
-                <el-input
-                  ref="password"
-                  v-model="loginForm.password"
-                  placeholder="请输入动态码"
-                  name="password"
-                  type="text"
-                  tabindex="1"
-                  autocomplete="on"
-                  size="large"
-                >
-                  <template #append>获取动态码</template>
-                </el-input>
+                <el-tooltip :visible="capsTooltip" content="大写键已打开" placement="left" manual>
+                  <el-form-item prop="password">
+                    <el-input
+                      :key="passwordType"
+                      ref="password"
+                      v-model="loginForm.password"
+                      prefix-icon="Lock"
+                      :type="passwordType"
+                      placeholder="请输入密码"
+                      name="password"
+                      tabindex="2"
+                      autocomplete="on"
+                      @keyup="checkCapslock"
+                      @blur="capsTooltip = false"
+                      @keyup.enter="handleLogin"
+                    >
+                      <template #suffix>
+                        <svg-icon :icon-class="passwordType === 'password' ? 'ui-eye' : 'ui-hide'" color="gray" @click="showPwd"/>
+                      </template>
+                    </el-input>
+                  </el-form-item>
+                </el-tooltip>
               </el-col>
             </el-row>
           </el-form-item>
-          <el-form-item>
-            <el-row>
-              <el-col :span="20">
-                <drag-verify/>
-              </el-col>
-            </el-row>
-          </el-form-item>
+          <div v-if="errorTime >= 3" class="input">
+            <el-form-item prop="identify">
+              <el-row>
+                <el-col :span="14">
+                  <el-input
+                    ref="identify"
+                    v-model="loginForm.identify"
+                    prefix-icon="Postcard"
+                    placeholder="验证码"
+                    name="identify"
+                    type="text"
+                    tabindex="3" />
+                </el-col>
+                <el-col :span="6">
+                  <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
+                </el-col>
+              </el-row>
+            </el-form-item>
+          </div>
+
           <el-form-item>
             <el-row>
               <el-col :span="20">
@@ -67,11 +91,9 @@
 </template>
 <script>
 import { mixin } from '@/views/login/mixin'
-import DragVerify from './dragVerify.vue'
 
 export default {
   name: 'Login3',
-  components: { DragVerify },
   mixins: [mixin]
 }
 </script>

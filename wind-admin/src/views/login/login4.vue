@@ -1,13 +1,13 @@
 <template>
   <div class="contain">
     <el-row>
-      <el-col :span="8">
+      <el-col :span="10">
         <el-form
           ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" autocomplete="on"
           label-position="left">
 
           <div class="card">
-            <p class="title">欢迎进入千库人力资源平台<img src="../../assets/img/login/login1/icon.png"/></p>
+            <p class="title">{{ title }}</p>
             <div class="input">
               <el-form-item prop="username">
                 <el-row>
@@ -15,6 +15,7 @@
                     <el-input
                       ref="username"
                       v-model="loginForm.username"
+                      prefix-icon="User"
                       placeholder="手机号/邮箱/昵称"
                       name="username"
                       type="text"
@@ -37,6 +38,7 @@
                         v-model="loginForm.password"
                         :type="passwordType"
                         placeholder="请输入您的密码"
+                        prefix-icon="Lock"
                         name="password"
                         tabindex="2"
                         autocomplete="on"
@@ -44,10 +46,11 @@
                         @keyup="checkCapslock"
                         @blur="capsTooltip = false"
                         @keyup.enter="handleLogin"
-                      />
-                      <span class="show-pwd" @click="showPwd">
-                        <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                      </span>
+                      >
+                        <template #suffix>
+                          <svg-icon :icon-class="passwordType === 'password' ? 'ui-eye' : 'ui-hide'" color="gray" @click="showPwd"/>
+                        </template>
+                      </el-input>
                     </el-col>
                   </el-row>
                 </el-form-item>
@@ -55,13 +58,14 @@
 
             </div>
 
-            <div class="input">
+            <div v-if="errorTime >= 3" class="input">
               <el-form-item prop="identify">
                 <el-row>
                   <el-col :span="12">
                     <el-input
                       ref="identify"
                       v-model="loginForm.identify"
+                      prefix-icon="Postcard"
                       placeholder="请输入验证码"
                       name="identify"
                       type="text"
@@ -71,26 +75,9 @@
                   <el-col :span="6">
                     <indentify ref="identify" :identify-code="identifyCode" :content-width="80" @click="makeCode" />
                   </el-col>
-                  <!-- <el-col :span="6">
-                    <img src="../../assets/img/login/login1/refresh.png"/>
-                  </el-col> -->
                 </el-row>
               </el-form-item>
             </div>
-
-            <div class="input">
-              <el-form-item>
-                <el-row>
-                  <el-col :span="6">
-                    <el-checkbox v-model="checked1" label="记住密码" size="large" />
-                  </el-col>
-                  <el-col :span="8">
-                    <el-checkbox v-model="checked2" label="记住我" size="large" />
-                  </el-col>
-                </el-row>
-              </el-form-item>
-            </div>
-
             <div>
               <el-form-item>
                 <el-row>
@@ -98,15 +85,6 @@
                     <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:5px;" size="large" @click="handleLogin">
                       登陆
                     </el-button>
-                  </el-col>
-                </el-row>
-              </el-form-item>
-            </div>
-            <div>
-              <el-form-item>
-                <el-row>
-                  <el-col :span="6">
-                    <el-link type="primary">忘记密码？</el-link>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -137,31 +115,23 @@ export default {
     width: 100%;
     height: 100%;
     background-size: 100% 100%;
+    overflow: hidden;
   }
 
   .login-form {
     padding: 20px;
     max-width: 100%;
-    margin: 16% 0 20% 20%;
+    margin: 20% 0 20% 20%;
     overflow: hidden;
+    box-sizing: border-box;
   }
 
   .card {
     .title {
-      width: 303px;
-      display: flex;
       font-size: 48px;
       font-family: Microsoft YaHei;
       font-weight: bold;
       color: #B74DD7;
-      align-items: end;
-      box-sizing: border-box;
-      img{
-        width: 20px;
-        height: 10px;
-        margin-bottom: 10px;
-        margin-left: 5px;
-      }
     }
 
     .show-pwd {

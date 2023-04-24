@@ -171,8 +171,8 @@ export default {
   methods: {
     statusFilter(status) {
       const statusMap = {
-        1: ' ',
-        0: 'error'
+        1: '',
+        0: 'danger'
       }
       return statusMap[status]
     },
