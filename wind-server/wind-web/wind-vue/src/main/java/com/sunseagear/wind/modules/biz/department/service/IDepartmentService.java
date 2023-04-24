@@ -10,7 +10,7 @@ import com.sunseagear.wind.modules.biz.department.entity.Department;
  * @package biz.department
  * @title: 组织架构&mdash;&mdash;左树右表树表（飞廉演示）控制器
  * @description: 组织架构&mdash;&mdash;左树右表树表（飞廉演示）控制器
- * @author: 
+ * @author:
  * @date: 2021-04-15 10:23:14
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */

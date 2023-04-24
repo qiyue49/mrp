@@ -14,13 +14,12 @@ import java.security.PublicKey;
 public class JasyptEncrypt implements StringEncryptor {
 
     /*
-    * 生成数据加密字符串的方法
-    * 1、Util模块RSACryptographyUtils类中的data就是要加密的内容。
-    * 2、运行main函数，会出现公钥，公钥模，公钥指数，私钥，私钥模，私钥指数，加密前，加密后，解密后等等打印信息。
-    * 3、如果加密前和解密后内容一样，则说明加密成功，将公钥模，公钥指数 ，私钥指数记录下来保存到下面变量中
-    * 4、将加密后的字段复制到yml数据库的密码位置。并且用ENC(包含)
-    * */
-
+     * 生成数据加密字符串的方法
+     * 1、Util模块RSACryptographyUtils类中的data就是要加密的内容。
+     * 2、运行main函数，会出现公钥，公钥模，公钥指数，私钥，私钥模，私钥指数，加密前，加密后，解密后等等打印信息。
+     * 3、如果加密前和解密后内容一样，则说明加密成功，将公钥模，公钥指数 ，私钥指数记录下来保存到下面变量中
+     * 4、将加密后的字段复制到yml数据库的密码位置。并且用ENC(包含)
+     * */
 
 
     //为了保障数据安全，以下参数请自己利用RSACryptographyUtils类生成

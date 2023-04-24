@@ -12,7 +12,7 @@ public final class SmsClientFactory {
             return new AliyunSmsClient();
         } else if (Constants.CLIENT_TENCENT.equals(clientType)) {
             return new TencentSmsClient();
-        }else if (Constants.CLIENT_HUYI.equals(clientType)) {
+        } else if (Constants.CLIENT_HUYI.equals(clientType)) {
             return new HuyiSmsClient();
         }
         return null;

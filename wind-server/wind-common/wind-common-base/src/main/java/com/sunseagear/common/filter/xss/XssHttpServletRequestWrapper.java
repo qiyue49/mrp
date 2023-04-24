@@ -1,9 +1,8 @@
 package com.sunseagear.common.filter.xss;
 
-import org.apache.commons.text.StringEscapeUtils;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletRequestWrapper;
+import org.apache.commons.text.StringEscapeUtils;
 
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 

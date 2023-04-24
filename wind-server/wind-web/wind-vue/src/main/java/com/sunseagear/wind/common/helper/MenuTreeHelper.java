@@ -1,8 +1,6 @@
 package com.sunseagear.wind.common.helper;
 
 
-import com.sunseagear.common.mvc.entity.TreeEntity;
-import com.sunseagear.common.utils.ObjectUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.sys.entity.Menu;
 
@@ -39,7 +37,7 @@ public class MenuTreeHelper implements Serializable {
                 MenuTreeNode treeEntity = treeEntityHashMap.get(item.getParentId());
                 treeEntity.getChildren().add(menuTreeNode);
 
-            }else{
+            } else {
                 treeNodeList.add(menuTreeNode);
             }
         });
@@ -66,7 +64,7 @@ public class MenuTreeHelper implements Serializable {
             put("component", menu.getComponent());
             put("type", menu.getType());
             put("hidden", !menu.isEnable());
-            put("parentId",menu.getParentId());
+            put("parentId", menu.getParentId());
 
             //设置meta
             Map<String, Object> meta = new HashMap<>();
@@ -78,8 +76,8 @@ public class MenuTreeHelper implements Serializable {
         }
 
         public List<MenuTreeNode> getChildren() {
-            if (!containsKey("children")){
-                put("children",new ArrayList<MenuTreeNode>());
+            if (!containsKey("children")) {
+                put("children", new ArrayList<MenuTreeNode>());
             }
             return (List<MenuTreeNode>) get("children");
         }

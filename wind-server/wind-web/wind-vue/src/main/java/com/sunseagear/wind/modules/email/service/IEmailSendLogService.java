@@ -3,9 +3,6 @@ package com.sunseagear.wind.modules.email.service;
 import com.sunseagear.common.mvc.service.ICommonService;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * All rights Reserved, Designed By www.sunseagear.com
  *

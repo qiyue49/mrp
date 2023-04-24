@@ -3,11 +3,10 @@ package com.sunseagear.wind.modules.monitor.controller;
 import cn.afterturn.easypoi.excel.ExcelExportUtil;
 import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -15,11 +14,12 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.monitor.entity.LoginLog;
 import com.sunseagear.wind.modules.monitor.service.ILoginLogService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
@@ -60,7 +60,7 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<LoginLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "login_time");
+        entityWrapper.orderByDesc("login_time");
         String status = request.getParameter("status");
         if (!StringUtils.isEmpty(status)) {
             entityWrapper.eq("status", status);
@@ -96,7 +96,7 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
                     "");
             //加入条件
             QueryWrapper<LoginLog> entityWrapper = new QueryWrapper<>();
-            entityWrapper.orderByDesc( "login_time");
+            entityWrapper.orderByDesc("login_time");
             Page pageBean = loginLogService.selectPage(getPage(), entityWrapper);
             String title = "登陆日志";
             Workbook book = ExcelExportUtil.exportExcel(new ExportParams(

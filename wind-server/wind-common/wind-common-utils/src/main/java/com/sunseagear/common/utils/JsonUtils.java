@@ -1,10 +1,10 @@
 package com.sunseagear.common.utils;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sunseagear.common.utils.entity.JsonResult;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import com.sunseagear.common.utils.entity.JsonResult;
 import com.sunseagear.common.utils.entity.PageResult;
 import org.apache.commons.text.StringEscapeUtils;
 

@@ -1,11 +1,10 @@
 package com.sunseagear.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 
@@ -71,10 +70,11 @@ public class ServletUtils {
 
     /**
      * 获取域名
+     *
      * @param request
      * @return
      */
-    public static String getContextUrl (HttpServletRequest request){
+    public static String getContextUrl(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();
         String tempContextUrl = url.delete(url.length() - request.getRequestURI().length(), url.length()).toString();
         return tempContextUrl + "/";

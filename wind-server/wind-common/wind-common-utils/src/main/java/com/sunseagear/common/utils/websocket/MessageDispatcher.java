@@ -1,10 +1,10 @@
 package com.sunseagear.common.utils.websocket;
 
 
-import com.sunseagear.common.utils.websocket.processor.JsonProcessor;
-import com.sunseagear.common.utils.websocket.processor.SocketMessage;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.sunseagear.common.utils.websocket.processor.JsonProcessor;
+import com.sunseagear.common.utils.websocket.processor.SocketMessage;
 
 import java.util.HashMap;
 

@@ -9,12 +9,12 @@ import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.PropertiesUtil;
 import com.sunseagear.common.utils.StringUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
@@ -194,7 +194,7 @@ public class OSSUploadHelper {
             }
         }
         String filename = file.getOriginalFilename();
-        if (!originalName){
+        if (!originalName) {
             filename = DateUtils.long2DateTime(System.currentTimeMillis(), "yyyyMMddHHmmssSSS") + "."
                     + StringUtils.getExtensionName(filename);
         }

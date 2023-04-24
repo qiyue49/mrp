@@ -60,7 +60,7 @@ public class Menu extends TreeEntity<String> {
     private String component;
 
 
-    public Boolean isEnable(){
+    public Boolean isEnable() {
         return enabled == 1;
     }
 

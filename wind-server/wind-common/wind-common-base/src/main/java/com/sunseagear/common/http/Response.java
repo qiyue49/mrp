@@ -1,9 +1,9 @@
 package com.sunseagear.common.http;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.*;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.StringUtils;
-import com.google.gson.*;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;

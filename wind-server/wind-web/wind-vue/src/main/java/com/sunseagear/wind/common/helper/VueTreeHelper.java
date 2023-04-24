@@ -1,7 +1,6 @@
 package com.sunseagear.wind.common.helper;
 
 import com.sunseagear.common.mvc.entity.TreeEntity;
-import com.sunseagear.common.mvc.entity.tree.TreeNode;
 import com.sunseagear.common.utils.StringUtils;
 
 import java.io.Serializable;
@@ -36,7 +35,7 @@ public class VueTreeHelper<ID extends Serializable> implements Serializable {
                 }
                 treeEntity.getChildren().add(item);
 
-            }else{
+            } else {
                 treeNodeList.add(item);
             }
         });

@@ -10,7 +10,7 @@ import com.sunseagear.wind.modules.biz.event.entity.Event;
  * @package biz.event
  * @title: 事件管理&mdash;&mdash;单表（飞廉演示）控制器
  * @description: 事件管理&mdash;&mdash;单表（飞廉演示）控制器
- * @author: 
+ * @author:
  * @date: 2021-04-12 01:03:40
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */

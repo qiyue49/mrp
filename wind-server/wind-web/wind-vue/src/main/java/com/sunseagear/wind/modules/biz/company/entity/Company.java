@@ -6,8 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import lombok.Data;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -16,7 +14,7 @@ import java.util.Date;
  * @package biz.company
  * @title: 供货厂家&mdash;&mdash;级联表主表（飞廉演示）控制器
  * @description: 供货厂家&mdash;&mdash;级联表主表（飞廉演示）控制器
- * @author: 
+ * @author:
  * @date: 2021-10-21 07:59:27
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */

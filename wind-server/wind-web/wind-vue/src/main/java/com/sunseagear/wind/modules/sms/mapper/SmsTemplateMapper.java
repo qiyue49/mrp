@@ -2,7 +2,6 @@ package com.sunseagear.wind.modules.sms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sunseagear.wind.modules.sms.entity.SmsTemplate;
-import com.sunseagear.wind.modules.sms.entity.SmsTemplate;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

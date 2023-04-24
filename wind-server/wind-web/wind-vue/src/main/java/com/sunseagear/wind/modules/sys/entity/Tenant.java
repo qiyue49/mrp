@@ -5,18 +5,16 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
-import lombok.Data;
-
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
  *
  * @version V1.0
  * @package sys
- * @title: 租户管理控制器
- * @description: 租户管理控制器
+ * @title: 租户管理实体类
+ * @description: 租户管理实体类
  * @author: 未知
  * @date: 2019-11-28 06:24:52
  * @copyright: www.sunseagear.com Inc. All rights reserved.

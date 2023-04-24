@@ -6,7 +6,6 @@ import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.StringUtils;
 import jakarta.activation.DataSource;
 import org.quartz.Scheduler;
-import org.quartz.ee.servlet.QuartzInitializerListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.ApplicationArguments;

@@ -27,10 +27,10 @@ public class UserUtils {
      */
     public static Principal getPrincipal() {
         Authentication authentication = getAuthentication();
-        if (authentication instanceof AnonymousAuthenticationToken){
+        if (authentication instanceof AnonymousAuthenticationToken) {
             return null;
         }
-        if (authentication == null){
+        if (authentication == null) {
             return null;
         }
         return (Principal) getAuthentication().getPrincipal();

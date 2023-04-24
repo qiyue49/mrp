@@ -5,9 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
-import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.modules.sys.entity.Organization;
+import com.sunseagear.wind.modules.sys.entity.User;
 import lombok.Data;
+
 import java.util.Date;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Date;
  * @package biz.event
  * @title: 事件管理&mdash;&mdash;单表（飞廉演示）控制器
  * @description: 事件管理&mdash;&mdash;单表（飞廉演示）控制器
- * @author: 
+ * @author:
  * @date: 2021-04-12 01:03:40
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */

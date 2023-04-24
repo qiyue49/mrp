@@ -8,19 +8,17 @@ import com.sunseagear.common.utils.entity.Principal;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.JSQLParserException;
 import net.sf.jsqlparser.expression.Expression;
-import net.sf.jsqlparser.expression.LongValue;
 import net.sf.jsqlparser.expression.StringValue;
 import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
-import net.sf.jsqlparser.expression.operators.relational.*;
+import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
+import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
+import net.sf.jsqlparser.expression.operators.relational.InExpression;
+import net.sf.jsqlparser.expression.operators.relational.ItemsList;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.schema.Column;
-import net.sf.jsqlparser.statement.Statement;
 import net.sf.jsqlparser.statement.select.PlainSelect;
 import net.sf.jsqlparser.statement.select.Select;
-import net.sf.jsqlparser.util.deparser.ExpressionDeParser;
-import net.sf.jsqlparser.util.deparser.SelectDeParser;
 import org.apache.commons.text.StringEscapeUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
@@ -39,6 +37,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
 
     private final DataRuleHandler dataRuleHandler;
     private static GroupTemplate groupTemplate;
+
     static {
         StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
         Configuration configuration = null;
@@ -64,7 +63,8 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
             return where;
         }
         Map<String, Object> userMap = dataRuleHandler.getUser(principal.getId());
-        DataRuleModel dataScope = dataRuleHandler.getDataRule(mappedStatementId, principal.getRoleId());;
+        DataRuleModel dataScope = dataRuleHandler.getDataRule(mappedStatementId, principal.getRoleId());
+        ;
         //如果还不行，那就只有不处理了
         if (dataScope == null) {
             return where;
@@ -82,7 +82,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
             }
             userMap.forEach(template::binding);
             String whereSql = template.render();
-            String sql = "select * from table where " + whereSql.replace("where","");
+            String sql = "select * from table where " + whereSql.replace("where", "");
             CCJSqlParserManager parserManager = new CCJSqlParserManager();
             Select select = (Select) parserManager.parse(new StringReader(sql));
             PlainSelect plain = (PlainSelect) select.getSelectBody();

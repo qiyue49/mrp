@@ -7,16 +7,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "oss")
 public class TencentConfig {
     //API密钥secretId
-    private String secretId="";
+    private String secretId = "";
 
     //API密钥secretKey
-    private String secretKey="";
+    private String secretKey = "";
 
     //存储桶所属地域
-    private String region="";
+    private String region = "";
 
     //存储桶空间名称
-    private String bucketName="";
+    private String bucketName = "";
 
     //存储桶访问域名
     private String domain;

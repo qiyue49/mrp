@@ -9,15 +9,15 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.task.entity.ScheduleJob;
 import com.sunseagear.wind.modules.task.service.IScheduleJobService;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.quartz.CronExpression;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.quartz.CronExpression;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<ScheduleJob> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
         String jobName = request.getParameter("jobName");
         if (!StringUtils.isEmpty(jobName)) {
             entityWrapper.like("job_name", jobName);

@@ -108,6 +108,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         User user = getUser();
         return getRoleList(user);
     }
+
     public static List<Role> getRoleList(User user) {
         List<Role> roleList = CacheUtils.getCacheObject(CACHE_ROLE_LIST + user.getId());
         if (ObjectUtils.isNullOrEmpty(roleList)) {
@@ -119,6 +120,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 获取角色列表
+     *
      * @return
      */
     public static Set<String> getRoleStringList() {
@@ -128,6 +130,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 是否有特定的角色
+     *
      * @param roleCode
      * @return
      */
@@ -143,12 +146,14 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 获取权限列表
+     *
      * @return
      */
     public static Set<String> getPermissionSet() {
         User user = getUser();
         return getPermissionSet(user);
     }
+
     public static Set<String> getPermissionSet(User user) {
         List<String> permissionList = UserUtils.getPermissionList(user);
         Set<String> permissionsList = Sets.newConcurrentHashSet();
@@ -226,6 +231,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 更新用户
+     *
      * @param id
      */
     public static void update(String id) {
@@ -259,6 +265,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 清除权限缓存
+     *
      * @param roleId
      */
     public static void clearPermissionCache(String roleId) {

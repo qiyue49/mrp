@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.sys.service.impl;
 
-import com.sunseagear.common.datarule.handler.DataRuleHandler;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.modules.sys.service.IUserService;
@@ -12,7 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {

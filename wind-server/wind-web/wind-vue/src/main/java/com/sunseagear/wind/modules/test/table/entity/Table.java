@@ -29,27 +29,27 @@ public class Table extends DataEntity<String> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id; //id
 
-    @ExcelField(title = "标题",sort = 10)
+    @ExcelField(title = "标题", sort = 10)
     @TableField(value = "title")
     private String title; //标题
 
-    @ExcelField(title = "内容",sort = 20)
+    @ExcelField(title = "内容", sort = 20)
     @TableField(value = "content")
     private String content; //内容
 
-    @ExcelField(title = "作者",sort = 30)
+    @ExcelField(title = "作者", sort = 30)
     @TableField(value = "author")
     private String author; //作者
 
-    @ExcelField(title = "类型",sort = 40)
+    @ExcelField(title = "类型", sort = 40)
     @TableField(value = "type")
     private String type; //类型
 
-    @ExcelField(title = "状态",sort = 50)
+    @ExcelField(title = "状态", sort = 50)
     @TableField(value = "status")
     private String status; //状态
 
-    @ExcelField(title = "重要程度",sort = 60)
+    @ExcelField(title = "重要程度", sort = 60)
     @TableField(value = "level")
     private Integer level; //重要程度
 
@@ -59,7 +59,7 @@ public class Table extends DataEntity<String> {
     @TableField(value = "readings")
     private Integer readings; //阅读数
 
-    @ExcelField(title = "发布时间",sort = 70)
+    @ExcelField(title = "发布时间", sort = 70)
     @TableField(value = "publish_date")
     private Date publishDate; //发布时间
 

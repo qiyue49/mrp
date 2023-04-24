@@ -1,22 +1,21 @@
 package com.sunseagear.wind.modules.test.twotable.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.test.twotable.entity.Car;
 import com.sunseagear.wind.modules.test.twotable.service.ICarService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -41,7 +40,7 @@ public class CarController extends BaseBeanController<Car> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Car> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
         String keyword = request.getParameter("keyword");
         if (!StringUtils.isEmpty(keyword)) {
             entityWrapper.like("name", keyword).or().like("code", keyword);

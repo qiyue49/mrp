@@ -1,24 +1,23 @@
 package com.sunseagear.wind.modules.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
+import com.sunseagear.wind.common.helper.MenuTreeHelper;
 import com.sunseagear.wind.common.helper.VueTreeHelper;
 import com.sunseagear.wind.modules.sys.entity.Menu;
 import com.sunseagear.wind.modules.sys.service.IMenuService;
-import com.sunseagear.wind.common.helper.MenuTreeHelper;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -50,7 +49,7 @@ public class MenuController extends BaseBeanController<Menu> {
         if (!StringUtils.isEmpty(keyword)) {
             entityWrapper.like("name", keyword);
         }
-        entityWrapper.orderByAsc( "sort");
+        entityWrapper.orderByAsc("sort");
         List<Menu> treeNodeList = menuService.selectList(entityWrapper);
         List<Menu> vueTreeNodes = VueTreeHelper.create().sort(treeNodeList);
         return Response.successJson(vueTreeNodes);
@@ -75,6 +74,7 @@ public class MenuController extends BaseBeanController<Menu> {
         menuService.insertOrUpdate(entity);
         return Response.ok("更新成功");
     }
+
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:menu:detail')")
@@ -82,6 +82,7 @@ public class MenuController extends BaseBeanController<Menu> {
         Menu organization = menuService.selectById(id);
         return Response.successJson(organization);
     }
+
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:menu:delete')")

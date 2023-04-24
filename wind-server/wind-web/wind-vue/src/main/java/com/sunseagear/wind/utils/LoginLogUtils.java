@@ -1,12 +1,11 @@
 package com.sunseagear.wind.utils;
 
+import com.sunseagear.common.disruptor.Task;
+import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
-import com.sunseagear.common.disruptor.Task;
-import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.wind.modules.monitor.entity.LoginLog;
-import com.sunseagear.wind.modules.monitor.service.ILoginLogService;
 import com.sunseagear.wind.modules.monitor.service.impl.LoginLogServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 

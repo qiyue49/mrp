@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.sys.json;
 
-import com.sunseagear.common.http.Response;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.FileUtils;
@@ -8,15 +7,14 @@ import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.MessageUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.AttachmentHelper;
-import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import com.sunseagear.wind.utils.BASE64DecodedMultipartFile;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**

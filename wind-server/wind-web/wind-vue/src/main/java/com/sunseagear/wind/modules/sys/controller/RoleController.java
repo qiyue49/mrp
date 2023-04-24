@@ -1,9 +1,9 @@
 package com.sunseagear.wind.modules.sys.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.tenant.TenantProperties;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -16,12 +16,12 @@ import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -68,7 +68,7 @@ public class RoleController extends BaseBeanController<Role> {
         } else {
             entityWrapper.nested(i -> i.eq("tenant_id", UserUtils.getTenantId()).or().eq("tenant_id", TenantProperties.getInstance().getDefaultTenantId())).eq("is_sys", "0");
         }
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
             entityWrapper.like("code", code);
@@ -95,8 +95,8 @@ public class RoleController extends BaseBeanController<Role> {
         } else {
             entityWrapper.nested(i -> i.eq("tenant_id", UserUtils.getTenantId()).or().eq("tenant_id", TenantProperties.getInstance().getDefaultTenantId())).eq("is_sys", "0");
         }
-        entityWrapper.eq("usable","1");
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.eq("usable", "1");
+        entityWrapper.orderByDesc("create_date");
         List<Role> usableLst = roleService.selectList(entityWrapper);
         return Response.successJson(usableLst);
     }
@@ -162,7 +162,7 @@ public class RoleController extends BaseBeanController<Role> {
         List<Menu> treeNodeList;
         if (roleId.equals("0")) {
             QueryWrapper<Menu> entityWrapper = new QueryWrapper<Menu>();
-            entityWrapper.orderByAsc( "sort").ne("type",Menu.BUTTON);
+            entityWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
             treeNodeList = menuService.selectList(entityWrapper);
         } else {
             treeNodeList = menuService.getCurrentUserMenus();
@@ -185,7 +185,7 @@ public class RoleController extends BaseBeanController<Role> {
         List<Menu> treeNodeList;
         if (roleId.equals("0")) {
             QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
-            entityWrapper.orderByAsc( "sort");
+            entityWrapper.orderByAsc("sort");
             treeNodeList = menuService.selectList(entityWrapper);
         } else {
             treeNodeList = menuService.findMenuAndPermissionByUserId(UserUtils.getUser().getId());
@@ -215,10 +215,11 @@ public class RoleController extends BaseBeanController<Role> {
         }
         return Response.ok("保存成功");
     }
+
     @PostMapping(value = "/setPermission")
     @Log(logType = LogType.OTHER, title = "权限配置")
     public String setPermission(@RequestParam("roleId") String roleId,
-                          @RequestParam("menuIds") String menuIds) {
+                                @RequestParam("menuIds") String menuIds) {
         try {
             // 权限设置
             roleMenuService.setPermission(roleId, menuIds);

@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.sys.service.impl;
 
-import com.sunseagear.common.mvc.service.impl.TreeCommonServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.mvc.service.impl.TreeCommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.sys.entity.Menu;
 import com.sunseagear.wind.modules.sys.mapper.MenuMapper;
@@ -36,7 +36,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Str
                     Menu menu = menuHashMapAll.get(id);
                     menuHashMap.put(id, menu);
                 });
-            }else if (!StringUtils.isEmpty(treeNode.getParentId())){
+            } else if (!StringUtils.isEmpty(treeNode.getParentId())) {
                 String parentId = treeNode.getParentId();
                 Menu menu = menuHashMapAll.get(parentId);
                 menuHashMap.put(parentId, menu);

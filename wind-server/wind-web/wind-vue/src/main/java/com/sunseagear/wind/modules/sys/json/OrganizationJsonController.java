@@ -13,7 +13,6 @@ import com.sunseagear.wind.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
@@ -39,7 +38,7 @@ public class OrganizationJsonController extends BaseBeanController<Organization>
 
     @PostMapping("/list")
     @Log(logType = LogType.SELECT)
-    public String List(){
+    public String List() {
         QueryWrapper<Organization> entityWrapper = new QueryWrapper<>();
         String tenantId = UserUtils.getTenantId();
         if (!StringUtils.isEmpty(tenantId)) {

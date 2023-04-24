@@ -8,7 +8,6 @@ import net.sf.jsqlparser.expression.Expression;
 import net.sf.jsqlparser.expression.StringValue;
 
 
-
 @AllArgsConstructor
 public class CommonTenantHandler implements TenantLineHandler {
 
@@ -20,7 +19,7 @@ public class CommonTenantHandler implements TenantLineHandler {
     @Override
     public Expression getTenantId() {
         String tenantId = UserUtils.getTenantId();
-        if (StringUtils.isEmpty(tenantId)){
+        if (StringUtils.isEmpty(tenantId)) {
             return new StringValue(TenantProperties.getInstance().getDefaultTenantId());
         }
         return new StringValue(tenantId);
@@ -44,7 +43,7 @@ public class CommonTenantHandler implements TenantLineHandler {
      */
     @Override
     public boolean ignoreTable(String tableName) {
-        if (!TenantProperties.getInstance().getEnable()){
+        if (!TenantProperties.getInstance().getEnable()) {
             return true;
         }
         return StringUtils.isEmpty(UserUtils.getTenantId()) || TenantProperties.getInstance().getIgnoreTables().contains(tableName);

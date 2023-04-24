@@ -39,8 +39,8 @@ public class SysConfigHelper {
         });
     }
 
-    public List<SysConfig> getSysConfigList(String tenantId){
-        HashMap<String ,SysConfig> sysConfigHashMap = new HashMap<>();
+    public List<SysConfig> getSysConfigList(String tenantId) {
+        HashMap<String, SysConfig> sysConfigHashMap = new HashMap<>();
         List<SysConfig> configList = sysConfigMap.get(tenantId);
         if (configList == null) {
             configList = new ArrayList<>();
@@ -72,14 +72,14 @@ public class SysConfigHelper {
         SysConfig sysConfig = sysConfigService.getOne(new QueryWrapper<SysConfig>().eq("code", code).eq("tenant_id", tenantId));
         if (sysConfig == null) {
             sysConfig = getDefaultConfig(code);
-        }else{
+        } else {
             configList.add(sysConfig);
         }
         return sysConfig;
 
     }
 
-    public SysConfig getDefaultConfig(String code){
+    public SysConfig getDefaultConfig(String code) {
         List<SysConfig> configList = sysConfigMap.get(TenantProperties.getInstance().getDefaultTenantId());
         for (SysConfig config : configList) {
             if (config.getCode().equals(code)) {
@@ -89,7 +89,7 @@ public class SysConfigHelper {
         return null;
     }
 
-    public void update(String tenantId){
+    public void update(String tenantId) {
         if (!sysConfigMap.containsKey(tenantId)) {
             sysConfigMap.put(tenantId, new ArrayList<>());
         }

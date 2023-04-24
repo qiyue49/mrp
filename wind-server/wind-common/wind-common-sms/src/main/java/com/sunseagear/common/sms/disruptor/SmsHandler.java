@@ -1,8 +1,8 @@
 package com.sunseagear.common.sms.disruptor;
 
+import com.lmax.disruptor.WorkHandler;
 import com.sunseagear.common.sms.client.ISmsClient;
 import com.sunseagear.common.sms.data.SmsResult;
-import com.lmax.disruptor.WorkHandler;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com

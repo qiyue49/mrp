@@ -28,7 +28,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
     @Override
     public boolean insert(T entity) {
-        if (isDemo){
+        if (isDemo) {
             return true;
         }
 
@@ -44,7 +44,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
     @Override
     public boolean insertOrUpdate(T entity) {
-        if (isDemo){
+        if (isDemo) {
             return true;
         }
 
@@ -60,7 +60,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
 
     private void updateSelftAndChild(T entity, ID newParentId, String newParentIds) {
-        if (isDemo){
+        if (isDemo) {
             return;
         }
 
@@ -76,7 +76,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
     @Override
     public boolean deleteById(Serializable id) {
-        if (isDemo){
+        if (isDemo) {
             return true;
         }
         T entity = selectById(id);
@@ -86,10 +86,10 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serial
 
     @Override
     public void deleteBatchIds(List<Serializable> idList) {
-        if (isDemo){
+        if (isDemo) {
             return;
         }
-        for (Serializable  treeId: idList) {
+        for (Serializable treeId : idList) {
             deleteById(treeId);
         }
     }

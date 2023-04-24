@@ -512,9 +512,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
         } else if (type.getName().endsWith("BigDecimal")) {
             returnValue = new BigDecimal(value);
         } /*else if (type.getName().endsWith("Clob")) {
-			Object obj = ClobProxy.generateProxy(value);
-			returnValue = obj;// proxy.getWrappedClob();
-		}*/ else {
+            Object obj = ClobProxy.generateProxy(value);
+            returnValue = obj;// proxy.getWrappedClob();
+        }*/ else {
             returnValue = value.toString();
         }
 
@@ -552,7 +552,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             Class<? extends Object> clazz = obj.getClass();
             Field[] fields = obj.getClass().getDeclaredFields();// 获得属性
             for (Field field : fields) {
-                PropertyDescriptor pd = new PropertyDescriptor((String)field.getName(), clazz);
+                PropertyDescriptor pd = new PropertyDescriptor((String) field.getName(), clazz);
                 Method getMethod = pd.getReadMethod();// 获得get方法
                 String filed = "";// 如果是IS开头的区两位 我也是醉了-_-!!!!
                 if (getMethod.getName().toLowerCase().startsWith(("is"))) {

@@ -1,16 +1,16 @@
 package com.sunseagear.common.email.disruptor;
 
-import com.sunseagear.common.email.data.EmailResult;
 import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.IgnoreExceptionHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
+import com.sunseagear.common.email.data.EmailResult;
+import jakarta.annotation.PostConstruct;
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import jakarta.annotation.PostConstruct;
-import jakarta.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;

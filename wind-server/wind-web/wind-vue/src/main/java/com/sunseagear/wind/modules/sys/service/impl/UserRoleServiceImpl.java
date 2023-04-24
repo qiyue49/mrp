@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.sys.service.impl;
 
-import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.sunseagear.wind.modules.sys.entity.Role;
 import com.sunseagear.wind.modules.sys.entity.UserRole;
 import com.sunseagear.wind.modules.sys.mapper.UserRoleMapper;

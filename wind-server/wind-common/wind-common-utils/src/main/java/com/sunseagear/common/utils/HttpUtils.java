@@ -15,6 +15,7 @@ public class HttpUtils {
                 .build();
         return execute(request);
     }
+
     public static String SyncGet(final String webUrl) {
         final Request request = new Request.Builder()
                 .url(webUrl)

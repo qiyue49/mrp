@@ -1,8 +1,8 @@
 package com.sunseagear.common.email.disruptor;
 
+import jakarta.mail.internet.MimeMessage;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
-import jakarta.mail.internet.MimeMessage;
 import java.io.Serializable;
 
 public class EmailData implements Serializable {

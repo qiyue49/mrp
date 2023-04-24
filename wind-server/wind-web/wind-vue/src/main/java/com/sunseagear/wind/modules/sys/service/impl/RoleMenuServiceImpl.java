@@ -1,13 +1,12 @@
 package com.sunseagear.wind.modules.sys.service.impl;
 
-import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.sys.entity.Menu;
 import com.sunseagear.wind.modules.sys.entity.RoleMenu;
 import com.sunseagear.wind.modules.sys.mapper.MenuMapper;
 import com.sunseagear.wind.modules.sys.mapper.RoleMenuMapper;
-import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +27,10 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
     @Override
     public void setMenu(String roleId, String menuIds) {
         menuMapper.deleteRoleMenu(roleId);
-        setRoleMenu(roleId,menuIds,Menu.MENU);
+        setRoleMenu(roleId, menuIds, Menu.MENU);
     }
-    private void setRoleMenu(String roleId, String menuIds, String type){
+
+    private void setRoleMenu(String roleId, String menuIds, String type) {
         if (!StringUtils.isEmpty(menuIds)) {
             List<Menu> menuListAll = menuMapper.selectList(new QueryWrapper());
             HashMap<String, Menu> menuHashMapAll = new HashMap<>();
@@ -42,7 +42,7 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
             List<RoleMenu> roleMenuList = new ArrayList<>();
             for (String menuId : selectMenus) {
                 Menu menu = menuHashMapAll.get(menuId);
-                if (!menu.getType().equals(type)){
+                if (!menu.getType().equals(type)) {
                     continue;
                 }
                 RoleMenu roleMenu = new RoleMenu();
@@ -54,10 +54,11 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
             UserUtils.clearPermissionCache(roleId);
         }
     }
+
     @Override
     public void setPermission(String roleId, String menuIds) {
         menuMapper.deleteRolePermission(roleId);
-        setRoleMenu(roleId,menuIds,Menu.BUTTON);
+        setRoleMenu(roleId, menuIds, Menu.BUTTON);
     }
 
     @Override

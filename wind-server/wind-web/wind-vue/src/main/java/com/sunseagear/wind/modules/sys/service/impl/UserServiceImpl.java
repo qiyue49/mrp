@@ -1,9 +1,7 @@
 package com.sunseagear.wind.modules.sys.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.modules.sys.entity.UserRole;
@@ -33,10 +31,10 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     public void changePassword(String userid, String newPassword) {
         User user = selectById(userid);
         if (user != null) {
-            user.setPassword(passwordService.getPassword(newPassword,user.getCredentialsSalt()));
+            user.setPassword(passwordService.getPassword(newPassword, user.getCredentialsSalt()));
             update(user);
-        }else{
-            throw  new RuntimeException("用戶不存在");
+        } else {
+            throw new RuntimeException("用戶不存在");
         }
     }
 
@@ -46,7 +44,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             return null;
         }
         User user = selectOne(new QueryWrapper<User>().eq("username", username));
-        if (user == null){
+        if (user == null) {
             return null;
         }
         user.setRoles(roleService.findListByUserId(user.getId()));
@@ -59,7 +57,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             return null;
         }
         User user = selectOne(new QueryWrapper<User>().eq("email", email));
-        if (user == null){
+        if (user == null) {
             return null;
         }
         user.setRoles(roleService.findListByUserId(user.getId()));
@@ -73,7 +71,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             return null;
         }
         User user = selectOne(new QueryWrapper<User>().eq("phone", phone));
-        if (user == null){
+        if (user == null) {
             return null;
         }
         user.setRoles(roleService.findListByUserId(user.getId()));
@@ -122,7 +120,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         if (selectCount(new QueryWrapper<User>().ne("id", user.getId()).eq("username", user.getUsername())) > 0) {
             throw new RuntimeException("账号重复");
         }
-        if (!StringUtils.isEmpty(user.getId())){
+        if (!StringUtils.isEmpty(user.getId())) {
             UserUtils.update(user.getId());
         }
         return super.update(user);

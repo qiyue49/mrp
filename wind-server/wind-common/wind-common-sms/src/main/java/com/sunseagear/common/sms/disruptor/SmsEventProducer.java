@@ -1,7 +1,7 @@
 package com.sunseagear.common.sms.disruptor;
 
-import com.sunseagear.common.sms.config.SmsConfigProperties;
 import com.lmax.disruptor.RingBuffer;
+import com.sunseagear.common.sms.config.SmsConfigProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

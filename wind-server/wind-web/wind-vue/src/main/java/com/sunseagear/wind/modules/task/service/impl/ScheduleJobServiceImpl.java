@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.task.service.impl;
 
-import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.sunseagear.common.quartz.QuartzManager;
 import com.sunseagear.common.quartz.callback.QuartzInitCallback;
 import com.sunseagear.common.quartz.constant.ScheduleConstants;
@@ -10,7 +10,6 @@ import com.sunseagear.wind.modules.task.mapper.ScheduleJobMapper;
 import com.sunseagear.wind.modules.task.service.IScheduleJobService;
 import com.sunseagear.wind.modules.task.utils.ScheduleJobUtils;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +27,7 @@ import java.util.List;
 public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper, ScheduleJob>
         implements IScheduleJobService, QuartzInitCallback {
 
-//    @Autowired
+    //    @Autowired
     private QuartzManager quartzManager = new QuartzManager();
 
     @Override

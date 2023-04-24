@@ -1,7 +1,6 @@
 package com.sunseagear.wind.modules.biz.newsContent.service;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.mvc.service.ICommonService;
 import com.sunseagear.wind.modules.biz.newsContent.entity.NewsContent;

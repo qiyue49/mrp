@@ -1,12 +1,10 @@
 package com.sunseagear.wind.utils;
 
+import com.google.common.collect.Lists;
 import com.sunseagear.common.utils.CacheUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
-import com.sunseagear.wind.modules.sys.service.IDictService;
-import com.google.common.collect.Lists;
 import com.sunseagear.wind.modules.sys.service.impl.DictServiceImpl;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.redis.cache.RedisCache;
 
 import java.io.Serializable;
 import java.util.ArrayList;

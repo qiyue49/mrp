@@ -1,11 +1,10 @@
 package com.sunseagear.common.email.disruptor;
 
 import com.lmax.disruptor.RingBuffer;
+import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
-
-import jakarta.mail.internet.MimeMessage;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com

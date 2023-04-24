@@ -9,14 +9,14 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.biz.newsContent.entity.NewsContent;
 import com.sunseagear.wind.modules.biz.newsContent.service.INewsContentService;
-import org.springframework.security.access.prepost.PreAuthorize;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -42,6 +42,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
 
     @Autowired
     private INewsContentService newsContentService;
+
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
@@ -69,7 +70,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
         // 预处理
         Page pageBean = newsContentService.selectPage(getPage(), entityWrapper);
         System.out.println(pageBean);
-        return Response.successPageJson(pageBean,"newsContentDescribe",false);
+        return Response.successPageJson(pageBean, "newsContentDescribe", false);
     }
 
     @PostMapping("add")
@@ -110,7 +111,6 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
         newsContentService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }
-
 
 
 }

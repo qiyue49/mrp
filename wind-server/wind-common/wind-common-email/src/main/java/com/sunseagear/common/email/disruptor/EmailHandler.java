@@ -1,7 +1,7 @@
 package com.sunseagear.common.email.disruptor;
 
-import com.sunseagear.common.email.data.EmailResult;
 import com.lmax.disruptor.WorkHandler;
+import com.sunseagear.common.email.data.EmailResult;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com

@@ -5,8 +5,8 @@ import com.lmax.disruptor.IgnoreExceptionHandler;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-
 import jakarta.annotation.PostConstruct;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;

@@ -13,11 +13,11 @@ public final class OSSClientFactory {
             ossClient = new LocalClient();
         } else if (Constants.CLIENTA_ALIYUN.equals(clientType)) {
             ossClient = new AliyunOSSClient();
-        } else if(Constants.CLIENTA_TENCENT.equals(clientType)) {
+        } else if (Constants.CLIENTA_TENCENT.equals(clientType)) {
             ossClient = new TencentCOS();
-        } else if(Constants.CLIENTA_QINIU.equals(clientType)) {
+        } else if (Constants.CLIENTA_QINIU.equals(clientType)) {
             ossClient = new QiniuOSSClient();
-        }  else {
+        } else {
             return null;
         }
         return ossClient;

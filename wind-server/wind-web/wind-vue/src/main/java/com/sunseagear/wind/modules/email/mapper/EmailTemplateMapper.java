@@ -2,7 +2,6 @@ package com.sunseagear.wind.modules.email.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.sunseagear.wind.modules.email.entity.EmailTemplate;
-import com.sunseagear.wind.modules.email.entity.EmailTemplate;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

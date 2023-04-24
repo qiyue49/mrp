@@ -1,14 +1,13 @@
 package com.sunseagear.common.oss.client;
 
+import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
-import com.qiniu.storage.Region;
+import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.sunseagear.common.oss.config.OssConfig;
 import com.sunseagear.common.oss.config.QiniuConfig;
 import com.sunseagear.common.oss.exception.OSSException;
-import com.qiniu.http.Response;
-import com.qiniu.storage.UploadManager;
 import com.sunseagear.common.utils.PropertiesUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
@@ -49,7 +48,7 @@ public class QiniuOSSClient extends AbstractOSSClient {
         Configuration configuration = new Configuration();
         configuration.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;
         uploadManager = new UploadManager(configuration);
-        bucketManager = new BucketManager(auth,configuration);
+        bucketManager = new BucketManager(auth, configuration);
     }
 
 
@@ -64,7 +63,7 @@ public class QiniuOSSClient extends AbstractOSSClient {
         Configuration configuration = new Configuration();
         configuration.resumableUploadAPIVersion = Configuration.ResumableUploadAPIVersion.V2;
         uploadManager = new UploadManager(configuration);
-        bucketManager = new BucketManager(auth,configuration);
+        bucketManager = new BucketManager(auth, configuration);
     }
 
     @Override
@@ -81,7 +80,7 @@ public class QiniuOSSClient extends AbstractOSSClient {
         try {
             String fileType = path.substring(path.lastIndexOf("."));
             String fileName = new Date().getTime() + "" + fileType;
-            String filepath = prefix+ fileName;
+            String filepath = prefix + fileName;
             Response res = uploadManager.put(data, filepath, token);
             if (!res.isOK()) {
                 throw new RuntimeException("上传七牛出错：" + res.toString());
@@ -97,7 +96,7 @@ public class QiniuOSSClient extends AbstractOSSClient {
         try {
             filename = filename.replace(domain + "/", "");
             Response response = bucketManager.delete(bucketName, filename);
-            log.info("删除" + bucketName + "下的文件"  + filename + "成功");
+            log.info("删除" + bucketName + "下的文件" + filename + "成功");
         } catch (Exception e) {
             throw new OSSException("删除文件失败", e);
         }

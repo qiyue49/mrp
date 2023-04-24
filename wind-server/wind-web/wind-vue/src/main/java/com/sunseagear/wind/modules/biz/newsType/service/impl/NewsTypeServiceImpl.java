@@ -1,9 +1,9 @@
 package com.sunseagear.wind.modules.biz.newsType.service.impl;
 
 import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
-import com.sunseagear.wind.modules.biz.newsType.service.INewsTypeService;
 import com.sunseagear.wind.modules.biz.newsType.entity.NewsType;
 import com.sunseagear.wind.modules.biz.newsType.mapper.NewsTypeMapper;
+import com.sunseagear.wind.modules.biz.newsType.service.INewsTypeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service("newsTypeService")
-public class NewsTypeServiceImpl  extends CommonServiceImpl<NewsTypeMapper, NewsType> implements  INewsTypeService {
+public class NewsTypeServiceImpl extends CommonServiceImpl<NewsTypeMapper, NewsType> implements INewsTypeService {
 
 }

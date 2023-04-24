@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.biz.event.mapper;
 
-import com.sunseagear.wind.modules.biz.event.entity.Event;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sunseagear.wind.modules.biz.event.entity.Event;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @package biz.event
  * @title: 事件管理&mdash;&mdash;单表（飞廉演示）控制器
  * @description: 事件管理&mdash;&mdash;单表（飞廉演示）控制器
- * @author: 
+ * @author:
  * @date: 2021-04-12 01:03:40
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */

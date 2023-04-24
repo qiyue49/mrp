@@ -2,7 +2,6 @@ package com.sunseagear.wind.modules.test.treetable.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.mvc.service.impl.TreeCommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.test.treetable.entity.TreeTable;

@@ -39,7 +39,7 @@ public class CacheUtils {
     /**
      * 删除基本的对象，Integer、String、实体类等
      *
-     * @param key   缓存的键值
+     * @param key 缓存的键值
      */
     public static void deleteCacheObject(final String key) {
         redisTemplate.delete(key);
@@ -61,8 +61,8 @@ public class CacheUtils {
     /**
      * 缓存基本的对象到数据集，Integer、String、实体类等
      *
-     * @param key      缓存的键值
-     * @param value    缓存的值
+     * @param key   缓存的键值
+     * @param value 缓存的值
      */
     public static <T> void addCacheSet(final String key, final T value) {
         redisTemplate.opsForSet().add(key, value);
@@ -71,7 +71,7 @@ public class CacheUtils {
     /**
      * 从数据集删除基本的对象，Integer、String、实体类等
      *
-     * @param key      缓存的键值
+     * @param key 缓存的键值
      */
     public static void removeCacheSet(final String key, String value) {
         redisTemplate.opsForSet().remove(key, value);

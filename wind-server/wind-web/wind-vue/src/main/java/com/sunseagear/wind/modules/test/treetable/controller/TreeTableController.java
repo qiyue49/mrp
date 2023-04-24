@@ -1,22 +1,21 @@
 package com.sunseagear.wind.modules.test.treetable.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.utils.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.common.helper.VueTreeHelper;
 import com.sunseagear.wind.modules.test.treetable.entity.TreeTable;
 import com.sunseagear.wind.modules.test.treetable.service.ITreeTableService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -55,7 +54,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<TreeTable> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
             entityWrapper.like("name", name);

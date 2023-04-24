@@ -1,19 +1,11 @@
 package com.sunseagear.wind.modules.email.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.mapper.EmailSendLogMapper;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
-import com.sunseagear.wind.modules.email.service.IEmailSendService;
-import org.apache.commons.text.StringEscapeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
 
 
 /**

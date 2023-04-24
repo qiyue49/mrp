@@ -1,19 +1,19 @@
 package com.sunseagear.wind.modules.task.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.task.entity.ScheduleJobLog;
 import com.sunseagear.wind.modules.task.service.IScheduleJobLogService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -44,7 +44,7 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<ScheduleJobLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "create_time");
+        entityWrapper.orderByDesc("create_time");
         String jobName = request.getParameter("jobName");
         if (!StringUtils.isEmpty(jobName)) {
             entityWrapper.like("job_name", jobName);

@@ -141,12 +141,12 @@ public class OAuthServiceImpl implements IOAuthService {
 
         for (int i = currentRow; i < currentRow + page.getSize() && i < activePrincipalList.size(); i++) {
             if (!StringUtils.isEmpty(username)) {
-                if (!activePrincipalList.get(i).getUsername().contains(username)){
+                if (!activePrincipalList.get(i).getUsername().contains(username)) {
                     continue;
                 }
             }
             if (!StringUtils.isEmpty(loginIp)) {
-                if (!activePrincipalList.get(i).getLoginIp().equals(loginIp)){
+                if (!activePrincipalList.get(i).getLoginIp().equals(loginIp)) {
                     continue;
                 }
             }

@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import lombok.Data;
-import java.util.Date;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -15,7 +14,7 @@ import java.util.Date;
  * @package biz.employee
  * @title: 员工信息&mdash;&mdash;左树右表主表（飞廉演示）控制器
  * @description: 员工信息&mdash;&mdash;左树右表主表（飞廉演示）控制器
- * @author: 
+ * @author:
  * @date: 2021-05-20 14:04:18
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */

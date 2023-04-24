@@ -3,7 +3,6 @@ package com.sunseagear.common.mvc.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.sunseagear.common.mvc.constant.DataBaseConstant;
-import lombok.Data;
 
 import java.util.Date;
 

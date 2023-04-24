@@ -11,14 +11,13 @@ import com.sunseagear.wind.common.helper.SysConfigHelper;
 import com.sunseagear.wind.modules.sys.entity.SysConfig;
 import com.sunseagear.wind.modules.sys.service.ISysConfigService;
 import com.sunseagear.wind.utils.UserUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
         //加入条件
         QueryWrapper<SysConfig> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("tenant_id", UserUtils.getTenantId());
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
             entityWrapper.eq("code", code);
@@ -68,7 +67,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     public String add(@Valid SysConfig entity, BindingResult result) {
         long count = sysConfigService.selectCount(new QueryWrapper<SysConfig>().
                 nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
-                .eq("tenant_id",UserUtils.getTenantId()));
+                .eq("tenant_id", UserUtils.getTenantId()));
         if (count > 0) {
             return Response.failJson("名称和编码不能重复");
         }
@@ -86,7 +85,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     public String update(@Valid SysConfig entity, BindingResult result) {
         long count = sysConfigService.selectCount(new QueryWrapper<SysConfig>()
                 .nested(i -> i.eq("name", entity.getName()).or().eq("code", entity.getName()))
-                .eq("tenant_id",UserUtils.getTenantId())
+                .eq("tenant_id", UserUtils.getTenantId())
                 .ne("id", entity.getId()));
         if (count > 0) {
             return Response.failJson("名称和编码不能重复");

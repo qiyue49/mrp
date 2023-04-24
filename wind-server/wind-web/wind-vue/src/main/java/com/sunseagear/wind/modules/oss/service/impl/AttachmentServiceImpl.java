@@ -1,26 +1,11 @@
 package com.sunseagear.wind.modules.oss.service.impl;
 
-import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
-import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
-import com.sunseagear.common.oss.exception.InvalidExtensionException;
-import com.sunseagear.common.utils.ArrayUtils;
-import com.sunseagear.common.utils.MessageUtils;
-import com.sunseagear.wind.common.helper.AttachmentHelper;
-import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.mapper.AttachmentMapper;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
-import org.apache.commons.fileupload.FileUploadBase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import jakarta.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

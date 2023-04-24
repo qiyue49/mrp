@@ -19,19 +19,19 @@ import java.io.InputStream;
 import java.util.Date;
 
 @Slf4j
-public class TencentCOS extends AbstractOSSClient{
+public class TencentCOS extends AbstractOSSClient {
     public static final String DEFAULT_CONFIG_FILE = "tencent.oss.properties";
     //腾讯云客户端
-    private String secretId="";
+    private String secretId = "";
 
     //API密钥secretKey
-    private String secretKey="";
+    private String secretKey = "";
 
     //存储桶所属地域
-    private String region="";
+    private String region = "";
 
     //存储桶空间名称
-    private String bucketName="";
+    private String bucketName = "";
 
     //存储桶访问域名
     private String domain;
@@ -95,7 +95,7 @@ public class TencentCOS extends AbstractOSSClient{
     public String upload(InputStream inputStream, String path) {
         try {
             String fileType = path.substring(path.lastIndexOf("."));
-            String fileName = new Date().getTime() +fileType;
+            String fileName = new Date().getTime() + fileType;
             String key = prefix + fileName;
             // 创建上传Object的Metadata
             ObjectMetadata objectMetadata = new ObjectMetadata();
@@ -121,7 +121,7 @@ public class TencentCOS extends AbstractOSSClient{
         try {
             filename = filename.replace(domain + "/", "");
             client.deleteObject(bucketName, filename);
-            log.info("删除" + bucketName + "下的文件"  + filename + "成功");
+            log.info("删除" + bucketName + "下的文件" + filename + "成功");
         } catch (Exception e) {
             throw new OSSException("删除文件失败", e);
         }

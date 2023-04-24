@@ -1,26 +1,26 @@
 package com.sunseagear.wind.modules.oss.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.MessageUtils;
-import com.sunseagear.wind.common.helper.AttachmentHelper;
-import com.sunseagear.wind.common.response.ResponseError;
-import org.apache.commons.fileupload.FileUploadBase;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
+import com.sunseagear.wind.common.helper.AttachmentHelper;
+import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
+import jakarta.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload.FileUploadBase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -58,7 +58,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Attachment> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "upload_time");
+        entityWrapper.orderByDesc("upload_time");
         String fileName = request.getParameter("fileName");
         if (!StringUtils.isEmpty(fileName)) {
             entityWrapper.like("file_name", fileName);

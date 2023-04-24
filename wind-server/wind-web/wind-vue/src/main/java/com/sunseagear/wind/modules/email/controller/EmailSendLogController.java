@@ -1,20 +1,20 @@
 package com.sunseagear.wind.modules.email.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.sunseagear.wind.modules.email.service.IEmailSendService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
+import com.sunseagear.wind.modules.email.service.IEmailSendService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -48,7 +48,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<EmailSendLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "response_date");
+        entityWrapper.orderByDesc("response_date");
         String subject = request.getParameter("subject");
         if (!StringUtils.isEmpty(subject)) {
             entityWrapper.like("subject", subject);

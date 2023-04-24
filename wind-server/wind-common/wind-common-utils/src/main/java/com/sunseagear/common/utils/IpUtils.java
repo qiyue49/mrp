@@ -1,9 +1,9 @@
 package com.sunseagear.common.utils;
 
 import com.alibaba.fastjson.JSONObject;
+import jakarta.servlet.http.HttpServletRequest;
 import okhttp3.Headers;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,8 +40,8 @@ public class IpUtils {
             Map<String, Object> params = new HashMap<>();
             params.put("ip", ip);
             Headers headers = new Headers.Builder().add("accept", "*/*").
-            add("connection", "Keep-Alive").
-            add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)").build();
+                    add("connection", "Keep-Alive").
+                    add("user-agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1;SV1)").build();
             String rspStr = HttpUtils.SyncGet(IP_URL + "?ip=" + ip, headers);
             if (StringUtils.isEmpty(rspStr)) {
                 return address;

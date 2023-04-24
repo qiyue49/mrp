@@ -85,9 +85,9 @@ public class DataRuleHandler {
             if (!roleDataRuleModelDataHashMap.containsKey(item.getRoleId())) {
                 roleDataRuleModelDataHashMap.put(item.getRoleId(), new HashMap<>());
             }
-            if (dataRuleModelIdHashMap.containsKey(item.getDataRuleId())){
+            if (dataRuleModelIdHashMap.containsKey(item.getDataRuleId())) {
                 DataRuleModel dataRuleModel = dataRuleModelIdHashMap.get(item.getDataRuleId());
-                roleDataRuleModelDataHashMap.get(item.getRoleId()).put(dataRuleModel.getScopeClass(),dataRuleModel);
+                roleDataRuleModelDataHashMap.get(item.getRoleId()).put(dataRuleModel.getScopeClass(), dataRuleModel);
             }
         });
     }
@@ -100,7 +100,7 @@ public class DataRuleHandler {
                 break;
             }
         }
-        dataRuleModelIdHashMap.put(dataRuleModel.getId(),dataRuleModel);
+        dataRuleModelIdHashMap.put(dataRuleModel.getId(), dataRuleModel);
         dataRuleModelHashMap.put(dataRuleModel.getScopeClass(), dataRuleModel);
         if (StringUtils.isEmpty(dataRuleModel.getTableName())) {
             return;
@@ -123,13 +123,13 @@ public class DataRuleHandler {
 
     public DataRuleModel getDataRule(String mapperId, String roleIds) {
         String[] ids = roleIds.split(",");
-        for (String roleId: ids){
-            if (!roleDataRuleModelDataHashMap.containsKey(roleId)){
-               continue;
+        for (String roleId : ids) {
+            if (!roleDataRuleModelDataHashMap.containsKey(roleId)) {
+                continue;
             }
-            HashMap<String,DataRuleModel> roleDataRuleMap =  roleDataRuleModelDataHashMap.get(roleId);
+            HashMap<String, DataRuleModel> roleDataRuleMap = roleDataRuleModelDataHashMap.get(roleId);
             if (!roleDataRuleMap.containsKey(mapperId)) {
-               continue;
+                continue;
             }
             return roleDataRuleMap.get(mapperId);
         }

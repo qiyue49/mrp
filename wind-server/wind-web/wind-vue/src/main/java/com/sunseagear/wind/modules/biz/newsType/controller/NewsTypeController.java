@@ -9,14 +9,14 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.biz.newsType.entity.NewsType;
 import com.sunseagear.wind.modules.biz.newsType.service.INewsTypeService;
-import org.springframework.security.access.prepost.PreAuthorize;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -42,6 +42,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
 
     @Autowired
     private INewsTypeService newsTypeService;
+
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
@@ -107,7 +108,7 @@ public class NewsTypeController extends BaseBeanController<NewsType> {
     @GetMapping(value = "/select")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:newsType:newstype:list')")
-    public String selectNewsContentType(){
+    public String selectNewsContentType() {
         QueryWrapper<NewsType> entityWrapper = new QueryWrapper<>();
         entityWrapper.orderByDesc(false, "create_date");
         List<NewsType> NewsType = newsTypeService.selectList(entityWrapper);

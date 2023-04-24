@@ -21,7 +21,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,14 +36,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("access_token");
-        if (!StringUtils.isEmpty(token)){
+        if (!StringUtils.isEmpty(token)) {
             Pattern pattern = Pattern.compile("/sso/oauth2/\\**");
             //检索匹配器对象
             Matcher matcher = pattern.matcher(request.getRequestURI());
-            if (!matcher.find()){
-                try{
+            if (!matcher.find()) {
+                try {
                     jwtService.isTokenExpired(token);
-                }catch (ExpiredJwtException e){
+                } catch (ExpiredJwtException e) {
                     e.printStackTrace();
                     ServletUtils.printJson(response, Response.error(ResponseError.EXPIRED_ACCESS_TOKEN, "TOKEN过期"));
                     return;

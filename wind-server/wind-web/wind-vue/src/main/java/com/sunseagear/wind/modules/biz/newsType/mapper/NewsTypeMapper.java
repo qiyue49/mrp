@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.biz.newsType.mapper;
 
-import com.sunseagear.wind.modules.biz.newsType.entity.NewsType;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.sunseagear.wind.modules.biz.newsType.entity.NewsType;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

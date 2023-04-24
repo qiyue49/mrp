@@ -81,9 +81,10 @@ public class LocalClient extends AbstractOSSClient {
         }
         return domain + "/" + path;
     }
+
     @Override
     public void delete(String filename) {
-        filename = filename.replace(domain,"");
+        filename = filename.replace(domain, "");
         String basePath = uploadFilePath;
         File desc = new File(basePath + filename);
         if (desc.exists()) {

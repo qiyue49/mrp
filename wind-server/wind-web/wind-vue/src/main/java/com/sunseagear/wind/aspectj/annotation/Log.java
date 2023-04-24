@@ -1,7 +1,6 @@
 package com.sunseagear.wind.aspectj.annotation;
 
 import com.sunseagear.wind.aspectj.enums.LogType;
-import com.sunseagear.wind.aspectj.enums.LogType;
 
 import java.lang.annotation.*;
 

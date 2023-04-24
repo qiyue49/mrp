@@ -8,6 +8,7 @@ import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.ReflectionUtils;
 import com.sunseagear.wind.utils.DictUtils;
 import com.sunseagear.wind.utils.excel.annotation.ExcelField;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
@@ -18,7 +19,6 @@ import org.apache.poi.xssf.usermodel.XSSFRichTextString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -347,11 +347,11 @@ public class ExportExcel {
                 cell.setCellValue(date);
             } else if (val instanceof LocalDate) {
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-                String localTime = df.format((LocalDate)val);
+                String localTime = df.format((LocalDate) val);
                 cell.setCellValue(localTime);
             } else if (val instanceof LocalDateTime) {
                 DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String localTime = df.format((LocalDateTime)val);
+                String localTime = df.format((LocalDateTime) val);
                 cell.setCellValue(localTime);
             } else {
                 if (fieldType != Class.class) {

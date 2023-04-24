@@ -4,14 +4,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
 import com.sunseagear.common.utils.entity.Principal;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
@@ -39,7 +39,7 @@ public class UserOnlineController extends BaseBeanController<Principal> {
     @PreAuthorize("hasAuthority('monitor:user:online:list')")
     public String list(HttpServletRequest request) throws IOException {
         // 预处理
-        Page pageBean = oAuthService.activePrincipal(getPage(),request);
+        Page pageBean = oAuthService.activePrincipal(getPage(), request);
         return Response.successPageJson(pageBean);
     }
 

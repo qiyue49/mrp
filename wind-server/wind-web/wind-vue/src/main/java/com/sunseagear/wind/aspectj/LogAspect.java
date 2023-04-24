@@ -1,15 +1,14 @@
 package com.sunseagear.wind.aspectj;
 
 import com.alibaba.fastjson.JSONObject;
+import com.sunseagear.common.disruptor.Task;
+import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
-import com.sunseagear.common.disruptor.Task;
-import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
-import com.sunseagear.wind.modules.monitor.service.IOperationLogService;
 import com.sunseagear.wind.modules.monitor.service.impl.OperationLogServiceImpl;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.utils.UserUtils;

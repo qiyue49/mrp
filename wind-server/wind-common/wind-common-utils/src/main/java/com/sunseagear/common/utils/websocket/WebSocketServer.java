@@ -1,7 +1,7 @@
 package com.sunseagear.common.utils.websocket;
 
-import com.sunseagear.common.utils.websocket.processor.SocketMessage;
 import com.google.gson.Gson;
+import com.sunseagear.common.utils.websocket.processor.SocketMessage;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import org.springframework.context.annotation.Bean;

@@ -1,20 +1,20 @@
 package com.sunseagear.wind.modules.monitor.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.tenant.TenantProperties;
 import com.sunseagear.common.utils.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
 import com.sunseagear.wind.modules.monitor.service.IOperationLogService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
@@ -42,6 +42,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     static {
         TenantProperties.getInstance().getIgnoreTables().add("sys_operation_log");
     }
+
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
@@ -54,7 +55,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<OperationLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc( "create_date");
+        entityWrapper.orderByDesc("create_date");
         String operationIp = request.getParameter("operationIp");
         if (!StringUtils.isEmpty(operationIp)) {
             entityWrapper.eq("operation_ip", operationIp);

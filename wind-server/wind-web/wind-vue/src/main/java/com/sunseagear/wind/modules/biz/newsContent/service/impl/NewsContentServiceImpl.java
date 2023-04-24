@@ -1,12 +1,11 @@
 package com.sunseagear.wind.modules.biz.newsContent.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
-import com.sunseagear.wind.modules.biz.newsContent.service.INewsContentService;
 import com.sunseagear.wind.modules.biz.newsContent.entity.NewsContent;
 import com.sunseagear.wind.modules.biz.newsContent.mapper.NewsContentMapper;
+import com.sunseagear.wind.modules.biz.newsContent.service.INewsContentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
