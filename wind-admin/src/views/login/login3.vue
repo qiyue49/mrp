@@ -107,7 +107,7 @@
 import { mixin } from './mixin'
 
 export default {
-  name: 'Login1',
+  name: 'Login3',
   mixins: [mixin]
 }
 </script>
