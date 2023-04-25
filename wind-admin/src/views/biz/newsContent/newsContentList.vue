@@ -106,7 +106,6 @@ export default {
     getList() {
       this.listLoading = true
       fetchNewsContentList(this.listQuery).then(response => {
-        console.log('列表', response)
         this.list = response.data.data
         this.list.forEach(item => {
           if (item.img !== undefined && item.img !== '') {

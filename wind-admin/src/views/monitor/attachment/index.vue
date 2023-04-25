@@ -92,6 +92,7 @@ export default {
         type: undefined
       },
       showReviewer: false,
+      batchDeleteLoading: false,
       multipleSelection: []
     }
   },
@@ -137,6 +138,7 @@ export default {
     },
     handleBatchDelete() {
       if (this.multipleSelection.length) {
+        this.batchDeleteLoading = true
         const list = this.multipleSelection
         const ids = []
         list.forEach(function(value, index, array) {
@@ -147,9 +149,11 @@ export default {
           if (response.data.code === 0) {
             this.$message.success('提交成功')
             this.$refs.multipleTable.clearSelection()
+            this.batchDeleteLoading = false
             this.getList()
           }
         }).catch(() => {
+          this.batchDeleteLoading = false
         })
         this.getList()
       } else {

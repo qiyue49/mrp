@@ -16,12 +16,11 @@ export default {
   components: { Login1, Login3, Login4, Login5 },
   data() {
     return {
-      index: 2
+      index: 4
     }
   },
   created() {
-    this.index = 2
-    // console.log('index', this.index)
+    this.index = 4
   },
   methods: {
     getRandomArbitrary(min, max) {
