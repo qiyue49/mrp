@@ -55,7 +55,7 @@
 import { fetchDictList, createDict, deleteDict, updateDict } from '@/api/sys/dict'
 import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves' // 水波纹指令
-import { store } from '@/stores'
+// import { store } from '@/stores'
 import Pagination from '@/components/Pagination/index.vue'
 
 export default {
@@ -156,9 +156,9 @@ export default {
             this.loading = false
             const data = response.data
             if (data.code === 0) {
-              store.dispatch('dict/GetDicts').then(() => {
-                console.log('数据字典加载成功...')
-              })
+              // store.dispatch('dict/GetDicts').then(() => {
+              //   console.log('数据字典加载成功...')
+              // })
 
               this.dialogFormVisible = false
               this.$message.success('创建成功')
@@ -188,9 +188,9 @@ export default {
             this.loading = false
             const data = response.data
             if (data.code === 0) {
-              store.dispatch('dict/GetDicts').then(() => {
-                console.log('数据字典加载成功...')
-              })
+              // store.dispatch('dict/GetDicts').then(() => {
+              //   console.log('数据字典加载成功...')
+              // })
               this.dialogFormVisible = false
               this.$message.success('更新成功')
               this.getList()
@@ -210,9 +210,9 @@ export default {
         deleteDict(row.id).then((response) => {
           const data = response.data
           if (data.code === 0) {
-            store.dispatch('dict/GetDicts').then(() => {
-              console.log('数据字典加载成功...')
-            })
+            // store.dispatch('dict/GetDicts').then(() => {
+            //   console.log('数据字典加载成功...')
+            // })
 
             this.dialogFormVisible = false
             this.$message.success('删除成功')

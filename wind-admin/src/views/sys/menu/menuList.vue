@@ -33,7 +33,7 @@
         </el-table-column>
         <el-table-column min-width="150" label="图标">
           <template #default="scope">
-            <component :is="scope.row.icon" class="icon"/>
+            <el-icon v-if="scope.row.icon" class="icon"><component :is="scope.row.icon"/></el-icon>
             <span>{{ scope.row.icon }}</span>
           </template>
         </el-table-column>

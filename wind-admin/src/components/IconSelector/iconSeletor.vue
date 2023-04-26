@@ -2,7 +2,7 @@
   <div style="width: 100%">
     <el-input v-model="name" readonly>
       <template #prefix>
-        <component :is="name" class="icon"/>
+        <el-icon v-if="name" class="icon"><component :is="name"/></el-icon>
       </template>
       <template #append>
         <el-button icon="Search" @click="show" />
