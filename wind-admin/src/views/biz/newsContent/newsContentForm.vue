@@ -22,7 +22,7 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="相关图片" prop="img">
-            <upload-image v-model="temp.img" />
+            <upload-image v-model="temp.img" :max-count="4" />
           </el-form-item>
         </el-col>
         <el-col :span="24">

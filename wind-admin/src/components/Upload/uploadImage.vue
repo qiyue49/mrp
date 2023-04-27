@@ -1,5 +1,6 @@
 <template>
-  <div class="upload-container">
+  <div
+    class="upload-container">
     <el-upload
       v-model:file-list="imageList"
       :data="uploadData"
@@ -12,11 +13,12 @@
       :on-preview="handlePictureCardPreview"
       :on-remove="remove"
       class="avatar-uploader"
+      :disabled="(imageList.length < maxCount)?false:true"
     >
       <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
     </el-upload>
     <el-dialog v-model="dialogVisible" draggable class="dialog-title">
-      <img :src="dialogImageUrl" alt="Preview Image" />
+      <img :src="dialogImageUrl" alt="Preview Image" style="width:100%;object-fit: cover" />
     </el-dialog>
   </div>
 </template>
@@ -74,6 +76,9 @@ export default {
           return
         }
         this.imageList = JSON.parse(val)
+        if (this.imageList.length === this.maxCount) {
+          this.$message.warning('图片上传已达到最大值')
+        }
       }
     }
   },
@@ -96,7 +101,7 @@ export default {
     },
     handleAvatarSuccess(response, file) {
       this.imageList = this.imageList.map(item => {
-        return { name: item.name, url: item.response.data }
+        return { name: item.name, url: item.url }
       })
       if (response.code === 0) {
         // this.imageList.push(response.data)
@@ -158,6 +163,12 @@ export default {
     height: $value;
     margin-top: 10px;
     display: block;
+  }
+
+  .upload-container{
+    :deep(.el-overlay){
+      z-index: 201000000 !important;
+    }
   }
 
   .delete {

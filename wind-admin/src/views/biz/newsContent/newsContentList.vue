@@ -42,7 +42,7 @@
         <el-table-column class-name="imgflx" label="相关图片" min-width="150px">
           <template #default="{row}">
             <div v-for="(img,index) in row.img" :key="index">
-              <el-image class="imgs" :src="img" :preview-src-list="row.img" style="width: 75px; height: 75px" />
+              <el-image class="imgs" :src="img" preview-teleported :preview-src-list="row.img" style="width: 75px; height: 75px" />
             </div>
           </template>
         </el-table-column>
