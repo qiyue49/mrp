@@ -12,9 +12,8 @@
       :before-upload="beforeAvatarUpload"
       :on-preview="handlePictureCardPreview"
       :on-remove="remove"
-      :on-change="dealImgChange"
       class="avatar-uploader"
-      :class="{hideImg:noneBtnImg}"
+      :disabled="(imageList.length < maxCount)?false:true"
     >
       <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
     </el-upload>
@@ -55,7 +54,6 @@ export default {
   data() {
     return {
       imageList: [],
-      noneBtnImg: false,
       resultUrl: undefined,
       dialogImageUrl: undefined,
       dialogVisible: false,
@@ -78,6 +76,9 @@ export default {
           return
         }
         this.imageList = JSON.parse(val)
+        if (this.imageList.length === this.maxCount) {
+          this.$message.warning('图片上传已达到最大值')
+        }
       }
     }
   },
@@ -94,10 +95,6 @@ export default {
     remove() {
       // this.imageList.splice(this.imageList.indexOf(uploadFile), 1)
       this.emitInput(this.imageList)
-      this.noneBtnImg = this.imageList.length >= this.maxCount
-    },
-    dealImgChange() {
-      this.noneBtnImg = this.imageList.length >= this.maxCount
     },
     emitInput(val) {
       this.$emit('update:modelValue', JSON.stringify(val))
@@ -166,10 +163,6 @@ export default {
     height: $value;
     margin-top: 10px;
     display: block;
-  }
-
-  .hideImg :deep(.el-upload--picture-card){
-    display: none;
   }
 
   .upload-container{
