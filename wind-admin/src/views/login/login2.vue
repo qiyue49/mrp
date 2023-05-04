@@ -43,10 +43,11 @@
                       @keyup="checkCapslock"
                       @blur="capsTooltip = false"
                       @keyup.enter="handleLogin"
-                    />
-                    <span class="show-pwd" @click="showPwd">
-                      <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-                    </span>
+                    >
+                      <template #suffix>
+                        <svg-icon :icon-class="passwordType === 'password' ? 'ui-eye' : 'ui-hide'" color="gray" @click="showPwd"/>
+                      </template>
+                    </el-input>
                   </el-form-item>
                 </el-tooltip>
               </el-col>
