@@ -104,11 +104,11 @@ export default {
     },
     handleAvatarSuccess(response, file) {
       this.imageList = this.imageList.map(item => {
-        return { name: item.name, url: item.url }
+        return { name: item.name, url: response.data }
       })
       if (response.code === 0) {
         // this.imageList.push(response.data)
-        this.emitInput(this.imageList)
+        this.emitInput(JSON.parse(JSON.stringify(this.imageList)))
       } else {
         this.$message.error(response.msg)
       }

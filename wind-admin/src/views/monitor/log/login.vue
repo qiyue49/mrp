@@ -170,7 +170,7 @@ export default {
         this.downloadLoading = true
         if (response.data.code === 0) {
           import('@/vendor/Export2Excel').then(excel => {
-            excel.export_byte_to_excel(response.data.bytes, response.data.title)
+            excel.export_byte_to_excel(response.data.data.bytes, response.data.data.title)
             this.downloadLoading = false
           })
         } else {

@@ -12,6 +12,7 @@ import { defineStore } from 'pinia'
 import { resetRouter } from '@/router'
 import { store } from '@/stores'
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
 
 export const userStore = defineStore('user', () => {
   const userInfo = ref()
@@ -34,6 +35,9 @@ export const userStore = defineStore('user', () => {
     return new Promise((resolve, reject) => {
       userLogin(username.trim(), password).then(response => {
         const data = response.data
+        if (response.data.code !== 0) {
+          ElMessage.error(response.data.msg)
+        }
         setToken(data.data.accessToken)
         setRefreshToken(data.data.refreshToken)
         resolve(response)
