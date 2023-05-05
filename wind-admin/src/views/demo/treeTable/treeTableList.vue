@@ -2,7 +2,9 @@
   <el-card class="el-card">
     <div class="app-container">
       <div class="filter-container">
-        <el-input v-model="listQuery.name" placeholder="请输入名称" class="filter-item" @keyup.enter="handleFilter" />
+        <div class="filter-item">
+          <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
+        </div>
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>

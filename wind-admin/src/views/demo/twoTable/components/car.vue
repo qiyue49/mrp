@@ -2,7 +2,9 @@
   <div id="carComponent">
     <div>
       <div class="filter-container">
-        <el-input v-model="listQuery.keyword" class="filter-item" placeholder="请输入品牌名称或编码" @keyup.enter="handleFilter" />
+        <div class="filter-item">
+          <el-input v-model="listQuery.keyword" placeholder="请输入品牌名称或编码" @keyup.enter="handleFilter" />
+        </div>
         <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
