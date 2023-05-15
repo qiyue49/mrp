@@ -47,11 +47,9 @@
 
 <script>
 import { addRole, updateRole } from '@/api/sys/role'
-import permission from '@/directive/permission/permission'
 
 export default {
   name: 'RoleForm',
-  directives: { permission },
   emits: ['refreshList'],
   data() {
     return {

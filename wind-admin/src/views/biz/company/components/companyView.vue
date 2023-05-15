@@ -5,10 +5,10 @@
         <span>名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入名称" />
       </div>
-      <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+      <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
         搜索
       </el-button>
-      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -54,14 +54,11 @@
 
 <script>
 import { deleteCompany, fetchCompanyList } from '@/api/biz/company/company'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import companyForm from './companyForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'CompanyView',
   components: { companyForm, Pagination },
-  directives: { waves, permission },
   emits: ['refreshSub'],
   data() {
     return {

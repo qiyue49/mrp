@@ -6,7 +6,7 @@
           <span>任务名称:</span>
           <el-input v-model="listQuery.jobName" type="primary" placeholder="请输入任务名称" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-permission="['task:schedule:job:refresh:job']" v-waves type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['task:schedule:job:refresh:job']" type="primary" class="filter-item" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button v-permission="['task:schedule:job:add']" type="primary" class="filter-item" icon="Edit" @click="handleCreate">新增</el-button>
         <el-button v-permission="['task:schedule:job:delete']" :loading="batchDeleteLoading" type="danger" class="filter-item" icon="Delete" @click="handleBatchDelete">删除</el-button>
         <el-button v-permission="['task:schedule:job:refresh:job']" :loading="refreshTaskLoading" type="primary" class="filter-item" icon="Refresh" @click="handleRefreshTask">刷新任务</el-button>
@@ -159,14 +159,9 @@
 
 <script>
 import { fetchScheduleList, createSchedule, deleteSchedule, batchDeleteSchedule, updateSchedule, refreshTask, refreshSchedule, changeJobStatus, runAJobNow } from '@/api/tool/task/schedule'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
 
 export default {
   name: 'SysScheduleList',
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       tableKey: 0,

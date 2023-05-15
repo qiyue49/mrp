@@ -23,7 +23,7 @@
           </el-select>
         </div>
 
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
       </div>
@@ -121,7 +121,6 @@
 <script>
 import Pagination from '@/components/Pagination/index.vue'
 import { fetchList, sendMsg, deleteSendlog, retrySend } from '@/api/sms/sendlog'
-import waves from '@/directive/waves' // 水波纹指令
 
 export default {
   name: 'SmsSendlogList',

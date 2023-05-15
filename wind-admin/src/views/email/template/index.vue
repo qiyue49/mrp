@@ -10,7 +10,7 @@
           <span>模版编码:</span>
           <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
       <el-table
@@ -68,16 +68,11 @@
 </template>
 <script>
 import { fetchTemplateList, createTemplate, deleteTemplate, updateTemplate } from '@/api/email/template'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
 import { getDictList } from '@/utils/dict'
 import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'TemplateList',
   components: { Pagination },
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       tableKey: 0,

@@ -6,7 +6,7 @@
           <span>字典标签或值:</span>
           <el-input v-model="listQuery.keyword" placeholder="请输入字典标签或值" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-permission="['sys:dict:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:dict:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button v-permission="['sys:dict:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
@@ -53,17 +53,12 @@
 
 <script>
 import { fetchDictList, createDict, deleteDict, updateDict } from '@/api/sys/dict'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
 // import { store } from '@/stores'
 import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'SysDictComponent',
   components: { Pagination },
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       dictGroup: {},

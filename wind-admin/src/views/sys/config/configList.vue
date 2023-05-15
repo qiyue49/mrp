@@ -10,7 +10,7 @@
           <span>配置编码:</span>
           <el-input v-model="listQuery.code" placeholder="请输入配置编码" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button v-permission="['sys:config:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -66,14 +66,11 @@
 
 <script>
 import { fetchConfigList, deleteConfig } from '@/api/sys/config'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // waves directive
 import configForm from './configForm'
 import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'Config',
   components: { Pagination, configForm },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

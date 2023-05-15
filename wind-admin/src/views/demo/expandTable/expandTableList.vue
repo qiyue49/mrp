@@ -76,14 +76,11 @@
 
 <script>
 import { deleteExpandTable, fetchExpandTableList } from '@/api/demo/expandTable/expandTable'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // waves directive
 import expandTableForm from './expandTableForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'ExpandTableList',
   components: { expandTableForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

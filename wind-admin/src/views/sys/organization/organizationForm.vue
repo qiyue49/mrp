@@ -30,11 +30,9 @@
 
 <script>
 import { fetchOrganization, createOrganization, updateOrganization } from '@/api/sys/organization'
-import permission from '@/directive/permission/permission'
 
 export default {
   name: 'OrganizationForm',
-  directives: { permission },
   emits: ['refreshList'],
   data() {
     return {

@@ -11,7 +11,7 @@
           <el-input v-model="listQuery.realname" class="filter-item" placeholder="请输入姓名" @keyup.enter="handleFilter" />
           <el-input v-model="listQuery.username" class="filter-item" placeholder="请输入用户名" @keyup.enter="handleFilter" />
           <el-input v-model="listQuery.phone" class="filter-item" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
-          <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
+          <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
         </div>
 
         <el-table
@@ -67,16 +67,11 @@
 <script>
 import { fetchList, fetchUser } from '@/api/sys/user'
 import { objectMerge } from '@/utils/index'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'SystemUser',
   components: { Pagination },
-  directives: {
-    waves, permission
-  },
   props: {
     modelValue: {
       type: String,

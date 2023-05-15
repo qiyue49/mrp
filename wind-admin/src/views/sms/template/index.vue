@@ -10,7 +10,7 @@
           <span>模版编码:</span>
           <el-input v-model="listQuery.code" placeholder="请输入模版编码" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-permission="['sms:template:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sms:template:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button v-permission="['sms:template:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
@@ -92,15 +92,11 @@
 
 <script>
 import { fetchList, createTemplate, deleteTemplate, updateTemplate } from '@/api/sms/template'
-import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'SysTemplateList',
   components: { Pagination },
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       tableKey: 0,

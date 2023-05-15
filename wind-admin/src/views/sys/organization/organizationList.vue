@@ -6,7 +6,7 @@
           <span>名称:</span>
           <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-permission="['sys:organization:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button v-permission="['sys:organization:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
@@ -34,15 +34,11 @@
 
 <script>
 import { fetchOrganizationList, deleteOrganization } from '@/api/sys/organization'
-import permission from '@/directive/permission/permission'
 import waves from '@/directive/waves'
 import OrganizationForm from './organizationForm' // 水波纹指令
 export default {
   name: 'OrganizationList',
   components: { OrganizationForm },
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       tableKey: 0,

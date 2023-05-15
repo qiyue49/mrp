@@ -61,11 +61,9 @@ import { createUser, updateUser, fetchUser } from '@/api/sys/user'
 import { fetchOrganizationList } from '@/api/sys/organization'
 import SystemOrganization from '@/components/System/systemOrganization'
 import UploadImage from '@/components/Upload/uploadImage'
-import permission from '@/directive/permission/permission'
 
 export default {
   name: 'UserForm',
-  directives: { permission },
   components: { UploadImage, SystemOrganization },
   emits: ['refreshList'],
   data() {

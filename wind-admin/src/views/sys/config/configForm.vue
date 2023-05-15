@@ -63,7 +63,6 @@
 
 <script>
 import { updateConfig, createConfig } from '@/api/sys/config'
-import permission from '@/directive/permission/permission'
 import UploadFile from '@/components/Upload/uploadFile'
 import UploadImage from '@/components/Upload/uploadImage'
 import BaiduMapPoint from '@/components/BaiduMap/baiduMapPoint'
@@ -72,7 +71,6 @@ const statusOptions = [{ label: '文本框', value: '1' }, { label: '图片上�
 export default {
   name: 'ConfigForm',
   components: { BaiduMapPoint, UploadImage, UploadFile },
-  directives: { permission },
   emits: ['refreshList'],
   data() {
     return {

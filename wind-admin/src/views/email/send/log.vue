@@ -22,7 +22,7 @@
             />
           </el-select>
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
       </div>

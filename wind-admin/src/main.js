@@ -12,6 +12,7 @@ import 'virtual:svg-icons-register'
 import '@/styles/index.scss'
 import VueBMap, { initBMapApiLoader } from 'vue-bmap-gl'
 import 'vue-bmap-gl/dist/style.css'
+import { permissionDirective } from '@/directive/permission/permission'
 
 const app = createApp(App)
 app.config.globalProperties.$echarts = echarts
@@ -30,6 +31,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
   app.config.globalProperties.$icons.push(key)
   app.component(key, component)
 }
+
+app.directive('permission', permissionDirective)
 
 // 定义字典全局方法
 app.config.globalProperties.dictList = function (code) {

@@ -14,7 +14,7 @@
       >
         {{ item.label }}
       </el-radio>
-      <el-button v-waves :loading="loading" type="primary" icon="Download" @click="sendMessage">
+      <el-button :loading="loading" type="primary" icon="Download" @click="sendMessage">
         发送
       </el-button>
     </div>
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import waves from '@/directive/waves' // waves directive
 import { webSocketConnect, webSocketSend, webSocketClose } from '@/utils/webSocket'
 export default {
   name: 'Websocket',

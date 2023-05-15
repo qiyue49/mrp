@@ -20,7 +20,7 @@
               :value="item.value" />
           </el-select>
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button v-permission="['biz:event:event:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -84,14 +84,11 @@
 
 <script>
 import { deleteEvent, fetchEventList } from '@/api/biz/event/event'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import eventForm from './eventForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'EventList',
   components: { eventForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

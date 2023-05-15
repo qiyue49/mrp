@@ -6,7 +6,7 @@
           <span>附件名称:</span>
           <el-input v-model="listQuery.fileName" placeholder="请输入附件名称" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
       </div>
 

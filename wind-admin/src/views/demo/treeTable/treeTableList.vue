@@ -5,7 +5,7 @@
         <div class="filter-item">
           <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -49,13 +49,10 @@
 
 <script>
 import { deleteTreeTable, fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // waves directive
 import treeTableForm from './treeTableForm'
 export default {
   name: 'TreeTable',
   components: { treeTableForm },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

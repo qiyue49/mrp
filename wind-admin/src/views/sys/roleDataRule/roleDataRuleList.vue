@@ -10,7 +10,7 @@
           <span>数据权限名称:</span>
           <el-input v-model="listQuery.scopeName" placeholder="请输入数据权限名称" />
         </div>
-        <el-button v-waves class="filter-item" icon="Search" type="primary" @click="handleFilter">
+        <el-button class="filter-item" icon="Search" type="primary" @click="handleFilter">
           查询
         </el-button>
         <el-button v-permission="['sys:datarule:add']" icon="Plus" class="filter-item" type="primary" @click="handleCreate">
@@ -82,15 +82,12 @@
 <script>
 import { deleteDataRule } from '@/api/sys/dataRule/dataRule'
 import { fetchRoleDataRuleList, updateRoleDataRules } from '@/api/sys/roleDataRule/roleDataRule'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import dataRuleForm from '../dataRule/dataRuleForm'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'RoleDataRuleList',
   components: { dataRuleForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

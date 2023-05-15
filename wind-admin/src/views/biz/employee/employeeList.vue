@@ -27,7 +27,7 @@
                 {{ item.label }}
               </el-radio>
             </div>
-            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+            <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
               搜索
             </el-button>
             <el-button v-permission="['biz:employee:employee:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -88,14 +88,11 @@
 <script>
 import { deleteEmployee, fetchEmployeeList } from '@/api/biz/employee/employee'
 import { fetchDepartmentList } from '@/api/biz/department/department'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import employeeForm from './employeeForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'EmployeeList',
   components: { employeeForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

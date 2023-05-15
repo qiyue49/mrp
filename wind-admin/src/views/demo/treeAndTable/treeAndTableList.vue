@@ -21,7 +21,7 @@
               <span>类型:</span>
               <el-input v-model="listQuery.type" placeholder="请输入类型" />
             </div>
-            <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+            <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
               搜索
             </el-button>
             <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -79,14 +79,11 @@
 <script>
 import { deleteTreeAndTable, fetchTreeAndTableList } from '@/api/demo/treeAndTable/treeAndTable'
 import { fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // waves directive
 import treeAndTableForm from './treeAndTableForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'TreeAndTableList',
   components: { treeAndTableForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

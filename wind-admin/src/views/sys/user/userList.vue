@@ -25,9 +25,9 @@
               <span>手机号码:</span>
               <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
             </div>
-            <el-button v-permission="['sys:user:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-            <el-button v-permission="['sys:user:add']" v-waves class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
-            <el-button v-permission="['sys:user:export']" v-waves class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+            <el-button v-permission="['sys:user:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+            <el-button v-permission="['sys:user:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
+            <el-button v-permission="['sys:user:export']" class="filter-item" :loading="downloadLoading" type="primary" icon="Download" @click="handleDownload">导出</el-button>
           </div>
 
           <el-table
@@ -115,16 +115,11 @@ import { fetchList, deleteUser, modifyPassword, exportUser } from '@/api/sys/use
 import { fetchOrganizationList } from '@/api/sys/organization'
 import { fetchUsableRoleList } from '@/api/sys/role'
 import { fetchUserRoleIds, insertByUserId, deleteByUserId } from '@/api/sys/userRole'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
 import userForm from './userForm'
 import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'UserList',
   components: { Pagination, userForm },
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       treeList: [],

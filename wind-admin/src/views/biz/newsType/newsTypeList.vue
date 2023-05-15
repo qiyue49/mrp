@@ -6,7 +6,7 @@
           <span>新闻类型名称:</span>
           <el-input v-model="listQuery.newsTypeName" placeholder="请输入新闻类型名称" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button v-permission="['biz:newsType:newstype:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -51,14 +51,11 @@
 
 <script>
 import { deleteNewsType, fetchNewsTypeList } from '@/api/biz/newsType/newsType'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import newsTypeForm from './newsTypeForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'NewsTypeList',
   components: { newsTypeForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

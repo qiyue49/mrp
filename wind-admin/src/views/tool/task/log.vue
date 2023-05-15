@@ -23,8 +23,8 @@
           </el-select>
         </div>
 
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button v-waves class="filter-item" type="danger" icon="Delete" @click="handleBathDelete">删除</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="danger" icon="Delete" @click="handleBathDelete">删除</el-button>
       </div>
 
       <el-table

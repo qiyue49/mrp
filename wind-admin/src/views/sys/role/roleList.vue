@@ -10,7 +10,7 @@
           <span>角色编码:</span>
           <el-input v-model="listQuery.code" placeholder="请输入角色编码" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-permission="['sys:role:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:role:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button v-permission="['sys:role:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
@@ -59,16 +59,12 @@
 import { fetchList, deleteRole } from '@/api/sys/role'
 import roleDataRuleList from '../roleDataRule/roleDataRuleList'
 import waves from '@/directive/waves'
-import permission from '@/directive/permission/permission'
 import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 export default {
   name: 'RoleList',
   components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList },
-  directives: {
-    waves, permission
-  },
   data() {
     return {
       tableKey: 0,

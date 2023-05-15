@@ -18,7 +18,7 @@
           <span>租户名称:</span>
           <el-input v-model="listQuery.name" placeholder="请输入租户名称" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button v-permission="['sys:tenant:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -80,15 +80,12 @@
 
 <script>
 import { deleteTenant, fetchTenantList } from '@/api/sys/tenant/tenant'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import tenantForm from './tenantForm'
 import Pagination from '@/components/Pagination'
 
 export default {
   name: 'TenantList',
   components: { tenantForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

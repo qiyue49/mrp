@@ -10,7 +10,7 @@
           <span>IP:</span>
           <el-input v-model="listQuery.loginIp" placeholder="请输入IP" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       </div>
 
       <el-table

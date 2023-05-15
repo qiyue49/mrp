@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-button v-waves v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+      <el-button v-permission="['biz:company:company:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
         新增
       </el-button>
     </div>
@@ -51,14 +51,11 @@
 
 <script>
 import { deleteProduct, fetchProductList } from '@/api/biz/company/product'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import productForm from './productForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'ProductView',
   components: { productForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

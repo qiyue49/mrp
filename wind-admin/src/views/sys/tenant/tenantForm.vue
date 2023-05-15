@@ -32,11 +32,9 @@
 
 <script>
 import { createTenant, updateTenant, getTenant } from '@/api/sys/tenant/tenant'
-import permission from '@/directive/permission/permission'
 
 export default {
   name: 'TenantForm',
-  directives: { permission },
   emits: ['refreshList'],
   data() {
     return {

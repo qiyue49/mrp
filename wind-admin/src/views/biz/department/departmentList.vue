@@ -43,13 +43,10 @@
 
 <script>
 import { deleteDepartment, fetchDepartmentList } from '@/api/biz/department/department'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import departmentForm from './departmentForm'
 export default {
   name: 'Department',
   components: { departmentForm },
-  directives: { waves, permission },
   data() {
     return {
       tableKey: 0,

@@ -52,11 +52,9 @@
 
 <script>
 import { createDataRule, updateDataRule, getDataRule } from '@/api/sys/dataRule/dataRule'
-import permission from '@/directive/permission/permission'
 
 export default {
   name: 'DataRuleForm',
-  directives: { permission },
   emits: ['refreshList'],
   data() {
     return {

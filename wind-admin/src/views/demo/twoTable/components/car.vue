@@ -5,7 +5,7 @@
         <div class="filter-item">
           <el-input v-model="listQuery.keyword" placeholder="请输入品牌名称或编码" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
@@ -47,16 +47,11 @@
 
 <script>
 import { fetchCarList, deleteCar } from '@/api/demo/twoTable/car'
-import permission from '@/directive/permission/permission'
-import waves from '@/directive/waves' // 水波纹指令
 import carForm from './carForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 
 export default {
   name: 'Car',
-  directives: {
-    waves, permission
-  },
   components: { Pagination, carForm },
   emits: ['refreshCarModel'],
   data() {

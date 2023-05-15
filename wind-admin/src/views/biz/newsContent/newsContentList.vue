@@ -6,7 +6,7 @@
           <span>内容标题:</span>
           <el-input v-model="listQuery.newsContentTitle" placeholder="请输入内容标题" />
         </div>
-        <el-button v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">
+        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">
           搜索
         </el-button>
         <el-button v-permission="['biz:newsContent:newscontent:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">
@@ -68,14 +68,11 @@
 
 <script>
 import { deleteNewsContent, fetchNewsContentList } from '@/api/biz/newsContent/newsContent'
-import waves from '@/directive/waves' // waves directive
-import permission from '@/directive/permission/permission'
 import newsContentForm from './newsContentForm'
 import Pagination from '@/components/Pagination'
 export default {
   name: 'NewsContentList',
   components: { newsContentForm, Pagination },
-  directives: { waves, permission },
   data() {
     return {
       imgArray: [],

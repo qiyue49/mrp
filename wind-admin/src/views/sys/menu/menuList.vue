@@ -6,7 +6,7 @@
           <span>菜单名称:</span>
           <el-input v-model="listQuery.keyword" placeholder="请输入菜单名称" @keyup.enter="handleFilter" />
         </div>
-        <el-button v-permission="['sys:menu:list']" v-waves class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+        <el-button v-permission="['sys:menu:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
         <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
       </div>
 
@@ -60,15 +60,10 @@
 
 <script>
 import { fetchMenuList, deleteMenu, changeSort } from '@/api/sys/menu'
-import waves from '@/directive/waves' // 水波纹指令
-import permission from '@/directive/permission/permission'
 import MenuForm from './menuForm'
 import MenuGenButton from './menuGenButton'
 export default {
   name: 'MenuComponent',
-  directives: {
-    waves, permission
-  },
   components: { MenuGenButton, MenuForm },
   data() {
     return {

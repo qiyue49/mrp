@@ -103,11 +103,9 @@
 import { createMenu, fetchMenu, updateMenu } from '@/api/sys/menu'
 import IconSelector from '@/components/IconSelector/iconSeletor'
 import { isExternal } from '@/utils/validate'
-import permission from '@/directive/permission/permission'
 
 export default {
   name: 'MenuForm',
-  directives: { permission },
   components: { IconSelector },
   emits: ['refreshList'],
   data() {
