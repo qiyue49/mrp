@@ -34,7 +34,6 @@
 
 <script>
 import { fetchOrganizationList, deleteOrganization } from '@/api/sys/organization'
-import waves from '@/directive/waves'
 import OrganizationForm from './organizationForm' // 水波纹指令
 export default {
   name: 'OrganizationList',

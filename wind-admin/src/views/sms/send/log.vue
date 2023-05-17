@@ -125,9 +125,6 @@ import { fetchList, sendMsg, deleteSendlog, retrySend } from '@/api/sms/sendlog'
 export default {
   name: 'SmsSendlogList',
   components: { Pagination },
-  directives: {
-    waves
-  },
   data() {
     return {
       tableKey: 0,

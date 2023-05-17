@@ -95,15 +95,11 @@
 
 <script>
 import { fetchScheduleJobLogList, deleteScheduleJobLog, batchDeleteScheduleJobLog } from '@/api/tool/task/log'
-import waves from '@/directive/waves'
 import Pagination from '../../../components/Pagination' // 水波纹指令
 
 export default {
   name: 'ScheduleJobLogList',
   components: { Pagination },
-  directives: {
-    waves
-  },
   data() {
     return {
       tableKey: 0,

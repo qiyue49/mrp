@@ -58,7 +58,6 @@
 <script>
 import { fetchList, deleteRole } from '@/api/sys/role'
 import roleDataRuleList from '../roleDataRule/roleDataRuleList'
-import waves from '@/directive/waves'
 import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令

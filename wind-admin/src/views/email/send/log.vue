@@ -113,15 +113,11 @@ import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 import { fetchSendLogList, sendEmail, deleteSendlog, retrySend } from '@/api/email/sendlog'
 import { fetchTemplateList } from '@/api/email/template'
 import { unescape } from '@/utils/index'
-import waves from '@/directive/waves'
 const jsonData = '{}'
 
 export default {
   name: 'EmailSendlogList',
   components: { Pagination },
-  directives: {
-    waves
-  },
   data() {
     return {
       tableKey: 0,

@@ -67,14 +67,10 @@
 
 <script>
 import { fetchMonitorUserOnlineList } from '@/api/monitor/user/online'
-import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 export default {
   name: 'MonitorUserOnlineList',
   components: { Pagination },
-  directives: {
-    waves
-  },
   data() {
     return {
       tableKey: 0,

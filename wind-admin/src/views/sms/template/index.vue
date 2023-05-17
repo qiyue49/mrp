@@ -92,7 +92,6 @@
 
 <script>
 import { fetchList, createTemplate, deleteTemplate, updateTemplate } from '@/api/sms/template'
-import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'SysTemplateList',

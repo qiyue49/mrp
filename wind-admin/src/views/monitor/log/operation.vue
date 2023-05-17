@@ -84,15 +84,11 @@
 
 <script>
 import { fetchOperationLogList, deleteOperationLog, batchDeleteOperationLog } from '@/api/monitor/log/operation'
-import waves from '@/directive/waves'
 import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
 
 export default {
   name: 'ScheduleJobLogList',
   components: { Pagination },
-  directives: {
-    waves
-  },
   data() {
     return {
       tableKey: 0,
