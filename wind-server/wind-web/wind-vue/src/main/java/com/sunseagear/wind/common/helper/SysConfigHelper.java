@@ -17,13 +17,14 @@ public class SysConfigHelper {
     }
 
     private static SysConfigHelper sysConfigHelper;
-    private ISysConfigService sysConfigService;
+    private ISysConfigService sysConfigService = SpringContextHolder.getBean("sysConfigService");
 
     private HashMap<String, List<SysConfig>> sysConfigMap = new HashMap<>();
 
     public static SysConfigHelper getInstance() {
         if (sysConfigHelper == null) {
             sysConfigHelper = new SysConfigHelper();
+            sysConfigHelper.init();
         }
         return sysConfigHelper;
     }

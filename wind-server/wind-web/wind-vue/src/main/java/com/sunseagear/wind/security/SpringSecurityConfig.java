@@ -1,5 +1,6 @@
 package com.sunseagear.wind.security;
 
+import com.sunseagear.wind.common.helper.SysConfigHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +31,12 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http.authorizeHttpRequests(authorize -> {
             try {
-                authorize
-                        // 放行登录接口
-                        .requestMatchers("/json/oss/**", "/json/**", "/sso/oauth2/**").permitAll()
-                        // 放行资源目录
-                        .requestMatchers("/static/**", "/resources/**").permitAll()
+                // 根据配置放行外部接口
+                if (Boolean.parseBoolean(SysConfigHelper.getInstance().getSysConfig("openAPI").getValue())) {
+                    authorize.requestMatchers("/json/oss/**", "/json/**").permitAll();
+                }
+                // 放行资源目录
+                authorize.requestMatchers("/sso/oauth2/**", "/static/**", "/resources/**").permitAll()
                         // 其余的都需要权限校验
                         .anyRequest().authenticated()
                         .and()
