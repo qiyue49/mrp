@@ -21,6 +21,9 @@ public class SysConfig extends DataEntity<String> {
     @TableField(value = "code")
     private String code;
 
+    @TableField(value = "setting")
+    private String setting;
+
     @TableField(value = "value")
     private String value;
 

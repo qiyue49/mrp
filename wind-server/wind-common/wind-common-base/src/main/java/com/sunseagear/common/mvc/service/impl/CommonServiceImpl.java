@@ -16,8 +16,11 @@ import java.util.List;
 
 @Transactional
 public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements ICommonService<T> {
-    protected boolean isDemo = false;
+    protected static boolean isDemo = false;
 
+    public void setDemo(boolean isDemo) {
+        CommonServiceImpl.isDemo = isDemo;
+    }
     public Page<T> selectPage(Page<T> page) {
         return (Page<T>) page(page);
     }

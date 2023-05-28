@@ -47,7 +47,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
         //加入条件
         QueryWrapper<SysConfig> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("tenant_id", UserUtils.getTenantId());
-        entityWrapper.orderByDesc("create_date");
+        entityWrapper.orderByAsc("id");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
             entityWrapper.eq("code", code);

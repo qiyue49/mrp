@@ -10,6 +10,8 @@ import java.util.List;
 
 public interface ICommonService<T> extends IService<T> {
 
+    public void setDemo(boolean isDemo);
+
     Boolean doValid(DuplicateValid duplicateValid, Wrapper<T> wrapper);
 
     boolean insert(T entity);

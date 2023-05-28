@@ -16,11 +16,17 @@
           <el-form-item label="组件类型" prop="type">
             <el-select v-model="temp.type" placeholder="请选择组件类型">
               <el-option
-                v-for="item in statusOptions" :key="item.label + 'filter_status'"
+                v-for="item in dictList('sys_config_component_type')"
+                :key="item.value + 'filter_status'"
                 :label="item.label"
                 :value="item.value"
               />
             </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col v-if="title==='新增' && temp.type === '5'" :span="12">
+          <el-form-item label="配置项" prop="setting">
+            <el-input v-model="temp.setting" placeholder="请选择配置项"/>
           </el-form-item>
         </el-col>
         <el-col v-if="title==='新增'" :span="12">
@@ -41,6 +47,14 @@
             <upload-image v-if="temp.type === '2'" v-model="temp.value" />
             <upload-file v-if="temp.type === '3'" v-model="temp.value" />
             <baidu-map-point v-if="temp.type === '4'" v-model="temp.value" />
+            <el-select v-if="temp.type === '5'" v-model="temp.value" placeholder="请选择配置值">
+              <el-option
+                v-for="item in dictList(temp.setting)"
+                :key="item.value + 'filter_status'"
+                :label="item.label"
+                :value="item.value"
+              />
+            </el-select>
           </el-form-item>
         </el-col>
         <el-col :span="24">
@@ -67,14 +81,12 @@ import UploadFile from '@/components/Upload/uploadFile'
 import UploadImage from '@/components/Upload/uploadImage'
 import BaiduMapPoint from '@/components/BaiduMap/baiduMapPoint'
 
-const statusOptions = [{ label: '文本框', value: '1' }, { label: '图片上传', value: '2' }, { label: '文件上传', value: '3' }, { label: '地图打点', value: '4' }]
 export default {
   name: 'ConfigForm',
   components: { BaiduMapPoint, UploadImage, UploadFile },
   emits: ['refreshList'],
   data() {
     return {
-      statusOptions,
       temp: {},
       title: undefined,
       loading: false,
@@ -82,6 +94,7 @@ export default {
       rules: {
         name: [{ required: true, message: '配置名称为必填', trigger: 'blur' }],
         code: [{ required: true, message: '配置编码为必填', trigger: 'blur' }],
+        setting: [{ required: true, message: '配置项为必填', trigger: 'blur' }],
         type: [{ required: true, message: '组件类型为必填', trigger: 'blur' }],
         isSys: [{ required: true, message: '是否系统参数为必填', trigger: 'blur' }],
         value: [{ required: true, message: '配置值为必填', trigger: 'blur' }]
@@ -104,6 +117,7 @@ export default {
         remarks: undefined,
         name: undefined,
         code: undefined,
+        setting: undefined,
         value: undefined,
         type: '1',
         isSys: 'false'

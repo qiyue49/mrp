@@ -17,10 +17,10 @@ public class WebStartInitListener implements ApplicationListener<ContextRefreshe
     public void onApplicationEvent(ContextRefreshedEvent event) {
         // 需要执行的逻辑代码，当spring容器初始化完成后就会执行该方法。
         log.error("=================数据初始化=========================");
-        log.error("===初始化字典缓存===");
-        DictUtils.initDict();
         log.error("===初始化系统配置数据===");
         SysConfigHelper.getInstance().init();
+        log.error("===初始化字典缓存===");
+        DictUtils.initDict();
         log.error("===清空用户缓存===");
         UserUtils.clearAllUserCache();
         log.error("=================数据初始化完成=========================");
