@@ -40,13 +40,13 @@ public class UserRoleController extends BaseBeanController<UserRole> {
     @GetMapping(value = "{userId}/roleIds")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:user:role:list')")
-    public List<Long> userRoleIds(@PathVariable("userId") Long userId) {
+    public String userRoleIds(@PathVariable("userId") Long userId) {
         List<Long> roleIdList = new ArrayList<>();
         List<UserRole> userRoleList = userRoleService.selectList(new QueryWrapper<UserRole>().eq("user_id", userId));
         for (UserRole userRole : userRoleList) {
             roleIdList.add(userRole.getRoleId());
         }
-        return roleIdList;
+        return Response.successJson(roleIdList);
     }
 
     /**
@@ -58,7 +58,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
      */
     @PostMapping("{userId}/insertByUserId")
     @Log(logType = LogType.INSERT)
-    @PreAuthorize("hasAuthority('sys:user:role:add')")
+    @PreAuthorize("hasAuthority('sys:role:add')")
     public String insertByUserId(@PathVariable("userId") Long userId, @RequestParam("roleIds") Long[] roleIds) {
         for (Long roleId : roleIds) {
             UserRole userRole = new UserRole();
@@ -79,7 +79,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
      */
     @PostMapping("{userId}/deleteByUserId")
     @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('sys:user:role:delete')")
+    @PreAuthorize("hasAuthority('sys:role:delete')")
     public String deleteByUserId(@PathVariable("userId") Long userId, @RequestParam("roleIds") String roleIds) {
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", userId);
