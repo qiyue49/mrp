@@ -173,7 +173,7 @@ export default {
     },
     getTreeList() {
       this.listLoading = true
-      fetchOrganizationList(this.listQuery).then(response => {
+      fetchOrganizationList().then(response => {
         this.treeList = response.data.data
         this.listLoading = false
       })
@@ -198,7 +198,7 @@ export default {
     },
     getUserRoleIds(userId) {
       fetchUserRoleIds(userId).then(response => {
-        this.userRoleIds = response.data
+        this.userRoleIds = response.data.data
       })
     },
     handleFilter() {
@@ -294,6 +294,7 @@ export default {
       })
     },
     toAssignRoles(row) {
+      this.userRoleIds = []
       this.selectCurentUserId = row.id
       this.dialogFormRolesVisible = true
       this.getUserRoleIds(this.selectCurentUserId)
