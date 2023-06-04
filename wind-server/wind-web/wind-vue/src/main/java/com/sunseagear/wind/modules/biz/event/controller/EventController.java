@@ -98,7 +98,7 @@ public class EventController extends BaseBeanController<Event> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:event:event:detail')")
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Event event = eventService.selectById(id);
         return Response.successJson(event);
     }

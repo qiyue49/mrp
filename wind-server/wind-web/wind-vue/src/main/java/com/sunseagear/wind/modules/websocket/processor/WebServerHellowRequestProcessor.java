@@ -19,7 +19,7 @@ public class WebServerHellowRequestProcessor extends JsonProcessor<WebServerHell
     @Override
     public void process(SocketMessage<WebServerHellowReqMessage> message) {
         WebServerHellowReqMessage webCodeGenReqMessage = message.getEntity();
-        String userId = message.getUserId();
+        Long userId = message.getUserId();
         webSocketWebCodeServer.send(userId, ConstantMessageCode.SERVER_WEB_HELLOW_ACK, webCodeGenReqMessage);
     }
 

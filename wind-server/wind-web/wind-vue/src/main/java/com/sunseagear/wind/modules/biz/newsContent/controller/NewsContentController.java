@@ -98,7 +98,7 @@ public class NewsContentController extends BaseBeanController<NewsContent> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:newsContent:newscontent:detail')")
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         NewsContent newsContent = newsContentService.selectById(id);
         return Response.successJson(newsContent);
     }

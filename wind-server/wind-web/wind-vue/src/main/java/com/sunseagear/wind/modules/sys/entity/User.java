@@ -23,7 +23,7 @@ import java.util.List;
 @Data
 @TableName("sys_user")
 @SuppressWarnings("serial")
-public class User extends DataEntity<String> {
+public class User extends DataEntity<Long> {
 
     /**
      * 是否锁定（1：正常；-1：删除；0：锁定；）
@@ -38,7 +38,7 @@ public class User extends DataEntity<String> {
      * id
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     // 姓名
     @Excel(name = "用户名", orderNum = "1")
     private String username;
@@ -62,12 +62,12 @@ public class User extends DataEntity<String> {
     private String tenantId; //租户ID
 
     @TableField(value = "organization_id")
-    private String organizationId;
+    private Long organizationId;
 
     @TableField(exist = false)
     private Organization organization;
 
-    public void setOrganizationId(String organizationId) {
+    public void setOrganizationId(Long organizationId) {
         this.organizationId = organizationId;
         if (this.organization == null) {
             this.organization = new Organization();
@@ -95,7 +95,7 @@ public class User extends DataEntity<String> {
     }
 
     public String findRoleIds() {
-        List<String> roleIds = new ArrayList<>();
+        List<Long> roleIds = new ArrayList<>();
         roles.forEach(item -> {
             roleIds.add(item.getId());
         });

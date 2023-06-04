@@ -21,7 +21,7 @@ import lombok.Data;
 @Data
 @TableName("biz_department")
 @SuppressWarnings("serial")
-public class Department extends TreeEntity<String> {
+public class Department extends TreeEntity<Long> {
 
 
     @TableField(value = "code")

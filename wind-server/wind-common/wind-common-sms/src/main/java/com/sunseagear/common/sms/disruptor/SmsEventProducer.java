@@ -26,7 +26,7 @@ public class SmsEventProducer {
         this.smsDao = smsDao;
     }
 
-    private String sendSms(String eventId, SmsData smsData, SmsHandlerCallBack callBack) {
+    private Long sendSms(Long eventId, SmsData smsData, SmsHandlerCallBack callBack) {
         // 获取下一个序号
         long sequence = ringBuffer.next();
         try {
@@ -45,11 +45,11 @@ public class SmsEventProducer {
         return eventId;
     }
 
-    private String sendSms(String eventId, SmsData smsData) {
+    private Long sendSms(Long eventId, SmsData smsData) {
         return sendSms(eventId, smsData, null);
     }
 
-    public String sendSms(String eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
+    public Long sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
         SmsData smsData = new SmsData();
         smsData.setPhone(phone);
         smsData.setSmsTemplate(smsTemplate);
@@ -58,7 +58,7 @@ public class SmsEventProducer {
         return sendSms(eventId, smsData);
     }
 
-    public String sendSms(String eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas, SmsHandlerCallBack callBack) {
+    public Long sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas, SmsHandlerCallBack callBack) {
         SmsData smsData = new SmsData();
         smsData.setPhone(phone);
         smsData.setSmsTemplate(smsTemplate);

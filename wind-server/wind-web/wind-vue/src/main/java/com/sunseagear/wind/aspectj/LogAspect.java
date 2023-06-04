@@ -92,7 +92,7 @@ public class LogAspect {
             String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
             operationLog.setOperationIp(ip);
             operationLog.setRequestUri(ServletUtils.getRequest().getRequestURI());
-            if (currentUser != null) {
+            if (currentUser.getUsername() != null) {
                 operationLog.setOperationName(currentUser.getUsername());
             } else {
                 operationLog.setOperationName("未登录用户");

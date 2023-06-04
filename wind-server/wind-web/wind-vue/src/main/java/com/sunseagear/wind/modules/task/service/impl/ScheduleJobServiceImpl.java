@@ -31,7 +31,7 @@ public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper,
     private QuartzManager quartzManager = new QuartzManager();
 
     @Override
-    public void updateCron(String jobId) {
+    public void updateCron(Long jobId) {
         try {
             ScheduleJob scheduleJob = selectById(jobId);
             if (scheduleJob == null) {
@@ -48,7 +48,7 @@ public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper,
     }
 
     @Override
-    public void changeStatus(String jobId, String cmd) {
+    public void changeStatus(Long jobId, String cmd) {
         try {
             ScheduleJob scheduleJob = selectById(jobId);
             if (scheduleJob == null) {
@@ -103,7 +103,7 @@ public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper,
     }
 
     @Override
-    public void runAJobNow(String jobId) {
+    public void runAJobNow(Long jobId) {
         try {
             ScheduleJob scheduleJob = selectById(jobId);
             quartzManager.runAJobNow(ScheduleJobUtils.entityToData(scheduleJob));

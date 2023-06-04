@@ -22,11 +22,11 @@ import lombok.Data;
 @Data
 @TableName("biz_product")
 @SuppressWarnings("serial")
-public class Product extends DataEntity<String> {
+public class Product extends DataEntity<Long> {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @TableField(value = "name")
     private String name;  //名称
     @TableField(value = "price")

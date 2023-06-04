@@ -50,7 +50,7 @@ public class MessageDispatcher {
         }
         int code = jsonObject.get("code").getAsInt();
         String data = jsonObject.get("data").toString();
-        String userId = jsonObject.get("userId").getAsString();
+        Long userId = jsonObject.get("userId").getAsLong();
         String message = jsonObject.get("message").getAsString();
         Boolean isSuccess = jsonObject.get("success").getAsBoolean();
 

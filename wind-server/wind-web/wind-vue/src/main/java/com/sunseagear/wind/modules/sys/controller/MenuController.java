@@ -78,7 +78,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:menu:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         Menu organization = menuService.selectById(id);
         return Response.successJson(organization);
     }
@@ -86,7 +86,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:menu:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("parent_id", id);
         menuService.delete(entityWrapper);
@@ -116,7 +116,7 @@ public class MenuController extends BaseBeanController<Menu> {
     }
 
     @PostMapping("{id}/changeSort")
-    public String changeSort(@PathVariable("id") String id,
+    public String changeSort(@PathVariable("id") Long id,
                              @RequestParam("sort") Integer sort) {
         menuService.changeSort(id, sort);
         return Response.ok("排序成功");
@@ -130,7 +130,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @GetMapping(value = "getPermissions")
     public String getPermissions() {
         //加入条件
-        String uid = UserUtils.getUser().getId();
+        Long uid = UserUtils.getUser().getId();
         List<Menu> permissionValueList = menuService.findPermissionByUserId(uid);
         List<String> menuIdList = new ArrayList<>();
         for (Menu menu : permissionValueList) {
@@ -142,7 +142,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("{id}/generate/button")
     @Log(logType = LogType.OTHER, title = "生成按钮")
     @PreAuthorize("hasAuthority('sys:menu:generate:button')")
-    public String generateButton(@PathVariable("id") String id,
+    public String generateButton(@PathVariable("id") Long id,
                                  @RequestParam("parentPermission") String parentPermission,
                                  @RequestParam("permissions") String permissions,
                                  @RequestParam("permissionTitles") String permissionTitles,

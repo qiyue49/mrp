@@ -24,10 +24,10 @@ import java.util.Date;
 @Data
 @TableName("test_table")
 @SuppressWarnings("serial")
-public class Table extends DataEntity<String> {
+public class Table extends DataEntity<Long> {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
 
     @ExcelField(title = "标题", sort = 10)
     @TableField(value = "title")

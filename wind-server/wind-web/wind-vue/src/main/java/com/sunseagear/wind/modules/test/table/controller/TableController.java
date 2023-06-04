@@ -103,7 +103,7 @@ public class TableController extends BaseBeanController<Table> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:table:table:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         tableService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -111,7 +111,7 @@ public class TableController extends BaseBeanController<Table> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:table:table:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         Table tableEntity = tableService.selectById(id);
         tableEntity.setContent(StringEscapeUtils.unescapeHtml4(tableEntity.getContent()));
         return Response.successJson(tableEntity);

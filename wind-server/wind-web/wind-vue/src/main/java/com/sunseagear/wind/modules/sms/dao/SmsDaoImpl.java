@@ -24,7 +24,7 @@ public class SmsDaoImpl implements SmsDao {
     private ISmsSendLogService smsSendLogService;
 
     @Override
-    public void doResult(String eventId, SmsData smsData, SmsResult smsResult) {
+    public void doResult(Long eventId, SmsData smsData, SmsResult smsResult) {
         try {
             SmsSendLog sendLog = smsSendLogService.selectById(eventId);
             sendLog.setMsg(smsResult.getMsg());

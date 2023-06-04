@@ -2,6 +2,7 @@ package com.sunseagear.wind.modules.sso.controller;
 
 import com.sunseagear.common.datarule.handler.DataRuleHandler;
 import com.sunseagear.common.http.Response;
+import com.sunseagear.common.utils.ExceptionUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.common.helper.JWTHelper;
@@ -60,6 +61,7 @@ public class Oauth2Controller {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
+            LoginLogUtils.recordFailLoginLog(UserUtils.getUser().getUsername(), "用户名密码不能为空");
             return Response.failJson("用户名密码不能为空");
         }
         try {
@@ -80,18 +82,22 @@ public class Oauth2Controller {
             oAuthService.addRefreshToken(refreshToken, principal);
 
             //将用户信息缓存到数据权限模块
-            dataRuleHandler.refreshUser(principal.getId());
+            dataRuleHandler.refreshUser(principal.getId().toString());
+            LoginLogUtils.recordSuccessLoginLog(UserUtils.getUser().getUsername(), "退出成功");
 
             return Response.successJson(new Token(accessToken, refreshToken));
 
         } catch (UsernameNotFoundException e) {
             e.printStackTrace();
+            LoginLogUtils.recordFailLoginLog(UserUtils.getUser().getUsername(), "找不到用户");
             return Response.failJson("找不到用户");
         } catch (BadCredentialsException e) {
             e.printStackTrace();
+            LoginLogUtils.recordFailLoginLog(UserUtils.getUser().getUsername(), "用户名密码错误");
             return Response.failJson("用户名密码错误");
         } catch (Exception e) {
             e.printStackTrace();
+            LoginLogUtils.recordFailLoginLog(UserUtils.getUser().getUsername(), ExceptionUtils.getStackTraceAsString(e));
             return Response.failJson("登录失败");
         }
     }
@@ -105,6 +111,7 @@ public class Oauth2Controller {
         //生成Access Token
         Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
         if (principal == null) {
+            LoginLogUtils.recordFailLoginLog(UserUtils.getUser().getUsername(), "REFRESH_TOKEN过期");
             return Response.error(ResponseError.INVALID_REFRESH_TOKEN, "REFRESH_TOKEN过期");
         }
         Map<String, Object> dataMap = new HashMap<>();
@@ -119,6 +126,7 @@ public class Oauth2Controller {
         //生成Refresh Token，只有长时间无任何操作才会过期，过期就立即登出
         final String refreshTokenNew = jwtHelper.createRefreshToken(dataMap, principal.getUsername());
         oAuthService.addRefreshToken(refreshTokenNew, principal);
+        LoginLogUtils.recordSuccessLoginLog(UserUtils.getUser().getUsername(), "REFRESH_TOKEN更新");
 
         return Response.successJson(new Token(accessToken, refreshTokenNew));
     }
@@ -134,8 +142,8 @@ public class Oauth2Controller {
     @ResponseBody
     public String revokeToken(HttpServletRequest request) {
         String accessToken = request.getHeader("accessToken");
-        LoginLogUtils.recordLogoutLoginLog(UserUtils.getUser().getUsername(), "退出成功");
         oAuthService.revokeToken(accessToken);
+        LoginLogUtils.recordLogoutLoginLog(UserUtils.getUser().getUsername(), "退出成功");
         return Response.successJson("退出成功");
     }
 }

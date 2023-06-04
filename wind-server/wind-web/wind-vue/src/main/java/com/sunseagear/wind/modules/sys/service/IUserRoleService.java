@@ -14,9 +14,9 @@ import com.sunseagear.wind.modules.sys.entity.UserRole;
  */
 public interface IUserRoleService extends ICommonService<UserRole> {
 
-    void insert(String uid, String roleCode);
+    void insert(Long uid, String roleCode);
 
-    void insertByRoleId(String uid, String roleId);
+    void insertByRoleId(Long uid, Long roleId);
 
-    void deleteUserRole(String uid, String roleId);
+    void deleteUserRole(Long uid, Long roleId);
 }

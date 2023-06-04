@@ -85,7 +85,7 @@ public class DepartmentController extends BaseBeanController<Department> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:department:department:detail')")
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Department department = departmentService.selectById(id);
         return Response.successJson(department);
     }

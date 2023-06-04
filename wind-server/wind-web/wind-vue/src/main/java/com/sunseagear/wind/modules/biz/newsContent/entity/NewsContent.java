@@ -24,11 +24,11 @@ import java.util.Date;
 @Data
 @TableName("biz_newsContent")
 @SuppressWarnings("serial")
-public class NewsContent extends DataEntity<String> {
+public class NewsContent extends DataEntity<Long> {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @TableField(value = "newsContent_title")
     private String newsContentTitle;  //内容标题
     @TableField(value = "newsContent_describe")

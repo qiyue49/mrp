@@ -84,7 +84,7 @@ public class NewsContentJsonController extends BaseBeanController<NewsContent> {
 
     @GetMapping("detail/{id}/{userId}")
     @Log(logType = LogType.SELECT)
-    public String detail(@PathVariable("id") String id, @PathVariable("userId") String userId) {
+    public String detail(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
         NewsContent newsContent = newsContentService.selectById(id);
         return JsonUtils.successMessage(newsContent);
     }
@@ -99,7 +99,7 @@ public class NewsContentJsonController extends BaseBeanController<NewsContent> {
 
     @PostMapping("collection")
     @Log(logType = LogType.DELETE)
-    public String collection(String userId, String newsId) {
+    public String collection(Long userId, String newsId) {
         if (newsContentService.isCollection(userId, newsId)) {
             newsContentService.removeCollection(userId, newsId);
             return JsonUtils.successMessage("取消收藏成功");
@@ -112,7 +112,7 @@ public class NewsContentJsonController extends BaseBeanController<NewsContent> {
 
     @PostMapping("myCollection")
     @Log(logType = LogType.DELETE)
-    public String myCollection(String userId) {
+    public String myCollection(Long userId) {
         QueryWrapper<NewsContent> entityWrapper = new QueryWrapper<>();
         entityWrapper.orderByDesc(false, "create_date");
         entityWrapper.eq("c.user_id", userId);
@@ -124,7 +124,7 @@ public class NewsContentJsonController extends BaseBeanController<NewsContent> {
 
     @PostMapping("isCollection")
     @Log(logType = LogType.DELETE)
-    public String isCollection(@RequestParam(required = true) String userId, @RequestParam(required = true) String newsId) {
+    public String isCollection(@RequestParam(required = true) Long userId, @RequestParam(required = true) String newsId) {
         return JsonUtils.successMessage(newsContentService.isCollection(userId, newsId));
     }
 }

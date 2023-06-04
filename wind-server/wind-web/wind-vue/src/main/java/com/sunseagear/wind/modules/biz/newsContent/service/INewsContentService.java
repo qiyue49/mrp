@@ -19,13 +19,13 @@ import com.sunseagear.wind.modules.biz.newsContent.entity.NewsContent;
 public interface INewsContentService extends ICommonService<NewsContent> {
 
     // 根据新闻内容id获取数据
-    public NewsContent selectById(String id);
+    public NewsContent selectById(Long id);
 
-    boolean isCollection(String userId, String newsId);
+    boolean isCollection(Long userId, String newsId);
 
-    int removeCollection(String userId, String newsId);
+    int removeCollection(Long userId, String newsId);
 
-    int insertCollection(String userId, String newsId);
+    int insertCollection(Long userId, String newsId);
 
     Page myCollection(Page page, Wrapper<NewsContent> wrapper);
 }

@@ -101,7 +101,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:config:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         sysConfigService.deleteById(id);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
         return Response.ok("删除成功");
@@ -110,7 +110,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:config:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         SysConfig tenant = sysConfigService.selectById(id);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
         return Response.successJson(tenant);

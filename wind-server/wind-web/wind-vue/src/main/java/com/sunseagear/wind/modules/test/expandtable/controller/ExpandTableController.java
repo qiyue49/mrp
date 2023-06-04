@@ -82,7 +82,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:expandtable:expandtable:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         expandTableService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -90,7 +90,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:expandtable:expandtable:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         ExpandTable expandTable = expandTableService.selectById(id);
         return Response.successJson(expandTable);
     }

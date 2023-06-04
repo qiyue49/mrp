@@ -77,7 +77,7 @@ public class NewsTypeJsonController extends BaseBeanController<NewsType> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         NewsType newsType = newsTypeService.selectById(id);
         return JsonUtils.successMessage(newsType);
     }

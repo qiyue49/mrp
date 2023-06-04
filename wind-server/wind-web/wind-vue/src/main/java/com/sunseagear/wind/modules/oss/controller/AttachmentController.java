@@ -71,7 +71,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('oss:attachment:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         attachmentService.deleteById(id);
         return Response.ok();
     }

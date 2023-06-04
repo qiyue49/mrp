@@ -26,15 +26,15 @@ import java.util.Date;
 @Data
 @TableName("biz_event")
 @SuppressWarnings("serial")
-public class Event extends DataEntity<String> {
+public class Event extends DataEntity<Long> {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @TableField(value = "title")
     private String title;  //标题
     @TableField(value = "user_id")
-    private String userId;  //用户
+    private Long userId;  //用户
     @TableField(value = "organization_id")
     private String organizationId;  //部门
     @TableField(value = "date")

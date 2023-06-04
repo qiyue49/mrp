@@ -14,6 +14,6 @@ import com.sunseagear.wind.modules.biz.department.entity.Department;
  * @date: 2021-04-15 10:23:14
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */
-public interface IDepartmentService extends ITreeCommonService<Department, String> {
+public interface IDepartmentService extends ITreeCommonService<Department, Long> {
 
 }

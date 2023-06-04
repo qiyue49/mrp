@@ -69,7 +69,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:twotable:carmodel:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         CarModel carModel = carModelService.selectById(id);
         return Response.successJson(carModel);
     }
@@ -97,7 +97,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:twotable:carmodel:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         carModelService.deleteById(id);
         return Response.ok("删除成功");
     }

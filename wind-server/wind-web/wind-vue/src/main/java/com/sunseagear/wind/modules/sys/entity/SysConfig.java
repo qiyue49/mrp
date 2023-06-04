@@ -10,10 +10,10 @@ import lombok.Data;
 @Data
 @TableName("sys_config")
 @SuppressWarnings("serial")
-public class SysConfig extends DataEntity<String> {
+public class SysConfig extends DataEntity<Long> {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
 
     @TableField(value = "name")
     private String name;

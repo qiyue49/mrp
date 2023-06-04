@@ -14,6 +14,6 @@ import com.sunseagear.wind.modules.test.treetable.entity.TreeTable;
  * @date: 2019-11-13 21:38:34
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */
-public interface ITreeTableService extends ITreeCommonService<TreeTable, String> {
+public interface ITreeTableService extends ITreeCommonService<TreeTable, Long> {
 
 }

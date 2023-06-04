@@ -25,7 +25,7 @@ public class EmailEventProducer {
         this.emailDao = emailDao;
     }
 
-    private String send(String eventId, EmailData emailData, EmailHandlerCallBack callBack) {
+    private Long send(Long eventId, EmailData emailData, EmailHandlerCallBack callBack) {
         // 获取下一个序号
         long sequence = ringBuffer.next();
         try {
@@ -44,11 +44,11 @@ public class EmailEventProducer {
         return eventId;
     }
 
-    public String send(String eventId, MimeMessage message, MailProperties mailProperties) {
+    public Long send(Long eventId, MimeMessage message, MailProperties mailProperties) {
         return send(eventId, message, mailProperties, null);
     }
 
-    public String send(String eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
+    public Long send(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
         EmailData emailData = new EmailData();
         emailData.setMailProperties(mailProperties);
         emailData.setMimeMessage(message);

@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @TableName("sys_menu")
 @SuppressWarnings("serial")
-public class Menu extends TreeEntity<String> {
+public class Menu extends TreeEntity<Long> {
 
     public static final String CATALOG = "1";
     public static final String MENU = "2";

@@ -62,7 +62,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
         if (principal == null) {
             return where;
         }
-        Map<String, Object> userMap = dataRuleHandler.getUser(principal.getId());
+        Map<String, Object> userMap = dataRuleHandler.getUser(principal.getId().toString());
         DataRuleModel dataScope = dataRuleHandler.getDataRule(mappedStatementId, principal.getRoleId());
         ;
         //如果还不行，那就只有不处理了
@@ -92,7 +92,7 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
         } else if (DataRuleModel.OWN == scopeRule) {
             EqualsTo equalsTo = new EqualsTo();
             equalsTo.setLeftExpression(new Column(dataScope.getScopeColumn()));
-            equalsTo.setRightExpression(new StringValue(principal.getId()));
+            equalsTo.setRightExpression(new StringValue(principal.getId().toString()));
             return new AndExpression(where, equalsTo);
 
         } else if (DataRuleModel.OWN_ORG == scopeRule) {

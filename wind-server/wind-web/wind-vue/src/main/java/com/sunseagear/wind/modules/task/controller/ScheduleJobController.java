@@ -78,7 +78,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('task:schedule:job:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         scheduleJobService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -95,7 +95,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping(value = "{id}/changeJobStatus")
     @Log(logType = LogType.OTHER, title = "任务状态")
     @PreAuthorize("hasAuthority('task:schedule:job:change:job:status')")
-    public String changeJobStatus(@PathVariable("id") String id, HttpServletRequest request,
+    public String changeJobStatus(@PathVariable("id") Long id, HttpServletRequest request,
                                   HttpServletResponse response) {
         String cmd = request.getParameter("cmd");
         String label = "停止";
@@ -116,7 +116,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping(value = "{id}/updateCron")
     @Log(logType = LogType.OTHER, title = "任务更新")
     @PreAuthorize("hasAuthority('task:schedule:job:refresh:job')")
-    public String updateCron(@PathVariable("id") String id) {
+    public String updateCron(@PathVariable("id") Long id) {
         ScheduleJob scheduleJob = scheduleJobService.selectById(id);
         if (scheduleJob == null) {
             return Response.failJson("出错了 定时任务未找到");
@@ -131,8 +131,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping(value = "/runAJobNow")
     @Log(logType = LogType.OTHER, title = "执行一次")
     @PreAuthorize("hasAuthority('task:schedule:job:change:job:status')")
-    public String runAJobNow(ScheduleJob scheduleJob, HttpServletRequest request,
-                             HttpServletResponse response) {
+    public String runAJobNow(ScheduleJob scheduleJob) {
         if (scheduleJob == null) {
             return Response.failJson("出错了");
         }

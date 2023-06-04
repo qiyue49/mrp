@@ -25,13 +25,13 @@ import java.util.Date;
 @Data
 @TableName("sys_login_log")
 @SuppressWarnings("serial")
-public class LoginLog extends AbstractEntity<String> {
+public class LoginLog extends AbstractEntity<Long> {
 
     /**
      * 访问ID
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     /**
      * 登录账号
      */

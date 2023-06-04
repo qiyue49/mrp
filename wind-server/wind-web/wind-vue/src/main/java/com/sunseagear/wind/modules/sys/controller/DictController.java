@@ -108,7 +108,7 @@ public class DictController extends BaseBeanController<Dict> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:dict:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         dictService.deleteById(id);
         DictUtils.initDict();
         return Response.ok("删除成功");

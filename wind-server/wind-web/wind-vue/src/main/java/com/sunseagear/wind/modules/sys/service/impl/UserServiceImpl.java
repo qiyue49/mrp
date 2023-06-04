@@ -28,8 +28,8 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     private IRoleService roleService;
 
     @Override
-    public void changePassword(String userid, String newPassword) {
-        User user = selectById(userid);
+    public void changePassword(Long userId, String newPassword) {
+        User user = selectById(userId);
         if (user != null) {
             user.setPassword(passwordService.getPassword(newPassword, user.getCredentialsSalt()));
             update(user);
@@ -93,7 +93,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     }
 
     @Override
-    public Boolean checkPassword(String userId, String password) {
+    public Boolean checkPassword(Long userId, String password) {
         User user = selectById(userId);
         if (user == null) {
             return Boolean.FALSE;
@@ -120,7 +120,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         if (selectCount(new QueryWrapper<User>().ne("id", user.getId()).eq("username", user.getUsername())) > 0) {
             throw new RuntimeException("账号重复");
         }
-        if (!StringUtils.isEmpty(user.getId())) {
+        if (user.getId()==null) {
             UserUtils.update(user.getId());
         }
         return super.update(user);

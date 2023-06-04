@@ -5,15 +5,17 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
+import lombok.Data;
 
+@Data
 @TableName("test_car_model")
 @SuppressWarnings("serial")
-public class CarModel extends DataEntity<String> {
+public class CarModel extends DataEntity<Long> {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     @TableField(value = "car_id")
-    private String carId;
+    private Long carId;
     @TableField(value = "name")
     private String name;
     @TableField(value = "value")
@@ -24,52 +26,5 @@ public class CarModel extends DataEntity<String> {
     @TableField(exist = false)
     private String code;
 
-    public String getCarId() {
-        return this.carId;
-    }
-
-    public void setCarId(String carId) {
-        this.carId = carId;
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return this.value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public Integer getSort() {
-        return this.sort;
-    }
-
-    public void setSort(Integer sort) {
-        this.sort = sort;
-    }
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
 
 }

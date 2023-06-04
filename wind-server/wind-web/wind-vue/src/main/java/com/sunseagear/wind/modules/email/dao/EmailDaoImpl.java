@@ -24,7 +24,7 @@ public class EmailDaoImpl implements EmailDao {
     private IEmailSendLogService emailSendLogService;
 
     @Override
-    public void doResult(String eventId, EmailData emailData, EmailResult smsResult) {
+    public void doResult(Long eventId, EmailData emailData, EmailResult smsResult) {
         try {
             EmailSendLog sendLog = emailSendLogService.selectById(eventId);
             sendLog.setMsg(smsResult.getMsg());

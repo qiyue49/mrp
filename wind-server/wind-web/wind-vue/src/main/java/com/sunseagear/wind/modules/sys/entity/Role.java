@@ -16,9 +16,9 @@ import lombok.Data;
 @Data
 @TableName("sys_role")
 @SuppressWarnings("serial")
-public class Role extends DataEntity<String> {
+public class Role extends DataEntity<Long> {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     @TableField(value = "name")
     private String name;// 角色名称
     @TableField(value = "code")

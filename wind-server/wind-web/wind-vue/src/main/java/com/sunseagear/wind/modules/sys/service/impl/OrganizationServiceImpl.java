@@ -18,7 +18,7 @@ import java.util.*;
 
 @Transactional
 @Service("organizationService")
-public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationMapper, Organization, String>
+public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationMapper, Organization, Long>
         implements IOrganizationService {
 
     //所有数据更新都需要刷新数据权限
@@ -35,7 +35,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
         List<Organization> TreeTableListAll = list(new QueryWrapper<Organization>().eq("tenant_id", UserUtils.getTenantId()));
         HashMap<String, Organization> TreeTableHashMapAll = new HashMap<>();
         TreeTableListAll.forEach(Organization -> {
-            TreeTableHashMapAll.put(Organization.getId(), Organization);
+            TreeTableHashMapAll.put(Organization.getId().toString(), Organization);
         });
         HashMap<String, Organization> TreeTableHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
@@ -46,7 +46,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
                     TreeTableHashMap.put(id, Organization);
                 });
             }
-            TreeTableHashMap.put(treeNode.getId(), TreeTableHashMapAll.get(treeNode.getId()));
+            TreeTableHashMap.put(treeNode.getId().toString(), TreeTableHashMapAll.get(treeNode.getId().toString()));
 
         });
         List<Organization> TreeTableList = new ArrayList<>();
@@ -64,8 +64,8 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
 
 
     @Override
-    public List<Organization> findListByUserId(String userid) {
-        return baseMapper.findListByUserId(userid);
+    public List<Organization> findListByUserId(Long userId) {
+        return baseMapper.findListByUserId(userId);
     }
 
     @Override

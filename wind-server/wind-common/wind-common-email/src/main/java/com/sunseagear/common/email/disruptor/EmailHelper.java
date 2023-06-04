@@ -73,16 +73,16 @@ public class EmailHelper {
         disruptor.halt();
     }
 
-    public String sendAsync(String eventId, MimeMessage message, MailProperties mailProperties) {
+    public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
         return emailEventProducer.send(eventId, message, mailProperties);
     }
 
-    public String sendAsync(String eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
+    public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
         return emailEventProducer.send(eventId, message, mailProperties, callBack);
     }
 
 
-    public EmailResult sendSync(String eventId, MimeMessage message, MailProperties mailProperties) {
+    public EmailResult sendSync(Long eventId, MimeMessage message, MailProperties mailProperties) {
         // 异步的时候发送短信日志
         EmailData emailData = new EmailData();
         emailData.setMimeMessage(message);

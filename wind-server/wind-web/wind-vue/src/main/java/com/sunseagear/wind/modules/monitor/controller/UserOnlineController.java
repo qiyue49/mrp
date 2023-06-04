@@ -45,8 +45,8 @@ public class UserOnlineController extends BaseBeanController<Principal> {
 
     @PostMapping("/forceLogout")
     @Log(title = "用户强制退出")
-    public String forceLogout(@RequestParam(value = "ids") String[] ids) {
-        for (String id : ids) {
+    public String forceLogout(@RequestParam(value = "ids") Long[] ids) {
+        for (Long id : ids) {
             // 强制退出，不想频繁的请求redis没想好怎么处理
         }
         return Response.ok("强制退出成功");

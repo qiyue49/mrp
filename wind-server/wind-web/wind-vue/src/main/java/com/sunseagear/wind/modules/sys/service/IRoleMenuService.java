@@ -11,10 +11,10 @@ import com.sunseagear.wind.modules.sys.entity.RoleMenu;
  */
 public interface IRoleMenuService extends ICommonService<RoleMenu> {
 
-    void insert(String roleId, String menuId);
+    void insert(Long roleId, String menuId);
 
-    void setMenu(String roleId, String menuIds);
+    void setMenu(Long roleId, String menuIds);
 
-    void setPermission(String roleId, String menuIds);
+    void setPermission(Long roleId, String menuIds);
 }
 

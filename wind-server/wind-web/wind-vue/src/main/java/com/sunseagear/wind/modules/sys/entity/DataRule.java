@@ -22,11 +22,11 @@ import lombok.Data;
 @Data
 @TableName("sys_data_rule")
 @SuppressWarnings("serial")
-public class DataRule extends DataEntity<String> {
+public class DataRule extends DataEntity<Long> {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @TableField(value = "resource_code")
     private String resourceCode;  //资源编号
     @TableField(value = "scope_name")

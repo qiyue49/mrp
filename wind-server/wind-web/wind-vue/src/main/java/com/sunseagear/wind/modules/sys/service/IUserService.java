@@ -19,7 +19,7 @@ public interface IUserService extends ICommonService<User> {
      * @param userId
      * @param newPassword
      */
-    void changePassword(String userId, String newPassword);
+    void changePassword(Long userId, String newPassword);
 
     /**
      * 根据用户名查找用户
@@ -52,6 +52,6 @@ public interface IUserService extends ICommonService<User> {
      * @param password
      * @return
      */
-    Boolean checkPassword(String userId, String password);
+    Boolean checkPassword(Long userId, String password);
 
 }

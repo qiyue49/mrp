@@ -12,9 +12,9 @@ import java.util.List;
  * @Description:
  * @date 2014-12-20 21:33:51
  */
-public interface IOrganizationService extends ITreeCommonService<Organization, String> {
+public interface IOrganizationService extends ITreeCommonService<Organization, Long> {
     /**
      * 通过用户ID查找角色
      */
-    public List<Organization> findListByUserId(String userid);
+    public List<Organization> findListByUserId(Long userId);
 }

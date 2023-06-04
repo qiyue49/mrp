@@ -131,7 +131,7 @@ public class UserController extends BaseBeanController<User> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:user:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         userService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -148,8 +148,7 @@ public class UserController extends BaseBeanController<User> {
     @PostMapping(value = "{id}/changePassword")
     @Log(logType = LogType.OTHER, title = "修改成功")
     @PreAuthorize("hasAuthority('sys:user:change:password')")
-    public String changePassword(@PathVariable("id") String id, HttpServletRequest request,
-                                 HttpServletResponse response) {
+    public String changePassword(@PathVariable("id") Long id, HttpServletRequest request) {
         String password = request.getParameter("password");
         userService.changePassword(id, password);
         return Response.ok("密码修改成功");
@@ -158,7 +157,7 @@ public class UserController extends BaseBeanController<User> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:user:list')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         User user = userService.selectById(id);
         return Response.successJson(user);
     }
@@ -169,10 +168,10 @@ public class UserController extends BaseBeanController<User> {
         if (roleIdList != null && roleIdList.length > 0) {
             userRoleService.delete(new QueryWrapper<UserRole>().eq("user_id", entity.getId()));
             List<UserRole> userRoleList = new ArrayList<UserRole>();
-            for (String roleid : roleIdList) {
+            for (String roleId : roleIdList) {
                 UserRole userRole = new UserRole();
                 userRole.setUserId(entity.getId());
-                userRole.setRoleId(roleid);
+                userRole.setRoleId(Long.parseLong(roleId));
                 userRoleList.add(userRole);
             }
             userRoleService.insertBatch(userRoleList);
@@ -240,7 +239,7 @@ public class UserController extends BaseBeanController<User> {
     @PostMapping("my/update")
     @Log(logType = LogType.UPDATE, title = "用户更新")
     public String myUpdate(User user, HttpServletRequest request) {
-        String userId = UserUtils.getUser().getId();
+        Long userId = UserUtils.getUser().getId();
         User oldUser = userService.selectById(userId);
         // 验证错误
         BeanUtils.copyProperties(user, oldUser);
@@ -261,7 +260,7 @@ public class UserController extends BaseBeanController<User> {
     @Log(logType = LogType.OTHER, title = "用户修改密码")
     public String myChangePassword(String oldPassword,
                                    String password, HttpServletRequest request) {
-        String userId = UserUtils.getUser().getId();
+        Long userId = UserUtils.getUser().getId();
         if (userService.checkPassword(userId, oldPassword)) {
             userService.changePassword(userId, password);
         } else {

@@ -20,19 +20,19 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
     protected String remarks; // 备注
 
     @TableField(value = "create_by", fill = FieldFill.INSERT)
-    protected String createBy; // 创建者
+    protected Long createBy; // 创建者
 
     @TableField(value = "create_date", fill = FieldFill.INSERT)
     protected Date createDate; // 创建日期
 
     @TableField(value = "update_by", fill = FieldFill.UPDATE)
-    protected String updateBy; // 更新者
+    protected Long updateBy; // 更新者
 
     @TableField(value = "update_date", fill = FieldFill.UPDATE)
     protected Date updateDate; // 更新日期
 
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    protected String delFlag = "0"; // 删除标记（0：正常；1：删除 ）
+    protected int delFlag = 0; // 删除标记（0：正常；1：删除 ）
 
     public DataEntity() {
         super();
@@ -47,11 +47,11 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
         this.remarks = remarks;
     }
 
-    public String getCreateBy() {
+    public Long getCreateBy() {
         return createBy;
     }
 
-    public void setCreateBy(String createBy) {
+    public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
@@ -63,11 +63,11 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
         this.createDate = createDate;
     }
 
-    public String getUpdateBy() {
+    public Long getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
+    public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
 
@@ -79,11 +79,11 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
         this.updateDate = updateDate;
     }
 
-    public String getDelFlag() {
+    public int getDelFlag() {
         return delFlag;
     }
 
-    public void setDelFlag(String delFlag) {
+    public void setDelFlag(int delFlag) {
         this.delFlag = delFlag;
     }
 }

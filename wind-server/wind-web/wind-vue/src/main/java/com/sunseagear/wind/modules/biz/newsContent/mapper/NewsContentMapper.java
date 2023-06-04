@@ -22,11 +22,11 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface NewsContentMapper extends BaseMapper<NewsContent> {
 
-    boolean isCollection(String userId, String newsId);
+    boolean isCollection(Long userId, String newsId);
 
-    int removeCollection(String userId, String newsId);
+    int removeCollection(Long userId, String newsId);
 
-    int insertCollection(String userId, String newsId);
+    int insertCollection(Long userId, String newsId);
 
     Page<NewsContent> myCollection(Page<NewsContent> page, @Param(Constants.WRAPPER) Wrapper<NewsContent> wrapper);
 

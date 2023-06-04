@@ -112,7 +112,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("updateRules")
     @Log(logType = LogType.UPDATE)
     @PreAuthorize("hasAuthority('sys:datarule:update')")
-    public String update(@Valid String roleId, String[] ids) {
+    public String update(@Valid Long roleId, String[] ids) {
         QueryWrapper<RoleDataRule> roleDataRuleEntityWrapper = new QueryWrapper<>();
         roleDataRuleEntityWrapper.eq("role_id", roleId);
         roleDataRuleService.remove(roleDataRuleEntityWrapper);
@@ -136,7 +136,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:datarule:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         roleDataRuleService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -144,7 +144,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:datarule:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         RoleDataRule roleDataRule = roleDataRuleService.selectById(id);
         return Response.successJson(roleDataRule);
     }

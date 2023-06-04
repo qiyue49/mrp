@@ -95,7 +95,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         treeAndTableService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -103,7 +103,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         TreeAndTable treeAndTable = treeAndTableService.selectById(id);
         return Response.successJson(treeAndTable);
     }

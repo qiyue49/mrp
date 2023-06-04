@@ -69,7 +69,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('email:sendlog:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         emailSendLogService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -86,9 +86,9 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
     @PostMapping(value = "retrySend")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('email:sendlog:list')")
-    public String retrySend(@RequestParam(value = "ids", required = false) String[] ids) {
+    public String retrySend(@RequestParam(value = "ids", required = false) Long[] ids) {
         try {
-            List<Serializable> idList = java.util.Arrays.asList(ids);
+            List<Long> idList = java.util.Arrays.asList(ids);
             emailSendService.retrySend(idList);
         } catch (Exception e) {
             e.printStackTrace();

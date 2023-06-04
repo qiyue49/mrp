@@ -14,7 +14,7 @@ import java.util.List;
 public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> implements IRoleService {
 
     @Override
-    public List<Role> findListByUserId(String userid) {
+    public List<Role> findListByUserId(Long userid) {
         return baseMapper.findRoleByUserId(userid);
     }
 

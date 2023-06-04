@@ -27,12 +27,12 @@ public class RoleDataRule implements Serializable {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @TableField(value = "data_rule_category")
     private Integer scopeCategory;  //权限类型(1:数据权限、2:接口权限)
     @TableField(value = "data_rule_id")
     private String scopeId;  //权限id
     @TableField(value = "role_id")
-    private String roleId;  //角色id
+    private Long roleId;  //角色id
 
 }

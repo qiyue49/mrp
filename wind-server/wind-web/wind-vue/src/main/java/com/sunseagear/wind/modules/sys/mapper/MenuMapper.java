@@ -9,9 +9,9 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseTreeMapper<Menu> {
 
-    List<Menu> findMenuAndPermissionByUserId(String userId);
+    List<Menu> findMenuAndPermissionByUserId(Long userId);
 
-    List<Menu> findMenuByUserId(String userId);
+    List<Menu> findMenuByUserId(Long userId);
 
     /**
      * @param roleId
@@ -20,7 +20,7 @@ public interface MenuMapper extends BaseTreeMapper<Menu> {
      * @description: 通过角色查找菜单
      * @return: List<Menu>
      */
-    List<Menu> findMenuByRoleId(String roleId);
+    List<Menu> findMenuByRoleId(Long roleId);
 
 
     /**
@@ -30,7 +30,7 @@ public interface MenuMapper extends BaseTreeMapper<Menu> {
      * @description: 通过用户查找菜单
      * @return: List<Menu>
      */
-    List<Menu> findPermissionByUserId(String userId);
+    List<Menu> findPermissionByUserId(Long userId);
 
     /**
      * @param roleId
@@ -39,10 +39,10 @@ public interface MenuMapper extends BaseTreeMapper<Menu> {
      * @description: 通过角色查找菜单
      * @return: List<Menu>
      */
-    List<Menu> findPermissionByRoleId(String roleId);
+    List<Menu> findPermissionByRoleId(Long roleId);
 
-    void deleteRoleMenu(String roleId);
+    void deleteRoleMenu(Long roleId);
 
-    void deleteRolePermission(String roleId);
+    void deleteRolePermission(Long roleId);
 
 }

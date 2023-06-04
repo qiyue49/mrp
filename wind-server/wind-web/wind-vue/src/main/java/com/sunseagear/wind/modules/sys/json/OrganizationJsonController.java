@@ -51,7 +51,7 @@ public class OrganizationJsonController extends BaseBeanController<Organization>
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         Organization organization = organizationService.selectById(id);
         return JsonUtils.successMessage(organization);
     }

@@ -25,17 +25,17 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
     private MenuMapper menuMapper;
 
     @Override
-    public void setMenu(String roleId, String menuIds) {
+    public void setMenu(Long roleId, String menuIds) {
         menuMapper.deleteRoleMenu(roleId);
         setRoleMenu(roleId, menuIds, Menu.MENU);
     }
 
-    private void setRoleMenu(String roleId, String menuIds, String type) {
+    private void setRoleMenu(Long roleId, String menuIds, String type) {
         if (!StringUtils.isEmpty(menuIds)) {
             List<Menu> menuListAll = menuMapper.selectList(new QueryWrapper());
             HashMap<String, Menu> menuHashMapAll = new HashMap<>();
             menuListAll.forEach(menu -> {
-                menuHashMapAll.put(menu.getId(), menu);
+                menuHashMapAll.put(menu.getId().toString(), menu);
             });
 
             String[] selectMenus = menuIds.split(",");
@@ -56,13 +56,13 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
     }
 
     @Override
-    public void setPermission(String roleId, String menuIds) {
+    public void setPermission(Long roleId, String menuIds) {
         menuMapper.deleteRolePermission(roleId);
         setRoleMenu(roleId, menuIds, Menu.BUTTON);
     }
 
     @Override
-    public void insert(String roleId, String menuId) {
+    public void insert(Long roleId, String menuId) {
         QueryWrapper<RoleMenu> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("menu_id", menuId);
         entityWrapper.eq("role_id", roleId);

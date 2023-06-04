@@ -67,7 +67,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      * @param id
      * @return 取不到返回null
      */
-    public static User get(String id) {
+    public static User get(Long id) {
         User user = CacheUtils.getCacheObject(USER_CACHE_ID + id);
         if (user == null) {
             user = userService.selectById(id);
@@ -234,7 +234,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      *
      * @param id
      */
-    public static void update(String id) {
+    public static void update(Long id) {
         User user = userService.selectById(id);
         if (user == null) {
             return;
@@ -268,7 +268,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      *
      * @param roleId
      */
-    public static void clearPermissionCache(String roleId) {
+    public static void clearPermissionCache(Long roleId) {
         CacheUtils.clear(CACHE_PERMISSION_LIST + roleId);
     }
 

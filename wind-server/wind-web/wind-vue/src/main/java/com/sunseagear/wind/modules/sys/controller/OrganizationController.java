@@ -82,7 +82,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:organization:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         Organization organization = organizationService.selectById(id);
         return Response.successJson(organization);
     }
@@ -90,7 +90,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:organization:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         organizationService.deleteById(id);
         return Response.ok("删除成功");
     }

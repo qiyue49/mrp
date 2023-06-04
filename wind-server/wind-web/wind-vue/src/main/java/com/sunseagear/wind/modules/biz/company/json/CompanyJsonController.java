@@ -90,7 +90,7 @@ public class CompanyJsonController extends BaseBeanController<Company> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:company:company:detail')")
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Company company = companyService.selectById(id);
         return JsonUtils.successMessage(company);
     }

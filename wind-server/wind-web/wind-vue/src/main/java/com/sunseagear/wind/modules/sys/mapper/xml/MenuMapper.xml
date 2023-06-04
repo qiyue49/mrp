@@ -13,8 +13,7 @@
         LEFT JOIN sys_menu p ON p.id = t.parent_id
     </sql>
     <!-- 查找通过ID查找树信息 -->
-    <select id="selectByTreeId" resultType="com.sunseagear.wind.modules.sys.entity.Menu"
-            parameterType="java.lang.String">
+    <select id="selectByTreeId" resultType="com.sunseagear.wind.modules.sys.entity.Menu">
         select
         <include refid="Base_Column_List"/>
         from sys_menu t

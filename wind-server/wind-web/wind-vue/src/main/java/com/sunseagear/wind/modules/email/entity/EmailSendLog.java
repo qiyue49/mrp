@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @TableName("email_send_log")
 @SuppressWarnings("serial")
-public class EmailSendLog extends AbstractEntity<String> {
+public class EmailSendLog extends AbstractEntity<Long> {
     public static final String EMAIL_SEND_STATUS_SUCCESS = "1";
     public static final String EMAIL_SEND_STATUS_FAIL = "-1";
     public static final String EMAIL_SEND_STATUS_IN = "0";
@@ -31,7 +31,7 @@ public class EmailSendLog extends AbstractEntity<String> {
      * id
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     /**
      * 联系电话
      */

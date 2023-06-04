@@ -73,7 +73,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('monitor:operation:log:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         operationLogService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -81,7 +81,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('monitor:operation:log:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         OperationLog operationLog = operationLogService.selectById(id);
         return Response.successJson(operationLog);
     }

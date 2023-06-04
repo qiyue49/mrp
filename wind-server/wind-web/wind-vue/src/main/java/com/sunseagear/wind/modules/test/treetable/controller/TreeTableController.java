@@ -89,7 +89,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:treetable:treetable:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         treeTableService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -97,7 +97,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:treetable:treetable:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         TreeTable treeTable = treeTableService.selectById(id);
         return Response.successJson(treeTable);
     }

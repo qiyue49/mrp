@@ -23,11 +23,11 @@ import lombok.Data;
 @Data
 @TableName("sys_tenant")
 @SuppressWarnings("serial")
-public class Tenant extends DataEntity<String> {
+public class Tenant extends DataEntity<Long> {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @NotEmpty(message = "联系人不能为空")
     @TableField(value = "contact")
     private String contact;  //联系人
@@ -39,7 +39,7 @@ public class Tenant extends DataEntity<String> {
     @TableField(value = "name")
     private String name;  //租户名称
     @TableField(value = "user_id")
-    private String userId;
+    private Long userId;
     @TableField(exist = false)
     private String userName;
 }

@@ -75,7 +75,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
 
     @PostMapping("delete/{id}")
     @PreAuthorize("hasAuthority('sys:dict:group:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         dictGroupService.deleteById(id);
         DictUtils.initDict();
         return Response.ok("删除成功");

@@ -22,11 +22,11 @@ import lombok.Data;
 @Data
 @TableName("test_tree_and_table")
 @SuppressWarnings("serial")
-public class TreeAndTable extends DataEntity<String> {
+public class TreeAndTable extends DataEntity<Long> {
 
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id; //id
+    private Long id; //id
     @TableField(value = "name")
     private String name;  //部门名称
     @TableField(value = "type")

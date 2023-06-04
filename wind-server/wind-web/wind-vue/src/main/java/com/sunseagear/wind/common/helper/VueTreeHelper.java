@@ -12,11 +12,10 @@ import java.util.List;
 /**
  * 树排序
  */
-public class VueTreeHelper<ID extends Serializable> implements Serializable {
+public class VueTreeHelper implements Serializable {
 
-    public static <T extends Serializable> VueTreeHelper<T> create() {
-        VueTreeHelper<T> treeSortUtil = new VueTreeHelper<T>();
-        return treeSortUtil;
+    public static VueTreeHelper create() {
+        return new VueTreeHelper();
     }
 
     public <T extends TreeEntity> List<T> sort(List<T> treeNodes) {
@@ -28,8 +27,8 @@ public class VueTreeHelper<ID extends Serializable> implements Serializable {
         treeNodes.forEach(item -> {
             if (item.getParentId() != null
                     && !StringUtils.isEmpty(String.valueOf(item.getParentId()))
-                    && treeEntityHashMap.containsKey(item.getParentId())) {
-                TreeEntity treeEntity = treeEntityHashMap.get(item.getParentId());
+                    && treeEntityHashMap.containsKey(item.getParentId().toString())) {
+                TreeEntity treeEntity = treeEntityHashMap.get(item.getParentId().toString());
                 if (treeEntity.getChildren() == null) {
                     treeEntity.setChildren(new ArrayList<>());
                 }

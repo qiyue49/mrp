@@ -79,7 +79,7 @@ public class DepartmentJsonController extends BaseBeanController<Department> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Department department = departmentService.selectById(id);
         return JsonUtils.successMessage(department);
     }

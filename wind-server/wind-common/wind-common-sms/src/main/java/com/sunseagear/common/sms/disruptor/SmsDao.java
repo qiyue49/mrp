@@ -17,5 +17,5 @@ public interface SmsDao {
      * @description:响应
      * @return: void
      */
-    void doResult(String eventId, SmsData smsData, SmsResult smsResult);
+    void doResult(Long eventId, SmsData smsData, SmsResult smsResult);
 }

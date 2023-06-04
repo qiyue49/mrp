@@ -26,7 +26,7 @@ import java.util.*;
  */
 @Transactional
 @Service("treeTableService")
-public class TreeTableServiceImpl extends TreeCommonServiceImpl<TreeTableMapper, TreeTable, String> implements ITreeTableService {
+public class TreeTableServiceImpl extends TreeCommonServiceImpl<TreeTableMapper, TreeTable, Long> implements ITreeTableService {
 
 
     @Override
@@ -39,7 +39,7 @@ public class TreeTableServiceImpl extends TreeCommonServiceImpl<TreeTableMapper,
         List<TreeTable> TreeTableListAll = list(new QueryWrapper());
         HashMap<String, TreeTable> TreeTableHashMapAll = new HashMap<>();
         TreeTableListAll.forEach(TreeTable -> {
-            TreeTableHashMapAll.put(TreeTable.getId(), TreeTable);
+            TreeTableHashMapAll.put(TreeTable.getId().toString(), TreeTable);
         });
         HashMap<String, TreeTable> TreeTableHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
@@ -50,7 +50,7 @@ public class TreeTableServiceImpl extends TreeCommonServiceImpl<TreeTableMapper,
                     TreeTableHashMap.put(id, TreeTable);
                 });
             }
-            TreeTableHashMap.put(treeNode.getId(), TreeTableHashMapAll.get(treeNode.getId()));
+            TreeTableHashMap.put(treeNode.getId().toString(), TreeTableHashMapAll.get(treeNode.getId().toString()));
 
         });
         List<TreeTable> TreeTableList = new ArrayList<>();

@@ -16,5 +16,5 @@ public interface OrganizationMapper extends BaseTreeMapper<Organization> {
      * @description: 通过用户查找组织机构
      * @return: List<Organization>
      */
-    List<Organization> findListByUserId(String userId);
+    List<Organization> findListByUserId(Long userId);
 }

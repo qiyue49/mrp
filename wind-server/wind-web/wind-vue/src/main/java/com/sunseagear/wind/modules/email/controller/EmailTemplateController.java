@@ -93,7 +93,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('email:template:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         emailTemplateService.deleteById(id);
         return Response.ok("删除成功");
     }

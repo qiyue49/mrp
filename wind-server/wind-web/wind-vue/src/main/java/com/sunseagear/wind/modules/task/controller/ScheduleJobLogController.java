@@ -65,7 +65,7 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('task:schedule:joblog:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         scheduleJobLogService.deleteById(id);
         return Response.ok("删除成功");
     }

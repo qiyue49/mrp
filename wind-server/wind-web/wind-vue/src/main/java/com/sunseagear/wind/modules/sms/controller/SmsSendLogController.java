@@ -66,7 +66,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sms:sendlog:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         smsSendLogService.deleteById(id);
         return Response.ok("删除成功");
     }

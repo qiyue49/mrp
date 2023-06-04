@@ -67,13 +67,13 @@ public class SmsSendServiceImpl implements ISmsSendService {
     }
 
     @Override
-    public void send(String eventId, String phone, String code, Map<String, Object> datas) {
+    public void send(Long eventId, String phone, String code, Map<String, Object> datas) {
         String[] phones = {phone};
         send(eventId, phones, code, datas);
     }
 
     @Override
-    public void send(String eventId, String[] phones, String code, Map<String, Object> datas) {
+    public void send(Long eventId, String[] phones, String code, Map<String, Object> datas) {
         SmsTemplate template = smsTemplateService.selectOne(new QueryWrapper<SmsTemplate>().eq("code", code));
         if (datas == null) {
             datas = new HashMap<>();

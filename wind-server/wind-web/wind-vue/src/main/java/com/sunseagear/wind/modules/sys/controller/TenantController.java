@@ -101,7 +101,7 @@ public class TenantController extends BaseBeanController<Tenant> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:tenant:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         tenantService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -109,7 +109,7 @@ public class TenantController extends BaseBeanController<Tenant> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:tenant:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         Tenant tenant = tenantService.selectById(id);
         return Response.successJson(tenant);
     }

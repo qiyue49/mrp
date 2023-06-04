@@ -20,7 +20,7 @@ import lombok.Data;
 @Data
 @TableName("test_tree_table")
 @SuppressWarnings("serial")
-public class TreeTable extends TreeEntity<String> {
+public class TreeTable extends TreeEntity<Long> {
 
 
     @TableField(value = "geocoding")

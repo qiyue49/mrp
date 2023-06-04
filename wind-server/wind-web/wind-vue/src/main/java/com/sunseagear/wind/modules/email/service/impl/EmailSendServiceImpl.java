@@ -89,7 +89,7 @@ public class EmailSendServiceImpl implements IEmailSendService {
         }*/
     }
 
-    private void sendEmail(String eventId, String to, String subject, String text) {
+    private void sendEmail(Long eventId, String to, String subject, String text) {
         try {
             MimeMessage message = emailHelper.createMimeMessage(null);//创建一个MINE消息
             //true表示需要创建一个multipart message
@@ -122,13 +122,13 @@ public class EmailSendServiceImpl implements IEmailSendService {
     }
 
     @Override
-    public void send(String eventId, String email, String code, Map<String, Object> datas) {
+    public void send(Long eventId, String email, String code, Map<String, Object> datas) {
         String[] emails = {email};
         send(eventId, emails, code, datas);
     }
 
     @Override
-    public void send(String eventId, String[] emails, String code, Map<String, Object> datas) {
+    public void send(Long eventId, String[] emails, String code, Map<String, Object> datas) {
         EmailTemplate template = emailTemplateService.selectOne(new QueryWrapper<EmailTemplate>().eq("code", code));
         if (datas == null) {
             datas = new HashMap<>();
@@ -145,11 +145,11 @@ public class EmailSendServiceImpl implements IEmailSendService {
     }
 
     @Override
-    public boolean retrySend(List<? extends Serializable> idList) {
-        for (Serializable id : idList) {
+    public boolean retrySend(List<Long> idList) {
+        for (Long id : idList) {
             EmailSendLog sendLog = emailSendLogService.selectById(id);
             Map<String, Object> datas = JSON.parseObject(StringEscapeUtils.unescapeHtml4(sendLog.getSendData()), Map.class);
-            send(id.toString(), sendLog.getEmail().split(","), sendLog.getSendCode(), datas);
+            send(id, sendLog.getEmail().split(","), sendLog.getSendCode(), datas);
         }
         return true;
     }

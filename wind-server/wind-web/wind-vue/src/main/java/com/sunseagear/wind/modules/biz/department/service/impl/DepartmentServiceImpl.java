@@ -21,6 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Service("departmentService")
-public class DepartmentServiceImpl extends TreeCommonServiceImpl<DepartmentMapper, Department, String> implements IDepartmentService {
+public class DepartmentServiceImpl extends TreeCommonServiceImpl<DepartmentMapper, Department, Long> implements IDepartmentService {
 
 }

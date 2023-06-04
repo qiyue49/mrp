@@ -14,7 +14,7 @@ import java.util.*;
 
 @Transactional
 @Service("menuService")
-public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, String> implements IMenuService {
+public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Long> implements IMenuService {
 
     @Override
     public List<Menu> getCurrentUserMenus() {
@@ -26,7 +26,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Str
         List<Menu> menuListAll = list(new QueryWrapper());
         HashMap<String, Menu> menuHashMapAll = new HashMap<>();
         menuListAll.forEach(menu -> {
-            menuHashMapAll.put(menu.getId(), menu);
+            menuHashMapAll.put(menu.getId().toString(), menu);
         });
         HashMap<String, Menu> menuHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
@@ -36,12 +36,12 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Str
                     Menu menu = menuHashMapAll.get(id);
                     menuHashMap.put(id, menu);
                 });
-            } else if (!StringUtils.isEmpty(treeNode.getParentId())) {
-                String parentId = treeNode.getParentId();
+            } else if (treeNode.getParentId()!=null) {
+                String parentId = treeNode.getParentId().toString();
                 Menu menu = menuHashMapAll.get(parentId);
                 menuHashMap.put(parentId, menu);
             }
-            menuHashMap.put(treeNode.getId(), menuHashMapAll.get(treeNode.getId()));
+            menuHashMap.put(treeNode.getId().toString(), menuHashMapAll.get(treeNode.getId().toString()));
 
         });
         List<Menu> menuList = new ArrayList<>();
@@ -59,40 +59,40 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Str
 
 
     @Override
-    public List<Menu> findMenuAndPermissionByUserId(String userId) {
+    public List<Menu> findMenuAndPermissionByUserId(Long userId) {
         return getMenus(baseMapper.findMenuAndPermissionByUserId(userId));
     }
 
 
     @Override
-    public List<Menu> findMenuByUserId(String userId) {
+    public List<Menu> findMenuByUserId(Long userId) {
         return baseMapper.findMenuAndPermissionByUserId(userId);
     }
 
     @Override
-    public List<Menu> findMenuByRoleId(String roleId) {
+    public List<Menu> findMenuByRoleId(Long roleId) {
         return baseMapper.findMenuByRoleId(roleId);
     }
 
     @Override
-    public List<Menu> findPermissionByUserId(String userId) {
+    public List<Menu> findPermissionByUserId(Long userId) {
         return baseMapper.findPermissionByUserId(userId);
     }
 
     @Override
-    public List<Menu> findPermissionByRoleId(String roleId) {
+    public List<Menu> findPermissionByRoleId(Long roleId) {
         return baseMapper.findPermissionByRoleId(roleId);
     }
 
     @Override
-    public void changeSort(String menuId, Integer sort) {
+    public void changeSort(Long menuId, Integer sort) {
         Menu menu = selectById(menuId);
         menu.setSort(sort);
         insertOrUpdate(menu);
     }
 
     @Override
-    public void generateButton(String menuId,
+    public void generateButton(Long menuId,
                                String parentPermission,
                                String[] permissions,
                                String[] permissionTitles, Boolean additional) {

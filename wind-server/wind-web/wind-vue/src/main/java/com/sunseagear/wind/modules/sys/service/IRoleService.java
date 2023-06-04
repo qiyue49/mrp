@@ -16,5 +16,5 @@ public interface IRoleService extends ICommonService<Role> {
     /**
      * 通过用户ID查找角色
      */
-    List<Role> findListByUserId(String userid);
+    List<Role> findListByUserId(Long userid);
 }

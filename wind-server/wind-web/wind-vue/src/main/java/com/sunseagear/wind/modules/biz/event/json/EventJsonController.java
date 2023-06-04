@@ -92,7 +92,7 @@ public class EventJsonController extends BaseBeanController<Event> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Event event = eventService.selectById(id);
         return JsonUtils.successMessage(event);
     }

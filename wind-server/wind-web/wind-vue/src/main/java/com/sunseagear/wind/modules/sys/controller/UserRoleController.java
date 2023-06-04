@@ -37,21 +37,12 @@ public class UserRoleController extends BaseBeanController<UserRole> {
     private IUserRoleService userRoleService;
 
 
-    /**
-     * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
-     * @param userid
-     * @param request
-     * @param response
-     * @throws IOException
-     */
-    @GetMapping(value = "{userid}/roleIds")
+    @GetMapping(value = "{userId}/roleIds")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:user:role:list')")
-    public List<String> userRoleIds(@PathVariable("userid") String userid, HttpServletRequest request,
-                                    HttpServletResponse response) throws IOException {
-        List<String> roleIdList = new ArrayList<String>();
-        List<UserRole> userRoleList = userRoleService.selectList(new QueryWrapper<UserRole>().eq("user_id", userid));
+    public List<Long> userRoleIds(@PathVariable("userId") Long userId) {
+        List<Long> roleIdList = new ArrayList<>();
+        List<UserRole> userRoleList = userRoleService.selectList(new QueryWrapper<UserRole>().eq("user_id", userId));
         for (UserRole userRole : userRoleList) {
             roleIdList.add(userRole.getRoleId());
         }
@@ -68,8 +59,8 @@ public class UserRoleController extends BaseBeanController<UserRole> {
     @PostMapping("{userId}/insertByUserId")
     @Log(logType = LogType.INSERT)
     @PreAuthorize("hasAuthority('sys:user:role:add')")
-    public String insertByUserId(@PathVariable("userId") String userId, @RequestParam("roleIds") String[] roleIds) {
-        for (String roleId : roleIds) {
+    public String insertByUserId(@PathVariable("userId") Long userId, @RequestParam("roleIds") Long[] roleIds) {
+        for (Long roleId : roleIds) {
             UserRole userRole = new UserRole();
             userRole.setUserId(userId);
             userRole.setRoleId(roleId);
@@ -89,7 +80,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
     @PostMapping("{userId}/deleteByUserId")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:user:role:delete')")
-    public String deleteByUserId(@PathVariable("userId") String userId, @RequestParam("roleIds") String roleIds) {
+    public String deleteByUserId(@PathVariable("userId") Long userId, @RequestParam("roleIds") String roleIds) {
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", userId);
         entityWrapper.in("role_id", roleIds);

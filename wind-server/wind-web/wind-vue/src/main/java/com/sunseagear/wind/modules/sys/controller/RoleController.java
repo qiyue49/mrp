@@ -122,7 +122,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         Role role = roleService.getById(id);
         if (role.getCode().equals("admin")) {
             return Response.failJson("不能删除超级管理员角色");
@@ -146,7 +146,7 @@ public class RoleController extends BaseBeanController<Role> {
      * @return
      */
     @PostMapping(value = "{uid}/findListByUserId")
-    public List<Role> findListByUserId(@PathVariable("uid") String uid) {
+    public List<Role> findListByUserId(@PathVariable("uid") Long uid) {
         try {
             return roleService.findListByUserId(uid);
         } catch (Exception e) {
@@ -157,10 +157,10 @@ public class RoleController extends BaseBeanController<Role> {
 
 
     @GetMapping(value = "{roleId}/menu")
-    public String menu(@PathVariable("roleId") String roleId) {
+    public String menu(@PathVariable("roleId") Long roleId) {
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (roleId.equals("0")) {
+        if (roleId==0) {
             QueryWrapper<Menu> entityWrapper = new QueryWrapper<Menu>();
             entityWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
             treeNodeList = menuService.selectList(entityWrapper);
@@ -171,7 +171,7 @@ public class RoleController extends BaseBeanController<Role> {
         dataMap.put("menus", vueTreeNodes);
         // 获得选择的
         List<Menu> menuList = menuService.findMenuByRoleId(roleId);
-        List<String> menuIdList = new ArrayList<>();
+        List<Long> menuIdList = new ArrayList<>();
         for (Menu menu : menuList) {
             menuIdList.add(menu.getId());
         }
@@ -180,10 +180,10 @@ public class RoleController extends BaseBeanController<Role> {
     }
 
     @GetMapping(value = "{roleId}/permission")
-    public String permission(@PathVariable("roleId") String roleId) {
+    public String permission(@PathVariable("roleId") Long roleId) {
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (roleId.equals("0")) {
+        if (roleId==0) {
             QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
             entityWrapper.orderByAsc("sort");
             treeNodeList = menuService.selectList(entityWrapper);
@@ -194,7 +194,7 @@ public class RoleController extends BaseBeanController<Role> {
         dataMap.put("menus", vueTreeNodes);
         // 获得选择的
         List<Menu> menuList = menuService.findPermissionByRoleId(roleId);
-        List<String> menuIdList = new ArrayList<>();
+        List<Long> menuIdList = new ArrayList<>();
         for (Menu menu : menuList) {
             menuIdList.add(menu.getId());
         }
@@ -204,7 +204,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping(value = "/setMenu")
     @Log(logType = LogType.OTHER, title = "菜单配置")
-    public String setMenu(@RequestParam("roleId") String roleId,
+    public String setMenu(@RequestParam("roleId") Long roleId,
                           @RequestParam("menuIds") String menuIds) {
         try {
             // 权限设置
@@ -218,7 +218,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping(value = "/setPermission")
     @Log(logType = LogType.OTHER, title = "权限配置")
-    public String setPermission(@RequestParam("roleId") String roleId,
+    public String setPermission(@RequestParam("roleId") Long roleId,
                                 @RequestParam("menuIds") String menuIds) {
         try {
             // 权限设置

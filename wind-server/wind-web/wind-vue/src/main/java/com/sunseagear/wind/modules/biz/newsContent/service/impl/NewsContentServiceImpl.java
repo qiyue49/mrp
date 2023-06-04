@@ -37,7 +37,7 @@ public class NewsContentServiceImpl extends CommonServiceImpl<NewsContentMapper,
     private NewsContentMapper newsContentMapper;
 
     @Override
-    public NewsContent selectById(String id) {
+    public NewsContent selectById(Long id) {
         //获取数据库内容
         NewsContent newsContent = newsContentMapper.selectById(id);
         // 获取阅读量
@@ -55,17 +55,17 @@ public class NewsContentServiceImpl extends CommonServiceImpl<NewsContentMapper,
     }
 
     @Override
-    public boolean isCollection(String userId, String newsId) {
+    public boolean isCollection(Long userId, String newsId) {
         return newsContentMapper.isCollection(userId, newsId);
     }
 
     @Override
-    public int removeCollection(String userId, String newsId) {
+    public int removeCollection(Long userId, String newsId) {
         return newsContentMapper.removeCollection(userId, newsId);
     }
 
     @Override
-    public int insertCollection(String userId, String newsId) {
+    public int insertCollection(Long userId, String newsId) {
         return newsContentMapper.insertCollection(userId, newsId);
     }
 

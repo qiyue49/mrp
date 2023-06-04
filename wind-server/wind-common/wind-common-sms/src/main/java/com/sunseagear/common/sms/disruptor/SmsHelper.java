@@ -83,16 +83,16 @@ public class SmsHelper {
     }
 
 
-    public String sendAsyncSms(String eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
+    public Long sendAsyncSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
         return smsEventProducer.sendSms(eventId, phone, smsTemplate, smsConfigProperties, datas);
     }
 
-    public String sendAsyncSms(String eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas, SmsHandlerCallBack callBack) {
+    public Long sendAsyncSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas, SmsHandlerCallBack callBack) {
         return smsEventProducer.sendSms(eventId, phone, smsTemplate, smsConfigProperties, datas, callBack);
     }
 
 
-    public SmsResult sendSyncSms(String eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
+    public SmsResult sendSyncSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
         // 异步的时候发送短信日志
         SmsData smsData = new SmsData();
         smsData.setPhone(phone);

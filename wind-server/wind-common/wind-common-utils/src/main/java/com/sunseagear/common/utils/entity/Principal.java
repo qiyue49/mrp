@@ -19,7 +19,7 @@ public class Principal implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String id; // 编号
+    private Long id; // 编号
     private String username; // 登录名
     private String password; // 密码
     private String realname; // 姓名
@@ -53,7 +53,7 @@ public class Principal implements UserDetails, Serializable {
     public Principal() {
     }
 
-    public Principal(String id, String username, String realname, String tenantId, String roleId) {
+    public Principal(Long id, String username, String realname, String tenantId, String roleId) {
         this.id = id;
         this.username = username;
         this.realname = realname;
@@ -79,7 +79,7 @@ public class Principal implements UserDetails, Serializable {
 
     @Override
     public String toString() {
-        return id;
+        return id.toString();
     }
 
     @Override

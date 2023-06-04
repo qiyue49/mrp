@@ -73,7 +73,7 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
 
     @PostMapping("delete/{id}")
     @PreAuthorize("hasAuthority('monitor:login:log:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         loginLogService.deleteById(id);
         return Response.ok("删除成功");
     }

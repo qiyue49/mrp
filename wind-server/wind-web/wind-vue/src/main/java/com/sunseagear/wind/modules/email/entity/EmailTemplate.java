@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
+import lombok.Data;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -16,15 +17,16 @@ import com.sunseagear.common.mvc.entity.DataEntity;
  * @copyright: 2018 www.sunseagear.com Inc. All rights reserved.
  */
 
+@Data
 @TableName("email_template")
 @SuppressWarnings("serial")
-public class EmailTemplate extends DataEntity<String> {
+public class EmailTemplate extends DataEntity<Long> {
 
     /**
      * 主键
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     /**
      * 模版名称
      */
@@ -46,94 +48,4 @@ public class EmailTemplate extends DataEntity<String> {
     @TableField(value = "template_content")
     private String templateContent;
 
-
-    /**
-     * 获取  id
-     *
-     * @return String  主键
-     */
-    public String getId() {
-        return this.id;
-    }
-
-    /**
-     * 设置  id
-     *
-     * @param id 主键
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    /**
-     * 获取  name
-     *
-     * @return String  模版名称
-     */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * 设置  name
-     *
-     * @param name 模版名称
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * 获取  code
-     *
-     * @return String  模版编码
-     */
-    public String getCode() {
-        return this.code;
-    }
-
-    /**
-     * 设置  code
-     *
-     * @param code 模版编码
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
-
-    /**
-     * 获取  templateSubject
-     *
-     * @return String  模版主题
-     */
-    public String getTemplateSubject() {
-        return this.templateSubject;
-    }
-
-    /**
-     * 设置  templateSubject
-     *
-     * @param templateSubject 模版主题
-     */
-    public void setTemplateSubject(String templateSubject) {
-        this.templateSubject = templateSubject;
-    }
-
-    /**
-     * 获取  templateContent
-     *
-     * @return String  模版内容
-     */
-    public String getTemplateContent() {
-        return this.templateContent;
-    }
-
-    /**
-     * 设置  templateContent
-     *
-     * @param templateContent 模版内容
-     */
-    public void setTemplateContent(String templateContent) {
-        this.templateContent = templateContent;
-    }
 }

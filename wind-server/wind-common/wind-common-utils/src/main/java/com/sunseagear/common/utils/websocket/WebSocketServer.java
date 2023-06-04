@@ -17,8 +17,8 @@ public abstract class WebSocketServer {
      * 全部在线会话  PS: 基于场景考虑 这里使用线程安全的Map存储会话对象。
      * 以用户姓名为key
      */
-    protected Map<String, Session> onlineSessions = null;
-    protected static Map<String, Session> webOnlineSessions = new ConcurrentHashMap<>();
+    protected Map<Long, Session> onlineSessions = null;
+    protected static Map<Long, Session> webOnlineSessions = new ConcurrentHashMap<>();
 
     @Bean
     public void init() {
@@ -37,7 +37,7 @@ public abstract class WebSocketServer {
      * 当客户端打开连接：1.添加会话对象 2.更新在线人数
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("userId") String userId) {
+    public void onOpen(Session session, @PathParam("userId") Long userId) {
         onlineSessions.put(userId, session);
     }
 
@@ -55,7 +55,7 @@ public abstract class WebSocketServer {
      * 当关闭连接：1.移除会话对象 2.更新在线人数
      */
     @OnClose
-    public void onClose(Session session, @PathParam("userId") String userId) {
+    public void onClose(Session session, @PathParam("userId") Long userId) {
         onlineSessions.remove(userId);
     }
 
@@ -79,19 +79,19 @@ public abstract class WebSocketServer {
     }
 
 
-    public void sendSuccess(String userId, int code, String message) {
+    public void sendSuccess(Long userId, int code, String message) {
         send(userId, code, true, message, "");
     }
 
-    public void sendFail(String userId, int code, String message) {
+    public void sendFail(Long userId, int code, String message) {
         send(userId, code, false, message, "");
     }
 
-    public void send(String userId, int code, Object data) {
+    public void send(Long userId, int code, Object data) {
         send(userId, code, true, "成功", data);
     }
 
-    public void send(String userId, int code, boolean success, String message, Object data) {
+    public void send(Long userId, int code, boolean success, String message, Object data) {
         if (onlineSessions.containsKey(userId)) {
             SocketMessage socketMessage = new SocketMessage();
             socketMessage.setCode(code);

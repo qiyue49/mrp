@@ -74,7 +74,7 @@ public class UserJsonController extends BaseBeanController<User> {
 
     @PostMapping(value = "changePassword")
     @Log(logType = LogType.OTHER, title = "修改成功")
-    public String changePassword(String id, String password, String oldPassword) {
+    public String changePassword(Long id, String password, String oldPassword) {
         if (userService.checkPassword(id, oldPassword)) {
             userService.changePassword(id, password);
             return JsonUtils.successMessage("密码修改成功");
@@ -91,7 +91,7 @@ public class UserJsonController extends BaseBeanController<User> {
      */
     @GetMapping(value = "/detail/{id}")
     @Log(logType = LogType.SELECT)
-    public String selectUserById(@PathVariable("id") String id) {
+    public String selectUserById(@PathVariable("id") Long id) {
         User user = userService.selectById(id);
         return JsonUtils.successMessage(user);
     }

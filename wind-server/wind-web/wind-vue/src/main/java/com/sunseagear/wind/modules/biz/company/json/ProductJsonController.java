@@ -90,7 +90,7 @@ public class ProductJsonController extends BaseBeanController<Product> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:company:product:detail')")
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Product product = productService.selectById(id);
         return JsonUtils.successMessage(product);
     }

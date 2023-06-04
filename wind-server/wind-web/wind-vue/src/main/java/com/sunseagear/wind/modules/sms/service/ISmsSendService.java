@@ -15,9 +15,9 @@ public interface ISmsSendService {
 
     void send(String[] phones, String code, Map<String, Object> datas);
 
-    void send(String eventId, String phone, String code, Map<String, Object> datas);
+    void send(Long eventId, String phone, String code, Map<String, Object> datas);
 
-    void send(String eventId, String[] phones, String code, Map<String, Object> datas);
+    void send(Long eventId, String[] phones, String code, Map<String, Object> datas);
 
 
 }

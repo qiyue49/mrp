@@ -23,7 +23,7 @@ import java.util.Date;
 @Data
 @TableName("sms_send_log")
 @SuppressWarnings("serial")
-public class SmsSendLog extends AbstractEntity<String> {
+public class SmsSendLog extends AbstractEntity<Long> {
 
     public static final String SMS_SEND_STATUS_SUCCESS = "1";
     public static final String SMS_SEND_STATUS_FAIL = "-1";
@@ -32,7 +32,7 @@ public class SmsSendLog extends AbstractEntity<String> {
      * id
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     /**
      * 联系电话
      */

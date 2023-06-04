@@ -91,7 +91,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PostMapping("delete/{id}")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:datarule:delete')")
-    public String delete(@PathVariable("id") String id) {
+    public String delete(@PathVariable("id") Long id) {
         dataRuleService.deleteById(id);
         return Response.ok("删除成功");
     }
@@ -99,7 +99,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:datarule:detail')")
-    public String detail(@PathVariable("id") String id) {
+    public String detail(@PathVariable("id") Long id) {
         DataRule dataRule = dataRuleService.selectById(id);
         return Response.successJson(dataRule);
     }

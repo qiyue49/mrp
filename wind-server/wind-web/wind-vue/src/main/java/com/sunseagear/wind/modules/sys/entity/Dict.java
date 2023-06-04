@@ -10,13 +10,13 @@ import lombok.Data;
 @Data
 @TableName("sys_dict")
 @SuppressWarnings("serial")
-public class Dict extends DataEntity<String> {
+public class Dict extends DataEntity<Long> {
 
     /**
      * 主键
      */
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
     /**
      * 分组ID
      */

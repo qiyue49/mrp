@@ -19,7 +19,7 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
     private IRoleService roleService;
 
     @Override
-    public void insert(String uid, String roleCode) {
+    public void insert(Long uid, String roleCode) {
         //设置用户角色(单位角色)
         QueryWrapper<Role> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("code", roleCode);
@@ -27,12 +27,12 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
         if (role == null) {
             throw new RuntimeException("该角色编码不存在");
         }
-        String roleId = role.getId();
+        Long roleId = role.getId();
         insertByRoleId(uid, roleId);
     }
 
     @Override
-    public void insertByRoleId(String uid, String roleId) {
+    public void insertByRoleId(Long uid, Long roleId) {
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", uid);
         entityWrapper.eq("role_id", roleId);
@@ -47,7 +47,7 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
 
     //删除用户角色
     @Override
-    public void deleteUserRole(String uid, String roleId) {
+    public void deleteUserRole(Long uid, Long roleId) {
         QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
         entityWrapper.eq("user_id", uid);
         entityWrapper.eq("role_id", roleId);

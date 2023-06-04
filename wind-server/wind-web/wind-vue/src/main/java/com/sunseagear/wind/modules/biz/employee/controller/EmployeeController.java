@@ -98,7 +98,7 @@ public class EmployeeController extends BaseBeanController<Employee> {
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('biz:employee:employee:detail')")
-    public String detail(Model model, @PathVariable("id") String id) {
+    public String detail(Model model, @PathVariable("id") Long id) {
         Employee employee = employeeService.selectById(id);
         return Response.successJson(employee);
     }
