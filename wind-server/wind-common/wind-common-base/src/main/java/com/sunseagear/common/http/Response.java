@@ -71,7 +71,6 @@ public class Response {
     //如果isInclude为true，保留fields中的字段，否则是不保留
     private static Gson createGson(String fields, boolean isInclude) {
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
         gsonBuilder.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonPrimitive(DateUtils.formatDateTime(src));
@@ -254,6 +253,14 @@ public class Response {
             super(msg, data.getRecords());
             put("pages", data.getPages());
             put("total", data.getTotal());
+        }
+
+    }
+    public static class IdAdapter implements JsonSerializer<Long> {
+
+        @Override
+        public JsonElement serialize(Long s, Type type, JsonSerializationContext jsonSerializationContext) {
+            return new JsonPrimitive(s.toString());
         }
 
     }

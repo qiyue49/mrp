@@ -29,8 +29,6 @@ import java.util.Date;
 public class Event extends DataEntity<Long> {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "title")
     private String title;  //标题
     @TableField(value = "user_id")

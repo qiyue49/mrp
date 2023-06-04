@@ -13,11 +13,6 @@ import lombok.Data;
 public class DictGroup extends DataEntity<Long> {
 
     /**
-     * 主键
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-    /**
      * 分组名称
      */
     @TableField(value = "name")

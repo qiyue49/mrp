@@ -30,11 +30,7 @@ public class ScheduleJobLog extends AbstractEntity<Long> {
     public static final String SCHEDULE_JOB_LOG_RUN_NOMAL = "0";
 
     public static final String SCHEDULE_JOB_LOG_RUN_FAIL = "-1";
-    /**
-     * 任务日志ID
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+
     /**
      * 任务名称
      */

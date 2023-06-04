@@ -12,8 +12,6 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class CarModel extends DataEntity<Long> {
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
     @TableField(value = "car_id")
     private Long carId;
     @TableField(value = "name")

@@ -34,11 +34,6 @@ public class User extends DataEntity<Long> {
     public static final String STATUS_NORMAL = "1";
 
 
-    /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
     // 姓名
     @Excel(name = "用户名", orderNum = "1")
     private String username;

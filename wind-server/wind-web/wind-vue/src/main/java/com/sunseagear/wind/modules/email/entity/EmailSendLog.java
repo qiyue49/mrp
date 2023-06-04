@@ -27,11 +27,7 @@ public class EmailSendLog extends AbstractEntity<Long> {
     public static final String EMAIL_SEND_STATUS_SUCCESS = "1";
     public static final String EMAIL_SEND_STATUS_FAIL = "-1";
     public static final String EMAIL_SEND_STATUS_IN = "0";
-    /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+
     /**
      * 联系电话
      */

@@ -10,18 +10,7 @@ import lombok.Data;
 @TableName("sys_user_role")
 public class UserRole extends AbstractEntity<Long> {
 
-    /**
-     * 编号
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-    /**
-     * 用户编号
-     */
-    private Long userId;
-    /**
-     * 角色编号
-     */
-    private Long roleId;
+    private Long userId; //用户编号
+    private Long roleId; //角色编号
 
 }

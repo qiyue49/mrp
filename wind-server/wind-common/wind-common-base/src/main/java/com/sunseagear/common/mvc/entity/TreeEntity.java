@@ -15,8 +15,7 @@ import java.util.List;
  * 树抽象实体基类
  */
 public abstract class TreeEntity<T> extends DataEntity<T> implements TreeNode<T>, java.io.Serializable {
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    protected T id; // 编号
+
     @TableField(value = "name")
     protected String name; // 资源名称
     @TableField(value = "parent_id")
@@ -30,7 +29,7 @@ public abstract class TreeEntity<T> extends DataEntity<T> implements TreeNode<T>
     protected Boolean loaded = Boolean.TRUE;
 
     @TableField(exist = false)
-    List<TreeEntity> children = new ArrayList<>();
+    List<TreeEntity<T>> children = new ArrayList<>();
 
     /**
      * 是否有叶子节点
@@ -90,14 +89,6 @@ public abstract class TreeEntity<T> extends DataEntity<T> implements TreeNode<T>
         return new String[0];
     }
 
-    public T getId() {
-        return id;
-    }
-
-    public void setId(T id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -138,11 +129,11 @@ public abstract class TreeEntity<T> extends DataEntity<T> implements TreeNode<T>
         this.loaded = loaded;
     }
 
-    public List<TreeEntity> getChildren() {
+    public List<TreeEntity<T>> getChildren() {
         return children;
     }
 
-    public void setChildren(List<TreeEntity> children) {
+    public void setChildren(List<TreeEntity<T>> children) {
         this.children = children;
     }
 

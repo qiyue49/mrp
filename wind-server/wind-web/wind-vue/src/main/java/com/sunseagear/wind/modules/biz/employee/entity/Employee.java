@@ -25,8 +25,6 @@ import lombok.Data;
 public class Employee extends DataEntity<Long> {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "name")
     private String name;  //姓名
     @TableField(value = "sex")

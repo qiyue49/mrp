@@ -26,11 +26,6 @@ import java.util.Date;
 public class Attachment extends DataEntity<Long> {
 
     /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-    /**
      * 文件名称
      */
     @TableField(value = "file_name")

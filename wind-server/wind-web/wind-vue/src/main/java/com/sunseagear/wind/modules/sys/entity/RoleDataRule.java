@@ -26,8 +26,6 @@ import java.io.Serializable;
 public class RoleDataRule implements Serializable {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "data_rule_category")
     private Integer scopeCategory;  //权限类型(1:数据权限、2:接口权限)
     @TableField(value = "data_rule_id")

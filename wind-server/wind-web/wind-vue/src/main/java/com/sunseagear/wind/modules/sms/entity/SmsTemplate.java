@@ -22,11 +22,6 @@ import lombok.Data;
 public class SmsTemplate extends DataEntity<Long> {
 
     /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-    /**
      * 模版名称
      */
     @TableField(value = "name")

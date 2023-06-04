@@ -25,8 +25,6 @@ import lombok.Data;
 public class NewsType extends DataEntity<Long> {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "newsType_name")
     private String newsTypeName;  //新闻类型名称
 

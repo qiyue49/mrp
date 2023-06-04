@@ -25,8 +25,6 @@ import lombok.Data;
 public class Company extends DataEntity<Long> {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "name")
     private String name;  //名称
     @TableField(value = "contact")

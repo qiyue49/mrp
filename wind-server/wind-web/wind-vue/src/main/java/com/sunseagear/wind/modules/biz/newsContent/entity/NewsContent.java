@@ -27,8 +27,6 @@ import java.util.Date;
 public class NewsContent extends DataEntity<Long> {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "newsContent_title")
     private String newsContentTitle;  //内容标题
     @TableField(value = "newsContent_describe")

@@ -25,8 +25,6 @@ import lombok.Data;
 public class TreeAndTable extends DataEntity<Long> {
 
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id; //id
     @TableField(value = "name")
     private String name;  //部门名称
     @TableField(value = "type")
