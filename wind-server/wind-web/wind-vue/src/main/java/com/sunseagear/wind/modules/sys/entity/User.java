@@ -45,8 +45,6 @@ public class User extends DataEntity<Long> {
     private String portrait;
     // 密码
     private String password;
-    // 盐
-    private String salt;
     // 邮件
     @Excel(name = "邮件", orderNum = "3", width = 20.0D)
     private String email;
@@ -84,10 +82,6 @@ public class User extends DataEntity<Long> {
 
     @TableField(exist = false)
     List<Role> roles;  //角色数据
-
-    public String getCredentialsSalt() {
-        return salt;
-    }
 
     public String findRoleIds() {
         List<Long> roleIds = new ArrayList<>();

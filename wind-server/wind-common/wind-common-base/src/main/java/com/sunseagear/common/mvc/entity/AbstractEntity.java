@@ -12,7 +12,6 @@ import java.io.Serializable;
  */
 public abstract class AbstractEntity<ID> implements Serializable {
 
-    @JsonAdapter(Response.IdAdapter.class)
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     protected ID id; // 编号
 

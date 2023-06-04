@@ -2,8 +2,10 @@ package com.sunseagear.common.http;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.*;
+import com.google.gson.annotations.JsonAdapter;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.StringUtils;
+import lombok.Data;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;
@@ -71,6 +73,7 @@ public class Response {
     //如果isInclude为true，保留fields中的字段，否则是不保留
     private static Gson createGson(String fields, boolean isInclude) {
         GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.setLongSerializationPolicy(LongSerializationPolicy.STRING);
         gsonBuilder.registerTypeAdapter(Date.class, new JsonSerializer<Date>() {
             public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
                 return new JsonPrimitive(DateUtils.formatDateTime(src));
@@ -197,45 +200,62 @@ public class Response {
         return gson.toJson(new Result(code, msg));
     }
 
-    public static class Result extends HashMap<String, Object> {
+    @Data
+    public static class Result {
 
+        private int code;
+        private String msg;
+        private Object data;
+
+        private Result(){}
         public Result(Object data) {
-            put("code", OK_CODE);
-            put("msg", "操作成功");
-            put("data", data);
+            this.code = OK_CODE;
+            this.msg = "操作成功";
+            this.data = data;
         }
 
         public Result(String msg) {
-            put("code", OK_CODE);
-            put("msg", msg);
+            this.code = OK_CODE;
+            this.msg = msg;
         }
 
         public Result(int code, String msg) {
-            put("code", code);
-            put("msg", msg);
+            this.code = code;
+            this.msg = msg;
         }
 
         public Result(int code, String msg, Object data) {
-            put("code", code);
-            put("msg", msg);
-            put("data", data);
+            this.code = code;
+            this.msg = msg;
+            this.data = data;
         }
 
         public Result(String msg, Object data) {
-            put("code", OK_CODE);
-            put("msg", msg);
-            put("data", data);
+            code = OK_CODE;
+            this.msg = msg;
+            this.data = data;
         }
 
 
     }
 
+    @Data
     public static class PageResult extends Result {
+
+        @JsonAdapter(LongAdapter.class)
+        private long pages;
+        @JsonAdapter(LongAdapter.class)
+        private long total;
+        @JsonAdapter(LongAdapter.class)
+        private long size;
+
+        private PageResult(){}
 
         public PageResult(Page data) {
             super(data.getRecords());
-            put("pages", data.getPages());
-            put("total", data.getTotal());
+            this.pages = data.getPages();
+            this.total = data.getTotal();
+            this.size = data.getSize();
         }
 
         public PageResult(int code, String msg) {
@@ -244,23 +264,29 @@ public class Response {
 
         public PageResult(int code, String msg, Page data) {
             super(code, msg, data.getRecords());
-            put("pages", data.getPages());
-            put("total", data.getTotal());
+            this.pages = data.getPages();
+            this.total = data.getTotal();
+            this.size = data.getSize();
 
         }
 
         public PageResult(String msg, Page data) {
             super(msg, data.getRecords());
-            put("pages", data.getPages());
-            put("total", data.getTotal());
+            this.pages = data.getPages();
+            this.total = data.getTotal();
+            this.size = data.getSize();
         }
 
     }
-    public static class IdAdapter implements JsonSerializer<Long> {
+
+    /*
+    * 系统默认会将Long类型转为string，如果需要保持long类型，在使用次适配器
+    * */
+    public static class LongAdapter implements JsonSerializer<Long> {
 
         @Override
         public JsonElement serialize(Long s, Type type, JsonSerializationContext jsonSerializationContext) {
-            return new JsonPrimitive(s.toString());
+            return new JsonPrimitive(s);
         }
 
     }

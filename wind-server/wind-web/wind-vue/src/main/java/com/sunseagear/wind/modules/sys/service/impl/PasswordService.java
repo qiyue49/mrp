@@ -14,7 +14,7 @@ public class PasswordService {
         user.setPassword(newPassword);
     }
 
-    public String getPassword(String password, String credentialsSalt) {
+    public String getPassword(String password) {
         return new BCryptPasswordEncoder().encode(password);
     }
 }

@@ -31,7 +31,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
     public void changePassword(Long userId, String newPassword) {
         User user = selectById(userId);
         if (user != null) {
-            user.setPassword(passwordService.getPassword(newPassword, user.getCredentialsSalt()));
+            user.setPassword(passwordService.getPassword(newPassword));
             update(user);
         } else {
             throw new RuntimeException("用戶不存在");
@@ -98,7 +98,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         if (user == null) {
             return Boolean.FALSE;
         }
-        String newPassword = passwordService.getPassword(password, user.getCredentialsSalt());
+        String newPassword = passwordService.getPassword(password);
         if (newPassword.equals(user.getPassword())) {
             return Boolean.TRUE;
         }
