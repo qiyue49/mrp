@@ -23,11 +23,6 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
     protected String parentIds; // 父编号列表
 
     @TableField(exist = false)
-    protected Boolean expanded = Boolean.FALSE;
-    @TableField(exist = false)
-    protected Boolean loaded = Boolean.TRUE;
-
-    @TableField(exist = false)
     List<TreeEntity> children = new ArrayList<>();
 
     /**
@@ -60,7 +55,7 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
     }
 
     public Boolean isLeaf() {
-        if (isHasChildren()) {
+        if (!this.children.isEmpty()) {
             return Boolean.FALSE;
         }
 
@@ -114,22 +109,6 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
         this.parentIds = parentIds;
     }
 
-    public Boolean getExpanded() {
-        return expanded;
-    }
-
-    public void setExpanded(Boolean expanded) {
-        this.expanded = expanded;
-    }
-
-    public Boolean getLoaded() {
-        return loaded;
-    }
-
-    public void setLoaded(Boolean loaded) {
-        this.loaded = loaded;
-    }
-
     public List<TreeEntity> getChildren() {
         return children;
     }
@@ -138,11 +117,4 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
         this.children = children;
     }
 
-    public boolean isHasChildren() {
-        return hasChildren;
-    }
-
-    public void setHasChildren(boolean hasChildren) {
-        this.hasChildren = hasChildren;
-    }
 }
