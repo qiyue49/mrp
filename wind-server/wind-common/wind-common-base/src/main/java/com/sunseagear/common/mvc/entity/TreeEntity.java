@@ -25,12 +25,6 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
     @TableField(exist = false)
     List<TreeEntity> children = new ArrayList<>();
 
-    /**
-     * 是否有叶子节点
-     */
-    @TableField(exist = false)
-    protected boolean hasChildren;
-
 
     public boolean isRoot() {
         if (getParentId() == null || getParentId().equals("0") || getParentId().equals("")) {
@@ -73,17 +67,6 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
         return "/";
     }
 
-    public String[] makeTags() {
-        return new String[0];
-    }
-
-    public T getId() {
-        return id;
-    }
-
-    public void setId(T id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
