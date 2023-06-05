@@ -7,11 +7,11 @@
       <h3>如何添加一个白名单</h3>
       <p>首先创建好白名单页面</p>
       <p>其次在router的index.js中constantRoutes数组中配置该页面的路由。本例中为/whiteList</p>
-      <p>然后在src的permission.js中whiteList数组中添加该页面的路由。本例中为/whiteList</p>
+      <p>然后在router的index.js中whiteList数组中添加该页面的路由。本例中为/whiteList</p>
       <p>最后运行项目，直接在浏览器中输入对应网址，就能看到该页面。本例中为(如果是hash路由,需要在http://localhost:9527/whiteList改为http://localhost:9527/#/whiteList)
         <br/>
-        <a target="_blank" href="http://localhost:9527/whiteList?token=eyJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOiIwIiwidGVuYW50SWQiOiIwMDAwMDAwMCIsImlkIjoiNDAyOGVhODE1YTNkMmE4YzAxNWEzZDJmOGQyYTAwMDIiLCJ1c2VybmFtZSI6ImFkbWluIiwicmVhbG5hbWUiOiLns7vnu5_nrqHnkIblkZgiLCJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTAxMzQxMiwiZXhwIjoxNjgxMDE1MjEyfQ.In43IghBdWI4GtYtOfPcW6iOxBR_MN285p_K2m5v77g">
-          http://localhost:9527/whiteList?token=eyJhbGciOiJIUzI1NiJ9.eyJyb2xlSWQiOiIwIiwidGVuYW50SWQiOiIwMDAwMDAwMCIsImlkIjoiNDAyOGVhODE1YTNkMmE4YzAxNWEzZDJmOGQyYTAwMDIiLCJ1c2VybmFtZSI6ImFkbWluIiwicmVhbG5hbWUiOiLns7vnu5_nrqHnkIblkZgiLCJzdWIiOiJhZG1pbiIsImlhdCI6MTY4MTAxMzQxMiwiZXhwIjoxNjgxMDE1MjEyfQ.In43IghBdWI4GtYtOfPcW6iOxBR_MN285p_K2m5v77g
+        <a target="_blank" :href="url">
+          {{ url }}
         </a>
       </p>
       <h3>白名单页面需要注意什么</h3>
@@ -43,6 +43,7 @@ export default {
   name: 'WhiteList',
   data() {
     return {
+      url: undefined,
       token: undefined,
       status: undefined
     }
@@ -52,6 +53,7 @@ export default {
   },
   methods: {
     init() {
+      document.title = '白名单'
       this.token = this.$route.query.token
       if (!this.isNull(this.token)) {
         // 一定要设置完token才能发起网络请求，否则会被拒绝
@@ -61,6 +63,7 @@ export default {
         // 加载系统配置
         this.$store.sysConfigStore.getConfig()
       }
+      this.url = 'http://localhost:9527/whiteList?token=' + this.$store.userStore.token
     }
 
   }

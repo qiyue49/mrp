@@ -26,7 +26,6 @@
 import { webSocketConnect, webSocketSend, webSocketClose } from '@/utils/webSocket'
 export default {
   name: 'Websocket',
-  directives: { waves },
   data() {
     return {
       message: {},

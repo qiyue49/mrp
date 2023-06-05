@@ -2,7 +2,6 @@ package com.sunseagear.common.mvc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.sunseagear.common.mvc.entity.TreeEntity;
-import com.sunseagear.common.mvc.entity.tree.TreeNode;
 import com.sunseagear.common.mvc.mapper.BaseTreeMapper;
 import com.sunseagear.common.mvc.service.ITreeCommonService;
 import com.sunseagear.common.utils.ObjectUtils;
@@ -22,8 +21,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEn
 
     @Override
     public List<T> selectTreeList(Wrapper<T> wrapper) {
-        List<T> content = baseMapper.selectTreeList(wrapper);
-        return content;
+        return baseMapper.selectTreeList(wrapper);
     }
 
 

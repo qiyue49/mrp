@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -124,14 +125,12 @@ public class Response {
 
         gsonBuilder.setPrettyPrinting();
         gsonBuilder.disableHtmlEscaping();
+        gsonBuilder.enableComplexMapKeySerialization();
 
         if (!StringUtils.isEmpty(fields)) {
 
             String[] fieldArray = fields.split(",");
-            HashSet<String> fieldSet = new HashSet<>();
-            for (String field : fieldArray) {
-                fieldSet.add(field);
-            }
+            HashSet<String> fieldSet = new HashSet<>(Arrays.asList(fieldArray));
 
             gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
                 @Override

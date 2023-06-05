@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div ref="view">
     <iframe id="template-iframe" ref="iframe" :src="src" style="width: 100%; height: 100%" frameborder="no" scrolling="auto" :style="'height:' + height"></iframe>
   </div>
 </template>
 
 <script>
+
+import { useFullscreen } from '@vueuse/core'
 
 export default {
   name: 'FramePage',
@@ -36,6 +38,13 @@ export default {
       } else {
         that.height = document.documentElement.clientHeight - 94.5 + 'px;'
       }
+    }
+    this.$store.settingStore.setFun(this.toggleFullScreen)
+  },
+  methods: {
+    toggleFullScreen() {
+      const { toggle } = useFullscreen(this.$refs.view)
+      toggle()
     }
   }
 }

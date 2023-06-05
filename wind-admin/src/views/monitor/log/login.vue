@@ -64,7 +64,7 @@
         </el-table-column>
         <el-table-column min-width="200" label="操作信息">
           <template #default="scope">
-            <span>{{ scope.row.msg }}</span>
+            <span class="tip" @click="detail(scope.row.msg)">{{ scope.row.msg }}</span>
           </template>
         </el-table-column>
         <el-table-column min-width="160" label="操作时间">
@@ -82,13 +82,21 @@
       </el-table>
 
       <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+      <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="详情" :close-on-click-modal="false">
+        <div v-html="msg" ></div>
+        <template #footer>
+          <el-button @click="dialogFormVisible = false">关闭</el-button>
+        </template>
+
+      </el-dialog>
     </div>
   </el-card>
 </template>
 
 <script>
 import { fetchLoginLogList, deleteLoginLog, batchDeleteLoginLog, exportLoginLog } from '@/api/monitor/log/login'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
+import { textToHtml } from '@/utils' // 水波纹指令
 
 export default {
   name: 'ScheduleJobLogList',
@@ -107,6 +115,7 @@ export default {
         title: undefined,
         type: undefined
       },
+      msg: undefined,
       showReviewer: false,
       dialogFormVisible: false,
       multipleSelection: [],
@@ -123,6 +132,10 @@ export default {
     this.getList()
   },
   methods: {
+    detail(msg) {
+      this.msg = textToHtml(msg)
+      this.dialogFormVisible = true
+    },
     statusTypeFilter(status) {
       const statusMap = {
         '-1': 'danger',
@@ -201,3 +214,17 @@ export default {
   }
 }
 </script>
+<style scoped>
+.tip{
+  width:100%;
+
+  word-break:keep-all; /* 不换行 */
+
+  white-space:nowrap; /* 不换行 */
+
+  overflow:hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+
+  text-overflow:ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+
+}
+</style>

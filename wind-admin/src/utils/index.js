@@ -370,6 +370,12 @@ export function unescape(html) {
     .replace(/&quot;/g, '\"')
     .replace(/&#39;/g, '\'')
 }
+
+export function textToHtml(html) {
+  return html
+    .replace(/\r\n/g, '<br>')
+    .replace(/\n/g, '<br>')
+}
 export function isNull(val) {
   if (typeof val === 'boolean') {
     return false

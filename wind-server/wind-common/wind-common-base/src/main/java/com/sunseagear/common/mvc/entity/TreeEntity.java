@@ -1,14 +1,9 @@
 package com.sunseagear.common.mvc.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.sunseagear.common.mvc.entity.tree.TreeNode;
 import com.sunseagear.common.utils.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
