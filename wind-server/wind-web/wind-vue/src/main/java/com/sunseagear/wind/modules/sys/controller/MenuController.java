@@ -87,9 +87,6 @@ public class MenuController extends BaseBeanController<Menu> {
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:menu:delete')")
     public String delete(@PathVariable("id") Long id) {
-        QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("parent_id", id);
-        menuService.delete(entityWrapper);
         menuService.deleteById(id);
         return Response.ok("删除成功");
     }

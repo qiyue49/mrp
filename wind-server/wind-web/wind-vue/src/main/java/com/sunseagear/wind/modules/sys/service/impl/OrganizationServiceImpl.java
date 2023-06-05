@@ -49,10 +49,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
             TreeTableHashMap.put(treeNode.getId().toString(), TreeTableHashMapAll.get(treeNode.getId().toString()));
 
         });
-        List<Organization> TreeTableList = new ArrayList<>();
-        TreeTableHashMap.values().forEach(item -> {
-            TreeTableList.add(item);
-        });
+        List<Organization> TreeTableList = new ArrayList<>(TreeTableHashMap.values());
         TreeTableList.sort(new Comparator<Organization>() {
             @Override
             public int compare(Organization o1, Organization o2) {

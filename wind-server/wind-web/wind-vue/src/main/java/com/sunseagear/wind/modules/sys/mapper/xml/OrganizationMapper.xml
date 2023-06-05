@@ -15,8 +15,7 @@
 		LEFT JOIN sys_organization p ON p.id = t.parent_id
 	</sql>
 
-    <select id="selectByTreeId" resultType="com.sunseagear.wind.modules.sys.entity.Organization"
-            parameterType="java.lang.String">
+    <select id="selectByTreeId" resultType="com.sunseagear.wind.modules.sys.entity.Organization">
         select
         <include refid="Base_Column_List"/>
         from sys_organization t
@@ -61,7 +60,7 @@
         where parent_ids like concat(#{oldParentIds}, '%')
     </update>
     <!-- 删除子树 -->
-    <delete id="deleteSunTree" parameterType="java.lang.String">
+    <delete id="deleteSunTree">
 		delete from sys_organization
 		where parent_ids like concat(#{oldParentIds}, '%')
 	</delete>

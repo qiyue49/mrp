@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
 
 /**
@@ -15,7 +16,7 @@ import lombok.Data;
 @Data
 @TableName("sys_role_menu")
 @SuppressWarnings("serial")
-public class RoleMenu implements java.io.Serializable {
+public class RoleMenu extends AbstractEntity<Long> {
 
     /**
      * 菜单编号

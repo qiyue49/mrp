@@ -43,9 +43,9 @@
     </update>
 
     <!-- 删除子树 -->
-    <delete id="deleteSunTree" parameterType="java.lang.String">
+    <delete id="deleteSunTree">
         delete from sys_menu
-        where parent_ids like concat(#{oldParentIds}, '%')
+        where parent_ids like concat('%', concat(#{oldParentIds}, '%'))
     </delete>
 
     <!-- 通过用户ID查询 -->

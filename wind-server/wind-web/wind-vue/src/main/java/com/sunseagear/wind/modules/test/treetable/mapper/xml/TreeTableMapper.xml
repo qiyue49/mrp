@@ -62,8 +62,7 @@
 
     <!-- 删除子树 -->
     <delete
-        id="deleteSunTree"
-        parameterType="java.lang.String">
+        id="deleteSunTree">
         delete from test_tree_table
         where parent_ids like concat(#{oldParentIds}, '%')
     </delete>

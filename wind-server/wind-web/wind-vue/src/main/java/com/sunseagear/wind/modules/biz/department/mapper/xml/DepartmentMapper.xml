@@ -44,7 +44,7 @@
     </update>
 
     <!-- 删除子树 -->
-    <delete id="deleteSunTree" parameterType="java.lang.String">
+    <delete id="deleteSunTree">
         delete from biz_department
         where parent_ids like concat(#{oldParentIds}, '%')
     </delete>
