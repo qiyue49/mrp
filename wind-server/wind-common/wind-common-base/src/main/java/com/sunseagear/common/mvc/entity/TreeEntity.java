@@ -14,27 +14,13 @@ import java.util.List;
 /**
  * 树抽象实体基类
  */
-public abstract class TreeEntity<T> extends AbstractEntity<T> implements java.io.Serializable {
+public abstract class TreeEntity<T> extends DataEntity<T> {
     @TableField(value = "name")
     protected String name; // 资源名称
     @TableField(value = "parent_id")
     protected T parentId; // 父编号
     @TableField(value = "parent_ids")
     protected String parentIds; // 父编号列表
-
-    @TableField(value = "remarks")
-    protected String remarks;
-    @TableField(value = "create_by", fill = FieldFill.INSERT)
-    protected String createBy; // 创建者
-    @TableField(value = "create_date", fill = FieldFill.INSERT)
-    protected Date createDate; // 创建日期
-    @TableField(value = "update_by", fill = FieldFill.UPDATE)
-    protected String updateBy; // 更新者
-    @TableField(value = "update_date", fill = FieldFill.UPDATE)
-    protected Date updateDate; // 更新日期
-    @TableField(value = "del_flag", fill = FieldFill.INSERT)
-    protected String delFlag = "0"; // 删除标记（0：正常；1：删除 ）
-
 
     @TableField(exist = false)
     protected Boolean expanded = Boolean.FALSE;
@@ -126,54 +112,6 @@ public abstract class TreeEntity<T> extends AbstractEntity<T> implements java.io
 
     public void setParentIds(String parentIds) {
         this.parentIds = parentIds;
-    }
-
-    public String getRemarks() {
-        return remarks;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getUpdateBy() {
-        return updateBy;
-    }
-
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateDate) {
-        this.updateDate = updateDate;
-    }
-
-    public String getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(String delFlag) {
-        this.delFlag = delFlag;
     }
 
     public Boolean getExpanded() {
