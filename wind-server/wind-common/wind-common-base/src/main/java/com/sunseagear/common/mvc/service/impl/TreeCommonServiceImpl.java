@@ -1,6 +1,7 @@
 package com.sunseagear.common.mvc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.sunseagear.common.mvc.entity.TreeEntity;
 import com.sunseagear.common.mvc.entity.tree.TreeNode;
 import com.sunseagear.common.mvc.mapper.BaseTreeMapper;
 import com.sunseagear.common.mvc.service.ITreeCommonService;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Transactional
-public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends Serializable & TreeNode<ID>, ID extends Serializable>
+public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEntity<ID> & Serializable, ID extends Serializable>
         extends CommonServiceImpl<M, T> implements ITreeCommonService<T, ID> {
 
     @Override
