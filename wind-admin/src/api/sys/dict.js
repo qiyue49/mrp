@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function fetchDicts() {
+export function fetchDictMap () {
   return request({
     url: '/sys/dict',
     method: 'get'

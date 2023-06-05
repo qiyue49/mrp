@@ -1,4 +1,4 @@
-import { fetchDictMap } from '@/api/system/dict'
+import { fetchDictMap } from '@/api/sys/dict'
 import { defineStore } from 'pinia'
 import { isNull } from '@/utils'
 import { ref } from 'vue'
