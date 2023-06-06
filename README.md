@@ -98,10 +98,10 @@ https://gitee.com/sunseagear/wenyao
 
 ### 系统要求(推荐)
 
-> * jdk 1.8+
->* tomcat 8.0+
+> * jdk 17+
+>* tomcat 10.0+
 >* mysql 5.7+
->* nodejs 12.0+
+>* nodejs 16.0+
 >* npm 6.0+
 
 ### 软件架构
