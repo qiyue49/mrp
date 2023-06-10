@@ -54,12 +54,11 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
      * @param request
-     * @throws IOException
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:datarule:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<RoleDataRule> roleDataRuleEntityWrapper = new QueryWrapper<>();
         String roleId = request.getParameter("roleId");
@@ -112,7 +111,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
     @PostMapping("updateRules")
     @Log(logType = LogType.UPDATE)
     @PreAuthorize("hasAuthority('sys:datarule:update')")
-    public String update(@Valid Long roleId, String[] ids) {
+    public String update(@Valid Long roleId, Long[] ids) {
         QueryWrapper<RoleDataRule> roleDataRuleEntityWrapper = new QueryWrapper<>();
         roleDataRuleEntityWrapper.eq("role_id", roleId);
         roleDataRuleService.remove(roleDataRuleEntityWrapper);
@@ -120,7 +119,7 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
             dataRuleHandler.refreshRole();
             return Response.ok("更新成功");
         }
-        List<String> idList = java.util.Arrays.asList(ids);
+        List<Long> idList = java.util.Arrays.asList(ids);
         List<RoleDataRule> roleDataRuleList = new ArrayList<>();
         idList.forEach(item -> {
             RoleDataRule roleDataRule = new RoleDataRule();

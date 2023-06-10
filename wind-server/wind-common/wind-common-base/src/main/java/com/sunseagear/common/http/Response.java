@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.sunseagear.common.utils.DateUtils;
+import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.StringUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;
@@ -30,25 +32,7 @@ public class Response {
     private static final int OK_CODE = 0;
     private static final int ERROR_CODE = 500;
 
-    public static String ok() {
-        return successJson("");
-    }
-
-    public static String ok(String msg) {
-        return successJson(msg);
-    }
-
-
-    public static String error(String msg) {
-        return failJson(ERROR_CODE, msg);
-    }
-
-    public static String error(int code, String msg) {
-        return failJson(code, msg);
-    }
-
-
-    private static Gson gson;
+    private static final Gson gson;
 
     static {
         gson = createGson(null, false);
@@ -158,12 +142,34 @@ public class Response {
         return gsonBuilder.create();
     }
 
+
+    public static String ok() {
+        return successJson("");
+    }
+
+    public static String ok(String msg) {
+        return successJson(msg);
+    }
+
+
+    public static String error(String msg) {
+        return failJson(ERROR_CODE, msg);
+    }
+
+    public static String error(int code, String msg) {
+        return failJson(code, msg);
+    }
+
     public static String successJson(String message) {
         return gson.toJson(new Result(message));
     }
 
     public static <T> String successJson(T object) {
         return successJson(object, null);
+    }
+
+    public static <T> String successJson(String msg, T object) {
+        return getGson(null).toJson(new Result(object));
     }
 
     public static <T> String successJson(T object, String includesProperties) {
@@ -196,41 +202,49 @@ public class Response {
     }
 
     public static String failJson(int code, String msg) {
-        return gson.toJson(new Result(code, msg));
+        return gson.toJson(new Result(code, false, msg));
     }
 
     @Data
     public static class Result {
 
+        private boolean success;
         private int code;
         private String msg;
         private Object data;
 
-        private Result(){}
+        private Result() {
+        }
+
         public Result(Object data) {
             this.code = OK_CODE;
+            this.success = true;
             this.msg = "操作成功";
             this.data = data;
         }
 
         public Result(String msg) {
             this.code = OK_CODE;
+            this.success = true;
             this.msg = msg;
         }
 
-        public Result(int code, String msg) {
+        public Result(int code, boolean success, String msg) {
             this.code = code;
+            this.success = success;
             this.msg = msg;
         }
 
-        public Result(int code, String msg, Object data) {
+        public Result(int code, boolean success, String msg, Object data) {
             this.code = code;
+            this.success = success;
             this.msg = msg;
             this.data = data;
         }
 
         public Result(String msg, Object data) {
-            code = OK_CODE;
+            this.code = OK_CODE;
+            this.success = true;
             this.msg = msg;
             this.data = data;
         }
@@ -239,8 +253,11 @@ public class Response {
     }
 
     @Data
+    @EqualsAndHashCode(callSuper = true)
     public static class PageResult extends Result {
 
+        @JsonAdapter(LongAdapter.class)
+        private long current;
         @JsonAdapter(LongAdapter.class)
         private long pages;
         @JsonAdapter(LongAdapter.class)
@@ -248,21 +265,23 @@ public class Response {
         @JsonAdapter(LongAdapter.class)
         private long size;
 
-        private PageResult(){}
+        private PageResult() {
+        }
 
         public PageResult(Page data) {
             super(data.getRecords());
+            this.current = data.getCurrent();
             this.pages = data.getPages();
             this.total = data.getTotal();
             this.size = data.getSize();
         }
 
-        public PageResult(int code, String msg) {
-            super(code, msg);
+        public PageResult(int code, boolean success, String msg) {
+            super(code, success, msg);
         }
 
-        public PageResult(int code, String msg, Page data) {
-            super(code, msg, data.getRecords());
+        public PageResult(int code, boolean success, String msg, Page data) {
+            super(code, success, msg, data.getRecords());
             this.pages = data.getPages();
             this.total = data.getTotal();
             this.size = data.getSize();
@@ -279,8 +298,8 @@ public class Response {
     }
 
     /*
-    * 系统默认会将Long类型转为string，如果需要保持long类型，在使用次适配器
-    * */
+     * 系统默认会将Long类型转为string，如果需要保持long类型，在使用此适配器
+     * */
     public static class LongAdapter implements JsonSerializer<Long> {
 
         @Override
@@ -289,5 +308,24 @@ public class Response {
         }
 
     }
+
+    /*
+     * 自动拼接Url，如果返回的地址不是全路径，那么会根据请求进行拼接。
+     * 主要用于内外网不同网址的场景。
+     * 例如：一个文件在服务器的路径是/file/aaa.docx
+     * 如果内网请求返回的是http://内网地址/file/aaa.docx
+     * 如果外网请求返回的是http://外网地址/file/aaa.docx
+     * */
+    public static class ContextUrlAdapter implements JsonSerializer<String>{
+
+        @Override
+        public JsonElement serialize(String s, Type type, JsonSerializationContext jsonSerializationContext) {
+            if (!StringUtils.isEmpty(s) && !StringUtils.startsWith(s, "http")) {
+                return new JsonPrimitive(ServletUtils.getContextUrl(ServletUtils.getRequest()) + s);
+            }
+            return new JsonPrimitive(s);
+        }
+    }
+
 
 }

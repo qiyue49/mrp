@@ -1,6 +1,6 @@
 package com.sunseagear.wind.modules.sys.json;
 
-import com.sunseagear.common.utils.JsonUtils;
+import com.sunseagear.common.http.Response;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.utils.DictUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,10 +16,10 @@ public class DictJsonController {
     public String get() {
         try {
             //放入数据字典
-            return JsonUtils.successMessage(DictUtils.getDict());
+            return Response.successJson(DictUtils.getDict());
         } catch (Exception e) {
             e.printStackTrace();
-            return JsonUtils.failMessage("获取失败");
+            return Response.error("获取失败");
         }
     }
 

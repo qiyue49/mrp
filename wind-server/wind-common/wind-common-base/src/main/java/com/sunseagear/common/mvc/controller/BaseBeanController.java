@@ -56,12 +56,12 @@ public abstract class BaseBeanController<Entity extends Serializable> {
         binder.registerCustomEditor(LocalDateTime.class, new LocalDateTimeConvertEditor());
     }
 
-    public Page<Entity> getPage() {
+    public Page getPage() {
         String page = ServletUtils.getRequest().getParameter("page");
         String limit = ServletUtils.getRequest().getParameter("limit");
         int pageInt = !StringUtils.isEmpty(page) ? Integer.parseInt(page) : 1;
         int limitInt = !StringUtils.isEmpty(limit) ? Integer.parseInt(limit) : 20;
-        return new Page<>(pageInt, limitInt);
+        return new Page(pageInt, limitInt);
     }
 
     /**

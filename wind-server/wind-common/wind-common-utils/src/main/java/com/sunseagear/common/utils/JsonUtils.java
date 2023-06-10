@@ -1,11 +1,8 @@
 package com.sunseagear.common.utils;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import com.sunseagear.common.utils.entity.JsonResult;
-import com.sunseagear.common.utils.entity.PageResult;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.io.IOException;
@@ -14,11 +11,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 public class JsonUtils {
-    public static final int Default = 0;
-    public static final int Empty = -1;
-    public static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd HH:mm:ss SSS";
-
-    private static Gson gson;
+    private static final Gson gson;
 
     static {
         gson = createGson(null, false);
@@ -73,18 +66,7 @@ public class JsonUtils {
 
         gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
             @Override
-            public boolean shouldSkipField(FieldAttributes fieldAttributes) {
-                if (fieldAttributes.getName().contains("CGLIB")
-                        || fieldAttributes.getName().equals("createBy")
-                        || fieldAttributes.getName().equals("createDate")
-                        || fieldAttributes.getName().equals("updateBy")
-                        || fieldAttributes.getName().equals("updateDate")
-                        || fieldAttributes.getName().equals("delFlag")
-                        || fieldAttributes.getName().equals("currentUser")) {
-                    return true;
-                }
-
-                if (fieldSet.contains(fieldAttributes.getName())) {
+            public boolean shouldSkipField(FieldAttributes fieldAttributes) {if (fieldSet.contains(fieldAttributes.getName())) {
                     return !isInclude;
                 }
 
@@ -100,8 +82,7 @@ public class JsonUtils {
     }
 
     public static String objectToJsonString(Object obj) {
-        String result = gson.toJson(obj);
-        return result;
+        return gson.toJson(obj);
     }
 
     public static <T> T jsonStringToObject(String jsonString, Type type) {
@@ -178,76 +159,4 @@ public class JsonUtils {
         return result;
     }
 
-    public static <T> String successMessage(T data, String includesProperties, boolean isInclude) {
-        return getGson(includesProperties, isInclude).toJson(new JsonResult(true, "操作成功", data));
-    }
-
-    public static String successMessage(String message, int statusCode) {
-        return successMessage(statusCode, message, "");
-    }
-
-    public static <T> String successMessage(String message, T data) {
-        return successMessage(JsonResult.SUCCESS, message, data);
-    }
-
-    public static <T> String successMessage(T data) {
-        return successMessage(JsonResult.SUCCESS, "操作成功", data);
-    }
-
-    public static String successMessage(String message) {
-        return successMessage(JsonResult.SUCCESS, message, null, "", false);
-    }
-
-    public static <T> String successMessage(int statusCode, String message, T data) {
-        return successMessage(statusCode, message, data, "", false);
-    }
-
-    public static <T> String successMessage(int statusCode, String message, T data, String includesProperties, boolean isInclude) {
-        return message(true, statusCode, message, data, includesProperties, isInclude);
-    }
-
-    public static <T> String message(boolean isSuccess, int statusCode, String message, T data, String includesProperties, boolean isInclude) {
-        return getGson(includesProperties, isInclude).toJson(new JsonResult(isSuccess, statusCode, message, data));
-    }
-
-
-    public static String failMessage(String message) {
-        return failMessage(JsonResult.FAIL, message);
-    }
-
-    public static String failMessage(int statusCode, String message) {
-        return message(false, statusCode, message, null, null, false);
-    }
-
-    public static <T extends Page> String successPageMessage(int statusCode, String message, T data) {
-        return pageMessage(true, statusCode, message, data, "", false);
-    }
-
-    public static <T extends Page> String successPageMessage(T data) {
-        return pageMessage(true, 0, "操作成功", data, "", false);
-    }
-
-    public static <T extends Page> String successPageMessage(T data, String includesProperties, boolean isInclude) {
-        return pageMessage(true, 0, "操作成功", data, includesProperties, isInclude);
-    }
-
-    public static <T extends Page> String pageMessage(boolean isSuccess, int statusCode, String message, T data, String includesProperties, boolean isInclude) {
-        return getGson(includesProperties, isInclude).toJson(new PageResult<T>(isSuccess, statusCode, message, data));
-    }
-
-    public static class ContextUrlAdapter implements JsonSerializer<String>, JsonDeserializer<String> {
-
-        @Override
-        public JsonElement serialize(String s, Type type, JsonSerializationContext jsonSerializationContext) {
-            if (!StringUtils.isEmpty(s) && !StringUtils.startsWith(s, "http")) {
-                return new JsonPrimitive(ServletUtils.getContextUrl(ServletUtils.getRequest()) + s);
-            }
-            return new JsonPrimitive(s);
-        }
-
-        @Override
-        public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return json.getAsJsonPrimitive().getAsString();
-        }
-    }
 }

@@ -1,9 +1,9 @@
 package com.sunseagear.wind.modules.sys.json;
 
+import com.sunseagear.common.http.Response;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.FileUtils;
-import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.MessageUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.AttachmentHelper;
@@ -47,15 +47,15 @@ public class OSSUploadJsonController {
     @RequestMapping(value = "upload", method = RequestMethod.POST)
     public String upload(HttpServletRequest request, MultipartFile[] file, @RequestParam(required = false, defaultValue = "") String dir) {
         try {
-            return JsonUtils.successMessage((Object) attachmentHelper.upload(request, file, dir));
+            return Response.successJson((Object) attachmentHelper.upload(request, file, dir));
         } catch (IOException e) {
-            return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            return Response.error(MessageUtils.getMessage("upload.server.error"));
         } catch (InvalidExtensionException e) {
-            return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            return Response.error(MessageUtils.getMessage("upload.server.error"));
         } catch (FileUploadBase.FileSizeLimitExceededException e) {
-            return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            return Response.error(MessageUtils.getMessage("upload.server.error"));
         } catch (FileNameLengthLimitExceededException e) {
-            return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+            return Response.error(MessageUtils.getMessage("upload.server.error"));
         }
     }
 
@@ -66,10 +66,10 @@ public class OSSUploadJsonController {
         fileType = FileUtils.getFileType(fileType).toLowerCase();
         String base64 = FileUtils.fileToBase64(file);
         if (base64 == null) {
-            JsonUtils.failMessage("转换失败");
+            Response.error("转换失败");
         }
         base64 = String.format("data:image/%s;base64,%s", fileType, base64);
-        return JsonUtils.successMessage((Object) base64);
+        return Response.successJson((Object) base64);
 
     }
 
@@ -78,18 +78,18 @@ public class OSSUploadJsonController {
         if (!StringUtils.isEmpty(content)) {
             MultipartFile multipartFile = BASE64DecodedMultipartFile.base64ToMultipart(content);
             try {
-                return JsonUtils.successMessage((Object) attachmentHelper.upload(request, multipartFile, dir));
+                return Response.successJson((Object) attachmentHelper.upload(request, multipartFile, dir));
             } catch (IOException e) {
-                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+                return Response.error(MessageUtils.getMessage("upload.server.error"));
             } catch (InvalidExtensionException e) {
-                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+                return Response.error(MessageUtils.getMessage("upload.server.error"));
             } catch (FileUploadBase.FileSizeLimitExceededException e) {
-                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+                return Response.error(MessageUtils.getMessage("upload.server.error"));
             } catch (FileNameLengthLimitExceededException e) {
-                return JsonUtils.failMessage(MessageUtils.getMessage("upload.server.error"));
+                return Response.error(MessageUtils.getMessage("upload.server.error"));
             }
         } else {
-            return JsonUtils.failMessage("图片不能为空");
+            return Response.error("图片不能为空");
         }
 
     }

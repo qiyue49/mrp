@@ -1,8 +1,8 @@
 package com.sunseagear.wind.modules.sys.json;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.controller.BaseBeanController;
-import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -21,8 +21,8 @@ import java.util.List;
  *
  * @version V1.0
  * @package biz.partyCongress
- * @title: 党代会议控制器
- * @description: 党代会议控制器
+ * @title: 组织机构控制器
+ * @description: 组织机构控制器
  * @author:
  * @date: 2020-12-02 05:09:05
  * @copyright: www.sunseagear.com Inc. All rights reserved.
@@ -46,14 +46,14 @@ public class OrganizationJsonController extends BaseBeanController<Organization>
         }
         List<Organization> organizations = organizationService.selectTreeList(entityWrapper);
         List<Organization> sort = VueTreeHelper.create().sort(organizations);
-        return JsonUtils.successMessage(sort);
+        return Response.successJson(sort);
     }
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     public String detail(@PathVariable("id") Long id) {
         Organization organization = organizationService.selectById(id);
-        return JsonUtils.successMessage(organization);
+        return Response.successJson(organization);
     }
 
 }
