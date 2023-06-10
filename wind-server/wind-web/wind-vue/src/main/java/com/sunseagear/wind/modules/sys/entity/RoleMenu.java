@@ -19,6 +19,11 @@ import lombok.Data;
 public class RoleMenu extends AbstractEntity<Long> {
 
     /**
+     * 编号
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+    /**
      * 菜单编号
      */
     @TableField(value = "menu_id")

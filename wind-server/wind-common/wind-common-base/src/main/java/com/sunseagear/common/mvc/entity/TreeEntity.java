@@ -1,6 +1,8 @@
 package com.sunseagear.common.mvc.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.sunseagear.common.utils.StringUtils;
 
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.List;
  * 树抽象实体基类
  */
 public abstract class TreeEntity<T> extends DataEntity<T> {
+
     @TableField(value = "name")
     protected String name; // 资源名称
     @TableField(value = "parent_id")

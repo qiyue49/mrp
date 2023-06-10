@@ -1,6 +1,8 @@
 package com.sunseagear.wind.modules.sys.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.TreeEntity;
 import lombok.Data;
@@ -14,9 +16,12 @@ public class Menu extends TreeEntity<Long> {
     public static final String MENU = "2";
     public static final String BUTTON = "3";
 
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id; // ID
+
     @TableField(value = "permission")
-    private String permission;
-    /**资源路径*/
+    private String permission; // 资源路径
+
     /**
      * 菜单类型
      */

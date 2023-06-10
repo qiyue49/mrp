@@ -13,6 +13,11 @@ import lombok.Data;
 public class Car extends DataEntity<Long> {
 
     /**
+     * 主键
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+    /**
      * 汽车品牌
      */
     @TableField(value = "name")

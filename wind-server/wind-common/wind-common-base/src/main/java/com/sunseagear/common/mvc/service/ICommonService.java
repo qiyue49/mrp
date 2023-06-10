@@ -3,16 +3,13 @@ package com.sunseagear.common.mvc.service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sunseagear.common.http.DuplicateValid;
 
 import java.io.Serializable;
 import java.util.List;
 
 public interface ICommonService<T> extends IService<T> {
 
-    public void setDemo(boolean isDemo);
-
-    Boolean doValid(DuplicateValid duplicateValid, Wrapper<T> wrapper);
+    void setDemo(boolean isDemo);
 
     boolean insert(T entity);
 

@@ -12,15 +12,7 @@ import java.io.Serializable;
  */
 public abstract class AbstractEntity<ID> implements Serializable {
 
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    protected ID id; // 编号
+    public abstract ID getId();
 
-
-    public ID getId() {
-        return id;
-    }
-
-    public void setId(ID id) {
-        this.id = id;
-    }
+    public abstract void setId(ID id);
 }

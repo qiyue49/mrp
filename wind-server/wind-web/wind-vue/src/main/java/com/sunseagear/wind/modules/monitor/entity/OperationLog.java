@@ -29,7 +29,11 @@ public class OperationLog extends AbstractEntity<Long> {
      * 失败
      */
     public final static String OPERATION_LOG_FAIL = "0";
-
+    /**
+     * 编号
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
     /**
      * 日志标题
      */

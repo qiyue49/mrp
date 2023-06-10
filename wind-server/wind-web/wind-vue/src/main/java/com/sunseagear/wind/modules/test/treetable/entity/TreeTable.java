@@ -1,6 +1,8 @@
 package com.sunseagear.wind.modules.test.treetable.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.TreeEntity;
 import lombok.Data;
@@ -22,9 +24,12 @@ import lombok.Data;
 @SuppressWarnings("serial")
 public class TreeTable extends TreeEntity<Long> {
 
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id; //ID
 
     @TableField(value = "geocoding")
     private String geocoding;  //地理编码
+
     @TableField(value = "postal_code")
     private String postalCode;  //邮政编码
 

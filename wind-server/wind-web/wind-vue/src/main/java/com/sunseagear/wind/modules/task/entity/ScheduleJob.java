@@ -24,6 +24,11 @@ public class ScheduleJob extends AbstractEntity<Long> {
     public static final String STATUS_DISABLE = "0";
 
     /**
+     * 任务主键
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+    /**
      * 任务名
      */
     @TableField(value = "job_name")

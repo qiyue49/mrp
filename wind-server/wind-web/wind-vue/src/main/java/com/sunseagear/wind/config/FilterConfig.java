@@ -1,5 +1,6 @@
 package com.sunseagear.wind.config;
 
+import com.sunseagear.common.filter.xss.XssFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ import java.util.List;
  */
 
 @Configuration
-public class CorsConfig {
+public class FilterConfig {
 
     @Bean
     public FilterRegistrationBean corsFilter() {
@@ -40,5 +41,16 @@ public class CorsConfig {
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
         return bean;
     }
+
+    @Bean
+    public FilterRegistrationBean xssFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new XssFilter());
+        registration.addUrlPatterns("/*");//过滤所有路径
+        registration.setName("xssFilter");//过滤器名称
+        registration.setOrder(Integer.MAX_VALUE);//优先级，越低越优先
+        return registration;
+    }
+
 
 }

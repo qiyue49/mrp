@@ -1,14 +1,11 @@
 package com.sunseagear.common.mvc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sunseagear.common.http.DuplicateValid;
 import com.sunseagear.common.mvc.service.ICommonService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -109,19 +106,6 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public Boolean doValid(DuplicateValid duplicateValid, Wrapper<T> wrapper) {
-        Boolean valid = Boolean.FALSE;
-        String queryType = duplicateValid.getQueryType();
-        if (StringUtils.isEmpty(queryType)) {
-            queryType = "table";
-        }
-        if (queryType.equals("table")) {
-            valid = validTable(duplicateValid, (QueryWrapper<T>) wrapper);
-        }
-        return valid;
-    }
-
-    @Override
     public boolean delete(Wrapper<T> wrapper) {
         if (isDemo) {
             return true;
@@ -150,29 +134,6 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     @Override
     public T selectOne(Wrapper<T> wrapper) {
         return getOne(wrapper);
-    }
-
-    private Boolean validTable(DuplicateValid duplicateValid, QueryWrapper<T> wrapper) {
-        Long num = null;
-        String extendName = duplicateValid.getExtendName();
-        String extendParam = duplicateValid.getExtendParam();
-        if (!StringUtils.isEmpty(extendParam)) {
-            // [2].编辑页面校验
-            wrapper.eq(duplicateValid.getName(), duplicateValid.getParam()).ne(extendName, extendParam);
-            num = baseMapper.selectCount(wrapper);
-        } else {
-            // [1].添加页面校验
-            wrapper.eq(duplicateValid.getName(), duplicateValid.getParam());
-            num = baseMapper.selectCount(wrapper);
-        }
-
-        if (num == null || num == 0) {
-            // 该值可用
-            return true;
-        } else {
-            // 该值不可用
-            return false;
-        }
     }
 
 }

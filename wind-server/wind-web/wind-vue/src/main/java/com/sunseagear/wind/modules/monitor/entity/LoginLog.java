@@ -28,6 +28,11 @@ import java.util.Date;
 public class LoginLog extends AbstractEntity<Long> {
 
     /**
+     * 访问ID
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+    /**
      * 登录账号
      */
     @Excel(name = "登录账号", orderNum = "0", width = 15)

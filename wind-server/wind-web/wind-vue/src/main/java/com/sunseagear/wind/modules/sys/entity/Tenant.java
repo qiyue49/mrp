@@ -26,6 +26,8 @@ import lombok.Data;
 public class Tenant extends DataEntity<Long> {
 
 
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id; //id
     @NotEmpty(message = "联系人不能为空")
     @TableField(value = "contact")
     private String contact;  //联系人
