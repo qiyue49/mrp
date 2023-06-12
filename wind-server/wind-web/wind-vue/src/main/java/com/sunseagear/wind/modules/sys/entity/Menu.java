@@ -32,11 +32,7 @@ public class Menu extends TreeEntity<Long> {
      */
     @TableField(value = "path")
     private String path;
-    /**
-     * 访问路由
-     */
-    @TableField(value = "url")
-    private String url;
+
     /**
      * 是否显示
      */
@@ -52,11 +48,6 @@ public class Menu extends TreeEntity<Long> {
      */
     @TableField(value = "icon")
     private String icon;
-    /**
-     * 跳转URL
-     */
-    @TableField(value = "redirect")
-    private String redirect;
 
     /**
      * 前端资源路径
