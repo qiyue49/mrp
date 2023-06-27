@@ -6,6 +6,7 @@ import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
+import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -27,48 +28,45 @@ import java.util.concurrent.TimeUnit;
 public class OAuthServiceImpl implements IOAuthService {
 
 
-    private final String ACCESS_TOKEN_KEY = "access_token:key";
-    private final String AUTH_CODE_PRE = "auth_code_pre:";
-    private final String ACCESS_TOKEN_PRE = "access_token:pre:";
-    private final String REFRESH_TOKEN_PRE = "refresh_token_pre:";
+    private final String AUTH_CODE = UserUtils.USER_CACHE + ":auth_code:";
+    private final String ACCESS_TOKEN = UserUtils.USER_CACHE + ":access_token:";
+    private final String REFRESH_TOKEN = UserUtils.USER_CACHE + ":refresh_token:";
 
     @Override
     public void addAuthCode(String authCode, Principal principal) {
-        CacheUtils.setCacheObject(AUTH_CODE_PRE + authCode, principal, getExpireIn(), TimeUnit.MILLISECONDS);
+        CacheUtils.setCacheObject(AUTH_CODE + authCode, principal, getExpireIn(), TimeUnit.MILLISECONDS);
     }
 
     @Override
     public void addAccessToken(String accessToken, Principal principal) {
-        CacheUtils.setCacheObject(ACCESS_TOKEN_PRE + accessToken, principal, getExpireIn(), TimeUnit.MILLISECONDS);
-        CacheUtils.addCacheSet(ACCESS_TOKEN_KEY, accessToken);
-        CacheUtils.expire(ACCESS_TOKEN_KEY, getExpireIn(), TimeUnit.MILLISECONDS);//设置过期时间
+        CacheUtils.setCacheObject(ACCESS_TOKEN + accessToken, principal, getExpireIn(), TimeUnit.MILLISECONDS);
 
     }
 
     @Override
     public void addRefreshToken(String refreshToken, Principal principal) {
-        CacheUtils.setCacheObject(REFRESH_TOKEN_PRE + refreshToken, principal, getRefreshExpireIn(), TimeUnit.MILLISECONDS);
+        CacheUtils.setCacheObject(REFRESH_TOKEN + refreshToken, principal, getRefreshExpireIn(), TimeUnit.MILLISECONDS);
     }
 
     @Override
     public Principal getPrincipalByAuthCode(String authCode) {
-        return CacheUtils.getCacheObject(AUTH_CODE_PRE + authCode);
+        return CacheUtils.getCacheObject(AUTH_CODE + authCode);
     }
 
     @Override
     public Principal getPrincipalByAccessToken(String accessToken) {
-        return CacheUtils.getCacheObject(ACCESS_TOKEN_PRE + accessToken);
+        return CacheUtils.getCacheObject(ACCESS_TOKEN + accessToken);
     }
 
     @Override
     public Principal getPrincipalByRefreshToken(String refreshToken) {
-        return CacheUtils.getCacheObject(REFRESH_TOKEN_PRE + refreshToken);
+        return CacheUtils.getCacheObject(REFRESH_TOKEN + refreshToken);
     }
 
     @Override
     public boolean checkAuthCode(String authCode) {
         try {
-            return CacheUtils.getCacheObject(AUTH_CODE_PRE + authCode) != null;
+            return CacheUtils.getCacheObject(AUTH_CODE + authCode) != null;
         } catch (Exception e) {
             return Boolean.FALSE;
         }
@@ -77,7 +75,7 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public boolean checkAccessToken(String accessToken) {
         try {
-            return CacheUtils.getCacheObject(ACCESS_TOKEN_PRE + accessToken) != null;
+            return CacheUtils.getCacheObject(ACCESS_TOKEN + accessToken) != null;
         } catch (Exception e) {
             return Boolean.FALSE;
         }
@@ -86,7 +84,7 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public boolean checkRefreshToken(String refreshToken) {
         try {
-            return CacheUtils.getCacheObject(REFRESH_TOKEN_PRE + refreshToken) != null;
+            return CacheUtils.getCacheObject(REFRESH_TOKEN + refreshToken) != null;
         } catch (Exception e) {
             return Boolean.FALSE;
         }
@@ -94,8 +92,7 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void revokeToken(String accessToken) {
-        CacheUtils.deleteCacheObject(ACCESS_TOKEN_PRE + accessToken);
-        CacheUtils.removeCacheSet(ACCESS_TOKEN_KEY, accessToken);
+        CacheUtils.deleteCacheObject(ACCESS_TOKEN + accessToken);
     }
 
     @Override
@@ -120,9 +117,9 @@ public class OAuthServiceImpl implements IOAuthService {
     @Override
     public List<Principal> activePrincipal() {
         List<Principal> principalList = new ArrayList<>();
-        Set<String> accessTokenList = CacheUtils.getCacheSet(ACCESS_TOKEN_KEY);
+        Set<String> accessTokenList = CacheUtils.keys(ACCESS_TOKEN);
         for (String accessToken : accessTokenList) {
-            Principal principal = getPrincipalByAccessToken(accessToken);
+            Principal principal = getPrincipalByAccessToken(accessToken.replace(ACCESS_TOKEN,""));
             if (principal != null) {
                 principalList.add(principal);
             }

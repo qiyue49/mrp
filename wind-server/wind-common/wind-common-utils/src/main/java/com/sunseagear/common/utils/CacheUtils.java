@@ -124,6 +124,10 @@ public class CacheUtils {
         return keys.size() == count;
     }
 
+    public static Set<String> keys(final String cacheName){
+        return redisTemplate.keys(cacheName + "*");
+    }
+
     /**
      * 缓存Map
      *
