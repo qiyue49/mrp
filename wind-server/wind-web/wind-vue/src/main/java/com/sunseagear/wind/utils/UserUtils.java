@@ -195,7 +195,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         getRoleList(user).forEach(item -> {
             ArrayList<String> cachePermissions = CacheUtils.getCacheObject(CACHE_PERMISSION_LIST + item.getId());
             permissionList.addAll(ObjectUtils.isNullOrEmpty(cachePermissions) ? new ArrayList<>() : cachePermissions);
-            if (ObjectUtils.isNullOrEmpty(permissionList)) {
+            if (ObjectUtils.isNullOrEmpty(cachePermissions)) {
                 List<Menu> permissionValueList = menuService.findPermissionByRoleId(item.getId());
                 List<String> menuIdList = new ArrayList<>();
                 for (Menu menu : permissionValueList) {
