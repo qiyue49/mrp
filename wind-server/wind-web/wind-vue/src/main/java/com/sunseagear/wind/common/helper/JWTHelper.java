@@ -83,11 +83,11 @@ public class JWTHelper {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public static int getExpireIn() {
+    public static long getExpireIn() {
         return Integer.valueOf(SysConfigHelper.getInstance().getSysConfig("tokenExpire").getValue()) * 60 * 1000;
     }
 
-    public static int getRefreshExpireIn() {
+    public static long getRefreshExpireIn() {
         return Integer.valueOf(SysConfigHelper.getInstance().getSysConfig("refreshTokenExpire").getValue()) * 60 * 1000;
     }
 

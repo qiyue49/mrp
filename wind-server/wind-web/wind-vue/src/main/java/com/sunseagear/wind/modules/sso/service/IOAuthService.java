@@ -36,7 +36,7 @@ public interface IOAuthService {
 
     Principal getPrincipalByRefreshToken(String refreshToken);// 根据refresh Token获取用户认证信息
 
-    Integer getExpireIn();//auth code / access token 过期时间
+    long getExpireIn();//auth code / access token 过期时间
 
     boolean checkClientId(String clientId);// 检查客户端id是否存在
 

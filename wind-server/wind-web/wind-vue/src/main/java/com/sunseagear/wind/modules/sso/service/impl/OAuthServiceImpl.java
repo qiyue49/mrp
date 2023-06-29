@@ -110,11 +110,11 @@ public class OAuthServiceImpl implements IOAuthService {
     }
 
     @Override
-    public Integer getExpireIn() {
+    public long getExpireIn() {
         return JWTHelper.getExpireIn();
     }
 
-    public static int getRefreshExpireIn() {
+    public static long getRefreshExpireIn() {
         return JWTHelper.getRefreshExpireIn();
     }
 
