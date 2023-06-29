@@ -14,6 +14,7 @@ export const sysConfigStore = defineStore('sysConfig', () => {
           configList.value.forEach(item => {
             config[item.code] = item.value
           })
+          localStorage.setItem('loginPage', config.loginPage)
         }
         resolve()
       }).catch(error => {

@@ -76,7 +76,7 @@
 </template>
 
 <script>
-import { updateConfig, createConfig } from '@/api/sys/config'
+import { updateConfig, createConfig, getConfig } from '@/api/sys/config'
 import UploadFile from '@/components/Upload/uploadFile'
 import UploadImage from '@/components/Upload/uploadImage'
 import BaiduMapPoint from '@/components/BaiduMap/baiduMapPoint'
@@ -149,12 +149,20 @@ export default {
         }
       })
     },
-    handleUpdate(row) {
-      this.temp = Object.assign({}, row) // copy obj
+    handleUpdate(id) {
+      this.resetTemp()
       this.title = '编辑'
       this.dialogFormVisible = true
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
+      })
+      getConfig(id).then(response => {
+        if (response.data.code === 0) {
+          this.temp = response.data.data
+        } else {
+          this.dialogFormVisible = false
+          this.$message.error(response.data.msg)
+        }
       })
     },
     updateData() {

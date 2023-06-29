@@ -18,17 +18,25 @@ export default {
   components: { Login1, Login2, Login3, Login4, Login5 },
   data() {
     return {
-      index: 2
+      index: 5
     }
   },
   created() {
-    // this.index = 5
-    this.index = this.getRandomArbitrary(1, 5)
-    // console.log('index', this.index)
+    let result = localStorage.getItem('loginPage')
+    if (this.isNull(result)) {
+      result = 5
+    } else {
+      result = Number.parseInt(result)
+    }
+    if (result === 0) {
+      this.index = this.getRandomArbitrary(1, 5)
+    } else {
+      this.index = result
+    }
   },
   methods: {
     getRandomArbitrary(min, max) {
-      return Math.floor(Math.random() * (max - min) + min)
+      return Math.floor(Math.random() * max + min)
     }
   }
 }

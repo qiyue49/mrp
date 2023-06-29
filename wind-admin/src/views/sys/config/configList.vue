@@ -108,7 +108,7 @@ export default {
       this.getList()
     },
     handleUpdate(row) {
-      this.$refs.form.handleUpdate(row)
+      this.$refs.form.handleUpdate(row.id)
     },
     handleDelete(row) {
       this.$confirm('确定删除该数据吗?', '提示', {
