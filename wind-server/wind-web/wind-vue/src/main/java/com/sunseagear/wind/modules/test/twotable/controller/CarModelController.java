@@ -32,7 +32,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/test/twotable/carmodel")
-@PreAuthorize("hasAuthority('test:twotable:carmodel')")
+@PreAuthorize("hasAuthority('test:twotable:car')")
 @Log(title = "车辆型号管理")
 public class CarModelController extends BaseBeanController<CarModel> {
 
@@ -48,7 +48,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    @PreAuthorize("hasAuthority('test:twotable:carmodel:list')")
+    @PreAuthorize("hasAuthority('test:twotable:car:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<CarModel> queryWrapper = new QueryWrapper<>();
@@ -68,7 +68,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
-    @PreAuthorize("hasAuthority('test:twotable:carmodel:detail')")
+    @PreAuthorize("hasAuthority('test:twotable:car:detail')")
     public String detail(@PathVariable("id") Long id) {
         CarModel carModel = carModelService.selectById(id);
         return Response.successJson(carModel);
@@ -86,7 +86,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
-    @PreAuthorize("hasAuthority('test:twotable:carmodel:update')")
+    @PreAuthorize("hasAuthority('test:twotable:car:update')")
     public String update(@Valid CarModel entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -94,18 +94,10 @@ public class CarModelController extends BaseBeanController<CarModel> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('test:twotable:carmodel:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        carModelService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('test:twotable:carmodel:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    @PreAuthorize("hasAuthority('test:twotable:car:delete')")
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         carModelService.deleteBatchIds(idList);
         return Response.ok("删除成功");

@@ -38,16 +38,9 @@ export function updateSchedule(data) {
   })
 }
 
-export function deleteSchedule(id) {
+export function deleteSchedule(ids) {
   return request({
-    url: '/task/schedule/job/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchDeleteSchedule(ids) {
-  return request({
-    url: '/task/schedule/job/batch/delete',
+    url: '/task/schedule/job/delete',
     method: 'post',
     data: { ids }
   })

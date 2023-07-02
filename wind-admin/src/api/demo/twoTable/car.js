@@ -31,10 +31,11 @@ export function updateCar(data) {
   })
 }
 
-export function deleteCar(id) {
+export function deleteCar(ids) {
   return request({
-    url: '/test/twotable/car/delete/' + id,
-    method: 'post'
+    url: '/test/twotable/car/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

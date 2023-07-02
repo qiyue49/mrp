@@ -59,7 +59,7 @@
 
 <script>
 import { fetchDictGroupList, createDictGroup, deleteDictGroup, updateDictGroup } from '@/api/sys/dictGroup'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'SysDictGroupComponent',

@@ -100,14 +100,6 @@ public class TableController extends BaseBeanController<Table> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('test:table:table:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        tableService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:table:table:detail')")
@@ -117,10 +109,10 @@ public class TableController extends BaseBeanController<Table> {
         return Response.successJson(tableEntity);
     }
 
-    @PostMapping("batch/delete")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:table:table:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = Arrays.asList(ids);
         tableService.deleteBatchIds(idList);
         return Response.ok("删除成功");

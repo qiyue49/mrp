@@ -34,7 +34,7 @@
 
 <script>
 import { fetchOrganizationList, deleteOrganization } from '@/api/sys/organization'
-import OrganizationForm from './organizationForm' // 水波纹指令
+import OrganizationForm from './organizationForm'
 export default {
   name: 'OrganizationList',
   components: { OrganizationForm },

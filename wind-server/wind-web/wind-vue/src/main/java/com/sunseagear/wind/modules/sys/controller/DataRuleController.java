@@ -88,13 +88,6 @@ public class DataRuleController extends BaseBeanController<DataRule> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('sys:datarule:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        dataRuleService.deleteById(id);
-        return Response.ok("删除成功");
-    }
 
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
@@ -104,10 +97,10 @@ public class DataRuleController extends BaseBeanController<DataRule> {
         return Response.successJson(dataRule);
     }
 
-    @PostMapping("batch/delete")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:datarule:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         dataRuleService.deleteBatchIds(idList);
         return Response.ok("删除成功");

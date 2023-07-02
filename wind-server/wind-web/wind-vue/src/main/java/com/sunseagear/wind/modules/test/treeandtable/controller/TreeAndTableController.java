@@ -92,14 +92,6 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        treeAndTableService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:detail')")
@@ -108,10 +100,10 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
         return Response.successJson(treeAndTable);
     }
 
-    @PostMapping("batch/delete")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         treeAndTableService.deleteBatchIds(idList);
         return Response.ok("删除成功");

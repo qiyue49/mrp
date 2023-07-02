@@ -27,7 +27,7 @@
 
 <script>
 import { getToken } from '@/utils/auth'
-import defaultImg from '@/assets/img/default_img.jpg' // 水波纹指令
+import defaultImg from '@/assets/img/default_img.jpg'
 export default {
   name: 'UploadFile',
   props: {

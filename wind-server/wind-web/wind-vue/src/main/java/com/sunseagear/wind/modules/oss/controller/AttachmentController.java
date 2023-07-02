@@ -68,15 +68,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
         return Response.successPageJson(pageBean);
     }
 
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('oss:attachment:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        attachmentService.deleteById(id);
-        return Response.ok();
-    }
-
-    @PostMapping("batch/delete")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('oss:attachment:delete')")
     public String batchDelete(@RequestParam(value = "ids", required = false) String[] ids) {

@@ -31,16 +31,9 @@ export function updateTable(data) {
   })
 }
 
-export function deleteTable(id) {
+export function deleteTable(ids) {
   return request({
-    url: '/test/table/table/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchDelete(ids) {
-  return request({
-    url: '/test/table/table/batch/delete',
+    url: '/test/table/table/delete',
     method: 'post',
     data: { ids }
   })

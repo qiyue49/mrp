@@ -30,10 +30,11 @@ export function updateOrganization(data) {
   })
 }
 
-export function deleteOrganization(id) {
+export function deleteOrganization(ids) {
   return request({
-    url: '/sys/organization/delete/' + id,
-    method: 'post'
+    url: '/sys/organization/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

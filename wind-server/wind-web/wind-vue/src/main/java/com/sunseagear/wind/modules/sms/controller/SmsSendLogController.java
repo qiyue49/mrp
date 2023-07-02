@@ -60,21 +60,13 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
         }
         // 预处理
         Page pageBean = smsSendLogService.selectPage(getPage(), queryWrapper);
-        return Response.successPageJson(pageBean, "id,phone,templateName,sendData,sendCode,tryNum,status,smsid,code,msg,delFlag,responseDate");
+        return Response.successPageJson(pageBean);
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sms:sendlog:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        smsSendLogService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('sms:sendlog:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         smsSendLogService.deleteBatchIds(idList);
         return Response.ok("删除成功");

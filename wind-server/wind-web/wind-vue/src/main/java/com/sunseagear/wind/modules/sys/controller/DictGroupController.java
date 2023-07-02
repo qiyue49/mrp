@@ -18,6 +18,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 @RestController
 @RequestMapping("/sys/dict/group")
@@ -48,7 +51,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
         }
         // 预处理
         Page pageBean = dictGroupService.selectPage(getPage(), queryWrapper);
-        return Response.successPageJson(pageBean, "id,name,code,remarks,usable");
+        return Response.successPageJson(pageBean);
     }
 
     @PostMapping("add")
@@ -73,10 +76,12 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
+    @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:dict:group:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        dictGroupService.deleteById(id);
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
+        List<Serializable> idList = Arrays.asList(ids);
+        dictGroupService.deleteBatchIds(idList);
         DictUtils.initDict();
         return Response.ok("删除成功");
     }

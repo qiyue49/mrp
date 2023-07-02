@@ -46,7 +46,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
         }
         // 预处理
         Page pageBean = scheduleJobService.selectPage(getPage(), queryWrapper);
-        return Response.successPageJson(pageBean, "id,jobName,cronExpression,executeClass,methodName,methodParams,misfirePolicy,loadWay,isConcurrent,description,jobStatus,jobGroup");
+        return Response.successPageJson(pageBean);
     }
 
     @PostMapping("add")
@@ -75,18 +75,10 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('task:schedule:job:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        scheduleJobService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('task:schedule:job:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         scheduleJobService.deleteBatchIds(idList);
         return Response.ok("删除成功");

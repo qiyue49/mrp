@@ -60,7 +60,7 @@ import { fetchList, deleteRole } from '@/api/sys/role'
 import roleDataRuleList from '../roleDataRule/roleDataRuleList'
 import RoleForm from './roleForm'
 import RoleSettingForm from './roleSettingForm'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'RoleList',
   components: { Pagination, RoleSettingForm, RoleForm, roleDataRuleList },

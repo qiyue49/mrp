@@ -31,16 +31,9 @@ export function updateConfig(data) {
   })
 }
 
-export function deleteConfig(id) {
+export function deleteConfig(ids) {
   return request({
-    url: '/sys/config/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchConfig(ids) {
-  return request({
-    url: '/sys/config/batch/delete',
+    url: '/sys/config/delete',
     method: 'post',
     data: { ids }
   })

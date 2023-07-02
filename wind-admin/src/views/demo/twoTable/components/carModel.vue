@@ -30,8 +30,8 @@
         />
         <el-table-column label="操作" width="180">
           <template #default="scope">
-            <el-button v-permission="['test:car:carModel:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
-            <el-button v-permission="['test:car:carModel:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除
+            <el-button v-permission="['test:twotable:car:detail']" size="small" plain type="primary" icon="EditPen" @click="handleUpdate(scope.row)">编辑</el-button>
+            <el-button v-permission="['test:twotable:car:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(scope.row)">删除
             </el-button>
           </template>
         </el-table-column>
@@ -47,7 +47,7 @@
 <script>
 import { fetchCarModelList, deleteCarModel } from '@/api/demo/twoTable/carModel'
 import carModelForm from './carModelForm'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'CarModel',
@@ -105,15 +105,21 @@ export default {
       this.$refs.form.handleCreate(this.dictGroup)
     },
     handleDelete(row) {
-      deleteCarModel(row.id).then((response) => {
-        const data = response.data
-        if (data.code === 0) {
-          this.dialogFormVisible = false
-          this.$message.success('删除成功')
-          this.getList()
-        } else {
-          this.$message.error(data.msg)
-        }
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteCarModel(row.id).then((response) => {
+          const data = response.data
+          if (data.code === 0) {
+            this.dialogFormVisible = false
+            this.$message.success('删除成功')
+            this.getList()
+          } else {
+            this.$message.error(data.msg)
+          }
+        })
       })
     }
 

@@ -94,8 +94,8 @@
 </template>
 
 <script>
-import { fetchScheduleJobLogList, deleteScheduleJobLog, batchDeleteScheduleJobLog } from '@/api/tool/task/log'
-import Pagination from '../../../components/Pagination' // 水波纹指令
+import { fetchScheduleJobLogList, deleteScheduleJobLog } from '@/api/tool/task/log'
+import Pagination from '../../../components/Pagination'
 
 export default {
   name: 'ScheduleJobLogList',
@@ -162,23 +162,42 @@ export default {
       this.ids = array.join(',')
     },
     handleBathDelete() {
-      batchDeleteScheduleJobLog(this.ids).then((response) => {
-        if (response.data.code === 0) {
-          this.getList()
-          this.$message.success(response.data.msg)
-        } else {
-          this.$message.error(response.data.msg)
-        }
+      if (this.isNull(this.ids)) {
+        this.$message({
+          message: '至少选择一条日志',
+          type: 'warning'
+        })
+        return
+      }
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteScheduleJobLog(this.ids).then((response) => {
+          if (response.data.code === 0) {
+            this.getList()
+            this.$message.success(response.data.msg)
+          } else {
+            this.$message.error(response.data.msg)
+          }
+        })
       })
     },
     handleDelete(row) {
-      deleteScheduleJobLog(row.id).then((response) => {
-        if (response.data.code === 0) {
-          this.getList()
-          this.$message.success(response.data.msg)
-        } else {
-          this.$message.error(response.data.msg)
-        }
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteScheduleJobLog(row.id).then((response) => {
+          if (response.data.code === 0) {
+            this.getList()
+            this.$message.success(response.data.msg)
+          } else {
+            this.$message.error(response.data.msg)
+          }
+        })
       })
     }
   }

@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
 import { fetchSendLogList, sendEmail, deleteSendlog, retrySend } from '@/api/email/sendlog'
 import { fetchTemplateList } from '@/api/email/template'
 import { unescape } from '@/utils/index'

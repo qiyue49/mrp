@@ -31,10 +31,11 @@ export function updateTemplate(data) {
   })
 }
 
-export function deleteTemplate(id) {
+export function deleteTemplate(ids) {
   return request({
-    url: '/email/template/delete/' + id,
-    method: 'post'
+    url: '/email/template/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

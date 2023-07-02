@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -97,16 +98,6 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
         return Response.ok("更新成功");
     }
 
-
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('sys:config:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        sysConfigService.deleteById(id);
-        SysConfigHelper.getInstance().update(UserUtils.getTenantId());
-        return Response.ok("删除成功");
-    }
-
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:config:detail')")
@@ -114,6 +105,16 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
         SysConfig tenant = sysConfigService.selectById(id);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
         return Response.successJson(tenant);
+    }
+
+    @PostMapping("delete")
+    @Log(logType = LogType.DELETE)
+    @PreAuthorize("hasAuthority('sys:config:delete')")
+    public String delete(@RequestParam("ids") Long[] ids) {
+        List<Serializable> idList = java.util.Arrays.asList(ids);
+        sysConfigService.deleteBatchIds(idList);
+        SysConfigHelper.getInstance().update(UserUtils.getTenantId());
+        return Response.ok("删除成功");
     }
 
     @GetMapping("config")

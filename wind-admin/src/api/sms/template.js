@@ -31,10 +31,11 @@ export function updateTemplate(data) {
   })
 }
 
-export function deleteTemplate(id) {
+export function deleteTemplate(ids) {
   return request({
-    url: '/sms/template/delete/' + id,
-    method: 'post'
+    url: '/sms/template/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

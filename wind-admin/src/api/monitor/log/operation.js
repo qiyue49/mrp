@@ -8,16 +8,9 @@ export function fetchOperationLogList(query) {
   })
 }
 
-export function deleteOperationLog(id) {
+export function deleteOperationLog(ids) {
   return request({
-    url: '/monitor/operation/log/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchDeleteOperationLog(ids) {
-  return request({
-    url: '/monitor/operation/log/batch/delete',
+    url: '/monitor/operation/log/delete',
     method: 'post',
     data: { ids }
   })

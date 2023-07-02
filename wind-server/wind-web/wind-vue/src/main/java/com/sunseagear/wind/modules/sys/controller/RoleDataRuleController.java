@@ -132,14 +132,6 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('sys:datarule:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        roleDataRuleService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:datarule:detail')")
@@ -148,10 +140,10 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
         return Response.successJson(roleDataRule);
     }
 
-    @PostMapping("batch/delete")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:datarule:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         roleDataRuleService.deleteBatchIds(idList);
         return Response.ok("删除成功");

@@ -21,7 +21,7 @@ public class Dict extends DataEntity<Long> {
      * 分组ID
      */
     @TableField(value = "gid")
-    private String gid;
+    private Long gid;
     /**
      * 键值名称
      */

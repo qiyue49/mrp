@@ -68,8 +68,8 @@
 </template>
 
 <script>
-import { fetchAttachmentList, deleteAttachment, batchDeleteAttachment } from '@/api/oss/attachment'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import { fetchAttachmentList, deleteAttachment } from '@/api/oss/attachment'
+import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'SysSendlogList',
   components: { Pagination },
@@ -126,32 +126,47 @@ export default {
       this.multipleSelection = val
     },
     handleDelete(row) {
-      deleteAttachment(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteAttachment(row.id).then(response => {
+          if (response.data.code === 0) {
+            this.getList()
+            this.$message.success(response.data.msg)
+          } else {
+            this.$message.error(response.data.msg)
+          }
+        })
       })
     },
     handleBatchDelete() {
       if (this.multipleSelection.length) {
-        this.batchDeleteLoading = true
-        const list = this.multipleSelection
-        const ids = []
-        list.forEach(function(value, index, array) {
-          ids.push(value.id)
-        })
-        const idsStr = ids.join(',')
-        batchDeleteAttachment(idsStr).then(response => {
-          if (response.data.code === 0) {
-            this.$message.success('提交成功')
-            this.$refs.multipleTable.clearSelection()
+        this.$confirm('确定删除该数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.batchDeleteLoading = true
+          const list = this.multipleSelection
+          const ids = []
+          list.forEach(function(value, index, array) {
+            ids.push(value.id)
+          })
+          const idsStr = ids.join(',')
+          deleteAttachment(idsStr).then(response => {
+            if (response.data.code === 0) {
+              this.$message.success('提交成功')
+              this.$refs.multipleTable.clearSelection()
+              this.batchDeleteLoading = false
+              this.getList()
+            }
+          }).catch(() => {
             this.batchDeleteLoading = false
-            this.getList()
-          }
-        }).catch(() => {
-          this.batchDeleteLoading = false
+          })
+          this.getList()
         })
-        this.getList()
       } else {
         this.$message({
           message: '至少选择一条日志',

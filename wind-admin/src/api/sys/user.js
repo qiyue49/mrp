@@ -31,10 +31,11 @@ export function updateUser(data) {
   })
 }
 
-export function deleteUser(id) {
+export function deleteUser(ids) {
   return request({
-    url: '/sys/user/delete/' + id,
-    method: 'post'
+    url: '/sys/user/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

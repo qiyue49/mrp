@@ -71,16 +71,9 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
         return Response.successPageJson(pageBean);
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @PreAuthorize("hasAuthority('monitor:login:log:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        loginLogService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @PreAuthorize("hasAuthority('monitor:login:log:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         loginLogService.deleteBatchIds(idList);
         return Response.ok("删除成功");

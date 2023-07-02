@@ -38,16 +38,9 @@ export function updateRoleDataRules(data) {
   })
 }
 
-export function deleteRoleDataRule(id) {
+export function deleteRoleDataRule(ids) {
   return request({
-    url: '/sys/roledatarule/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchRoleDataRule(ids) {
-  return request({
-    url: '/sys/roledatarule/batch/delete',
+    url: '/sys/roledatarule/delete',
     method: 'post',
     data: { ids }
   })

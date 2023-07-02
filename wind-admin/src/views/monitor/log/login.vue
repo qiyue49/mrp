@@ -96,7 +96,7 @@
 <script>
 import { fetchLoginLogList, deleteLoginLog, batchDeleteLoginLog, exportLoginLog } from '@/api/monitor/log/login'
 import Pagination from '@/components/Pagination/index.vue'
-import { textToHtml } from '@/utils' // 水波纹指令
+import { textToHtml } from '@/utils'
 
 export default {
   name: 'ScheduleJobLogList',
@@ -164,10 +164,16 @@ export default {
       row.status = status
     },
     handleDelete(row) {
-      deleteLoginLog(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteLoginLog(row.id).then(() => {
+          this.$message.success('删除成功')
+          const index = this.list.indexOf(row)
+          this.list.splice(index, 1)
+        })
       })
     },
     handleSelectionChange(val) {
@@ -189,20 +195,26 @@ export default {
     },
     handleBatchDelete() {
       if (this.multipleSelection.length) {
-        this.batchDeleteLoading = true
-        const list = this.multipleSelection
-        const ids = []
-        list.forEach(function(value, index, array) {
-          ids.push(value.id)
-        })
-        const idsStr = ids.join(',')
-        batchDeleteLoginLog(idsStr).then(() => {
-          this.$message.success('提交成功')
-          this.$refs.multipleTable.clearSelection()
-          this.batchDeleteLoading = false
-          this.getList()
-        }).catch(() => {
-          this.batchDeleteLoading = false
+        this.$confirm('确定删除该数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.batchDeleteLoading = true
+          const list = this.multipleSelection
+          const ids = []
+          list.forEach(function(value, index, array) {
+            ids.push(value.id)
+          })
+          const idsStr = ids.join(',')
+          batchDeleteLoginLog(idsStr).then(() => {
+            this.$message.success('提交成功')
+            this.$refs.multipleTable.clearSelection()
+            this.batchDeleteLoading = false
+            this.getList()
+          }).catch(() => {
+            this.batchDeleteLoading = false
+          })
         })
       } else {
         this.$message({

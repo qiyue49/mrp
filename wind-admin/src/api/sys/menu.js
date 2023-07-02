@@ -47,10 +47,11 @@ export function updateMenu(data) {
   })
 }
 
-export function deleteMenu(id) {
+export function deleteMenu(ids) {
   return request({
-    url: '/sys/menu/delete/' + id,
-    method: 'post'
+    url: '/sys/menu/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

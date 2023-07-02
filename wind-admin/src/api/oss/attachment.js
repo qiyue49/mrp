@@ -39,16 +39,9 @@ export function testAttachment(data) {
   })
 }
 
-export function deleteAttachment(id) {
+export function deleteAttachment(ids) {
   return request({
-    url: '/oss/attachment/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchDeleteAttachment(ids) {
-  return request({
-    url: '/oss/attachment/batch/delete',
+    url: '/oss/attachment/delete',
     method: 'post',
     data: { ids }
   })

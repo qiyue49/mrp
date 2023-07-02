@@ -31,16 +31,9 @@ export function updateExpandTable(data) {
   })
 }
 
-export function deleteExpandTable(id) {
+export function deleteExpandTable(ids) {
   return request({
-    url: '/test/expandtable/expandtable/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchExpandTable(ids) {
-  return request({
-    url: '/test/expandtable/expandtable/batch/delete',
+    url: '/test/expandtable/expandtable/delete',
     method: 'post',
     data: { ids }
   })

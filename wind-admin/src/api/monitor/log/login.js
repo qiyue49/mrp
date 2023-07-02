@@ -17,7 +17,7 @@ export function deleteLoginLog(id) {
 
 export function batchDeleteLoginLog(ids) {
   return request({
-    url: '/monitor/login/log/batch/delete',
+    url: '/monitor/login/log/delete',
     method: 'post',
     data: { ids }
   })

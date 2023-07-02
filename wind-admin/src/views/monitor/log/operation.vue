@@ -83,8 +83,8 @@
 </template>
 
 <script>
-import { fetchOperationLogList, deleteOperationLog, batchDeleteOperationLog } from '@/api/monitor/log/operation'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import { fetchOperationLogList, deleteOperationLog } from '@/api/monitor/log/operation'
+import Pagination from '@/components/Pagination/index.vue'
 
 export default {
   name: 'ScheduleJobLogList',
@@ -152,10 +152,16 @@ export default {
       row.status = status
     },
     handleDelete(row) {
-      deleteOperationLog(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteOperationLog(row.id).then(() => {
+          this.$message.success('删除成功')
+          const index = this.list.indexOf(row)
+          this.list.splice(index, 1)
+        })
       })
     },
     handleSelectionChange(val) {
@@ -163,20 +169,26 @@ export default {
     },
     handleBatchDelete() {
       if (this.multipleSelection.length) {
-        this.batchDeleteLoading = true
-        const list = this.multipleSelection
-        const ids = []
-        list.forEach(function(value, index, array) {
-          ids.push(value.id)
-        })
-        const idsStr = ids.join(',')
-        batchDeleteOperationLog(idsStr).then(() => {
-          this.$message.success('提交成功')
-          this.$refs.multipleTable.clearSelection()
-          this.batchDeleteLoading = false
-          this.getList()
-        }).catch(() => {
-          this.batchDeleteLoading = false
+        this.$confirm('确定删除该数据吗?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.batchDeleteLoading = true
+          const list = this.multipleSelection
+          const ids = []
+          list.forEach(function(value, index, array) {
+            ids.push(value.id)
+          })
+          const idsStr = ids.join(',')
+          deleteOperationLog(idsStr).then(() => {
+            this.$message.success('提交成功')
+            this.$refs.multipleTable.clearSelection()
+            this.batchDeleteLoading = false
+            this.getList()
+          }).catch(() => {
+            this.batchDeleteLoading = false
+          })
         })
       } else {
         this.$message({
@@ -184,23 +196,6 @@ export default {
           type: 'warning'
         })
       }
-    },
-    change(t) {
-      if (t < 10) {
-        return '0' + t
-      } else {
-        return t
-      }
-    },
-    timestampToTime(timestamp) {
-      const date = new Date(timestamp * 1000) // 时间戳为10位需*1000，时间戳为13位的话不需乘1000
-      const Y = date.getFullYear() + '-'
-      const M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-'
-      const D = this.change(date.getDate()) + ' '
-      const h = this.change(date.getHours()) + ':'
-      const m = this.change(date.getMinutes()) + ':'
-      const s = this.change(date.getSeconds())
-      return Y + M + D + h + m + s
     }
   }
 }

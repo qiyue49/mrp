@@ -8,15 +8,9 @@ export function fetchScheduleJobLogList(query) {
   })
 }
 
-export function deleteScheduleJobLog(id) {
+export function deleteScheduleJobLog(ids) {
   return request({
-    url: '/task/schedule/job/log/delete/' + id,
-    method: 'post'
-  })
-}
-export function batchDeleteScheduleJobLog(ids) {
-  return request({
-    url: '/task/schedule/job/log/batch/delete',
+    url: '/task/schedule/job/log/delete',
     method: 'post',
     data: { ids }
   })

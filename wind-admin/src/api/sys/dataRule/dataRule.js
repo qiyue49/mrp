@@ -31,16 +31,9 @@ export function updateDataRule(data) {
   })
 }
 
-export function deleteDataRule(id) {
+export function deleteDataRule(ids) {
   return request({
-    url: '/sys/datarule/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchDataRule(ids) {
-  return request({
-    url: '/sys/datarule/batch/delete',
+    url: '/sys/datarule/delete',
     method: 'post',
     data: { ids }
   })

@@ -70,14 +70,6 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
         return Response.successPageJson(pageBean);
     }
 
-    @PostMapping("delete/{id}")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('monitor:operation:log:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        operationLogService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
     @GetMapping("detail/{id}")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('monitor:operation:log:detail')")
@@ -86,10 +78,10 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
         return Response.successJson(operationLog);
     }
 
-    @PostMapping("batch/delete")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('monitor:operation:log:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         operationLogService.deleteBatchIds(idList);
         return Response.ok("删除成功");

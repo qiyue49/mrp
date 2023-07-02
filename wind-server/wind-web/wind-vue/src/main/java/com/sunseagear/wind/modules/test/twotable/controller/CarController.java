@@ -17,6 +17,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
 
 @RestController
 @RequestMapping("/test/twotable/car")
@@ -47,7 +49,7 @@ public class CarController extends BaseBeanController<Car> {
         }
         // 预处理
         Page pageBean = carService.selectPage(getPage(), queryWrapper);
-        return Response.successPageJson(pageBean, "id,name,code,remarks,usable");
+        return Response.successPageJson(pageBean);
     }
 
     @GetMapping("detail/{id}")
@@ -80,8 +82,9 @@ public class CarController extends BaseBeanController<Car> {
 
     @PostMapping("delete/{id}")
     @PreAuthorize("hasAuthority('test:twotable:car:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        carService.deleteById(id);
+    public String delete(@RequestParam("ids") Long[] ids) {
+        List<Serializable> idList = java.util.Arrays.asList(ids);
+        carService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }
 

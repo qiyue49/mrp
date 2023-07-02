@@ -31,16 +31,9 @@ export function updateTreeTable(data) {
   })
 }
 
-export function deleteTreeTable(id) {
+export function deleteTreeTable(ids) {
   return request({
-    url: '/test/treetable/treetable/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchTreeTable(ids) {
-  return request({
-    url: '/test/treetable/treetable/batch/delete',
+    url: '/test/treetable/treetable/delete',
     method: 'post',
     data: { ids }
   })

@@ -87,18 +87,10 @@ public class OrganizationController extends BaseBeanController<Organization> {
         return Response.successJson(organization);
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:organization:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        organizationService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('sys:organization:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         organizationService.deleteBatchIds(idList);
         return Response.ok("删除成功");

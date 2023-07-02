@@ -38,10 +38,11 @@ export function updateDict(data) {
   })
 }
 
-export function deleteDict(id) {
+export function deleteDict(ids) {
   return request({
-    url: '/sys/dict/delete/' + id,
-    method: 'post'
+    url: '/sys/dict/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 

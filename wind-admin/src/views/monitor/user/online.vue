@@ -67,7 +67,7 @@
 
 <script>
 import { fetchMonitorUserOnlineList } from '@/api/monitor/user/online'
-import Pagination from '@/components/Pagination/index.vue' // 水波纹指令
+import Pagination from '@/components/Pagination/index.vue'
 export default {
   name: 'MonitorUserOnlineList',
   components: { Pagination },

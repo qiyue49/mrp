@@ -31,16 +31,9 @@ export function updateTenant(data) {
   })
 }
 
-export function deleteTenant(id) {
+export function deleteTenant(ids) {
   return request({
-    url: '/sys/tenant/delete/' + id,
-    method: 'post'
-  })
-}
-
-export function batchTenant(ids) {
-  return request({
-    url: '/sys/tenant/batch/delete',
+    url: '/sys/tenant/delete',
     method: 'post',
     data: { ids }
   })

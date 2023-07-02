@@ -230,10 +230,19 @@ export default {
       })
     },
     handleDelete(row) {
-      deleteTemplate(row.id).then(() => {
-        this.$message.success('删除成功')
-        const index = this.list.indexOf(row)
-        this.list.splice(index, 1)
+      this.$confirm('确定删除该数据吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        deleteTemplate(row.id).then(response => {
+          if (response.data.code === 0) {
+            this.getList()
+            this.$message.success(response.data.msg)
+          } else {
+            this.$message.error(response.data.msg)
+          }
+        })
       })
     }
   }

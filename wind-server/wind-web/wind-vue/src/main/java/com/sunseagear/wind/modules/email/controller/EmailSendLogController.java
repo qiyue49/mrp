@@ -63,21 +63,13 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
         }
         // 预处理
         Page pageBean = emailSendLogService.selectPage(getPage(), queryWrapper);
-        return Response.successPageJson(pageBean, "id,email,subject,content,sendData,sendCode,responseDate,tryNum,msg,status,delFlag,emarks");
+        return Response.successPageJson(pageBean);
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('email:sendlog:delete')")
-    public String delete(@PathVariable("id") Long id) {
-        emailSendLogService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @Log(logType = LogType.DELETE)
-    @PreAuthorize("hasAuthority('email:sendlog:delete')")
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         emailSendLogService.deleteBatchIds(idList);
         return Response.ok("删除成功");

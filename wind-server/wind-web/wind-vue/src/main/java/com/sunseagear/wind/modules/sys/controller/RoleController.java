@@ -79,7 +79,7 @@ public class RoleController extends BaseBeanController<Role> {
         }
         // 预处理
         Page pageBean = roleService.selectPage(getPage(), queryWrapper);
-        return Response.successPageJson(pageBean, "id,name,code,isSys,usable,tenantId");
+        return Response.successPageJson(pageBean);
     }
 
     /**
@@ -120,20 +120,9 @@ public class RoleController extends BaseBeanController<Role> {
         return Response.ok("更新成功");
     }
 
-    @PostMapping("delete/{id}")
+    @PostMapping("delete")
     @Log(logType = LogType.DELETE)
-    public String delete(@PathVariable("id") Long id) {
-        Role role = roleService.getById(id);
-        if (role.getCode().equals("admin")) {
-            return Response.failJson("不能删除超级管理员角色");
-        }
-        roleService.deleteById(id);
-        return Response.ok("删除成功");
-    }
-
-    @PostMapping("batch/delete")
-    @Log(logType = LogType.DELETE)
-    public String batchDelete(@RequestParam("ids") String[] ids) {
+    public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         roleService.deleteBatchIds(idList);
         return Response.ok("删除成功");
@@ -158,9 +147,10 @@ public class RoleController extends BaseBeanController<Role> {
 
     @GetMapping(value = "{roleId}/menu")
     public String menu(@PathVariable("roleId") Long roleId) {
+        Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (roleId==0) {
+        if (role.getCode().equals("admin")) {
             QueryWrapper<Menu> queryWrapper = new QueryWrapper<Menu>();
             queryWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
             treeNodeList = menuService.selectList(queryWrapper);
@@ -181,9 +171,10 @@ public class RoleController extends BaseBeanController<Role> {
 
     @GetMapping(value = "{roleId}/permission")
     public String permission(@PathVariable("roleId") Long roleId) {
+        Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (roleId==0) {
+        if (role.getCode().equals("admin")) {
             QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("sort");
             treeNodeList = menuService.selectList(queryWrapper);

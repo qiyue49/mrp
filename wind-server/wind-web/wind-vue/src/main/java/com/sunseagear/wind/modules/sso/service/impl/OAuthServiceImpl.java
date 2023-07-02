@@ -32,7 +32,7 @@ public class OAuthServiceImpl implements IOAuthService {
     // 如果要求服务器重启后所有用户全部重新登录，则采用这种配置。
 //    private final String PREFIX = UserUtils.USER_CACHE + ":";
 
-    private final String AUTH_CODE = PREFIX + ":auth_code:";
+    private final String AUTH_CODE = PREFIX + "auth_code:";
     private final String ACCESS_TOKEN = PREFIX + "access_token:";
     private final String REFRESH_TOKEN = PREFIX + "refresh_token:";
 

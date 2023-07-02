@@ -31,10 +31,11 @@ export function updateDictGroup(data) {
   })
 }
 
-export function deleteDictGroup(id) {
+export function deleteDictGroup(ids) {
   return request({
-    url: '/sys/dict/group/delete/' + id,
-    method: 'post'
+    url: '/sys/dict/group/delete',
+    method: 'post',
+    data: { ids }
   })
 }
 
