@@ -45,19 +45,19 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PreAuthorize("hasAuthority('sys:config:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<SysConfig> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("tenant_id", UserUtils.getTenantId());
-        entityWrapper.orderByAsc("id");
+        QueryWrapper<SysConfig> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tenant_id", UserUtils.getTenantId());
+        queryWrapper.orderByAsc("id");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
-            entityWrapper.eq("code", code);
+            queryWrapper.eq("code", code);
         }
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.eq("name", name);
+            queryWrapper.eq("name", name);
         }
         // 预处理
-        Page pageBean = sysConfigService.selectPage(getPage(), entityWrapper);
+        Page pageBean = sysConfigService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

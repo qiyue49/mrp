@@ -52,18 +52,18 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PreAuthorize("hasAuthority('email:template:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<EmailTemplate> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<EmailTemplate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
-            entityWrapper.like("code", code);
+            queryWrapper.like("code", code);
         }
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.like("name", name);
+            queryWrapper.like("name", name);
         }
         // 预处理
-        Page pageBean = emailTemplateService.selectPage(getPage(), entityWrapper);
+        Page pageBean = emailTemplateService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

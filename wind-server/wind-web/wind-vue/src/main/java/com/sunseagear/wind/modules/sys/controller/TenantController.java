@@ -54,26 +54,26 @@ public class TenantController extends BaseBeanController<Tenant> {
     @PreAuthorize("hasAuthority('sys:tenant:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<Tenant> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("a.create_date");
+        QueryWrapper<Tenant> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("a.create_date");
         String tenantId = request.getParameter("tenantId");
         if (!StringUtils.isEmpty(tenantId)) {
-            entityWrapper.eq("tenant_id", tenantId);
+            queryWrapper.eq("tenant_id", tenantId);
         }
         String contact = request.getParameter("contact");
         if (!StringUtils.isEmpty(contact)) {
-            entityWrapper.eq("contact", contact);
+            queryWrapper.eq("contact", contact);
         }
         String phone = request.getParameter("phone");
         if (!StringUtils.isEmpty(phone)) {
-            entityWrapper.eq("phone", phone);
+            queryWrapper.eq("phone", phone);
         }
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.eq("name", name);
+            queryWrapper.eq("name", name);
         }
         // 预处理
-        Page pageBean = tenantService.selectPage(getPage(), entityWrapper);
+        Page pageBean = tenantService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "remarks", false);
     }
 

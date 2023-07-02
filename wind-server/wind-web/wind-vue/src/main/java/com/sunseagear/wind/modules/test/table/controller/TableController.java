@@ -60,23 +60,23 @@ public class TableController extends BaseBeanController<Table> {
     @PreAuthorize("hasAuthority('test:table:table:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<Table> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
 
         String title = request.getParameter("title");
         if (!StringUtils.isEmpty(title)) {
-            entityWrapper.eq("title", title);
+            queryWrapper.eq("title", title);
         }
         String level = request.getParameter("level");
         if (!StringUtils.isEmpty(title)) {
-            entityWrapper.eq("level", level);
+            queryWrapper.eq("level", level);
         }
         String type = request.getParameter("type");
         if (!StringUtils.isEmpty(type)) {
-            entityWrapper.eq("type", type);
+            queryWrapper.eq("type", type);
         }
         // 预处理
-        Page pageBean = tableService.selectPage(getPage(), entityWrapper);
+        Page pageBean = tableService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "content", false);
     }
 
@@ -167,22 +167,22 @@ public class TableController extends BaseBeanController<Table> {
     @PreAuthorize("hasAuthority('test:table:table:export')")
     public String export(HttpServletRequest request) {
         try {
-            QueryWrapper<Table> entityWrapper = new QueryWrapper<>();
-            entityWrapper.orderByDesc("create_date");
+            QueryWrapper<Table> queryWrapper = new QueryWrapper<>();
+            queryWrapper.orderByDesc("create_date");
 
             String title = request.getParameter("title");
             if (!StringUtils.isEmpty(title)) {
-                entityWrapper.eq("title", title);
+                queryWrapper.eq("title", title);
             }
             String level = request.getParameter("level");
             if (!StringUtils.isEmpty(title)) {
-                entityWrapper.eq("level", level);
+                queryWrapper.eq("level", level);
             }
             String type = request.getParameter("type");
             if (!StringUtils.isEmpty(type)) {
-                entityWrapper.eq("type", type);
+                queryWrapper.eq("type", type);
             }
-            List<Table> list = tableService.selectList(entityWrapper);
+            List<Table> list = tableService.selectList(queryWrapper);
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             new ExportExcel("综合表格", Table.class).setDataList(list).write(bos);
             byte[] bytes = bos.toByteArray();

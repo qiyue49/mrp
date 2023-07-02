@@ -70,26 +70,26 @@ public class UserController extends BaseBeanController<User> {
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:user:list')")
     public String list(HttpServletRequest request) throws IOException {
-        QueryWrapper<User> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("t.tenant_id", UserUtils.getTenantId());
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("t.tenant_id", UserUtils.getTenantId());
         String realname = request.getParameter("realname");
         if (!StringUtils.isEmpty(realname)) {
-            entityWrapper.like("t.realname", realname);
+            queryWrapper.like("t.realname", realname);
         }
         String username = request.getParameter("username");
         if (!StringUtils.isEmpty(username)) {
-            entityWrapper.like("t.username", username);
+            queryWrapper.like("t.username", username);
         }
         String phone = request.getParameter("phone");
         if (!StringUtils.isEmpty(phone)) {
-            entityWrapper.like("t.phone", phone);
+            queryWrapper.like("t.phone", phone);
         }
         String organizationId = request.getParameter("organization.id");
         if (!StringUtils.isEmpty(organizationId)) {
-            entityWrapper.apply(String.format("t.organization_id = '%s' or b.parent_ids like '%%%s%%'", organizationId, organizationId));
+            queryWrapper.apply(String.format("t.organization_id = '%s' or b.parent_ids like '%%%s%%'", organizationId, organizationId));
         }
         // 预处理
-        Page pageBean = userService.selectPage(getPage(), entityWrapper);
+        Page pageBean = userService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 
@@ -188,13 +188,13 @@ public class UserController extends BaseBeanController<User> {
             TemplateExportParams params = new TemplateExportParams(
                     "");
             //加入条件
-            QueryWrapper<User> entityWrapper = new QueryWrapper<>();
+            QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             // 子查询
             String organizationid = request.getParameter("organizationid");
             if (!StringUtils.isEmpty(organizationid)) {
-                entityWrapper.eq("uo.organization_id", organizationid);
+                queryWrapper.eq("uo.organization_id", organizationid);
             }
-            Page pageBean = userService.selectPage(getPage(), entityWrapper);
+            Page pageBean = userService.selectPage(getPage(), queryWrapper);
             String title = "用户信息";
             Workbook book = ExcelExportUtil.exportExcel(new ExportParams(
                     title, title, title), User.class, pageBean.getRecords());

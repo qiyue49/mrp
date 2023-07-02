@@ -47,22 +47,22 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
     @PreAuthorize("hasAuthority('email:sendlog:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<EmailSendLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("response_date");
+        QueryWrapper<EmailSendLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("response_date");
         String subject = request.getParameter("subject");
         if (!StringUtils.isEmpty(subject)) {
-            entityWrapper.like("subject", subject);
+            queryWrapper.like("subject", subject);
         }
         String email = request.getParameter("email");
         if (!StringUtils.isEmpty(email)) {
-            entityWrapper.eq("email", email);
+            queryWrapper.eq("email", email);
         }
         String status = request.getParameter("status");
         if (!StringUtils.isEmpty(status)) {
-            entityWrapper.eq("status", status);
+            queryWrapper.eq("status", status);
         }
         // 预处理
-        Page pageBean = emailSendLogService.selectPage(getPage(), entityWrapper);
+        Page pageBean = emailSendLogService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,email,subject,content,sendData,sendCode,responseDate,tryNum,msg,status,delFlag,emarks");
     }
 

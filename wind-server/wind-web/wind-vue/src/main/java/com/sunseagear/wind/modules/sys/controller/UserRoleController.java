@@ -81,10 +81,10 @@ public class UserRoleController extends BaseBeanController<UserRole> {
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:role:delete')")
     public String deleteByUserId(@PathVariable("userId") Long userId, @RequestParam("roleIds") String roleIds) {
-        QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("user_id", userId);
-        entityWrapper.in("role_id", roleIds);
-        userRoleService.delete(entityWrapper);
+        QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.in("role_id", roleIds);
+        userRoleService.delete(queryWrapper);
         UserUtils.clearCache(UserUtils.get(userId));
         return Response.ok("删除成功");
     }

@@ -39,14 +39,14 @@ public class CarController extends BaseBeanController<Car> {
     @PreAuthorize("hasAuthority('test:twotable:car:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<Car> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<Car> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String keyword = request.getParameter("keyword");
         if (!StringUtils.isEmpty(keyword)) {
-            entityWrapper.like("name", keyword).or().like("code", keyword);
+            queryWrapper.like("name", keyword).or().like("code", keyword);
         }
         // 预处理
-        Page pageBean = carService.selectPage(getPage(), entityWrapper);
+        Page pageBean = carService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,name,code,remarks,usable");
     }
 

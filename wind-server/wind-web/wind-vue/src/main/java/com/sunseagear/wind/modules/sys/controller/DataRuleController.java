@@ -53,18 +53,18 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PreAuthorize("hasAuthority('sys:datarule:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<DataRule> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<DataRule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String resourceCode = request.getParameter("resourceCode");
         if (!StringUtils.isEmpty(resourceCode)) {
-            entityWrapper.eq("resource_code", resourceCode);
+            queryWrapper.eq("resource_code", resourceCode);
         }
         String scopeName = request.getParameter("scopeName");
         if (!StringUtils.isEmpty(scopeName)) {
-            entityWrapper.eq("scope_name", scopeName);
+            queryWrapper.eq("scope_name", scopeName);
         }
         // 预处理
-        Page pageBean = dataRuleService.selectPage(getPage(), entityWrapper);
+        Page pageBean = dataRuleService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "scopeValue", false);
     }
 

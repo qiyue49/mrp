@@ -45,14 +45,14 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @PreAuthorize("hasAuthority('sys:organization:list')")
     public String list(HttpServletRequest request,
                        HttpServletResponse response) throws IOException {
-        QueryWrapper<Organization> entityWrapper = new QueryWrapper<Organization>();
-        entityWrapper.eq("tenant_id", UserUtils.getTenantId());
+        QueryWrapper<Organization> queryWrapper = new QueryWrapper<Organization>();
+        queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         //加入条件
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.like("name", name);
+            queryWrapper.like("name", name);
         }
-        List<Organization> treeNodeList = organizationService.selectList(entityWrapper);
+        List<Organization> treeNodeList = organizationService.selectList(queryWrapper);
         List<Organization> vueTreeNodes = VueTreeHelper.create().sort(treeNodeList);
         return Response.successJson(vueTreeNodes);
     }

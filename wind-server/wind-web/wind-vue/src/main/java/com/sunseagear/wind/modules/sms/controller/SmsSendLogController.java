@@ -44,22 +44,22 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
     @PreAuthorize("hasAuthority('sms:sendlog:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<SmsSendLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("response_date");
+        QueryWrapper<SmsSendLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("response_date");
         String sendCode = request.getParameter("sendCode");
         if (!StringUtils.isEmpty(sendCode)) {
-            entityWrapper.eq("send_code", sendCode);
+            queryWrapper.eq("send_code", sendCode);
         }
         String phone = request.getParameter("phone");
         if (!StringUtils.isEmpty(phone)) {
-            entityWrapper.eq("phone", phone);
+            queryWrapper.eq("phone", phone);
         }
         String status = request.getParameter("status");
         if (!StringUtils.isEmpty(status)) {
-            entityWrapper.eq("status", status);
+            queryWrapper.eq("status", status);
         }
         // 预处理
-        Page pageBean = smsSendLogService.selectPage(getPage(), entityWrapper);
+        Page pageBean = smsSendLogService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,phone,templateName,sendData,sendCode,tryNum,status,smsid,code,msg,delFlag,responseDate");
     }
 

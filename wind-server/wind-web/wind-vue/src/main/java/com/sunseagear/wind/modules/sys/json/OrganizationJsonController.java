@@ -39,12 +39,12 @@ public class OrganizationJsonController extends BaseBeanController<Organization>
     @PostMapping("/list")
     @Log(logType = LogType.SELECT)
     public String List() {
-        QueryWrapper<Organization> entityWrapper = new QueryWrapper<>();
+        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         String tenantId = UserUtils.getTenantId();
         if (!StringUtils.isEmpty(tenantId)) {
-            entityWrapper.eq("t.tenant_id", tenantId);
+            queryWrapper.eq("t.tenant_id", tenantId);
         }
-        List<Organization> organizations = organizationService.selectTreeList(entityWrapper);
+        List<Organization> organizations = organizationService.selectTreeList(queryWrapper);
         List<Organization> sort = VueTreeHelper.create().sort(organizations);
         return Response.successJson(sort);
     }

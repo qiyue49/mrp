@@ -40,14 +40,14 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @PreAuthorize("hasAuthority('sys:dict:group:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<DictGroup> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<DictGroup> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String keyword = request.getParameter("keyword");
         if (!StringUtils.isEmpty(keyword)) {
-            entityWrapper.like("name", keyword).or().like("code", keyword);
+            queryWrapper.like("name", keyword).or().like("code", keyword);
         }
         // 预处理
-        Page pageBean = dictGroupService.selectPage(getPage(), entityWrapper);
+        Page pageBean = dictGroupService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,name,code,remarks,usable");
     }
 

@@ -53,15 +53,15 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     @PreAuthorize("hasAuthority('test:treetable:treetable:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<TreeTable> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<TreeTable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.like("name", name);
+            queryWrapper.like("name", name);
         }
 
         // 预处理
-        List<TreeTable> treeNodeList = treeTableService.selectList(entityWrapper);
+        List<TreeTable> treeNodeList = treeTableService.selectList(queryWrapper);
         List<TreeTable> vueTreeNodes = VueTreeHelper.create().sort(treeNodeList);
         return Response.successJson(vueTreeNodes);
     }

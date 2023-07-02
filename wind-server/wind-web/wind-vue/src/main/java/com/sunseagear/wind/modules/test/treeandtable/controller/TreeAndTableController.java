@@ -53,22 +53,22 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<TreeAndTable> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<TreeAndTable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.eq("name", name);
+            queryWrapper.eq("name", name);
         }
         String type = request.getParameter("type");
         if (!StringUtils.isEmpty(type)) {
-            entityWrapper.eq("type", type);
+            queryWrapper.eq("type", type);
         }
         String areaId = request.getParameter("areaId");
         if (!StringUtils.isEmpty(areaId)) {
-            entityWrapper.eq("area_id", areaId);
+            queryWrapper.eq("area_id", areaId);
         }
         // 预处理
-        Page pageBean = treeAndTableService.selectPage(getPage(), entityWrapper);
+        Page pageBean = treeAndTableService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

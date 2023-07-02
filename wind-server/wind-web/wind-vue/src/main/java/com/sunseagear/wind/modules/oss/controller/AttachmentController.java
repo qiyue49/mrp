@@ -57,14 +57,14 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     @PreAuthorize("hasAuthority('oss:attachment:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<Attachment> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("upload_time");
+        QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("upload_time");
         String fileName = request.getParameter("fileName");
         if (!StringUtils.isEmpty(fileName)) {
-            entityWrapper.like("file_name", fileName);
+            queryWrapper.like("file_name", fileName);
         }
         // 预处理
-        Page pageBean = attachmentService.selectPage(getPage(), entityWrapper);
+        Page pageBean = attachmentService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

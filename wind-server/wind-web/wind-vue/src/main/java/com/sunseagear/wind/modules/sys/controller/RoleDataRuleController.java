@@ -66,18 +66,18 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
         // 预处理
         List<RoleDataRule> list = roleDataRuleService.selectList(roleDataRuleEntityWrapper);
 
-        QueryWrapper<DataRule> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<DataRule> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String resourceCode = request.getParameter("resourceCode");
         if (!StringUtils.isEmpty(resourceCode)) {
-            entityWrapper.eq("resource_code", resourceCode);
+            queryWrapper.eq("resource_code", resourceCode);
         }
         String scopeName = request.getParameter("scopeName");
         if (!StringUtils.isEmpty(scopeName)) {
-            entityWrapper.eq("scope_name", scopeName);
+            queryWrapper.eq("scope_name", scopeName);
         }
         // 预处理
-        Page<DataRule> pageBean = dataRuleService.selectPage(getPage(), entityWrapper);
+        Page<DataRule> pageBean = dataRuleService.selectPage(getPage(), queryWrapper);
         pageBean.getRecords().forEach(item -> {
             list.forEach(roleDataRule -> {
                 if (item.getId().equals(roleDataRule.getScopeId())) {

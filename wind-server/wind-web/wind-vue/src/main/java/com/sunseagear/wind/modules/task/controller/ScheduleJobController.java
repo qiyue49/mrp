@@ -38,14 +38,14 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PreAuthorize("hasAuthority('task:schedule:job:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<ScheduleJob> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<ScheduleJob> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String jobName = request.getParameter("jobName");
         if (!StringUtils.isEmpty(jobName)) {
-            entityWrapper.like("job_name", jobName);
+            queryWrapper.like("job_name", jobName);
         }
         // 预处理
-        Page pageBean = scheduleJobService.selectPage(getPage(), entityWrapper);
+        Page pageBean = scheduleJobService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,jobName,cronExpression,executeClass,methodName,methodParams,misfirePolicy,loadWay,isConcurrent,description,jobStatus,jobGroup");
     }
 

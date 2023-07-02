@@ -43,22 +43,22 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
     @PreAuthorize("hasAuthority('task:schedule:joblog:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<ScheduleJobLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_time");
+        QueryWrapper<ScheduleJobLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_time");
         String jobName = request.getParameter("jobName");
         if (!StringUtils.isEmpty(jobName)) {
-            entityWrapper.like("job_name", jobName);
+            queryWrapper.like("job_name", jobName);
         }
         String executeClass = request.getParameter("executeClass");
         if (!StringUtils.isEmpty(executeClass)) {
-            entityWrapper.eq("execute_class", executeClass);
+            queryWrapper.eq("execute_class", executeClass);
         }
         String status = request.getParameter("status");
         if (!StringUtils.isEmpty(status)) {
-            entityWrapper.eq("status", status);
+            queryWrapper.eq("status", status);
         }
         // 预处理
-        Page pageBean = scheduleJobLogService.selectPage(getPage(), entityWrapper);
+        Page pageBean = scheduleJobLogService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,jobName,executeClass,jobGroup,methodName,methodParams,jobMessage,status,exceptionInfo,createTime");
     }
 

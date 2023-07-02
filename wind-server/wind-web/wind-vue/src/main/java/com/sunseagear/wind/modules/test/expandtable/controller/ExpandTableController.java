@@ -52,10 +52,10 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PreAuthorize("hasAuthority('test:expandtable:expandtable:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<ExpandTable> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<ExpandTable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         // 预处理
-        Page pageBean = expandTableService.selectPage(getPage(), entityWrapper);
+        Page pageBean = expandTableService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

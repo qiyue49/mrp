@@ -59,15 +59,15 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
     @PreAuthorize("hasAuthority('monitor:login:log:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<LoginLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("login_time");
+        QueryWrapper<LoginLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("login_time");
         String status = request.getParameter("status");
         if (!StringUtils.isEmpty(status)) {
-            entityWrapper.eq("status", status);
+            queryWrapper.eq("status", status);
         }
 
         // 预处理
-        Page pageBean = loginLogService.selectPage(getPage(), entityWrapper);
+        Page pageBean = loginLogService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 
@@ -95,9 +95,9 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
             TemplateExportParams params = new TemplateExportParams(
                     "");
             //加入条件
-            QueryWrapper<LoginLog> entityWrapper = new QueryWrapper<>();
-            entityWrapper.orderByDesc("login_time");
-            Page pageBean = loginLogService.selectPage(getPage(), entityWrapper);
+            QueryWrapper<LoginLog> queryWrapper = new QueryWrapper<>();
+            queryWrapper.orderByDesc("login_time");
+            Page pageBean = loginLogService.selectPage(getPage(), queryWrapper);
             String title = "登陆日志";
             Workbook book = ExcelExportUtil.exportExcel(new ExportParams(
                     title, title, title), LoginLog.class, pageBean.getRecords());

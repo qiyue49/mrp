@@ -21,9 +21,9 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
     @Override
     public void insert(Long uid, String roleCode) {
         //设置用户角色(单位角色)
-        QueryWrapper<Role> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("code", roleCode);
-        Role role = roleService.selectOne(entityWrapper);
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", roleCode);
+        Role role = roleService.selectOne(queryWrapper);
         if (role == null) {
             throw new RuntimeException("该角色编码不存在");
         }
@@ -33,10 +33,10 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
 
     @Override
     public void insertByRoleId(Long uid, Long roleId) {
-        QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("user_id", uid);
-        entityWrapper.eq("role_id", roleId);
-        long count = selectCount(entityWrapper);
+        QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", uid);
+        queryWrapper.eq("role_id", roleId);
+        long count = selectCount(queryWrapper);
         if (count == 0) {
             UserRole userRole = new UserRole();
             userRole.setUserId(uid);
@@ -48,12 +48,12 @@ public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserR
     //删除用户角色
     @Override
     public void deleteUserRole(Long uid, Long roleId) {
-        QueryWrapper<UserRole> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("user_id", uid);
-        entityWrapper.eq("role_id", roleId);
-        long count = selectCount(entityWrapper);
+        QueryWrapper<UserRole> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", uid);
+        queryWrapper.eq("role_id", roleId);
+        long count = selectCount(queryWrapper);
         if (count > 0) {
-            delete(entityWrapper);
+            delete(queryWrapper);
         }
     }
 }

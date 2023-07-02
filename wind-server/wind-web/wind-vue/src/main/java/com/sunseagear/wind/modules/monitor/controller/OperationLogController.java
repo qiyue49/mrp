@@ -54,19 +54,19 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     @PreAuthorize("hasAuthority('monitor:operation:log:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<OperationLog> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<OperationLog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String operationIp = request.getParameter("operationIp");
         if (!StringUtils.isEmpty(operationIp)) {
-            entityWrapper.eq("operation_ip", operationIp);
+            queryWrapper.eq("operation_ip", operationIp);
         }
         String requestUri = request.getParameter("requestUri");
         if (!StringUtils.isEmpty(requestUri)) {
-            entityWrapper.like("request_uri", requestUri);
+            queryWrapper.like("request_uri", requestUri);
         }
 
         // 预处理
-        Page pageBean = operationLogService.selectPage(getPage(), entityWrapper);
+        Page pageBean = operationLogService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

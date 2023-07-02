@@ -37,17 +37,17 @@ public class UserJsonController extends BaseBeanController<User> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     public String list(HttpServletRequest request) throws IOException {
-        QueryWrapper<User> entityWrapper = new QueryWrapper<>();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         String tenantId = UserUtils.getTenantId();
         if (!StringUtils.isEmpty(tenantId)) {
-            entityWrapper.eq("t.tenant_id", tenantId);
+            queryWrapper.eq("t.tenant_id", tenantId);
         }
         String search = request.getParameter("search");
         if (!StringUtils.isEmpty(search)) {
-            entityWrapper.like("realname", search).or().like("phone", search);
+            queryWrapper.like("realname", search).or().like("phone", search);
         }
         // 预处理
-        Page page = userService.selectPage(getPage(), entityWrapper);
+        Page page = userService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(page, "password,username", false);
     }
 

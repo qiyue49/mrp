@@ -63,10 +63,10 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
 
     @Override
     public void insert(Long roleId, String menuId) {
-        QueryWrapper<RoleMenu> entityWrapper = new QueryWrapper<>();
-        entityWrapper.eq("menu_id", menuId);
-        entityWrapper.eq("role_id", roleId);
-        long count = selectCount(entityWrapper);
+        QueryWrapper<RoleMenu> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("menu_id", menuId);
+        queryWrapper.eq("role_id", roleId);
+        long count = selectCount(queryWrapper);
         if (count == 0) {
             RoleMenu roleMenu = new RoleMenu();
             roleMenu.setMenuId(menuId);

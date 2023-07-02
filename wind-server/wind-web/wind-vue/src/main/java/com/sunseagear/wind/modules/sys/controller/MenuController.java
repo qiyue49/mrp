@@ -43,14 +43,14 @@ public class MenuController extends BaseBeanController<Menu> {
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:menu:list')")
     public String list(HttpServletRequest request) throws IOException {
-        QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
+        QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         //加入条件
         String keyword = request.getParameter("keyword");
         if (!StringUtils.isEmpty(keyword)) {
-            entityWrapper.like("name", keyword);
+            queryWrapper.like("name", keyword);
         }
-        entityWrapper.orderByAsc("sort");
-        List<Menu> treeNodeList = menuService.selectList(entityWrapper);
+        queryWrapper.orderByAsc("sort");
+        List<Menu> treeNodeList = menuService.selectList(queryWrapper);
         List<Menu> vueTreeNodes = VueTreeHelper.create().sort(treeNodeList);
         return Response.successJson(vueTreeNodes);
     }

@@ -47,18 +47,18 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
     @PreAuthorize("hasAuthority('sms:template:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<SmsTemplate> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByDesc("create_date");
+        QueryWrapper<SmsTemplate> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("create_date");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
-            entityWrapper.like("code", code);
+            queryWrapper.like("code", code);
         }
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.like("name", name);
+            queryWrapper.like("name", name);
         }
         // 预处理
-        Page pageBean = smsTemplateService.selectPage(getPage(), entityWrapper);
+        Page pageBean = smsTemplateService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

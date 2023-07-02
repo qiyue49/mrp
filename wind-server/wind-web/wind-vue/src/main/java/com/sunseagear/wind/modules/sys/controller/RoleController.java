@@ -62,23 +62,23 @@ public class RoleController extends BaseBeanController<Role> {
     @Log(logType = LogType.SELECT)
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<Role> entityWrapper = new QueryWrapper<>();
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (UserUtils.getUser().getTenantId().equals(TenantProperties.getInstance().getDefaultTenantId())) {
-            entityWrapper.eq("tenant_id", UserUtils.getTenantId());
+            queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         } else {
-            entityWrapper.nested(i -> i.eq("tenant_id", UserUtils.getTenantId()).or().eq("tenant_id", TenantProperties.getInstance().getDefaultTenantId())).eq("is_sys", "0");
+            queryWrapper.nested(i -> i.eq("tenant_id", UserUtils.getTenantId()).or().eq("tenant_id", TenantProperties.getInstance().getDefaultTenantId())).eq("is_sys", "0");
         }
-        entityWrapper.orderByDesc("create_date");
+        queryWrapper.orderByDesc("create_date");
         String code = request.getParameter("code");
         if (!StringUtils.isEmpty(code)) {
-            entityWrapper.like("code", code);
+            queryWrapper.like("code", code);
         }
         String name = request.getParameter("name");
         if (!StringUtils.isEmpty(name)) {
-            entityWrapper.like("name", name);
+            queryWrapper.like("name", name);
         }
         // 预处理
-        Page pageBean = roleService.selectPage(getPage(), entityWrapper);
+        Page pageBean = roleService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean, "id,name,code,isSys,usable,tenantId");
     }
 
@@ -89,15 +89,15 @@ public class RoleController extends BaseBeanController<Role> {
      */
     @GetMapping(value = "usable/list")
     public String usableLst() throws IOException {
-        QueryWrapper<Role> entityWrapper = new QueryWrapper<Role>();
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<Role>();
         if (UserUtils.getUser().getTenantId().equals(TenantProperties.getInstance().getDefaultTenantId())) {
-            entityWrapper.eq("tenant_id", UserUtils.getTenantId());
+            queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         } else {
-            entityWrapper.nested(i -> i.eq("tenant_id", UserUtils.getTenantId()).or().eq("tenant_id", TenantProperties.getInstance().getDefaultTenantId())).eq("is_sys", "0");
+            queryWrapper.nested(i -> i.eq("tenant_id", UserUtils.getTenantId()).or().eq("tenant_id", TenantProperties.getInstance().getDefaultTenantId())).eq("is_sys", "0");
         }
-        entityWrapper.eq("usable", "1");
-        entityWrapper.orderByDesc("create_date");
-        List<Role> usableLst = roleService.selectList(entityWrapper);
+        queryWrapper.eq("usable", "1");
+        queryWrapper.orderByDesc("create_date");
+        List<Role> usableLst = roleService.selectList(queryWrapper);
         return Response.successJson(usableLst);
     }
 
@@ -161,9 +161,9 @@ public class RoleController extends BaseBeanController<Role> {
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
         if (roleId==0) {
-            QueryWrapper<Menu> entityWrapper = new QueryWrapper<Menu>();
-            entityWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
-            treeNodeList = menuService.selectList(entityWrapper);
+            QueryWrapper<Menu> queryWrapper = new QueryWrapper<Menu>();
+            queryWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
+            treeNodeList = menuService.selectList(queryWrapper);
         } else {
             treeNodeList = menuService.getCurrentUserMenus();
         }
@@ -184,9 +184,9 @@ public class RoleController extends BaseBeanController<Role> {
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
         if (roleId==0) {
-            QueryWrapper<Menu> entityWrapper = new QueryWrapper<>();
-            entityWrapper.orderByAsc("sort");
-            treeNodeList = menuService.selectList(entityWrapper);
+            QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
+            queryWrapper.orderByAsc("sort");
+            treeNodeList = menuService.selectList(queryWrapper);
         } else {
             treeNodeList = menuService.findMenuAndPermissionByUserId(UserUtils.getUser().getId());
         }

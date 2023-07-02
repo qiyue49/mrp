@@ -51,18 +51,18 @@ public class CarModelController extends BaseBeanController<CarModel> {
     @PreAuthorize("hasAuthority('test:twotable:carmodel:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<CarModel> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByAsc("sort");
+        QueryWrapper<CarModel> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort");
         String keyword = request.getParameter("keyword");
         String carId = request.getParameter("carId");
         if (!StringUtils.isEmpty(carId) && !StringUtils.isEmpty(keyword)) {
-            entityWrapper.eq("car_id", carId).and(i -> i.like("label", keyword).or().like("value", keyword));
+            queryWrapper.eq("car_id", carId).and(i -> i.like("label", keyword).or().like("value", keyword));
         } else if (!StringUtils.isEmpty(carId)) {
-            entityWrapper.eq("car_id", carId);
+            queryWrapper.eq("car_id", carId);
         }
 
         // 预处理
-        Page pageBean = carModelService.selectPage(getPage(), entityWrapper);
+        Page pageBean = carModelService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 

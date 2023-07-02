@@ -68,18 +68,18 @@ public class DictController extends BaseBeanController<Dict> {
     @PreAuthorize("hasAuthority('sys:dict:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
-        QueryWrapper<Dict> entityWrapper = new QueryWrapper<>();
-        entityWrapper.orderByAsc("sort");
+        QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByAsc("sort");
         String keyword = request.getParameter("keyword");
         String gid = request.getParameter("gid");
         if (!StringUtils.isEmpty(gid) && !StringUtils.isEmpty(keyword)) {
-            entityWrapper.eq("gid", gid).and(i -> i.like("label", keyword).or().like("value", keyword));
+            queryWrapper.eq("gid", gid).and(i -> i.like("label", keyword).or().like("value", keyword));
         } else if (!StringUtils.isEmpty(gid)) {
-            entityWrapper.eq("gid", gid);
+            queryWrapper.eq("gid", gid);
         }
 
         // 预处理
-        Page pageBean = dictService.selectPage(getPage(), entityWrapper);
+        Page pageBean = dictService.selectPage(getPage(), queryWrapper);
         return Response.successPageJson(pageBean);
     }
 
