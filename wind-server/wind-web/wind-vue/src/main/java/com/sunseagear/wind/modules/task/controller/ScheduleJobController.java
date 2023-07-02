@@ -87,8 +87,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping(value = "{id}/changeJobStatus")
     @Log(logType = LogType.OTHER, title = "任务状态")
     @PreAuthorize("hasAuthority('task:schedule:job:change:job:status')")
-    public String changeJobStatus(@PathVariable("id") Long id, HttpServletRequest request,
-                                  HttpServletResponse response) {
+    public String changeJobStatus(@PathVariable("id") Long id, HttpServletRequest request) {
         String cmd = request.getParameter("cmd");
         String label = "停止";
         if (cmd.equals("start")) {

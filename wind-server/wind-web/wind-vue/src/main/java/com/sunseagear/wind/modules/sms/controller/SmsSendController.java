@@ -52,7 +52,7 @@ public class SmsSendController {
     }
 
     @PostMapping(value = "/massSendSmsByCode")
-    public String massSendSmsByCode(HttpServletRequest request, HttpServletResponse response) {
+    public String massSendSmsByCode(HttpServletRequest request) {
         try {
             String phone = request.getParameter("phone");
             String code = request.getParameter("code");
