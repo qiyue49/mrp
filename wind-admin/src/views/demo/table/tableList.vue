@@ -1,5 +1,5 @@
 <template>
-  <el-card>
+  <el-card class="el-card">
     <div class="app-container">
       <div class="filter-container">
         <div class="filter-item">

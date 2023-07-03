@@ -87,7 +87,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
   function delOthersCachedViews(view) {
     return new Promise(resolve => {
       for (let i = 0; i < cachedViews.value.length; i++) {
-        const v = cachedViews[i]
+        const v = cachedViews.value[i]
         if (v === view.name) {
           const index = cachedViews.value.indexOf(v)
           cachedViews.value = cachedViews.value.slice(index, index + 1)
@@ -125,7 +125,7 @@ export const tagsViewStore = defineStore('tagsView', () => {
 
   function updateVisitedView(view) {
     for (let i = 0; i < visitedViews.value.length; i++) {
-      let v = visitedViews[i]
+      let v = visitedViews.value[i]
       if (v.path === view.path) {
         v = Object.assign(v, view)
         break
