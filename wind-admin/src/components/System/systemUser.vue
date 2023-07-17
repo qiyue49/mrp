@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable" @focus="show">
+    <el-input v-model="name" :style="{width: width}" readonly :clearable="clearable">
       <template #append>
         <el-button icon="Search" @click="show" />
       </template>
