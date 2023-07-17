@@ -3,7 +3,7 @@
     <el-input v-if="showText" v-model="location" />
     <el-button v-if="showText" type="primary" @click="addPath">数据画点</el-button>
     <div :style="{height:height,width:width}">
-      <el-bmap ref="map" :center="center" :zoom="zoom" @click="getClickInfo">
+      <el-bmap ref="map" :center="centerLocation" :zoom="zoom" @click="getClickInfo">
         <el-bmap-marker :position="location" enable-dragging raise-on-drag/>
       </el-bmap>
     </div>
@@ -48,6 +48,7 @@ export default {
   data() {
     return {
       location: [],
+      centerLocation: [],
       emitting: false
     }
   },
@@ -64,10 +65,12 @@ export default {
           this.point = {}
           this.location = []
         }
+        this.centerLocation = this.location
       }
     }
   },
-  created() {
+  mounted() {
+    this.centerLocation = this.center
   },
   methods: {
     addPath() {
