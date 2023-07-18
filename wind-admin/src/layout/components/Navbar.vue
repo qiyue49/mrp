@@ -47,7 +47,7 @@ import defaultAvatar from '@/assets/img/dashboard/avatar.png'
 import Setting from './Settings'
 import TopMenu from '@/layout/components/TopMenu/topMenu'
 import FullScreen from '@/layout/components/FullScreen/fullScreen'
-import DarkTheme from '@/components/DarkTheme/darkTheme.vue'
+import DarkTheme from '@/layout/components/DarkTheme/darkTheme.vue'
 
 export default {
   components: {

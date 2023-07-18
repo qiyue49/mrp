@@ -7,7 +7,7 @@
 <script setup>
 import { useToggle } from '@vueuse/shared'
 import { useDark } from '@vueuse/core'
-import SvgIcon from '../SvgIcon/index.vue'
+import SvgIcon from '../../../components/SvgIcon/index.vue'
 // import { isDark } from '../../.vitepress/theme/composables/dark'
 const isDark = useDark({
   // 存储到localStorage/sessionStorage中的Key 根据自己的需求更改

@@ -1,13 +1,15 @@
 <template>
   <div>
     <el-row :gutter="gutter">
-      <el-col v-for="(item, index) in imageList" :key="index" :span="span">
-        <el-image :src="item" :preview-src-list="imageList" :style="{'margin-top': gutter, width: width, height: height}" :fit="fit" />
+      <el-col v-for="(item, index) in imageList" :key="index" :span="span" style="margin-top: 10px">
+        <el-image :src="item" :preview-src-list="imageList" :style="{width: width, height: height}" :fit="fit" />
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
+import { isJson } from '@/utils'
+
 export default {
   name: 'ImageGallery',
   props: {
@@ -51,12 +53,17 @@ export default {
     modelValue: {
       immediate: true,
       handler(val) {
+        this.imageList = []
         if (this.isNull(val)) {
-          this.imageList = []
           return
         }
         if (val instanceof Array) {
           this.imageList = val
+        } else if (isJson(val)) {
+          const list = JSON.parse(val)
+          list.forEach(item => {
+            this.imageList.push(item.url)
+          })
         } else {
           this.imageList = val.split(',')
         }

@@ -18,7 +18,7 @@ export default {
     },
     placeholder: {
       type: String,
-      default: ''
+      default: '请选择'
     },
     list: {
       type: Array,
@@ -62,7 +62,7 @@ export default {
   methods: {
     refreshListValue() {
       this.attrList.forEach(item => {
-        if (this.value === item[this.props.id]) {
+        if (this.modelValue === item[this.props.id]) {
           this.attrValue = item[this.props.value]
         }
       })

@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <el-button type="primary" @click="newRect">添加折线</el-button>
-    <el-button type="primary" @click="clearRect">清除折线</el-button>
-    <el-button v-if="showText" type="primary" @click="addPath">数据画线</el-button>
-    <el-input v-if="showText" v-model="path" style="margin-top: 10px; margin-bottom: 10px" />
+  <div style="position: relative;">
     <div :style="{height:height,width:width}" >
-      <el-bmap :center="center" :zoom="zoom" @moveend="syncCenterAndZoom" @zoomend="syncCenterAndZoom">
+      <el-bmap :center="centerLocation" :zoom="zoom" @moveend="syncCenterAndZoom" @zoomend="syncCenterAndZoom">
         <el-bmap-polyline v-if="show" :path="path" :stroke-color="color" :stroke-opacity="opacity" :stroke-weight="weight" enable-editing @editend="updatePolyLinePath" />
       </el-bmap>
+    </div>
+    <div style="position: absolute; top:10px; right: 10px; z-index: 10" >
+      <el-button type="primary" icon="Plus" circle @click="newLine"/>
+      <el-button type="primary" icon="Delete" circle @click="clearLine"/>
     </div>
   </div>
 </template>
 
 <script>
+import { nextTick } from 'vue'
+
 export default {
   name: 'BaiduMapLine',
   props: {
@@ -49,17 +51,14 @@ export default {
     height: {
       type: String,
       default: '400px'
-    },
-    showText: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['update:modelValue'],
   data() {
     return {
-      mapCenter: {},
+      centerLocation: [],
       show: false,
+      emitting: false,
       path: undefined
     }
   },
@@ -67,6 +66,9 @@ export default {
     modelValue: {
       immediate: true,
       handler(val) {
+        if (this.emitting) {
+          return
+        }
         if (!this.isNull(val)) {
           this.path = JSON.parse(val)
           if (!(this.path instanceof Array)) {
@@ -83,31 +85,26 @@ export default {
     }
   },
   created() {
-    this.mapCenter.lat = this.center[1]
-    this.mapCenter.lng = this.center[0]
+    this.centerLocation = this.center
   },
   methods: {
     syncCenterAndZoom(e) {
       const { lng, lat } = e.target.getCenter()
-      this.mapCenter.lng = lng
-      this.mapCenter.lat = lat
-      // this.zoom = e.target.getZoom();
+      this.centerLocation = [lng, lat]
     },
-    newRect() {
-      const lng = this.mapCenter.lng
-      const lat = this.mapCenter.lat
+    newLine() {
+      const lng = this.centerLocation[0]
+      const lat = this.centerLocation[1]
       this.path = []
       this.path.push([lng + 0.01, lat + 0.01])
       this.path.push([lng - 0.01, lat - 0.01])
       this.show = true
       this.updateData()
     },
-    clearRect() {
-      this.path = undefined
+    clearLine() {
+      this.path = []
       this.show = false
       this.updateData()
-    },
-    addPath() {
     },
     updatePolyLinePath(e) {
       const polylinePath = e.target.getPath()
@@ -115,17 +112,15 @@ export default {
       polylinePath.forEach(item => {
         this.path.push([item.lng, item.lat])
       })
-
       this.updateData()
     },
     updateData() {
+      this.emitting = true
       this.$emit('update:modelValue', JSON.stringify(this.path))
+      nextTick(() => {
+        this.emitting = false
+      })
     }
-
   }
 }
 </script>
-
-<style scoped>
-
-</style>

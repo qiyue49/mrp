@@ -1,8 +1,8 @@
 <template>
-  <el-select v-model="attrValue" :filterable="filterable" :placeholder="placeholder" @change="change">
+  <el-select v-model="attrValue" :filterable="filterable" :placeholder="placeholder" :style="{width: width}" @change="change">
     <el-option
       v-for="item in attrList"
-      :key="item.label + 'scopeType'"
+      :key="item[props.value] + 'scopeType'"
       :label="item[props.label]"
       :value="item[props.value]"
     />
@@ -30,6 +30,10 @@ export default {
       default() {
         return []
       }
+    },
+    width: {
+      type: String,
+      default: '100%'
     },
     props: {
       type: Object,
