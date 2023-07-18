@@ -39,6 +39,11 @@ export const constantRoutes = [
     hidden: true
   },
   {
+    path: '/componentSample',
+    component: () => import('@/views/demo/componentSample/componentSample'),
+    hidden: true
+  },
+  {
     path: '/404',
     component: () => import('@/views/errorPage/404'),
     hidden: true
@@ -103,7 +108,7 @@ const router = createRouter({
   scrollBehavior: () => ({ left: 0, top: 0 })
 })
 
-const whiteList = ['/login', '/auth-redirect', '/whiteList'] // no redirect whitelist
+const whiteList = ['/login', '/auth-redirect', '/whiteList', '/componentSample'] // no redirect whitelist
 
 router.beforeEach(async(to, from, next) => {
   // set page title

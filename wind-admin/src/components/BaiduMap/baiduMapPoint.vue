@@ -1,7 +1,5 @@
 <template>
   <div>
-    <el-input v-if="showText" v-model="location" />
-    <el-button v-if="showText" type="primary" @click="addPath">数据画点</el-button>
     <div :style="{height:height,width:width}">
       <el-bmap ref="map" :center="centerLocation" :zoom="zoom" @click="getClickInfo">
         <el-bmap-marker :position="location" enable-dragging raise-on-drag/>
@@ -38,10 +36,6 @@ export default {
     height: {
       type: String,
       default: '400px'
-    },
-    showText: {
-      type: Boolean,
-      default: false
     }
   },
   emits: ['update:modelValue'],
@@ -69,13 +63,10 @@ export default {
       }
     }
   },
-  mounted() {
+  created() {
     this.centerLocation = this.center
   },
   methods: {
-    addPath() {
-
-    },
     getClickInfo(e) {
       const point = e.latlng
       this.location = [point.lng, point.lat]

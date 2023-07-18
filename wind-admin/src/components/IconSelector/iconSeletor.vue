@@ -6,7 +6,6 @@
       </template>
       <template #append>
         <el-button icon="Search" @click="show" />
-        <!--        <el-button icon="Delete" @click="clear" />-->
       </template>
     </el-input>
     <el-dialog v-model="iconFormVisible" draggable class="dialog-title" title="选择图标" :close-on-click-modal="false" append-to-body>
@@ -19,7 +18,7 @@
                 v-for="item in iconList" :key="item" :span="6" :class="{'active': item === isActive}"
                 @click="activeFun(item)">
                 <component :is="item" class="icon"/>
-                <span class="col-span">{{ item }}</span>
+                <span class="svg-name">{{ item }}</span>
               </el-col>
             </el-row>
           </el-scrollbar>
@@ -87,8 +86,11 @@ export default {
 }
 </script>
 <style scoped>
-.col-span{
+.svg-name{
   vertical-align: middle;
+  white-space: nowrap; /*文本不自动换行*/
+  overflow: hidden; /*隐藏超出容器的文本*/
+  text-overflow: ellipsis; /*省略显示*/
 }
 </style>
 
