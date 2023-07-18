@@ -1,6 +1,9 @@
 <template>
   <div>
     <el-link v-for="item in fileList" :key="item.url" target="_blank" :href="item.url" :underline="true" style="margin: 10px">
+      <el-icon>
+        <Document />
+      </el-icon>
       {{ item.name }}
     </el-link>
   </div>

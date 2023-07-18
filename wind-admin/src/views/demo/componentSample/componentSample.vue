@@ -1,42 +1,62 @@
 <template>
-  <el-row :gutter="40" style="width: 100%;">
-    <el-col :span="8">
-      <div>地图打点：{{ point }}</div>
-      <baidu-map-point v-model="point" />
-    </el-col>
-    <el-col :span="8">
-      <div>地图划线：{{ line }}</div>
-      <baidu-map-line v-model="line" />
-    </el-col>
-    <el-col :span="8">
-      <div>地图画框：{{ path }}</div>
-      <baidu-map-rect v-model="path" />
-    </el-col>
-    <el-col :span="6">
-      <div>图片上传：{{ urlImage }}</div>
-      <upload-image v-model="urlImage" dir="test"/>
-    </el-col>
-    <el-col :span="6">
-      <div>文件上传：{{ urlFile }}</div>
-      <upload-file v-model="urlFile" dir="test"/>
-    </el-col>
-    <el-col :span="6">
-      <div>多文件上传：{{ urlFileMulti }}</div>
-      <upload-file-multi v-model="urlFileMulti" dir="test"/>
-    </el-col>
-    <el-col :span="6">
-      <div>图片列表</div>
-      <image-gallery v-model="imageFileList"/>
-    </el-col>
-    <el-col :span="6">
-      <div>文件列表</div>
-      <file-download-list v-model="imageFileList"/>
-    </el-col>
-    <el-col :span="6">
-      <div>SVG图标<svg-icon :icon-class="svgIcon" /></div>
-      <svg-icon-selector v-model="svgIcon" />
-    </el-col>
-  </el-row>
+  <el-card>
+    <el-row :gutter="40">
+      <el-col :span="6">
+        <div class="title">图片上传：{{ urlImage }}</div>
+        <upload-image v-model="urlImage" dir="test"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">文件上传：{{ urlFile }}</div>
+        <upload-file v-model="urlFile" dir="test"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">多文件上传：{{ urlFileMulti }}</div>
+        <upload-file-multi v-model="urlFileMulti" dir="test"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">图片列表</div>
+        <image-gallery v-model="imageFileList"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">文件列表</div>
+        <file-download-list v-model="imageFileList"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">checkBox{{ checkId }}</div>
+        <checkbox v-model="checkId" :list="dictList('sf')"/>
+        <div class="title">checkBox-字典{{ checkId }}</div>
+        <checkbox-dict v-model="checkId" dict-code="sf"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">下拉选择{{ selectId }}</div>
+        <select-list v-model="selectId" :list="dictList('sf')"/>
+        <div class="title">树形选择{{ treeId }}</div>
+        <cascader-list v-model="treeId" :list="treeList"/>
+        <div class="title">自动完成{{ selectId }}</div>
+        <autocomplete-list v-model="selectId" :list="dictList('sf')" :props="{ value: 'label', id: 'value' }"/>
+      </el-col>
+      <el-col :span="6">
+        <div class="title">SVG图标<svg-icon :icon-class="svgIcon" /></div>
+        <svg-icon-selector v-model="svgIcon" />
+        <div class="title">用户选择{{ userId }}</div>
+        <system-user v-model="userId" />
+        <div class="title">组织机构选择{{ orgId }}</div>
+        <system-organization v-model="orgId" />
+      </el-col>
+      <el-col :span="8">
+        <div>地图打点：{{ point }}</div>
+        <baidu-map-point v-model="point" />
+      </el-col>
+      <el-col :span="8">
+        <div>地图划线：{{ line }}</div>
+        <baidu-map-line v-model="line" />
+      </el-col>
+      <el-col :span="8">
+        <div>地图画框：{{ path }}</div>
+        <baidu-map-rect v-model="path" />
+      </el-col>
+    </el-row>
+  </el-card>
 
 </template>
 
@@ -52,6 +72,14 @@ import ImageGallery from '@/components/ImageGallery/imageGallery.vue'
 import FileDownloadList from '@/components/FileList/fileDownloadList.vue'
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import SvgIconSelector from '@/components/IconSelector/svgIconSeletor.vue'
+import SystemUser from '@/components/System/systemUser.vue'
+import SystemOrganization from '@/components/System/systemOrganization.vue'
+import SelectList from '@/components/Select/selectList.vue'
+import CascaderList from '@/components/Select/cascaderList.vue'
+import AutocompleteList from '@/components/Select/autocompleteList.vue'
+import Checkbox from '@/components/Checkbox/checkbox.vue'
+import CheckboxDict from '@/components/Checkbox/checkboxDict.vue'
+import { fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
 
 const imageList = [
   { name: '文件1.jepg', url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' },
@@ -65,6 +93,13 @@ const imageList = [
 export default {
   name: 'ComponentSample',
   components: {
+    CheckboxDict,
+    Checkbox,
+    AutocompleteList,
+    CascaderList,
+    SelectList,
+    SystemOrganization,
+    SystemUser,
     SvgIconSelector,
     SvgIcon,
     FileDownloadList,
@@ -85,13 +120,35 @@ export default {
       urlFile: undefined,
       urlFileMulti: undefined,
       imageFileList: JSON.stringify(imageList),
-      svgIcon: ''
+      svgIcon: '',
+      userId: undefined,
+      orgId: undefined,
+      checkId: undefined,
+      selectId: undefined,
+      treeId: undefined,
+      treeList: []
 
+    }
+  },
+  created() {
+    this.getTree()
+  },
+  methods: {
+    getTree() {
+      fetchTreeTableList().then(response => {
+        if (response.data.code === 0) {
+          this.treeList = response.data.data
+        } else {
+          this.$message.error(response.data.msg)
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
+.title{
+  font-size: 20px;
+}
 </style>

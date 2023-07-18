@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <div style="position: relative;">
     <div :style="{height:height,width:width}">
       <el-bmap ref="map" :center="centerLocation" :zoom="zoom" @click="getClickInfo">
         <el-bmap-marker :position="location" enable-dragging raise-on-drag/>
       </el-bmap>
+    </div>
+    <div style="position: absolute; top:10px; right: 10px; z-index: 10" >
+      <el-button type="primary" icon="Delete" circle @click="clear"/>
     </div>
   </div>
 
@@ -78,6 +81,10 @@ export default {
       nextTick(() => {
         this.emitting = false
       })
+    },
+    clear() {
+      this.location = []
+      this.updateData()
     }
 
   }
