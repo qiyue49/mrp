@@ -96,13 +96,7 @@ public class Response {
 
         gsonBuilder.registerTypeAdapter(String.class, new JsonSerializer<String>() {
             public JsonElement serialize(String src, Type typeOfSrc, JsonSerializationContext context) {
-                return new JsonPrimitive(StringEscapeUtils.unescapeHtml4(src));
-            }
-        });
-
-        gsonBuilder.registerTypeAdapter(String.class, new JsonDeserializer() {
-            public String deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-                return StringEscapeUtils.escapeHtml4(json.getAsJsonPrimitive().getAsString());
+                return new JsonPrimitive(StringEscapeUtils.unescapeHtml4(StringEscapeUtils.unescapeHtml4(src)));
             }
         });
 

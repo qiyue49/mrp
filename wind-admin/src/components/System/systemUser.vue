@@ -153,10 +153,10 @@ export default {
     },
     getUserInfo() {
       this.name = undefined
-      if (this.selectCurentUserId === undefined) {
+      if (this.modelValue === undefined) {
         return
       }
-      fetchUser(this.selectCurentUserId).then(response => {
+      fetchUser(this.modelValue).then(response => {
         if (response.data.code === 0) {
           this.name = response.data.data.realname + '(' + response.data.data.username + ')'
         }
