@@ -78,7 +78,8 @@ public class OSSUploadJsonController {
         if (!StringUtils.isEmpty(content)) {
             MultipartFile multipartFile = BASE64DecodedMultipartFile.base64ToMultipart(content);
             try {
-                return Response.successJson((Object) attachmentHelper.upload(request, multipartFile, dir));
+                MultipartFile[] array = {multipartFile};
+                return Response.successJson((Object) attachmentHelper.upload(request, array, dir));
             } catch (IOException e) {
                 return Response.error(MessageUtils.getMessage("upload.server.error"));
             } catch (InvalidExtensionException e) {
