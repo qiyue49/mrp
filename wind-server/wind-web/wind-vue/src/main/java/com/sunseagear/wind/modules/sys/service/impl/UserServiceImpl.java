@@ -11,6 +11,7 @@ import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.utils.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -98,11 +99,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         if (user == null) {
             return Boolean.FALSE;
         }
-        String newPassword = passwordService.getPassword(password);
-        if (newPassword.equals(user.getPassword())) {
-            return Boolean.TRUE;
-        }
-        return Boolean.FALSE;
+        return new BCryptPasswordEncoder().matches(password, user.getPassword());
     }
 
     @Override
