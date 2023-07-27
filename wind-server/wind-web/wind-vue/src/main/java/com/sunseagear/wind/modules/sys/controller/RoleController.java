@@ -19,6 +19,7 @@ import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +43,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/sys/role")
+@PreAuthorize("hasAuthority('sys:role')")
 @Log(title = "角色管理")
 public class RoleController extends BaseBeanController<Role> {
 
@@ -60,6 +62,7 @@ public class RoleController extends BaseBeanController<Role> {
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
+    @PreAuthorize("hasAuthority('sys:role:list')")
     public String list(HttpServletRequest request) throws IOException {
         //加入条件
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
@@ -88,6 +91,7 @@ public class RoleController extends BaseBeanController<Role> {
      * @throws IOException
      */
     @GetMapping(value = "usable/list")
+    @PreAuthorize("hasAuthority('sys:role:list')")
     public String usableLst() throws IOException {
         QueryWrapper<Role> queryWrapper = new QueryWrapper<Role>();
         if (UserUtils.getUser().getTenantId().equals(TenantProperties.getInstance().getDefaultTenantId())) {
@@ -103,6 +107,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping("add")
     @Log(logType = LogType.INSERT)
+    @PreAuthorize("hasAuthority('sys:role:add')")
     public String add(@Valid Role entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -113,6 +118,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping("update")
     @Log(logType = LogType.UPDATE)
+    @PreAuthorize("hasAuthority('sys:role:update')")
     public String update(@Valid Role entity, BindingResult result) {
         // 验证错误
         this.checkError(entity, result);
@@ -122,6 +128,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
+    @PreAuthorize("hasAuthority('sys:role:delete')")
     public String batchDelete(@RequestParam("ids") Long[] ids) {
         List<Serializable> idList = java.util.Arrays.asList(ids);
         roleService.deleteBatchIds(idList);
@@ -135,6 +142,7 @@ public class RoleController extends BaseBeanController<Role> {
      * @return
      */
     @PostMapping(value = "{uid}/findListByUserId")
+    @PreAuthorize("hasAuthority('sys:role:list')")
     public List<Role> findListByUserId(@PathVariable("uid") Long uid) {
         try {
             return roleService.findListByUserId(uid);
@@ -146,6 +154,7 @@ public class RoleController extends BaseBeanController<Role> {
 
 
     @GetMapping(value = "{roleId}/menu")
+    @PreAuthorize("hasAuthority('sys:role:list')")
     public String menu(@PathVariable("roleId") Long roleId) {
         Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
@@ -170,6 +179,7 @@ public class RoleController extends BaseBeanController<Role> {
     }
 
     @GetMapping(value = "{roleId}/permission")
+    @PreAuthorize("hasAuthority('sys:role:list')")
     public String permission(@PathVariable("roleId") Long roleId) {
         Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
@@ -195,6 +205,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping(value = "/setMenu")
     @Log(logType = LogType.OTHER, title = "菜单配置")
+    @PreAuthorize("hasAuthority('sys:role:update')")
     public String setMenu(@RequestParam("roleId") Long roleId,
                           @RequestParam("menuIds") String menuIds) {
         try {
@@ -209,6 +220,7 @@ public class RoleController extends BaseBeanController<Role> {
 
     @PostMapping(value = "/setPermission")
     @Log(logType = LogType.OTHER, title = "权限配置")
+    @PreAuthorize("hasAuthority('sys:role:update')")
     public String setPermission(@RequestParam("roleId") Long roleId,
                                 @RequestParam("menuIds") String menuIds) {
         try {
