@@ -19,7 +19,7 @@
         <div class="flexdi">
           <el-form-item prop="publishDate">
             <div>发布时间：</div>
-            <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
+            <el-date-picker v-model="temp.publishDate" type="datetime" value-format="YYYY-MM-DD HH:mm" format="YYYY-MM-DD HH:mm" />
           </el-form-item>
           <el-form-item prop="author">
             <div>作者：</div>
@@ -76,7 +76,7 @@ export default {
       rules: {
         type: [{ required: true, message: 'type is required', trigger: 'change' }],
         timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }, { validator: this.formValidate.validateIngeterGTZRule, tigger: 'blur' }]
+        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
       },
       statusOptions: ['published', 'draft', 'deleted'],
       temp: {

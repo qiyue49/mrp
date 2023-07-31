@@ -2,46 +2,45 @@
   <!-- 富文本 -->
   <div class="tinymce-container">
     <editor :id="tinymceId" v-model="content" class="tinymce-textarea" :init="init" :disabled="disabled"/>
-    <!-- <div class="editor-custom-btn-container">
-      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
-    </div> -->
   </div>
 </template>
 
 <script>
 import tinymce from 'tinymce/tinymce'
 import Editor from '@tinymce/tinymce-vue'
-// import 'tinymce/models/dom' // 特别注意 tinymce 6.0.0 版本之后必须引入，否则不显示
+import 'tinymce/models/dom' // 特别注意 tinymce 6.0.0 版本之后必须引入，否则不显示
 import 'tinymce/icons/default/icons'
 import 'tinymce/themes/silver'
-import 'tinymce/plugins/image'
-import 'tinymce/plugins/media'
-import 'tinymce/plugins/table'
-import 'tinymce/plugins/lists'
-import 'tinymce/plugins/contextmenu'
-import 'tinymce/plugins/wordcount'
-import 'tinymce/plugins/colorpicker'
-import 'tinymce/plugins/textcolor'
-import 'tinymce/plugins/preview'
-import 'tinymce/plugins/code'
-import 'tinymce/plugins/link'
+import 'tinymce/plugins/accordion'
 import 'tinymce/plugins/advlist'
-import 'tinymce/plugins/codesample'
-import 'tinymce/plugins/hr'
-import 'tinymce/plugins/fullscreen'
-import 'tinymce/plugins/textpattern'
-import 'tinymce/plugins/searchreplace'
+import 'tinymce/plugins/anchor'
 import 'tinymce/plugins/autolink'
+import 'tinymce/plugins/autoresize'
+import 'tinymce/plugins/autosave'
+import 'tinymce/plugins/charmap'
+import 'tinymce/plugins/code'
+import 'tinymce/plugins/codesample'
 import 'tinymce/plugins/directionality'
+import 'tinymce/plugins/emoticons'
+import 'tinymce/plugins/fullscreen'
+import 'tinymce/plugins/help'
+import 'tinymce/plugins/image'
+import 'tinymce/plugins/importcss'
+import 'tinymce/plugins/insertdatetime'
+import 'tinymce/plugins/link'
+import 'tinymce/plugins/lists'
+import 'tinymce/plugins/media'
+import 'tinymce/plugins/nonbreaking'
+import 'tinymce/plugins/pagebreak'
+import 'tinymce/plugins/preview'
+import 'tinymce/plugins/quickbars'
+import 'tinymce/plugins/save'
+import 'tinymce/plugins/searchreplace'
+import 'tinymce/plugins/table'
+import 'tinymce/plugins/template'
 import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
-import 'tinymce/plugins/template'
-import 'tinymce/plugins/charmap'
-import 'tinymce/plugins/nonbreaking'
-import 'tinymce/plugins/insertdatetime'
-import 'tinymce/plugins/imagetools'
-import 'tinymce/plugins/autosave'
-import 'tinymce/plugins/autoresize'
+import 'tinymce/plugins/wordcount'
 // 扩展插件
 // import '../assets/tinymce/plugins/lineheight/plugin'
 // import editorImage from './components/editorImage'
@@ -55,32 +54,65 @@ export default {
       type: String,
       default: ''
     },
+    height: {
+      type: Number,
+      default: 600
+    },
     disabled: {
       type: Boolean,
       default: false
     },
+    menu: {
+      type: Object,
+      default() {
+        return {
+          file: { title: 'File', items: 'newdocument restoredraft | preview | export print | deleteallconversations' },
+          edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
+          view: {
+            title: 'View',
+            items: 'code | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments'
+          },
+          insert: {
+            title: 'Insert',
+            items: 'image link media addcomment pageembed template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents | insertdatetime'
+          },
+          format: {
+            title: 'Format',
+            items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | language | removeformat'
+          },
+          tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
+          table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
+          help: { title: 'Help', items: 'help' }
+        }
+      }
+    },
     plugins: {
       type: [String, Array],
       default:
-          'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap hr nonbreaking insertdatetime advlist lists wordcount imagetools textpattern autosave autoresize'
+          'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap nonbreaking insertdatetime advlist lists wordcount autosave autoresize'
     },
     toolbar: {
       type: [String, Array],
-      default: 'styleselect formatselect fontselect fontsizeselect |\ code undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link codesample  fullscreen preview| alignleft aligncenter alignright alignjustify outdent indent formatpainter |\ bullist numlist blockquote subscript superscript removeformat table image media charmap hr pagebreak insertdatetime'
+      default: 'styleselect formatselect fontselect fontsizeselect |\ code undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link codesample  fullscreen preview| alignleft aligncenter alignright alignjustify outdent indent formatpainter |\ bullist numlist blockquote subscript superscript removeformat table image media charmap pagebreak insertdatetime'
     }
   },
   emits: ['update:modelValue'],
   data() {
+    const dir = import.meta.env.MODE === 'tomcat' ? '/admin' : ''
     return {
       tinymceId: this.id || 'vue-tinymce' + Date.parse(new Date()),
       // 初始化配置
       init: {
-        language_url: '/static/tinymce-all-in-one/langs/zh_CN.js',
-        language: 'zh_CN',
-        skin_url: '/static/tinymce-all-in-one/skins/ui/oxide',
-        height: 400,
-        min_height: 400,
-        max_height: 400,
+        language_url: dir + '/static/tinymce/langs/zh-Hans.js',
+        language: 'zh-Hans',
+        skin_url: dir + '/static/tinymce/skins/ui/oxide',
+        content_css: dir + '/static/tinymce/skins/content/default/content.css',
+        height: this.height,
+        image_dimensions: false, // 去除宽高属性
+        min_height: 600,
+        max_height: 2000,
+        menubar: 'file edit insert view format table tools help',
+        menu: this.menu,
         toolbar_mode: 'wrap',
         plugins: this.plugins,
         toolbar: this.toolbar,
@@ -92,25 +124,31 @@ export default {
         tinymceId: this.tinymceId,
         // 此处为图片上传处理函数，这个直接用了base64的图片形式上传图片，
         // 如需ajax上传可参考https://www.tiny.cloud/docs/configure/file-image-upload/#images_upload_handler
-        images_upload_handler: (blobInfo, success, failure) => {
-          const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-          success(img)
+        images_upload_handler: (blobInfo, progress) => {
+          return new Promise((resolve, reject) => {
+            resolve('data:' + blobInfo.blob().type + ';base64,' + blobInfo.base64())
+          })
         }
       },
-      content: this.value
+      content: this.modelValue
     }
   },
   watch: {
-    modelValue(newValue) {
-      this.content = newValue
+    modelValue: {
+      immediate: true,
+      handler(val) {
+        this.content = val
+      }
     },
-    content(newValue) {
-      console.log('newValue', newValue)
-      this.$emit('update:modelValue', newValue)
+    content: {
+      immediate: true,
+      handler(val) {
+        this.$emit('update:modelValue', val)
+      }
     }
   },
   mounted() {
-    tinymce.init({})
+    tinymce.init(this.init)
   },
   methods: {
     imageSuccessCBK(arr) {
@@ -122,29 +160,34 @@ export default {
   }
 }
 </script>
-  <style scoped lang="scss">
-  .tinymce-container {
-  position: relative;
-  line-height: normal;
-}
-.tinymce-container :deep(.mce-fullscreen) {
-  z-index: 10000;
-}
-.tinymce-textarea {
-  visibility: hidden;
-  z-index: -1;
-}
-.editor-custom-btn-container {
-  position: absolute;
-  right: 4px;
-  top: 4px;
-  z-index: 2005000000;
-}
-.fullscreen .editor-custom-btn-container {
-  z-index: 10000;
-  position: fixed;
-}
-.editor-upload-btn {
-  display: inline-block;
-}
-  </style>
+<!--<style scoped lang="scss">-->
+<!--.tinymce-container {-->
+<!--  position: relative;-->
+<!--  line-height: normal;-->
+<!--}-->
+
+<!--.tinymce-container :deep(.mce-fullscreen) {-->
+<!--  z-index: 10000;-->
+<!--}-->
+
+<!--.tinymce-textarea {-->
+<!--  visibility: hidden;-->
+<!--  z-index: -1;-->
+<!--}-->
+
+<!--.editor-custom-btn-container {-->
+<!--  position: absolute;-->
+<!--  right: 4px;-->
+<!--  top: 4px;-->
+<!--  z-index: 2005000000;-->
+<!--}-->
+
+<!--.fullscreen .editor-custom-btn-container {-->
+<!--  z-index: 10000;-->
+<!--  position: fixed;-->
+<!--}-->
+
+<!--.editor-upload-btn {-->
+<!--  display: inline-block;-->
+<!--}-->
+<!--</style>-->

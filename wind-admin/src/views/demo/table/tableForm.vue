@@ -12,7 +12,7 @@
       <el-row :gutter="20">
         <el-col :span="8">
           <el-form-item label="发布时间" prop="publishDate">
-            <el-date-picker v-model="temp.publishDate" type="datetime" value-format="yyyy-MM-dd HH:mm" format="yyyy-MM-dd HH:mm" />
+            <el-date-picker v-model="temp.publishDate" type="datetime" value-format="YYYY-MM-DD HH:mm" format="YYYY-MM-DD HH:mm" />
           </el-form-item>
         </el-col>
         <el-col :span="16">
@@ -31,7 +31,6 @@
       </el-form-item>
       <el-form-item label="内容">
         <Tinymce ref="editor" v-model="temp.content" type="textarea" placeholder="Please input" />
-
       </el-form-item>
     </el-form>
     <template #footer>

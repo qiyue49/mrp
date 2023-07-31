@@ -17,9 +17,7 @@
       class="uploader"
     >
       <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <i v-else class="el-icon-upload uploader-icon">
-        {{ uploadLabel }}
-      </i>
+      <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
       <template v-if="!imageUrl&&showWaringLabel" #tip><span class="waring-label">{{ waringLabel }}</span></template>
     </el-upload>
   </div>

@@ -73,11 +73,17 @@ export default {
     modelValue: {
       immediate: true,
       handler(val) {
+        this.imageList = []
         if (this.isNull(val)) {
-          this.imageList = []
           return
         }
-        this.imageList = JSON.parse(val)
+        try {
+          this.imageList = JSON.parse(val)
+        } catch {
+          val.split(',').forEach(item => {
+            this.imageList.push({ name: item, url: item })
+          })
+        }
       }
     }
   },

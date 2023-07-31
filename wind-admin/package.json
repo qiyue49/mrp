@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
-    "@tinymce/tinymce-vue": "^5.0.0",
+    "@tinymce/tinymce-vue": "^5.1.0",
     "@vueuse/core": "^9.11.1",
     "axios": "^0.27.2",
     "driver.js": "^0.9.8",
@@ -37,7 +37,7 @@
     "qs": "^6.11.0",
     "sortablejs": "^1.15.0",
     "swiper": "^9.1.0",
-    "tinymce": "^5.3.1",
+    "tinymce": "^6.6.0",
     "validator": "^13.7.0",
     "vue": "^3.2.36",
     "vue-bmap-gl": "^1.0.4",
