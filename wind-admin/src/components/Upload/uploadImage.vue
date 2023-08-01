@@ -1,24 +1,26 @@
 <template>
   <div
-    class="upload-container">
+      class="upload-container">
     <el-upload
-      v-model:file-list="imageList"
-      :data="uploadData"
-      :action="uploadImageUrl"
-      list-type="picture-card"
-      :limit="maxCount"
-      :headers="myHeaders"
-      :on-success="handleUploadSuccess"
-      :before-upload="beforeUpload"
-      :on-preview="handlePictureCardPreview"
-      :on-remove="remove"
-      class="avatar-uploader"
-      :class="{hideImg:noneBtnImg}"
+        v-model:file-list="imageList"
+        :data="uploadData"
+        :action="uploadImageUrl"
+        list-type="picture-card"
+        :limit="maxCount"
+        :headers="myHeaders"
+        :on-success="handleUploadSuccess"
+        :before-upload="beforeUpload"
+        :on-preview="handlePictureCardPreview"
+        :on-remove="remove"
+        class="avatar-uploader"
+        :class="{hideImg:noneBtnImg}"
     >
-      <el-icon class="avatar-uploader-icon"><Plus /></el-icon>
+      <el-icon class="avatar-uploader-icon">
+        <Plus/>
+      </el-icon>
     </el-upload>
     <el-dialog v-model="dialogVisible" draggable class="dialog-title">
-      <img :src="dialogImageUrl" alt="Preview Image" style="width:100%;object-fit: cover" />
+      <img :src="dialogImageUrl" alt="Preview Image" style="width:100%;object-fit: cover"/>
     </el-dialog>
   </div>
 </template>
@@ -134,51 +136,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  //$value: --el-upload-list-picture-card-size;
-  //:deep(.el-upload) {
-  //  border: 1px dashed var(--el-border-color);
-  //  border-radius: 6px;
-  //  cursor: pointer;
-  //  width: $value;
-  //  height: $value;
-  //  position: relative;
-  //  overflow: hidden;
-  //  transition: var(--el-transition-duration-fast);
-  //}
-  //
-  //:deep(.el-upload):hover {
-  //  border-color: var(--el-color-primary);
-  //}
-  //
-  //.el-icon.avatar-uploader-icon {
-  //  font-size: 28px;
-  //  color: #8c939d;
-  //  width: $value;
-  //  height: $value;
-  //  text-align: center;
-  //}
-  //
-  //.avatar-uploader {
-  //  width: $value;
-  //  height: $value;
-  //  margin-top: 10px;
-  //  display: block;
-  //}
-
-  .hideImg :deep(.el-upload--picture-card){
-    display: none;
-  }
-
-  //.upload-container{
-  //  :deep(.el-overlay){
-  //    z-index: 201000000 !important;
-  //  }
-  //}
-  //
-  //.delete {
-  //  position: absolute;
-  //  margin-left: -30px;
-  //  margin-top: 3px
-  //
-  //}
+.hideImg :deep(.el-upload--picture-card) {
+  display: none;
+}
 </style>
