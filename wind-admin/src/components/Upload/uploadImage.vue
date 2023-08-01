@@ -8,11 +8,10 @@
       list-type="picture-card"
       :limit="maxCount"
       :headers="myHeaders"
-      :on-success="handleAvatarSuccess"
-      :before-upload="beforeAvatarUpload"
+      :on-success="handleUploadSuccess"
+      :before-upload="beforeUpload"
       :on-preview="handlePictureCardPreview"
       :on-remove="remove"
-      :on-change="dealImgChange"
       class="avatar-uploader"
       :class="{hideImg:noneBtnImg}"
     >
@@ -64,11 +63,6 @@ export default {
       uploadData: { base_path: this.basePath }
     }
   },
-  computed: {
-    imageUrl() {
-      return this.resultUrl
-    }
-  },
   watch: {
     modelValue: {
       immediate: true,
@@ -84,6 +78,7 @@ export default {
             this.imageList.push({ name: item, url: item })
           })
         }
+        this.noneBtnImg = this.imageList.length >= this.maxCount
       }
     }
   },
@@ -98,17 +93,13 @@ export default {
       this.dialogVisible = true
     },
     remove() {
-      // this.imageList.splice(this.imageList.indexOf(uploadFile), 1)
       this.emitInput(this.imageList)
-      this.noneBtnImg = this.imageList.length >= this.maxCount
-    },
-    dealImgChange() {
-      this.noneBtnImg = this.imageList.length >= this.maxCount
     },
     emitInput(val) {
       this.$emit('update:modelValue', JSON.stringify(val))
+      this.noneBtnImg = this.imageList.length >= this.maxCount
     },
-    handleAvatarSuccess(response, file) {
+    handleUploadSuccess(response, file) {
       this.imageList = this.imageList.map(item => {
         return { name: item.name, url: response.data }
       })
@@ -126,7 +117,7 @@ export default {
         this.$message.error('上传失败')
       }
     },
-    beforeAvatarUpload(file) {
+    beforeUpload(file) {
       const isJPG = (file.type === 'image/jpeg' || file.type === 'image/png')
       const isLt2M = file.size / 1024 / 1024 < 2
 
@@ -143,51 +134,51 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  $value: --el-upload-list-picture-card-size;
-  :deep(.el-upload) {
-    border: 1px dashed var(--el-border-color);
-    border-radius: 6px;
-    cursor: pointer;
-    width: $value;
-    height: $value;
-    position: relative;
-    overflow: hidden;
-    transition: var(--el-transition-duration-fast);
-  }
-
-  :deep(.el-upload):hover {
-    border-color: var(--el-color-primary);
-  }
-
-  .el-icon.avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: $value;
-    height: $value;
-    text-align: center;
-  }
-
-  .avatar-uploader {
-    width: $value;
-    height: $value;
-    margin-top: 10px;
-    display: block;
-  }
+  //$value: --el-upload-list-picture-card-size;
+  //:deep(.el-upload) {
+  //  border: 1px dashed var(--el-border-color);
+  //  border-radius: 6px;
+  //  cursor: pointer;
+  //  width: $value;
+  //  height: $value;
+  //  position: relative;
+  //  overflow: hidden;
+  //  transition: var(--el-transition-duration-fast);
+  //}
+  //
+  //:deep(.el-upload):hover {
+  //  border-color: var(--el-color-primary);
+  //}
+  //
+  //.el-icon.avatar-uploader-icon {
+  //  font-size: 28px;
+  //  color: #8c939d;
+  //  width: $value;
+  //  height: $value;
+  //  text-align: center;
+  //}
+  //
+  //.avatar-uploader {
+  //  width: $value;
+  //  height: $value;
+  //  margin-top: 10px;
+  //  display: block;
+  //}
 
   .hideImg :deep(.el-upload--picture-card){
     display: none;
   }
 
-  .upload-container{
-    :deep(.el-overlay){
-      z-index: 201000000 !important;
-    }
-  }
-
-  .delete {
-    position: absolute;
-    margin-left: -30px;
-    margin-top: 3px
-
-  }
+  //.upload-container{
+  //  :deep(.el-overlay){
+  //    z-index: 201000000 !important;
+  //  }
+  //}
+  //
+  //.delete {
+  //  position: absolute;
+  //  margin-left: -30px;
+  //  margin-top: 3px
+  //
+  //}
 </style>
