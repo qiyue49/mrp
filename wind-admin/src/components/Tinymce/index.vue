@@ -37,7 +37,6 @@ import 'tinymce/plugins/quickbars'
 import 'tinymce/plugins/save'
 import 'tinymce/plugins/searchreplace'
 import 'tinymce/plugins/table'
-import 'tinymce/plugins/template'
 import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
 import 'tinymce/plugins/wordcount'
@@ -62,38 +61,14 @@ export default {
       type: Boolean,
       default: false
     },
-    menu: {
-      type: Object,
-      default() {
-        return {
-          file: { title: 'File', items: 'newdocument restoredraft | preview | export print | deleteallconversations' },
-          edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
-          view: {
-            title: 'View',
-            items: 'code | visualaid visualchars visualblocks | spellchecker | preview fullscreen | showcomments'
-          },
-          insert: {
-            title: 'Insert',
-            items: 'image link media addcomment pageembed template codesample inserttable | charmap emoticons hr | pagebreak nonbreaking anchor tableofcontents | insertdatetime'
-          },
-          format: {
-            title: 'Format',
-            items: 'bold italic underline strikethrough superscript subscript codeformat | styles blocks fontfamily fontsize align lineheight | forecolor backcolor | language | removeformat'
-          },
-          tools: { title: 'Tools', items: 'spellchecker spellcheckerlanguage | a11ycheck code wordcount' },
-          table: { title: 'Table', items: 'inserttable | cell row column | advtablesort | tableprops deletetable' },
-          help: { title: 'Help', items: 'help' }
-        }
-      }
-    },
     plugins: {
       type: [String, Array],
       default:
-          'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media template code codesample table charmap nonbreaking insertdatetime advlist lists wordcount autosave autoresize'
+          'preview searchreplace autolink directionality visualblocks visualchars fullscreen image link media code codesample table charmap nonbreaking insertdatetime advlist lists wordcount autosave autoresize'
     },
     toolbar: {
       type: [String, Array],
-      default: 'styleselect formatselect fontselect fontsizeselect |\ code undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link codesample  fullscreen preview| alignleft aligncenter alignright alignjustify outdent indent formatpainter |\ bullist numlist blockquote subscript superscript removeformat table image media charmap pagebreak insertdatetime'
+      default: 'styleselect formatselect fontselect fontsizeselect |\ undo redo restoredraft cut copy paste pastetext forecolor backcolor bold italic underline strikethrough link codesample  fullscreen preview code| alignleft aligncenter alignright alignjustify outdent indent formatpainter bullist numlist blockquote subscript superscript removeformat table image media charmap pagebreak insertdatetime'
     }
   },
   emits: ['update:modelValue'],
@@ -111,8 +86,7 @@ export default {
         image_dimensions: false, // 去除宽高属性
         min_height: 600,
         max_height: 2000,
-        menubar: 'file edit insert view format table tools help',
-        menu: this.menu,
+        removed_menuitems: 'template', // 去除模板
         toolbar_mode: 'wrap',
         plugins: this.plugins,
         toolbar: this.toolbar,
@@ -149,45 +123,6 @@ export default {
   },
   mounted() {
     tinymce.init(this.init)
-  },
-  methods: {
-    imageSuccessCBK(arr) {
-      const _this = this
-      arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
-      })
-    }
   }
 }
 </script>
-<!--<style scoped lang="scss">-->
-<!--.tinymce-container {-->
-<!--  position: relative;-->
-<!--  line-height: normal;-->
-<!--}-->
-
-<!--.tinymce-container :deep(.mce-fullscreen) {-->
-<!--  z-index: 10000;-->
-<!--}-->
-
-<!--.tinymce-textarea {-->
-<!--  visibility: hidden;-->
-<!--  z-index: -1;-->
-<!--}-->
-
-<!--.editor-custom-btn-container {-->
-<!--  position: absolute;-->
-<!--  right: 4px;-->
-<!--  top: 4px;-->
-<!--  z-index: 2005000000;-->
-<!--}-->
-
-<!--.fullscreen .editor-custom-btn-container {-->
-<!--  z-index: 10000;-->
-<!--  position: fixed;-->
-<!--}-->
-
-<!--.editor-upload-btn {-->
-<!--  display: inline-block;-->
-<!--}-->
-<!--</style>-->

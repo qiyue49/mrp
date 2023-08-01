@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="dialogFormVisible" draggable width="800px" title="新建" class="dialog-title" destroy-on-close>
+  <el-dialog v-model="dialogFormVisible" draggable width="50%" title="新建" class="dialog-title" destroy-on-close>
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
       <el-form-item label="标题" prop="title">
         <el-input v-model="temp.title" />
