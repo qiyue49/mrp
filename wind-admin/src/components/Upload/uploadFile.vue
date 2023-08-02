@@ -9,16 +9,20 @@
       v-loading="uploadLoading"
       :data="uploadData"
       :action="uploadImageUrl"
-      :show-file-list="false"
+      :limit="1"
       :headers="myHeaders"
       :on-success="handleSuccess"
       :on-error="handleError"
       :before-upload="beforeUpload"
-      class="uploader"
-    >
-      <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-      <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-      <template v-if="!imageUrl&&showWaringLabel" #tip><span class="waring-label">{{ waringLabel }}</span></template>
+      :on-remove="remove"
+      drag>
+      <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+      <div class="el-upload__text">
+        将文件拖拽到此处 或者 <em>点击上传</em>
+      </div>
+      <template v-if="!imageUrl&&showWaringLabel" #tip>
+        <span class="waring-label">{{ waringLabel }}</span>
+      </template>
     </el-upload>
   </div>
 </template>
@@ -118,6 +122,10 @@ export default {
         this.$message.error(response.msg)
       }
     },
+    remove() {
+      this.resultUrl = undefined
+      this.emitInput(undefined)
+    },
     handleError(response) {
       this.uploadLoading = false
       if (response.msg) {
@@ -160,33 +168,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  .waring-label {
-    font-size: 14px;
-    color: #9b9d07;
-  }
-</style>

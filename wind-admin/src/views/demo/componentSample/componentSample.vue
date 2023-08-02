@@ -2,8 +2,10 @@
   <el-card>
     <el-row :gutter="40">
       <el-col :span="6">
-        <div class="title">图片上传：{{ urlImage }}</div>
-        <upload-image v-model="urlImage" dir="test"/>
+        <div class="title">图片上传</div>
+        upload-image组件传值为String。两种格式，一种是包含name和url两个字段的json数组字符串。另外一种是多个图片地址用逗号隔开的字符串<br/>
+        {{ urlImage }}
+        <upload-image v-model="urlImage" dir="test" :max-count="3"/>
       </el-col>
       <el-col :span="6">
         <div class="title">文件上传：{{ urlFile }}</div>
@@ -150,5 +152,6 @@ export default {
 <style scoped lang="scss">
 .title{
   font-size: 20px;
+  width: 100%;
 }
 </style>

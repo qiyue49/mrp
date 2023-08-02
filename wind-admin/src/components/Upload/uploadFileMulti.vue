@@ -205,7 +205,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

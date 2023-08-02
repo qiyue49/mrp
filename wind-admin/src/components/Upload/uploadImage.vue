@@ -1,25 +1,24 @@
 <template>
-  <div
-      class="upload-container">
+  <div class="upload-container">
     <el-upload
-        v-model:file-list="imageList"
-        :data="uploadData"
-        :action="uploadImageUrl"
-        list-type="picture-card"
-        :limit="maxCount"
-        :headers="myHeaders"
-        :on-success="handleUploadSuccess"
-        :before-upload="beforeUpload"
-        :on-preview="handlePictureCardPreview"
-        :on-remove="remove"
-        class="avatar-uploader"
-        :class="{hideImg:noneBtnImg}"
+      v-model:file-list="imageList"
+      :data="uploadData"
+      :action="uploadImageUrl"
+      accept="image/*"
+      list-type="picture-card"
+      :limit="maxCount"
+      :headers="myHeaders"
+      :on-success="handleUploadSuccess"
+      :before-upload="beforeUpload"
+      :on-preview="handlePictureCardPreview"
+      :on-remove="remove"
+      :class="{hideImg:noneBtnImg}"
     >
-      <el-icon class="avatar-uploader-icon">
+      <el-icon>
         <Plus/>
       </el-icon>
     </el-upload>
-    <el-dialog v-model="dialogVisible" draggable class="dialog-title">
+    <el-dialog v-model="dialogVisible" draggable>
       <img :src="dialogImageUrl" alt="Preview Image" style="width:100%;object-fit: cover"/>
     </el-dialog>
   </div>
