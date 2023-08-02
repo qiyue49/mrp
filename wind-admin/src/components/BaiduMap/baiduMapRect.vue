@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative;">
     <div :style="{height:height,width:width}">
-      <el-bmap :center="centerLocation" :zoom="zoom" @moveend="syncCenterAndZoom" @zoomend="syncCenterAndZoom">
+      <el-bmap :center="center" :zoom="zoom" @moveend="syncCenterAndZoom" @zoomend="syncCenterAndZoom">
         <el-bmap-polygon v-if="show" :path="path" :stroke-color="color" :stroke-opacity="opacity" :stroke-weight="weight" enable-editing @editend="updatePolygonPath" />
       </el-bmap>
     </div>
