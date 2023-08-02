@@ -40,22 +40,32 @@
       <el-col :span="6">
         <div class="title">SVG图标<svg-icon :icon-class="svgIcon" /></div>
         <svg-icon-selector v-model="svgIcon" />
-        <div class="title">用户选择{{ userId }}</div>
+        <div class="title">Icon图标<el-icon><component :is="icon"/></el-icon></div>
+        <icon-selector v-model="icon" />
+        <div class="title">用户选择</div>
+        {{ userId }}
         <system-user v-model="userId" />
-        <div class="title">组织机构选择{{ orgId }}</div>
+        <div class="title">组织机构选择</div>
+        {{ orgId }}
         <system-organization v-model="orgId" />
       </el-col>
       <el-col :span="8">
-        <div>地图打点：{{ point }}</div>
+        <div class="title">地图打点：</div>
+        {{ point }}
         <baidu-map-point v-model="point" />
       </el-col>
       <el-col :span="8">
-        <div>地图划线：{{ line }}</div>
+        <div class="title">地图划线：</div>
+        {{ line }}
         <baidu-map-line v-model="line" />
       </el-col>
       <el-col :span="8">
-        <div>地图画框：{{ path }}</div>
+        <div class="title">地图画框：</div>
+        {{ path }}
         <baidu-map-rect v-model="path" />
+      </el-col>
+      <el-col :span="24">
+        <Tinymce v-model="richText" style="margin: 10px"/>
       </el-col>
     </el-row>
   </el-card>
@@ -82,6 +92,8 @@ import AutocompleteList from '@/components/Select/autocompleteList.vue'
 import Checkbox from '@/components/Checkbox/checkbox.vue'
 import CheckboxDict from '@/components/Checkbox/checkboxDict.vue'
 import { fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
+import IconSelector from '@/components/IconSelector/iconSeletor.vue'
+import Tinymce from '@/components/Tinymce/index.vue'
 
 const imageList = [
   { name: '文件1.jepg', url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' },
@@ -95,6 +107,8 @@ const imageList = [
 export default {
   name: 'ComponentSample',
   components: {
+    Tinymce,
+    IconSelector,
     CheckboxDict,
     Checkbox,
     AutocompleteList,
@@ -122,12 +136,14 @@ export default {
       urlFile: undefined,
       urlFileMulti: undefined,
       imageFileList: JSON.stringify(imageList),
-      svgIcon: '',
+      svgIcon: 'files-attachment',
+      icon: 'Edit',
       userId: undefined,
       orgId: undefined,
       checkId: undefined,
       selectId: undefined,
       treeId: undefined,
+      richText: undefined,
       treeList: []
 
     }

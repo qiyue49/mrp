@@ -45,6 +45,7 @@ import 'tinymce/plugins/wordcount'
 // import editorImage from './components/editorImage'
 
 export default {
+  name: 'Tinymce',
   components: {
     Editor
   },
