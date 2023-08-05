@@ -28,8 +28,9 @@
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
+import { getRefreshToken, getToken } from '@/utils/auth'
 import defaultImg from '@/assets/img/default_img.jpg'
+import { refreshToken } from '@/api/sys/oauth2'
 export default {
   name: 'UploadFile',
   props: {
@@ -118,6 +119,19 @@ export default {
         this.uploadLoading = false
         this.resultUrl = response.data
         this.emitInput(this.resultUrl)
+      } else if (response.code === 200004) {
+        const refreshTokenData = getRefreshToken()
+        refreshToken(refreshTokenData).then(res => {
+          if (res.data.code === 0) {
+            this.$store.userStore.setToken(res.data.data.accessToken)
+            this.myHeaders = { access_token: res.data.data.accessToken }
+            file.status = 'ready'
+            // this.$refs.upload.$forceUpdate()
+            this.$refs.upload.submit()
+          } else {
+            this.$message.error('Token失效，请重新登录')
+          }
+        })
       } else {
         this.$message.error(response.msg)
       }

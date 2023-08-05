@@ -2,9 +2,9 @@
   <el-upload
     ref="upload"
     v-model:file-list="fileList"
-    class="upload-demo"
-    :data="uploadData"
     :headers="myHeaders"
+    class="upload-demo"
+    multiple
     :action="uploadImageUrl"
     :on-preview="handlePreview"
     :on-remove="handleRemove"
@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
+import { getRefreshToken, getToken } from '@/utils/auth'
+import { refreshToken } from '@/api/sys/oauth2'
 export default {
   name: 'UploadFileMulti',
   props: {
@@ -61,9 +62,7 @@ export default {
   data() {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
-      uploadData: { base_path: this.basePath },
       myHeaders: { access_token: getToken() },
-      imageExtension: ['bmp', 'jpg', 'jpeg', 'png', 'gif'],
       extensions: [],
       fileList: [],
       flag: false,
@@ -158,6 +157,19 @@ export default {
       if (response.code === 0) {
         this.uploadLoading = false
         this.emitList(fileList)
+      } else if (response.code === 200004) {
+        const refreshTokenData = getRefreshToken()
+        refreshToken(refreshTokenData).then(res => {
+          if (res.data.code === 0) {
+            this.$store.userStore.setToken(res.data.data.accessToken)
+            this.myHeaders = { access_token: res.data.data.accessToken }
+            file.status = 'ready'
+            // this.$refs.upload.$forceUpdate()
+            this.$refs.upload.submit()
+          } else {
+            this.$message.error('Token失效，请重新登录')
+          }
+        })
       } else {
         this.$message.error(response.msg)
       }
