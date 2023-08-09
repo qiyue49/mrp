@@ -14,14 +14,17 @@
       <el-col :span="6">
         <div class="title">多文件上传：{{ urlFileMulti }}</div>
         <upload-file-multi v-model="urlFileMulti" dir="test"/>
+        <div class="title">文件列表</div>
+        <file-download-list v-model="imageFileList"/>
       </el-col>
       <el-col :span="6">
         <div class="title">图片列表</div>
         <image-gallery v-model="imageFileList"/>
       </el-col>
       <el-col :span="6">
-        <div class="title">文件列表</div>
-        <file-download-list v-model="imageFileList"/>
+        <div class="title">二维码</div>
+        option属性参考qrcodejs2的option，<a href="http://code.ciaoca.com/javascript/qrcode/">http://code.ciaoca.com/javascript/qrcode/</a>
+        <qr-code text="http://www.sunseagear.com"/>
       </el-col>
       <el-col :span="6">
         <div class="title">checkBox{{ checkId }}</div>
@@ -94,6 +97,7 @@ import CheckboxDict from '@/components/Checkbox/checkboxDict.vue'
 import { fetchTreeTableList } from '@/api/demo/treeTable/treeTable'
 import IconSelector from '@/components/IconSelector/iconSeletor.vue'
 import Tinymce from '@/components/Tinymce/index.vue'
+import QrCode from '@/components/QrCode/qrCode.vue'
 
 const imageList = [
   { name: '文件1.jepg', url: 'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg' },
@@ -107,6 +111,7 @@ const imageList = [
 export default {
   name: 'ComponentSample',
   components: {
+    QrCode,
     Tinymce,
     IconSelector,
     CheckboxDict,

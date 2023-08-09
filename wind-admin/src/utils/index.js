@@ -223,6 +223,9 @@ export function html2Text(val) {
  * @returns {Object}
  */
 export function objectMerge(target, source) {
+  if (isNull(source)) {
+    return target
+  }
   if (typeof target !== 'object') {
     target = {}
   }
