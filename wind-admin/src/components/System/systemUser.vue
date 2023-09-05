@@ -8,9 +8,18 @@
     <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="选择用户" destroy-on-close append-to-body>
       <div>
         <div class="filter-container">
-          <el-input v-model="listQuery.realname" class="filter-item" placeholder="请输入姓名" @keyup.enter="handleFilter" />
-          <el-input v-model="listQuery.username" class="filter-item" placeholder="请输入用户名" @keyup.enter="handleFilter" />
-          <el-input v-model="listQuery.phone" class="filter-item" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
+          <div class="filter-item">
+            <span>姓名:</span>
+            <el-input v-model="listQuery.realname" placeholder="请输入姓名" @keyup.enter="handleFilter" />
+          </div>
+          <div class="filter-item">
+            <span>用户名:</span>
+            <el-input v-model="listQuery.username" placeholder="请输入用户名" @keyup.enter="handleFilter" />
+          </div>
+          <div class="filter-item">
+            <span>手机号码:</span>
+            <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
+          </div>
           <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">查询</el-button>
         </div>
 
