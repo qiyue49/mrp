@@ -23,8 +23,8 @@
       </el-col>
       <el-col :span="6">
         <div class="title">二维码</div>
-        option属性参考qrcodejs2的option，<a href="http://code.ciaoca.com/javascript/qrcode/">http://code.ciaoca.com/javascript/qrcode/</a>
-        <qr-code text="http://www.sunseagear.com"/>
+        option属性参考qrcodejs2的option，<a :href="qrCode">{{ qrCode }}</a>
+        <qr-code :text="qrCode"/>
       </el-col>
       <el-col :span="6">
         <div class="title">checkBox{{ checkId }}</div>
@@ -146,6 +146,7 @@ export default {
       userId: undefined,
       orgId: undefined,
       checkId: undefined,
+      qrCode: 'http://www.sunseagear.com',
       selectId: undefined,
       treeId: undefined,
       richText: undefined,
