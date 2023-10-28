@@ -1,19 +1,44 @@
 @use './element/index.scss';
 
 :root {
-  --ep-color-background: #F3F5F8;
-  --ep-color-background2: #ffffff;
+  --ep-color-background: var(--el-bg-color-page);
+  --ep-color-background2: white;
   --ep-color-primary3: #1762F2;
   --ep-color-primary4: #D34D25;
-  --ep-color-commom: #252631
-  }
-  :root.dark {
-  --ep-color-background: #000;
-  --ep-color-background2: var(--el-bg-color-page);
+  --ep-color-commom: #252631;
+  // 菜单选中背景颜色
+  --el-menu-active-bg-color: var(--el-color-primary);
+  // 菜单选中文字颜色
+  --el-menu-active-color: var(--el-color-white);
+  // 菜单文字颜色
+  --el-menu-text-color: var(--el-text-color-primary);
+  // 鼠标置于菜单上文字颜色
+  --el-menu-hover-text-color: var(--el-color-primary);
+  // 菜单背景颜色
+  --el-menu-bg-color: var(--el-fill-color-blank);
+  // 鼠标置于菜单上背景色
+  --el-menu-hover-bg-color: var(--el-color-primary-light-9);
+}
+
+:root.dark {
+  --ep-color-background: var(--el-bg-color-page);
+  --ep-color-background2: black;
   --ep-color-primary3: #1762F2;
   --ep-color-primary4: #D34D25;
-  --ep-color-commom: #ffffff
-  }
+  --ep-color-commom: #ffffff;
+  // 菜单选中背景颜色
+  --el-menu-active-bg-color: var(--el-color-primary);
+  // 菜单选中文字颜色
+  --el-menu-active-color: var(--el-color-white);
+  // 菜单文字颜色
+  --el-menu-text-color: var(--el-text-color-primary);
+  // 鼠标置于菜单上文字颜色
+  --el-menu-hover-text-color: var(--el-color-primary);
+  // 菜单背景颜色
+  --el-menu-bg-color: var(--el-fill-color-blank);
+  // 鼠标置于菜单上背景色
+  --el-menu-hover-bg-color: var(--el-color-primary-light-9);
+}
 
 html {
   width: 100%;
@@ -115,15 +140,17 @@ body {
   border-top: 3px solid var(--el-color-primary);
 }
 
-.el-dialog{
+.el-dialog {
   border-radius: 10px !important;
 }
+
 .dialog-title .el-dialog__header {
   border-radius: 10px 10px 0 0;
   margin-right: 0px;
   display: flex;
   justify-content: center;
   border-bottom: 3px solid var(--el-color-primary);
+
   .el-dialog__title {
     color: var(--el-color-primary);
   }
