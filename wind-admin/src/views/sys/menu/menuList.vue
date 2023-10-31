@@ -37,7 +37,7 @@
             <span>{{ scope.row.icon }}</span>
           </template>
         </el-table-column>
-        <el-table-column min-width="100" label="是否可用">
+        <el-table-column min-width="100" label="是否显示">
           <template #default="scope">
             <span>{{ dictLabel(scope.row.enabled, 'sf') }}</span>
           </template>

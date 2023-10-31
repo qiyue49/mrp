@@ -21,7 +21,7 @@
               v-for="item in dictList('sf')"
               :key="'enabled' + item.label"
               v-model="temp.enabled"
-              :label="item.value"
+              :label="item.value + ''"
               :disabled="temp.type === '3'"
             >
               {{ item.label }}
