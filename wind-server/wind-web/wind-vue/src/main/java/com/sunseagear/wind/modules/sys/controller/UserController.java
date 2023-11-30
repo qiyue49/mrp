@@ -86,7 +86,7 @@ public class UserController extends BaseBeanController<User> {
         }
         String organizationId = request.getParameter("organization.id");
         if (!StringUtils.isEmpty(organizationId)) {
-            queryWrapper.apply(String.format("t.organization_id = '%s' or b.parent_ids like '%%%s%%'", organizationId, organizationId));
+            queryWrapper.nested(i->i.eq("t.organization_id", organizationId).or().like("b.parent_ids",organizationId));
         }
         // 预处理
         Page pageBean = userService.selectPage(getPage(), queryWrapper);

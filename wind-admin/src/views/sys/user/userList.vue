@@ -11,19 +11,19 @@
         </div>
       </el-col>
       <el-col :span="18">
-        <div>
+        <div class="app-container">
           <div class="filter-container">
             <div class="filter-item">
               <span>姓名:</span>
-              <el-input v-model="listQuery.realname" placeholder="请输入姓名" @keyup.enter="handleFilter" />
+              <el-input v-model="listQuery.realname" placeholder="请输入姓名" clearable @keyup.enter="handleFilter" />
             </div>
             <div class="filter-item">
               <span>用户名:</span>
-              <el-input v-model="listQuery.username" placeholder="请输入用户名" @keyup.enter="handleFilter" />
+              <el-input v-model="listQuery.username" placeholder="请输入用户名" clearable @keyup.enter="handleFilter" />
             </div>
             <div class="filter-item">
               <span>手机号码:</span>
-              <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
+              <el-input v-model="listQuery.phone" placeholder="请输入手机号码" clearable @keyup.enter="handleFilter" />
             </div>
             <el-button v-permission="['sys:user:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
             <el-button v-permission="['sys:user:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
