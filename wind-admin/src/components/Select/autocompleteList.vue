@@ -3,7 +3,9 @@
     v-model="attrValue"
     :fetch-suggestions="querySearch"
     :placeholder="placeholder"
+    clearable
     style="width: 100%"
+    @change="change"
     @select="handleSelect"
   />
 </template>
@@ -61,6 +63,7 @@ export default {
   },
   methods: {
     refreshListValue() {
+      this.attrValue = undefined
       this.attrList.forEach(item => {
         if (this.modelValue === item[this.props.id]) {
           this.attrValue = item[this.props.value]
@@ -80,6 +83,11 @@ export default {
     },
     handleSelect(val) {
       this.$emit('update:modelValue', val[this.props.id])
+    },
+    change(value) {
+      if (this.isNull(value)) {
+        this.$emit('update:modelValue', undefined)
+      }
     }
 
   }
