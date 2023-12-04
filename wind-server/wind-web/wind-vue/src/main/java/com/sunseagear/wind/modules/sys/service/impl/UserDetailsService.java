@@ -42,7 +42,7 @@ public class UserDetailsService implements org.springframework.security.core.use
     private List<GrantedAuthority> getAuthorities(User user) {
         List<GrantedAuthority> authorities = new ArrayList<>();
         UserUtils.getPermissionSet(user).stream()
-                .map(p -> new SimpleGrantedAuthority(p))
+                .map(SimpleGrantedAuthority::new)
                 .forEach(authorities::add);
 
         return authorities;

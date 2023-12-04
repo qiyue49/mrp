@@ -20,21 +20,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-//    @Override
-//    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-//        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-//        FastJsonConfig fastJsonConfig = new FastJsonConfig();//4
-//        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-//        FastjsonUnXssFilter jsonUnFilter = new FastjsonUnXssFilter();
-//        fastJsonConfig.setSerializeFilters(jsonUnFilter);
-//        //处理中文乱码问题
-//        List<MediaType> fastMediaTypes = new ArrayList<MediaType>();
-//        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-//        converter.setSupportedMediaTypes(fastMediaTypes);
-//        converter.setFastJsonConfig(fastJsonConfig);
-//        converters.add(converter);
-//    }
-
     @Bean
     public SpringContextHolder springContextHolder() {
         return new SpringContextHolder();

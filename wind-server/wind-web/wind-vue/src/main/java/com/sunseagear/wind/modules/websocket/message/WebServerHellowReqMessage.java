@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class WebServerHellowReqMessage {
-    public static final int Code = ConstantMessageCode.WEB_SERVER_HELLOW_REQ;
+    public static final int CODE = ConstantMessageCode.WEB_SERVER_HELLOW_REQ;
 
 
     private Integer type;

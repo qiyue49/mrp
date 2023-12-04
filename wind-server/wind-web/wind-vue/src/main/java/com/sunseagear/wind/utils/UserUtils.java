@@ -33,6 +33,11 @@ import java.util.Set;
 @SuppressWarnings("unchecked")
 public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
+    private UserUtils() {
+        throw new IllegalStateException("Utility class");
+    }
+
+
     private static IUserService userService = SpringContextHolder.getBean(UserServiceImpl.class);
     private static IRoleService roleService = SpringContextHolder.getBean(RoleServiceImpl.class);
     private static IMenuService menuService = SpringContextHolder.getBean(MenuServiceImpl.class);
@@ -57,8 +62,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
             return new User();
         }
         // 如果没有登录，则返回实例化空的User对象。
-        User user = new User();
-        return user;
+        return new User();
     }
 
     /**
@@ -125,7 +129,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      */
     public static Set<String> getRoleStringList() {
         Set<Role> roles = Sets.newConcurrentHashSet(getRoleList());
-        return Sets.newHashSet(Collections2.transform(roles, role -> role.getCode()));
+        return Sets.newHashSet(Collections2.transform(roles, Role::getCode));
     }
 
     /**

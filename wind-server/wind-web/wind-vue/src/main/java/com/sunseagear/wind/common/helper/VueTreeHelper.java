@@ -1,11 +1,9 @@
 package com.sunseagear.wind.common.helper;
 
 import com.sunseagear.common.mvc.entity.TreeEntity;
-import com.sunseagear.common.utils.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -29,7 +27,6 @@ public class VueTreeHelper {
         });
         treeNodes.forEach(item -> {
             if (item.getParentId() != null
-                    && item.getParentId() != null
                     && treeEntityHashMap.containsKey(item.getParentId())) {
                 T treeEntity = treeEntityHashMap.get(item.getParentId());
                 if (treeEntity.getChildren() == null) {

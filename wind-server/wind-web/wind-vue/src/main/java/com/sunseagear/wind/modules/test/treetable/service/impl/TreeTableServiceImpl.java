@@ -1,7 +1,6 @@
 package com.sunseagear.wind.modules.test.treetable.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.mvc.service.impl.TreeCommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.test.treetable.entity.TreeTable;
@@ -10,7 +9,10 @@ import com.sunseagear.wind.modules.test.treetable.service.ITreeTableService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 
 /**
@@ -36,34 +38,26 @@ public class TreeTableServiceImpl extends TreeCommonServiceImpl<TreeTableMapper,
     }
 
     private List<TreeTable> getTreeTables(List<TreeTable> treeNodeList) {
-        List<TreeTable> TreeTableListAll = list(new QueryWrapper());
-        HashMap<String, TreeTable> TreeTableHashMapAll = new HashMap<>();
-        TreeTableListAll.forEach(TreeTable -> {
-            TreeTableHashMapAll.put(TreeTable.getId().toString(), TreeTable);
+        List<TreeTable> treeTableListAll = list();
+        HashMap<String, TreeTable> treeTableHashMapAll = new HashMap<>();
+        treeTableListAll.forEach(treeTable -> {
+            treeTableHashMapAll.put(treeTable.getId().toString(), treeTable);
         });
-        HashMap<String, TreeTable> TreeTableHashMap = new HashMap<>();
+        HashMap<String, TreeTable> treeTableHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
             String parentIds = treeNode.getParentIds();
             if (!StringUtils.isEmpty(parentIds)) {
                 Arrays.asList(parentIds.split("/")).forEach(id -> {
-                    TreeTable TreeTable = TreeTableHashMapAll.get(id);
-                    TreeTableHashMap.put(id, TreeTable);
+                    TreeTable treeTable = treeTableHashMapAll.get(id);
+                    treeTableHashMap.put(id, treeTable);
                 });
             }
-            TreeTableHashMap.put(treeNode.getId().toString(), TreeTableHashMapAll.get(treeNode.getId().toString()));
+            treeTableHashMap.put(treeNode.getId().toString(), treeTableHashMapAll.get(treeNode.getId().toString()));
 
         });
-        List<TreeTable> TreeTableList = new ArrayList<>();
-        TreeTableHashMap.values().forEach(item -> {
-            TreeTableList.add(item);
-        });
-        TreeTableList.sort(new Comparator<TreeTable>() {
-            @Override
-            public int compare(TreeTable o1, TreeTable o2) {
-                return o1.getCreateDate().compareTo(o2.getCreateDate());
-            }
-        });
-        return TreeTableList;
+        List<TreeTable> treeTableList = new ArrayList<>(treeTableHashMap.values());
+        treeTableList.sort((o1, o2) -> o1.getCreateDate().compareTo(o2.getCreateDate()));
+        return treeTableList;
     }
 
 }

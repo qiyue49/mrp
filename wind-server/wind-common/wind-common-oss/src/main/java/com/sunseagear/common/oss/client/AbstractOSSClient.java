@@ -9,5 +9,4 @@ package com.sunseagear.common.oss.client;
  * @copyright: 2017 kjt.gzst.gov.cn Inc. All rights reserved.
  */
 public abstract class AbstractOSSClient implements IOSSClient {
-    //protected abstract void init();
 }

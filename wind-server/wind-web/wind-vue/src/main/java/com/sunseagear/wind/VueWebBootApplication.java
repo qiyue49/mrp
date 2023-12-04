@@ -16,7 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({"com.sunseagear.common.datarule.config", "com.sunseagear.common.tenant", "com.sunseagear.common.quartz.config", "com.sunseagear.common.oss", "com.sunseagear.common.sms", "com.sunseagear.wind"})
 @SpringBootApplication
 public class VueWebBootApplication {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         SpringApplication.run(VueWebBootApplication.class, args);
     }
 }

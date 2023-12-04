@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class AliyunOSSClientUtil {
@@ -72,8 +73,9 @@ public class AliyunOSSClientUtil {
      */
     public static final String uploadObject2OSS(OSSClient client, File file, String bucketName, String diskName) {
         String resultStr = null;
+        InputStream is = null;
         try {
-            InputStream is = new FileInputStream(file);
+            is = new FileInputStream(file);
             String fileName = file.getName();
             Long fileSize = file.length();
             //创建上传Object的Metadata
@@ -90,6 +92,14 @@ public class AliyunOSSClientUtil {
             resultStr = putResult.getETag();
         } catch (Exception e) {
             LOG.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
+        } finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
         return resultStr;
     }
