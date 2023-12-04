@@ -69,7 +69,7 @@ public class UserController extends BaseBeanController<User> {
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:user:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("t.tenant_id", UserUtils.getTenantId());
         String realname = request.getParameter("realname");

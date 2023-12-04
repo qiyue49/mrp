@@ -52,7 +52,7 @@ public class TenantController extends BaseBeanController<Tenant> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:tenant:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<Tenant> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("a.create_date");

@@ -36,7 +36,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('task:schedule:job:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<ScheduleJob> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

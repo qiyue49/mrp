@@ -51,7 +51,7 @@ public class DataRuleController extends BaseBeanController<DataRule> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:datarule:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<DataRule> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

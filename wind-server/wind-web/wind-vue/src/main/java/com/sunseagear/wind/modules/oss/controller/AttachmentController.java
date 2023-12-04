@@ -55,7 +55,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('oss:attachment:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<Attachment> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("upload_time");

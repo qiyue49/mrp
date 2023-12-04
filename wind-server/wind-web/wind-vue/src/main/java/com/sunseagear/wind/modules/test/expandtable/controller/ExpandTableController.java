@@ -50,7 +50,7 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:expandtable:expandtable:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<ExpandTable> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

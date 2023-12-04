@@ -42,7 +42,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sms:sendlog:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<SmsSendLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("response_date");

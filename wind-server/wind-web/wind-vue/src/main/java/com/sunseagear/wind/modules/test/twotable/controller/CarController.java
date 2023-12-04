@@ -39,7 +39,7 @@ public class CarController extends BaseBeanController<Car> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:twotable:car:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<Car> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

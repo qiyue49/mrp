@@ -43,7 +43,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:organization:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         QueryWrapper<Organization> queryWrapper = new QueryWrapper<Organization>();
         queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         //加入条件

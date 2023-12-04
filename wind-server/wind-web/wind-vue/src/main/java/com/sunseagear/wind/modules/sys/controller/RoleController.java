@@ -63,7 +63,7 @@ public class RoleController extends BaseBeanController<Role> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:role:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (UserUtils.getUser().getTenantId().equals(TenantProperties.getInstance().getDefaultTenantId())) {

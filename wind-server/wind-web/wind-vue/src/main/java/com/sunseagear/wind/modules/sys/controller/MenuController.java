@@ -42,7 +42,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:menu:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
         //加入条件
         String keyword = request.getParameter("keyword");

@@ -44,7 +44,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:config:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<SysConfig> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("tenant_id", UserUtils.getTenantId());

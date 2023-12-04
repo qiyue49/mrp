@@ -41,7 +41,7 @@ public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog>
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('task:schedule:joblog:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<ScheduleJobLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_time");

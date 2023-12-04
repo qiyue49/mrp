@@ -66,7 +66,7 @@ public class DictController extends BaseBeanController<Dict> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:dict:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<Dict> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByAsc("sort");

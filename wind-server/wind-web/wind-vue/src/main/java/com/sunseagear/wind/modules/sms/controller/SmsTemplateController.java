@@ -45,7 +45,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sms:template:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<SmsTemplate> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

@@ -52,7 +52,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('monitor:operation:log:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<OperationLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

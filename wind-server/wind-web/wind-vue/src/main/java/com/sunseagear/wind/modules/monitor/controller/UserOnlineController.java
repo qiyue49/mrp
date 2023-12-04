@@ -37,7 +37,7 @@ public class UserOnlineController extends BaseBeanController<Principal> {
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('monitor:user:online:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         // 预处理
         Page pageBean = oAuthService.activePrincipal(getPage(), request);
         return Response.successPageJson(pageBean);

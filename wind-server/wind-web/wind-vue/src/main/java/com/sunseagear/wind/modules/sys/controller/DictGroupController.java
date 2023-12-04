@@ -41,7 +41,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:dict:group:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<DictGroup> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

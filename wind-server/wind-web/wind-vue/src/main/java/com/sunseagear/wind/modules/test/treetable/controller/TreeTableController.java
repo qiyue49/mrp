@@ -46,12 +46,11 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
      * @param request
-     * @throws IOException
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:treetable:treetable:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<TreeTable> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

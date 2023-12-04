@@ -50,7 +50,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('email:template:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<EmailTemplate> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");

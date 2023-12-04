@@ -45,7 +45,7 @@ public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('email:sendlog:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<EmailSendLog> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("response_date");

@@ -36,7 +36,7 @@ public class UserJsonController extends BaseBeanController<User> {
 
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         String tenantId = UserUtils.getTenantId();
         if (!StringUtils.isEmpty(tenantId)) {

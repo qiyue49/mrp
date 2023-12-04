@@ -51,7 +51,7 @@ public class TreeAndTableController extends BaseBeanController<TreeAndTable> {
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('test:treeandtable:treeandtable:list')")
-    public String list(HttpServletRequest request) throws IOException {
+    public String list(HttpServletRequest request) {
         //加入条件
         QueryWrapper<TreeAndTable> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("create_date");
