@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.gson.*;
 import com.google.gson.annotations.JsonAdapter;
 import com.sunseagear.common.utils.DateUtils;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.StringUtils;
 import lombok.Data;
@@ -14,9 +15,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -313,11 +312,30 @@ public class Response {
 
         @Override
         public JsonElement serialize(String s, Type type, JsonSerializationContext jsonSerializationContext) {
-            if (!StringUtils.isEmpty(s) && !StringUtils.startsWith(s, "http")) {
-                return new JsonPrimitive(ServletUtils.getContextUrl(ServletUtils.getRequest()) + s);
+            s = StringEscapeUtils.unescapeHtml4(StringEscapeUtils.unescapeHtml4(s));
+            JsonParser parser = new JsonParser();
+            JsonElement el = parser.parse(s);
+
+            if (el.isJsonArray()) {
+                List<OssFile> ossFileList = JsonUtils.jsonStringToListBean(s, OssFile.class);
+                ossFileList.forEach(item -> {
+                    if (!StringUtils.isEmpty(item.url) && !StringUtils.startsWith(item.url, "http")) {
+                        item.url = ServletUtils.getContextUrl(ServletUtils.getRequest()) + item.url;
+                    }
+                });
+                return  new JsonPrimitive(JsonUtils.objectToJsonString(ossFileList));
+            } else {
+                if (!StringUtils.isEmpty(s) && !StringUtils.startsWith(s, "http")) {
+                    return new JsonPrimitive(ServletUtils.getContextUrl(ServletUtils.getRequest()) + s);
+                }
+                return new JsonPrimitive(s);
             }
-            return new JsonPrimitive(s);
         }
+    }
+
+    class OssFile {
+        public String name;
+        public String url;
     }
 
 
