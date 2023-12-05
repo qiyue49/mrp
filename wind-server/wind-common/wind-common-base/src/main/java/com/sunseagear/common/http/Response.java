@@ -316,17 +316,16 @@ public class Response {
         @Override
         public JsonElement serialize(String s, Type type, JsonSerializationContext jsonSerializationContext) {
             s = StringEscapeUtils.unescapeHtml4(StringEscapeUtils.unescapeHtml4(s));
-            JsonParser parser = new JsonParser();
-            JsonElement el = parser.parse(s);
+            JsonElement el = JsonParser.parseString(s);
 
             if (el.isJsonArray()) {
                 List<OssFile> ossFileList = JsonUtils.jsonStringToListBean(s, OssFile.class);
                 ossFileList.forEach(item -> {
                     if (!StringUtils.isEmpty(item.url) && !StringUtils.startsWith(item.url, "http")) {
-                        item.url = ServletUtils.getContextUrl(ServletUtils.getRequest()) + item.url;
+                        item.setUrl(ServletUtils.getContextUrl(ServletUtils.getRequest()) + item.getUrl());;
                     }
                 });
-                return  new JsonPrimitive(JsonUtils.objectToJsonString(ossFileList));
+                return  new JsonPrimitive(new Gson().toJson(ossFileList));
             } else {
                 if (!StringUtils.isEmpty(s) && !StringUtils.startsWith(s, "http")) {
                     return new JsonPrimitive(ServletUtils.getContextUrl(ServletUtils.getRequest()) + s);
@@ -336,9 +335,10 @@ public class Response {
         }
     }
 
+    @Data
     class OssFile {
-        public String name;
-        public String url;
+        private String name;
+        private String url;
     }
 
 
