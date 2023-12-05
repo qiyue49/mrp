@@ -24,13 +24,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ExceptionConfig {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 捕捉shiro的异常
      *
-     * @param ex
-     * @return
      */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
@@ -41,7 +39,6 @@ public class ExceptionConfig {
     /**
      * 捕捉UnauthorizedException
      *
-     * @return
      */
     //@ResponseStatus(HttpStatus.UNAUTHORIZED)
     //@ExceptionHandler(UnauthorizedException.class)
@@ -52,9 +49,6 @@ public class ExceptionConfig {
     /**
      * 捕捉其他所有异常
      *
-     * @param request
-     * @param ex
-     * @return
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

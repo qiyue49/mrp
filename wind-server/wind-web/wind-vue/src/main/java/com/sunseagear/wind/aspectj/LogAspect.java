@@ -24,6 +24,7 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -47,7 +48,6 @@ public class LogAspect {
     /**
      * 前置通知 用于拦截操作
      *
-     * @param joinPoint
      */
     @AfterReturning(pointcut = "logPointCut()")
     public void doBefore(JoinPoint joinPoint) {
@@ -57,8 +57,6 @@ public class LogAspect {
     /**
      * 拦截异常操作
      *
-     * @param joinPoint
-     * @param e
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfter(JoinPoint joinPoint, Exception e) {
@@ -83,7 +81,7 @@ public class LogAspect {
             operationLog.setStatus(OperationLog.OPERATION_LOG_SUCCESS);
             // 请求的地址
             // 获取客户端操作系统
-            final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+            final UserAgent userAgent = UserAgent.parseUserAgentString(Objects.requireNonNull(ServletUtils.getRequest()).getHeader("User-Agent"));
             String os = userAgent.getOperatingSystem().getName();
             // 获取客户端浏览器
             String browser = userAgent.getBrowser().getName();
@@ -145,7 +143,7 @@ public class LogAspect {
     /**
      * 是否存在注解，如果存在就获取
      */
-    private Log getMethodAnnotationLog(JoinPoint joinPoint) throws Exception {
+    private Log getMethodAnnotationLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
@@ -158,8 +156,8 @@ public class LogAspect {
     /**
      * 是否类注解，如果存在就获取
      */
-    private Log getClazzAnnotationLog(JoinPoint joinPoint) throws Exception {
-        Class clazz = joinPoint.getTarget().getClass();
+    private Log getClazzAnnotationLog(JoinPoint joinPoint) {
+        Class<? extends Object> clazz = joinPoint.getTarget().getClass();
         return (Log) clazz.getAnnotation(Log.class);
     }
 

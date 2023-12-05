@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class QuartzManager {
 
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 
     /**
@@ -51,26 +51,19 @@ public class QuartzManager {
         if (StringUtils.isEmpty(misfirePolicy)) {
             misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
         }
-        switch (misfirePolicy) {
-            case ScheduleConstants.MISFIRE_DEFAULT:
-                return cb;
-            case ScheduleConstants.MISFIRE_IGNORE_MISFIRES:
-                return cb.withMisfireHandlingInstructionIgnoreMisfires();
-            case ScheduleConstants.MISFIRE_FIRE_AND_PROCEED:
-                return cb.withMisfireHandlingInstructionFireAndProceed();
-            case ScheduleConstants.MISFIRE_DO_NOTHING:
-                return cb.withMisfireHandlingInstructionDoNothing();
-            default:
-                throw new QuartzException("The task misfire policy '" + scheduleJob.getMisfirePolicy()
-                        + "' cannot be used in cron schedule tasks");
-        }
+        return switch (misfirePolicy) {
+            case ScheduleConstants.MISFIRE_DEFAULT -> cb;
+            case ScheduleConstants.MISFIRE_IGNORE_MISFIRES -> cb.withMisfireHandlingInstructionIgnoreMisfires();
+            case ScheduleConstants.MISFIRE_FIRE_AND_PROCEED -> cb.withMisfireHandlingInstructionFireAndProceed();
+            case ScheduleConstants.MISFIRE_DO_NOTHING -> cb.withMisfireHandlingInstructionDoNothing();
+            default -> throw new QuartzException("The task misfire policy '" + scheduleJob.getMisfirePolicy()
+                    + "' cannot be used in cron schedule tasks");
+        };
     }
 
     /**
      * 添加任务
      *
-     * @param job
-     * @throws SchedulerException
      */
     public void addJob(ScheduleJob job) throws SchedulerException {
         if (job == null || !ScheduleConstants.STATUS_RUNNING.equals(job.getJobStatus())) {
@@ -111,14 +104,12 @@ public class QuartzManager {
     /**
      * 获取所有计划中的任务列表
      *
-     * @return
-     * @throws SchedulerException
      */
     public List<ScheduleJob> getAllJob() throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
         GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
         Set<JobKey> jobKeys = scheduler.getJobKeys(matcher);
-        List<ScheduleJob> jobList = new ArrayList<ScheduleJob>();
+        List<ScheduleJob> jobList = new ArrayList<>();
         for (JobKey jobKey : jobKeys) {
             List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
             for (Trigger trigger : triggers) {
@@ -126,8 +117,7 @@ public class QuartzManager {
                 ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
                 Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
                 job.setJobStatus(triggerState.name());
-                if (trigger instanceof CronTrigger) {
-                    CronTrigger cronTrigger = (CronTrigger) trigger;
+                if (trigger instanceof CronTrigger cronTrigger) {
                     String cronExpression = cronTrigger.getCronExpression();
                     job.setCronExpression(cronExpression);
                 }
@@ -140,13 +130,11 @@ public class QuartzManager {
     /**
      * 所有正在运行的job
      *
-     * @return
-     * @throws SchedulerException
      */
     public List<ScheduleJob> getRunningJob() throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
         List<JobExecutionContext> executingJobs = scheduler.getCurrentlyExecutingJobs();
-        List<ScheduleJob> jobList = new ArrayList<ScheduleJob>(executingJobs.size());
+        List<ScheduleJob> jobList = new ArrayList<>(executingJobs.size());
         for (JobExecutionContext executingJob : executingJobs) {
             JobDetail jobDetail = executingJob.getJobDetail();
             JobKey jobKey = jobDetail.getKey();
@@ -154,8 +142,7 @@ public class QuartzManager {
             ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
             Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
             job.setJobStatus(triggerState.name());
-            if (trigger instanceof CronTrigger) {
-                CronTrigger cronTrigger = (CronTrigger) trigger;
+            if (trigger instanceof CronTrigger cronTrigger) {
                 String cronExpression = cronTrigger.getCronExpression();
                 job.setCronExpression(cronExpression);
             }
@@ -167,8 +154,6 @@ public class QuartzManager {
     /**
      * 暂停一个job
      *
-     * @param scheduleJob
-     * @throws SchedulerException
      */
     public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -179,8 +164,6 @@ public class QuartzManager {
     /**
      * 恢复一个job
      *
-     * @param scheduleJob
-     * @throws SchedulerException
      */
     public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -191,8 +174,6 @@ public class QuartzManager {
     /**
      * 删除一个job
      *
-     * @param scheduleJob
-     * @throws SchedulerException
      */
     public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -203,8 +184,6 @@ public class QuartzManager {
     /**
      * 立即执行job
      *
-     * @param scheduleJob
-     * @throws SchedulerException
      */
     public void runAJobNow(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -215,8 +194,6 @@ public class QuartzManager {
     /**
      * 更新job时间表达式
      *
-     * @param scheduleJob
-     * @throws SchedulerException
      */
     public void updateJobCron(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -240,7 +217,6 @@ public class QuartzManager {
     /**
      * 清空任务
      *
-     * @throws SchedulerException
      */
     public void empty() throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();

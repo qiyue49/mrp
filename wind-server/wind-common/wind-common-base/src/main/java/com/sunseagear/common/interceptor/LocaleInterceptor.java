@@ -18,16 +18,16 @@ import java.util.Locale;
 public class LocaleInterceptor implements HandlerInterceptor {
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object object,
-                                Exception exception) throws Exception {
+                                Exception exception) {
 
     }
 
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object object,
-                           ModelAndView modelAndView) throws Exception {
+                           ModelAndView modelAndView) {
 
     }
 
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) {
         String langType = "zh";
         if (langType.equals("zh")) {
             Locale locale = new Locale("zh", "CN");

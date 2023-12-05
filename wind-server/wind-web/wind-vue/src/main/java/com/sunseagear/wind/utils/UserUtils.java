@@ -38,9 +38,9 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     }
 
 
-    private static IUserService userService = SpringContextHolder.getBean(UserServiceImpl.class);
-    private static IRoleService roleService = SpringContextHolder.getBean(RoleServiceImpl.class);
-    private static IMenuService menuService = SpringContextHolder.getBean(MenuServiceImpl.class);
+    private static final IUserService userService = SpringContextHolder.getBean(UserServiceImpl.class);
+    private static final IRoleService roleService = SpringContextHolder.getBean(RoleServiceImpl.class);
+    private static final IMenuService menuService = SpringContextHolder.getBean(MenuServiceImpl.class);
     public static final String USER_CACHE = "sys_user";
     public static final String USER_CACHE_ID = "sys_user:id:";
     public static final String USER_CACHE_USER_NAME = "sys_user:username:";
@@ -68,7 +68,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 根据ID获取用户
      *
-     * @param id
      * @return 取不到返回null
      */
     public static User get(Long id) {
@@ -87,8 +86,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 根据用户名获取用户
      *
-     * @param username
-     * @return
      */
     public static User getByUserName(String username) {
         User user = CacheUtils.getCacheObject(USER_CACHE_USER_NAME + username);
@@ -106,7 +103,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 获取当前用户角色列表
      *
-     * @return
      */
     public static List<Role> getRoleList() {
         User user = getUser();
@@ -125,7 +121,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 获取角色列表
      *
-     * @return
      */
     public static Set<String> getRoleStringList() {
         Set<Role> roles = Sets.newConcurrentHashSet(getRoleList());
@@ -135,8 +130,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 是否有特定的角色
      *
-     * @param roleCode
-     * @return
      */
     public static boolean hasRole(String roleCode) {
         Set<String> roleCodeList = getRoleStringList();
@@ -151,7 +144,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 获取权限列表
      *
-     * @return
      */
     public static Set<String> getPermissionSet() {
         User user = getUser();
@@ -187,7 +179,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 获取当前用户授权菜单
      *
-     * @return
      */
     public static List<String> getPermissionList() {
         User user = getUser();
@@ -221,7 +212,7 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
      */
     public static boolean isAdmin() {
         List<Role> roleList = getRoleList();
-        Boolean bool = false;
+        boolean bool = false;
         for (Role r : roleList) {
             if (Integer.parseInt(r.getIsSys()) == 1
                     || r.getCode().toLowerCase().contains("admin")
@@ -236,7 +227,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 更新用户
      *
-     * @param id
      */
     public static void update(Long id) {
         User user = userService.selectById(id);
@@ -259,7 +249,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 清除指定用户缓存
      *
-     * @param user
      */
     public static void clearCache(User user) {
         CacheUtils.clear(USER_CACHE_ID + user.getId());
@@ -270,7 +259,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
     /**
      * 清除权限缓存
      *
-     * @param roleId
      */
     public static void clearPermissionCache(Long roleId) {
         CacheUtils.clear(CACHE_PERMISSION_LIST + roleId);

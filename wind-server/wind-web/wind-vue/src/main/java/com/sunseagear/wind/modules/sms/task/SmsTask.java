@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.wind.modules.sms.entity.SmsSendLog;
 import com.sunseagear.wind.modules.sms.service.ISmsSendLogService;
 import com.sunseagear.wind.modules.sms.service.ISmsSendService;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class SmsTask implements ApplicationListener<ContextRefreshedEvent> {
      * 这里把发送中的短信恢复发送
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    public void onApplicationEvent(@NotNull ContextRefreshedEvent contextRefreshedEvent) {
         //找到发送中的短信重新发送
         List<SmsSendLog> smsSendLogList = smsSendLogService
                 .selectList(new QueryWrapper<SmsSendLog>()

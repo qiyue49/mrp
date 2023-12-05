@@ -1,5 +1,7 @@
 package com.sunseagear.common.utils;
 
+import java.util.Arrays;
+
 /**
  * 加载基础
  */
@@ -18,7 +20,7 @@ public abstract class ObjectSwitchHelper {
     }
 
     public void setByte(String key, byte[] value) {
-        setString(key, String.valueOf(value));
+        setString(key, Arrays.toString(value));
     }
 
     public void setShort(String key, short value) {
@@ -47,11 +49,11 @@ public abstract class ObjectSwitchHelper {
     }
 
     public int getInt(String key) {
-        return Integer.valueOf(getString(key));
+        return Integer.parseInt(getString(key));
     }
 
     public boolean getBoolean(String key) {
-        return Boolean.valueOf(getString(key));
+        return Boolean.parseBoolean(getString(key));
     }
 
     public byte[] getByte(String key) {
@@ -59,19 +61,19 @@ public abstract class ObjectSwitchHelper {
     }
 
     public short getShort(String key) {
-        return Short.valueOf(getString(key, ""));
+        return Short.parseShort(getString(key, ""));
     }
 
     public long getLong(String key) {
-        return Long.valueOf(getString(key));
+        return Long.parseLong(getString(key));
     }
 
     public float getFloat(String key) {
-        return Float.valueOf(getString(key));
+        return Float.parseFloat(getString(key));
     }
 
     public double getDouble(String key) {
-        return Double.valueOf(getString(key));
+        return Double.parseDouble(getString(key));
     }
 
     public String getString(String key, String defaultValue) {
@@ -80,8 +82,8 @@ public abstract class ObjectSwitchHelper {
 
     public int getInt(String key, int defaultValue) {
         try {
-            return Integer.valueOf(getString(key, ""));
-        } catch (Exception e) {
+            return Integer.parseInt(getString(key, ""));
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -89,8 +91,8 @@ public abstract class ObjectSwitchHelper {
 
     public boolean getBoolean(String key, Boolean defaultValue) {
         try {
-            return Boolean.valueOf(getString(key, ""));
-        } catch (Exception e) {
+            return Boolean.parseBoolean(getString(key, ""));
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -99,7 +101,7 @@ public abstract class ObjectSwitchHelper {
     public byte[] getByte(String key, byte[] defaultValue) {
         try {
             return getString(key, "").getBytes();
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -107,8 +109,8 @@ public abstract class ObjectSwitchHelper {
 
     public short getShort(String key, Short defaultValue) {
         try {
-            return Short.valueOf(getString(key, ""));
-        } catch (Exception e) {
+            return Short.parseShort(getString(key, ""));
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -117,8 +119,8 @@ public abstract class ObjectSwitchHelper {
     public long getLong(String key, Long defaultValue) {
 
         try {
-            return Long.valueOf(getString(key, ""));
-        } catch (Exception e) {
+            return Long.parseLong(getString(key, ""));
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -127,8 +129,8 @@ public abstract class ObjectSwitchHelper {
     public float getFloat(String key, Float defaultValue) {
 
         try {
-            return Float.valueOf(getString(key, ""));
-        } catch (Exception e) {
+            return Float.parseFloat(getString(key, ""));
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -136,8 +138,8 @@ public abstract class ObjectSwitchHelper {
 
     public double getDouble(String key, Double defaultValue) {
         try {
-            return Double.valueOf(getString(key, ""));
-        } catch (Exception e) {
+            return Double.parseDouble(getString(key, ""));
+        } catch (Exception ignored) {
 
         }
         return defaultValue;
@@ -153,6 +155,6 @@ public abstract class ObjectSwitchHelper {
 
     public abstract void set(String key, Object value);
 
-    public abstract boolean remove(String key);
+    public abstract void remove(String key);
 
 }

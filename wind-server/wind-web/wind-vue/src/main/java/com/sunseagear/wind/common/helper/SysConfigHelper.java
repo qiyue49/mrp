@@ -1,7 +1,6 @@
 package com.sunseagear.wind.common.helper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.handler.TenantLineHandler;
 import com.sunseagear.common.tenant.TenantProperties;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.UserUtils;
@@ -19,7 +18,7 @@ public class SysConfigHelper {
     private static SysConfigHelper sysConfigHelper;
     private ISysConfigService sysConfigService = SpringContextHolder.getBean("sysConfigService");
 
-    private HashMap<String, List<SysConfig>> sysConfigMap = new HashMap<>();
+    private final HashMap<String, List<SysConfig>> sysConfigMap = new HashMap<>();
 
     public static SysConfigHelper getInstance() {
         if (sysConfigHelper == null) {

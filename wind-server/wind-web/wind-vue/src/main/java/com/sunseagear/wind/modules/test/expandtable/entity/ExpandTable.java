@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -19,6 +20,7 @@ import lombok.Data;
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("test_expand_table")
 @SuppressWarnings("serial")

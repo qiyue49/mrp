@@ -51,8 +51,6 @@ public class LoginLogController extends BaseBeanController<LoginLog> {
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)

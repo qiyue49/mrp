@@ -32,14 +32,13 @@ public class UserOnlineController extends BaseBeanController<Principal> {
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @throws IOException
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('monitor:user:online:list')")
     public String list(HttpServletRequest request) {
         // 预处理
-        Page pageBean = oAuthService.activePrincipal(getPage(), request);
+        Page<Principal> pageBean = oAuthService.activePrincipal(getPage(), request);
         return Response.successPageJson(pageBean);
     }
 

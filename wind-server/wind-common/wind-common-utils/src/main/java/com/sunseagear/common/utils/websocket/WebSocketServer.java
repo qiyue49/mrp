@@ -12,13 +12,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public abstract class WebSocketServer {
 
-    protected static MessageDispatcher messageDispatcher = new MessageDispatcher();
+    protected static final MessageDispatcher messageDispatcher = new MessageDispatcher();
     /**
      * 全部在线会话  PS: 基于场景考虑 这里使用线程安全的Map存储会话对象。
      * 以用户姓名为key
      */
     protected Map<Long, Session> onlineSessions = null;
-    protected static Map<Long, Session> webOnlineSessions = new ConcurrentHashMap<>();
+    protected static final Map<Long, Session> webOnlineSessions = new ConcurrentHashMap<>();
 
     @Bean
     public void init() {

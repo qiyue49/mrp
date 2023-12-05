@@ -6,6 +6,7 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 import jakarta.annotation.PostConstruct;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,9 @@ import java.util.concurrent.Executors;
 
 public class TaskHelper {
 
+    @Getter
     private int handlerCount = 1;
+    @Getter
     private int bufferSize = 1024;
     private Disruptor<TaskEvent> disruptor;
     private TaskEventProducer taskEventProducer;
@@ -41,7 +44,7 @@ public class TaskHelper {
 
         // Construct the Disruptor
         // 单线程模式，获取额外的性能
-        disruptor = new Disruptor<TaskEvent>(factory, bufferSize, executor, ProducerType.SINGLE,
+        disruptor = new Disruptor<>(factory, bufferSize, executor, ProducerType.SINGLE,
                 new BlockingWaitStrategy());
         List<TaskHandler> TaskHandlers = new ArrayList<>();
         for (int i = 0; i < handlerCount; i++) {
@@ -49,7 +52,7 @@ public class TaskHelper {
         }
         disruptor.handleExceptionsWith(new IgnoreExceptionHandler());
         // 多个消费者，每个消费者竞争消费不同数据
-        disruptor.handleEventsWithWorkerPool(TaskHandlers.toArray(new TaskHandler[TaskHandlers.size()]));
+        disruptor.handleEventsWithWorkerPool(TaskHandlers.toArray(new TaskHandler[0]));
         // Start the Disruptor, starts all threads running
         disruptor.start();
 
@@ -73,16 +76,8 @@ public class TaskHelper {
         taskEventProducer.doTask(task);
     }
 
-    public int getHandlerCount() {
-        return handlerCount;
-    }
-
     public void setHandlerCount(int handlerCount) {
         this.handlerCount = handlerCount;
-    }
-
-    public int getBufferSize() {
-        return bufferSize;
     }
 
     public void setBufferSize(int bufferSize) {

@@ -26,22 +26,18 @@ public interface IOSSClient {
     /**
      * 客户端初始化
      *
-     * @param propertiesName
      */
     void init(String propertiesName);
 
     /**
      * 客户端初始化
      *
-     * @param config
      */
     void init(OssConfig config);
 
     /**
      * 文件上传
      *
-     * @param inputStream
-     * @param path
      * @return 返回可以访问的路径
      */
     String upload(InputStream inputStream, String path);

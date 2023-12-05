@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 
 /**
@@ -17,7 +18,7 @@ public class PropertiesUtil extends ObjectSwitchHelper {
     /**
      * 日志对象
      */
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     private Properties properties;
     private String[] resourcesPaths;
     private String properiesName = "";
@@ -27,8 +28,7 @@ public class PropertiesUtil extends ObjectSwitchHelper {
     }
 
     public static PropertiesUtil create(String... resourcesPaths) {
-        PropertiesUtil propertiesUtil = new PropertiesUtil(resourcesPaths);
-        return propertiesUtil;
+        return new PropertiesUtil(resourcesPaths);
     }
 
     public PropertiesUtil(String... resourcesPaths) {
@@ -44,8 +44,6 @@ public class PropertiesUtil extends ObjectSwitchHelper {
             try {
                 is = PropertiesUtil.class.getClassLoader().getResourceAsStream(location);
                 properties.load(is);
-            } catch (IOException ex) {
-                logger.info("Could not load properties from path:" + location + ", " + ex.getMessage());
             } catch (Exception ex) {
                 logger.info("Could not load properties from path:" + location + ", " + ex.getMessage());
             } finally {
@@ -57,7 +55,6 @@ public class PropertiesUtil extends ObjectSwitchHelper {
     /**
      * 更新与删除时指定文件名称
      *
-     * @param properiesName
      */
     public void setOptProperiesName(String properiesName) {
         this.properiesName = properiesName;
@@ -73,7 +70,7 @@ public class PropertiesUtil extends ObjectSwitchHelper {
 
     public String getAbsolutePath(String filename) {
         if (!FileUtils.isAbsolutePath(filename)) {
-            filename = PropertiesUtil.class.getClassLoader().getResource(filename).getPath();
+            filename = Objects.requireNonNull(PropertiesUtil.class.getClassLoader().getResource(filename)).getPath();
         }
         return filename;
     }
@@ -132,7 +129,7 @@ public class PropertiesUtil extends ObjectSwitchHelper {
     }
 
     @Override
-    public boolean remove(String key) {
+    public void remove(String key) {
         if (StringUtils.isEmpty(this.properiesName)) {
             this.properiesName = this.resourcesPaths[0];
         }
@@ -154,7 +151,6 @@ public class PropertiesUtil extends ObjectSwitchHelper {
             IOUtils.closeQuietly(os);
         }
         this.properiesName = "";
-        return false;
     }
 
     public static void main(String[] args) {

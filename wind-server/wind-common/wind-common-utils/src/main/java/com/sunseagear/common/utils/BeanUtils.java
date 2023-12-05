@@ -37,7 +37,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      * @param clazz 要判断的类。
      * @return true 表示为基本数据类型。
      */
-    public static boolean isBaseDataType(Class<?> clazz) throws Exception {
+    public static boolean isBaseDataType(Class<?> clazz) {
         return (clazz.equals(String.class) || clazz.equals(Integer.class) || clazz.equals(Byte.class)
                 || clazz.equals(Long.class) || clazz.equals(Double.class) || clazz.equals(Float.class)
                 || clazz.equals(Character.class) || clazz.equals(Short.class) || clazz.equals(BigDecimal.class)
@@ -320,13 +320,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                     }
                 }
             }
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (InstantiationException | InvocationTargetException | IntrospectionException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return t;
@@ -343,11 +337,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                 Object value = pd.getReadMethod().invoke(bean);
                 map.put(key, value);
             }
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return map;
@@ -364,22 +354,17 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      */
     public static Map<String, Object> convertBean(Object bean)
             throws IntrospectionException, IllegalAccessException, InvocationTargetException {
-        Class<? extends Object> type = bean.getClass();
-        Map<String, Object> returnMap = new HashMap<String, Object>();
+        Class<?> type = bean.getClass();
+        Map<String, Object> returnMap = new HashMap<>();
         BeanInfo beanInfo = Introspector.getBeanInfo(type);
 
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-        for (int i = 0; i < propertyDescriptors.length; i++) {
-            PropertyDescriptor descriptor = propertyDescriptors[i];
+        for (PropertyDescriptor descriptor : propertyDescriptors) {
             String propertyName = descriptor.getName();
             if (!propertyName.equals("class")) {
                 Method readMethod = descriptor.getReadMethod();
-                Object result = readMethod.invoke(bean, new Object[0]);
-                if (result != null) {
-                    returnMap.put(propertyName, result);
-                } else {
-                    returnMap.put(propertyName, "");
-                }
+                Object result = readMethod.invoke(bean);
+                returnMap.put(propertyName, Objects.requireNonNullElse(result, ""));
             }
         }
         return returnMap;
@@ -393,22 +378,13 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
      * 当属性类型为接口时，传入的实际对象class不等于接口，会导致 NoSuchMethodException 异常
      *
-     * @param obj
-     * @param fieldname
-     * @param value
-     * @param valueClass
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
      * @author ly
      */
     public static void setField(Object obj, String fieldname, Object value, Class<?> valueClass)
             throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
             InvocationTargetException {
 
-        if (fieldname.length() > 0) {
+        if (!fieldname.isEmpty()) {
             if (PropertyUtils.isWriteable(obj, fieldname)) {
                 Class<?> valueclass = org.springframework.beans.BeanUtils.findPropertyType(fieldname, obj.getClass());
                 Object rObject = Caster(valueclass, String.valueOf(value));
@@ -437,7 +413,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     }
 
     public static Object getFieldEx(Object obj, String fieldName) throws IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException, SecurityException, NoSuchMethodException {
+            SecurityException {
         int dotIndex = fieldName.indexOf(".");
         if (dotIndex > 0) {
             Object subObj = getField(obj, fieldName.substring(0, dotIndex));
@@ -450,61 +426,64 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
      * 字符串到其他类型转换
      *
-     * @param type
-     * @param value
-     * @return
      */
     public static Object Caster(Class<?> type, String value) {
 
         Object returnValue = null;
-        if (value == null || value == "null" || "".equals(value))
+        if (value == null || value.equals("null") || value.isEmpty()) {
             return null;
+        }
 
         if (type.getName().equals("java.util.Date")) {
-            if (value.indexOf("Z") != -1 && value.indexOf("T") != -1) {
+            if (value.contains("Z") && value.contains("T")) {
                 returnValue = value;
             } else {
                 returnValue = DateUtils.parseDate(value);
             }
         } else if (type.getName().equals("java.sql.Timestamp")) {
-            if (value.indexOf("Z") != -1 && value.indexOf("T") != -1) {
+            if (value.contains("Z") && value.contains("T")) {
                 value = value.replace("Z", "");
                 value = value.replace("T", " ");
                 Date d = DateUtils.parseDate(value);
-                Timestamp t = new Timestamp(d.getTime());
-                returnValue = t;
+                returnValue = new Timestamp(d.getTime());
             } else {
                 Date d = DateUtils.parseDate(value);
-                Timestamp t = new Timestamp(d.getTime());
-                returnValue = t;
+                returnValue = new Timestamp(d.getTime());
             }
         } else if (type.getName().endsWith("Long")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Long.valueOf(value);
+            }
         } else if (type.getName().endsWith("Integer")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Integer.valueOf(value);
+            }
         } else if (type.getName().endsWith("int")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Integer.valueOf(value);
-            else
+            } else {
                 returnValue = 0;
+            }
         } else if (type.getName().endsWith("Double")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Double.valueOf(value);
+            }
         } else if (type.getName().endsWith("double")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Double.valueOf(value);
-            else
+            } else {
                 returnValue = 0.0;
+            }
         } else if (type.getName().endsWith("Byte")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Byte.valueOf(value);
+            }
         } else if (type.getName().endsWith("byte")) {
-            if (StringUtils.isNumericAndDot(value))
+            if (StringUtils.isNumericAndDot(value)) {
                 returnValue = Byte.valueOf(value);
-            else
+            } else {
                 returnValue = 0;
+            }
         } else if (type.getName().endsWith("Boolean") || type.getName().endsWith("boolean")) {
             returnValue = Boolean.parseBoolean(value);
         } else if (type.getName().endsWith("bool")) {
@@ -515,18 +494,19 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             Object obj = ClobProxy.generateProxy(value);
             returnValue = obj;// proxy.getWrappedClob();
         }*/ else {
-            returnValue = value.toString();
+            returnValue = value;
         }
 
         return returnValue;
     }
 
     public static Method getField(Object obj, String fieldname) {
-        if (obj == null)
+        if (obj == null) {
             return null;
-        if (fieldname.length() > 0) {
+        }
+        if (!fieldname.isEmpty()) {
             String methodname = "get" + fieldname.substring(0, 1).toUpperCase()
-                    + fieldname.substring(1, fieldname.length());
+                    + fieldname.substring(1);
             Method m;
             try {
                 m = obj.getClass().getMethod(methodname);
@@ -535,10 +515,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                 System.out.println(obj.getClass().getName() + "中未找到方法 :" + methodname);
 
                 // e.printStackTrace();
-            } catch (SecurityException e) {
-
-                e.printStackTrace();
-            } catch (IllegalArgumentException e) {
+            } catch (SecurityException | IllegalArgumentException e) {
 
                 e.printStackTrace();
             }
@@ -547,47 +524,45 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     }
 
     public static List<String> getFiledList(Object obj) {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         try {
-            Class<? extends Object> clazz = obj.getClass();
+            Class<?> clazz = obj.getClass();
             Field[] fields = obj.getClass().getDeclaredFields();// 获得属性
             for (Field field : fields) {
-                PropertyDescriptor pd = new PropertyDescriptor((String) field.getName(), clazz);
+                PropertyDescriptor pd = new PropertyDescriptor(field.getName(), clazz);
                 Method getMethod = pd.getReadMethod();// 获得get方法
                 String filed = "";// 如果是IS开头的区两位 我也是醉了-_-!!!!
                 if (getMethod.getName().toLowerCase().startsWith(("is"))) {
                     filed = getMethod.getName().substring(2);
-                } else
+                } else {
                     filed = getMethod.getName().substring(3);
+                }
                 list.add(filed);
             }
-        } catch (SecurityException e) {
+        } catch (SecurityException | IntrospectionException | IllegalArgumentException e) {
             e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-
         }
         return list;
     }
 
     public static Object getFieldValue(Object obj, String fieldname) {
-        if (obj == null)
+        if (obj == null) {
             return null;
+        }
         if (obj instanceof Map) {
             Map<String, Object> map = extracted(obj);
-            if (map.containsKey(fieldname))
+            if (map.containsKey(fieldname)) {
                 return map.get(fieldname);
-            else
+            } else {
                 return null;
+            }
         } else {
 
-            if (fieldname.length() > 0) {
+            if (!fieldname.isEmpty()) {
                 String methodname = "get" + fieldname.substring(0, 1).toUpperCase()
-                        + fieldname.substring(1, fieldname.length());
+                        + fieldname.substring(1);
                 String methodname1 = "is" + fieldname.substring(0, 1).toUpperCase()
-                        + fieldname.substring(1, fieldname.length());
+                        + fieldname.substring(1);
                 Method m;
                 try {
                     m = obj.getClass().getMethod(methodname);
@@ -600,31 +575,15 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                     } catch (NoSuchMethodException e1) {
 
                         e1.printStackTrace();
-                    } catch (SecurityException e1) {
-
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e1) {
-
-                        e.printStackTrace();
-                    } catch (IllegalArgumentException e1) {
-
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e1) {
+                    } catch (SecurityException | InvocationTargetException | IllegalArgumentException |
+                             IllegalAccessException e1) {
 
                         e.printStackTrace();
                     }
 
                     // e.printStackTrace();
-                } catch (SecurityException e) {
-
-                    e.printStackTrace();
-                } catch (IllegalAccessException e) {
-
-                    e.printStackTrace();
-                } catch (IllegalArgumentException e) {
-
-                    e.printStackTrace();
-                } catch (InvocationTargetException e) {
+                } catch (SecurityException | InvocationTargetException | IllegalArgumentException |
+                         IllegalAccessException e) {
 
                     e.printStackTrace();
                 }
@@ -640,47 +599,39 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
     public static void setFieldValue(Object obj, String fieldname, Object value) throws SecurityException,
             NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-        if (value != null)
+        if (value != null) {
             setFieldValue(obj, fieldname, value, value.getClass());
-        else
+        } else {
             setFieldValue(obj, fieldname, value, null);
+        }
 
     }
 
     public static Method getMethod(Class<?> cls, String methodName) {
-        if (cls == null)
+        if (cls == null) {
             return null;
+        }
         for (Method m : cls.getMethods()) {
-            if (m.getName().equals(methodName))
+            if (m.getName().equals(methodName)) {
                 return m;
+            }
         }
         return null;
     }
 
     public static boolean CopyFromOneToOther(Object from, Object to, String Exception) {
         List<String> Field = getFiledList(from);
-        if (Exception == null)
+        if (Exception == null) {
             Exception = "";
-        for (int i = 0; i < Field.size(); i++) {
-            if (!("," + Exception + ",").contains(Field.get(i))) {
-                Object value = getFieldValue(from, Field.get(i));
+        }
+        for (String s : Field) {
+            if (!("," + Exception + ",").contains(s)) {
+                Object value = getFieldValue(from, s);
                 if (value != null) {
                     try {
-                        setFieldValue(to, Field.get(i), value, value.getClass());
+                        setFieldValue(to, s, value, value.getClass());
                         // setField(to, Field.get(i), value);
-                    } catch (SecurityException e) {
-
-                        e.printStackTrace();
-                    } catch (NoSuchMethodException e) {
-
-                        e.printStackTrace();
-                    } catch (IllegalArgumentException e) {
-
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
+                    } catch (SecurityException | IllegalArgumentException e) {
 
                         e.printStackTrace();
                     }
@@ -692,14 +643,14 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
     // list的Where方法
     public static <T> List<T> ListDoWhere(List<T> list, String FieldName, Object Value) {
-        List<T> reslist = new ArrayList<T>();
-        if (list == null)
+        List<T> reslist = new ArrayList<>();
+        if (list == null) {
             return reslist;
-        for (int i = 0; i < list.size(); i++) {
-            T obj = list.get(i);
+        }
+        for (T obj : list) {
             Object myobj = getFieldValue(obj, FieldName);
-            if (myobj != null || (myobj == null && Value == null)) {
-                if (myobj.equals(Value)) {
+            if (myobj != null || Value == null) {
+                if (Objects.requireNonNull(myobj).equals(Value)) {
                     reslist.add(obj);
                 }
             }
@@ -709,9 +660,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
     // list的Select方法
     public static <T> List<Object> ListDoSelect(List<T> list, String FieldName) {
-        List<Object> reslist = new ArrayList<Object>();
-        for (int i = 0; i < list.size(); i++) {
-            T obj = list.get(i);
+        List<Object> reslist = new ArrayList<>();
+        for (T obj : list) {
             Object myobj = getFieldValue(obj, FieldName);
             if (myobj != null) {
                 reslist.add(myobj);
@@ -723,32 +673,22 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
      * 当属性类型为接口时，传入的实际对象class不等于接口，会导致 NoSuchMethodException 异常
      *
-     * @param obj
-     * @param fieldname
-     * @param value
-     * @param valueClass
-     * @throws SecurityException
-     * @throws NoSuchMethodException
-     * @throws IllegalArgumentException
-     * @throws IllegalAccessException
-     * @throws InvocationTargetException
      * @author ly
      */
     public static void setFieldValue(Object obj, String fieldname, Object value, Class<?> valueClass)
-            throws SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
-        if (obj == null)
+            throws SecurityException, IllegalArgumentException {
+        if (obj == null) {
             return;
+        }
 
-        if (obj instanceof Map) {
-            Map map = (Map) obj;
+        if (obj instanceof Map map) {
             map.put(fieldname, value);
         } else {
 
-            if (fieldname.length() > 0) {
+            if (!fieldname.isEmpty()) {
 
                 String methodname = "set" + fieldname.substring(0, 1).toUpperCase()
-                        + fieldname.substring(1, fieldname.length());
+                        + fieldname.substring(1);
                 try {
                     Method m = null;
                     // if (valueClass != null)
@@ -756,9 +696,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                     m = getMethod(obj.getClass(), methodname);// obj.getClass().getMethod(methodname);
                     // } else
                     // m = Utils.getMethod(obj.getClass(), methodname);
-                    if (m != null)
+                    if (m != null) {
                         m.invoke(obj, value);
-                    else {
+                    } else {
 
                     }
                 } catch (Exception e) {
@@ -804,14 +744,14 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      * 将json中存在的属性填充到Object对象对应的属性中去,如果Json对象中不存在的将忽略
      *
      * @param obj  目标对象
-     * @param json
-     * @return
      */
     public static Object json2Objec(Object obj, JSONObject json) {
-        if (json == null)
+        if (json == null) {
             return obj;
-        if (obj == null)
+        }
+        if (obj == null) {
             return obj;
+        }
         Iterator it = json.keys();
         // 遍历jsonObject数据，添加到Map对象
         while (it.hasNext()) {
@@ -819,8 +759,9 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             Object value;
             try {
                 value = json.get(key);
-                if (!(value instanceof JSONObject) && !(value instanceof JSONArray))
+                if (!(value instanceof JSONObject) && !(value instanceof JSONArray)) {
                     setField(obj, key, value);
+                }
 
             } catch (Exception e) {
 
@@ -835,16 +776,15 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
      * 将json中存在的属性填充到Object对象对应的属性中去,如果Json对象中不存在的将忽略
      *
-     * @param obj           目标对象
-     * @param json
-     * @param applyChildren 子对象赋值
-     * @return
+     * @param obj 目标对象
      */
-    public static Object json2Objec(Object obj, JSONObject json, Boolean applyChildren) {
-        if (json == null)
-            return obj;
-        if (obj == null)
-            return obj;
+    public static void json2Objec(Object obj, JSONObject json, Boolean applyChildren) {
+        if (json == null) {
+            return;
+        }
+        if (obj == null) {
+            return;
+        }
         Iterator it = json.keys();
         // 遍历jsonObject数据，添加到Map对象
         while (it.hasNext()) {
@@ -852,36 +792,30 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             Object value;
             try {
                 value = json.get(key);
-                if (!(value instanceof JSONObject) && !(value instanceof JSONArray))
+                if (!(value instanceof JSONObject) && !(value instanceof JSONArray)) {
                     setField(obj, key, value);
-                else if (value instanceof JSONObject) {
+                } else if (value instanceof JSONObject) {
                     if (applyChildren) {
                         Method method = getField(obj, key);
                         if (method != null) {
                             try {
                                 Object newObject = method.getReturnType().newInstance();
-                                if (newObject != null) {
-                                    json2Objec(newObject, (JSONObject) value, applyChildren);
-                                }
+                                json2Objec(newObject, (JSONObject) value, true);
                             } catch (Exception ec) {
 
                             }
                         }
 
                     }
-                } else if (value instanceof JSONArray) {
-                    JSONArray jarray = (JSONArray) value;
+                } else if (value instanceof JSONArray jarray) {
                     for (Object jobj : jarray) {
-                        if (jobj instanceof JSONObject) {
-                            JSONObject jsonObj = (JSONObject) jobj;
+                        if (jobj instanceof JSONObject jsonObj) {
                             if (applyChildren) {
                                 Method method = getField(obj, key);
                                 if (method != null) {
                                     try {
                                         Object newObject = method.getReturnType().newInstance();
-                                        if (newObject != null) {
-                                            json2Objec(newObject, jsonObj, applyChildren);
-                                        }
+                                        json2Objec(newObject, jsonObj, true);
                                     } catch (Exception ec) {
 
                                     }
@@ -897,7 +831,6 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
         }
 
-        return obj;
     }
 
 }

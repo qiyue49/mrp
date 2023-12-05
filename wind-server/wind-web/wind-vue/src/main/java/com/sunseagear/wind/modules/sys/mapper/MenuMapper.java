@@ -14,8 +14,6 @@ public interface MenuMapper extends BaseTreeMapper<Menu> {
     List<Menu> findMenuByUserId(Long userId);
 
     /**
-     * @param roleId
-     * @return
      * @title: findMenuByRoleId
      * @description: 通过角色查找菜单
      * @return: List<Menu>
@@ -24,8 +22,6 @@ public interface MenuMapper extends BaseTreeMapper<Menu> {
 
 
     /**
-     * @param userId
-     * @return
      * @title: findMenuByUserId
      * @description: 通过用户查找菜单
      * @return: List<Menu>
@@ -33,8 +29,6 @@ public interface MenuMapper extends BaseTreeMapper<Menu> {
     List<Menu> findPermissionByUserId(Long userId);
 
     /**
-     * @param roleId
-     * @return
      * @title: findMenuByRoleId
      * @description: 通过角色查找菜单
      * @return: List<Menu>

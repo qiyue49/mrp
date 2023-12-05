@@ -25,6 +25,7 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
 import java.util.Map.Entry;
@@ -33,7 +34,7 @@ public class CCPRestSDK {
     /**
      * 日志对象
      */
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     int status;
     private static final int Request_Get = 0;
 
@@ -60,15 +61,15 @@ public class CCPRestSDK {
     private String SUBACCOUNT_SID;
     private String SUBACCOUNT_Token;
     public String App_ID;
-    private BodyType BODY_TYPE = BodyType.Type_XML;
+    private final BodyType BODY_TYPE = BodyType.Type_XML;
     public String Callsid;
 
     public enum BodyType {
-        Type_XML, Type_JSON;
+        Type_XML, Type_JSON
     }
 
     public enum AccountType {
-        Accounts, SubAccounts;
+        Accounts, SubAccounts
     }
 
     /**
@@ -137,13 +138,13 @@ public class CCPRestSDK {
      *
      * @param date     必选参数 day 代表前一天的数据（从00:00 – 23:59）
      * @param keywords 可选参数 客户的查询条件，由客户自行定义并提供给云通讯平台。默认不填忽略此参数
-     * @return
      */
     public HashMap<String, Object> billRecords(String date, String keywords) {
 
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         if ((isEmpty(date))) {
             logger.error("必选参数: 日期  为空");
             throw new IllegalArgumentException("必选参数: 日期  为空");
@@ -165,15 +166,17 @@ public class CCPRestSDK {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
                 json.addProperty("date", date);
-                if (!(isEmpty(keywords)))
+                if (!(isEmpty(keywords))) {
                     json.addProperty("keywords", keywords);
+                }
 
                 requsetbody = json.toString();
             } else {
                 StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><BillRecords>");
                 sb.append("<appId>").append(App_ID).append("</appId>").append("<date>").append(date).append("</date>");
-                if (!(isEmpty(keywords)))
+                if (!(isEmpty(keywords))) {
                     sb.append("<keywords>").append(keywords).append("</keywords>");
+                }
 
                 sb.append("</BillRecords>").toString();
                 requsetbody = sb.toString();
@@ -182,8 +185,8 @@ public class CCPRestSDK {
             // 打印包体
             logger.info("请求的包体：" + requsetbody);
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
 
@@ -192,8 +195,9 @@ public class CCPRestSDK {
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -205,8 +209,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("billRecords response body = " + result);
         try {
@@ -228,12 +233,12 @@ public class CCPRestSDK {
      * @param userdata  可选参数 用户数据，在<startservice>通知中返回，只允许填写数字字符，为Dial节点的属性
      * @param record    可选参数 是否录音，可填项为true和false，默认值为false不录音，为Dial节点的属性
      * @param disnumber 可选参数 用户方的显号号码，根据平台侧显号规则控制。
-     * @return
      */
     public HashMap<String, Object> ivrDial(String number, String userdata, boolean record, String disnumber) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         if (isEmpty(number)) {
             logger.error("必选参数: 待呼叫号码   为空");
             throw new IllegalArgumentException("必选参数: 待呼叫号码   为空");
@@ -255,7 +260,7 @@ public class CCPRestSDK {
             sb.append("<Appid>").append(App_ID).append("</Appid>").append("<Dial number=").append("\"").append(number)
                     .append("\"");
             if (record) {
-                sb.append(" record=").append("\"").append(record).append("\"");
+                sb.append(" record=").append("\"").append(true).append("\"");
             }
             if (userdata != null) {
                 sb.append(" userdata=").append("\"").append(userdata).append("\"");
@@ -270,8 +275,8 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
 
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
             status = response.getStatusLine().getStatusCode();
@@ -279,8 +284,9 @@ public class CCPRestSDK {
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -292,8 +298,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("ivrDial response body = " + result);
         try {
@@ -319,17 +326,18 @@ public class CCPRestSDK {
      *                       wav格式的文件名，语音验证码的内容全部播放此节点下的全部语音文件，也就是实现了语音验证码功能播放用户自己的语音文件，
      *                       该参数和verifyCode二者不能同时为空，当二者都不为空时优先使用playVerifyCode。
      * @param maxCallTime    可选参数 最大通话时长
-     * @return
      */
     public HashMap<String, Object> voiceVerify(String verifyCode, String to, String displayNum, String playTimes,
                                                String respUrl, String lang, String userData, String welcomePrompt, String playVerifyCode,
                                                String maxCallTime) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
-        if ((isEmpty(verifyCode)) || (isEmpty(to)))
+        }
+        if ((isEmpty(verifyCode)) || (isEmpty(to))) {
             throw new IllegalArgumentException(
                     "必选参数:" + (isEmpty(verifyCode) ? " 验证码内容 " : "") + (isEmpty(to) ? " 接收号码 " : "") + "为空");
+        }
         SSLHttpClient chc = new SSLHttpClient();
         DefaultHttpClient httpclient = null;
         try {
@@ -347,48 +355,64 @@ public class CCPRestSDK {
                 json.addProperty("appId", App_ID);
                 json.addProperty("verifyCode", verifyCode);
                 json.addProperty("to", to);
-                if (!(isEmpty(displayNum)))
+                if (!(isEmpty(displayNum))) {
                     json.addProperty("displayNum", displayNum);
+                }
 
-                if (!(isEmpty(playTimes)))
+                if (!(isEmpty(playTimes))) {
                     json.addProperty("playTimes", playTimes);
+                }
 
-                if (!(isEmpty(respUrl)))
+                if (!(isEmpty(respUrl))) {
                     json.addProperty("respUrl", respUrl);
-                if (!(isEmpty(lang)))
+                }
+                if (!(isEmpty(lang))) {
                     json.addProperty("lang", lang);
-                if (!(isEmpty(userData)))
+                }
+                if (!(isEmpty(userData))) {
                     json.addProperty("userData", userData);
-                if (!(isEmpty(welcomePrompt)))
+                }
+                if (!(isEmpty(welcomePrompt))) {
                     json.addProperty("welcomePrompt", welcomePrompt);
-                if (!(isEmpty(playVerifyCode)))
+                }
+                if (!(isEmpty(playVerifyCode))) {
                     json.addProperty("playVerifyCode", playVerifyCode);
-                if (!(isEmpty(maxCallTime)))
+                }
+                if (!(isEmpty(maxCallTime))) {
                     json.addProperty("maxCallTime", maxCallTime);
+                }
 
                 requsetbody = json.toString();
             } else {
                 StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><VoiceVerify>");
                 sb.append("<appId>").append(App_ID).append("</appId>").append("<verifyCode>").append(verifyCode)
                         .append("</verifyCode>").append("<to>").append(to).append("</to>");
-                if (!(isEmpty(displayNum)))
+                if (!(isEmpty(displayNum))) {
                     sb.append("<displayNum>").append(displayNum).append("</displayNum>");
+                }
 
-                if (!(isEmpty(playTimes)))
+                if (!(isEmpty(playTimes))) {
                     sb.append("<playTimes>").append(playTimes).append("</playTimes>");
+                }
 
-                if (!(isEmpty(respUrl)))
+                if (!(isEmpty(respUrl))) {
                     sb.append("<respUrl>").append(respUrl).append("</respUrl>");
-                if (!(isEmpty(lang)))
+                }
+                if (!(isEmpty(lang))) {
                     sb.append("<lang>").append(lang).append("</lang>");
-                if (!(isEmpty(userData)))
+                }
+                if (!(isEmpty(userData))) {
                     sb.append("<userData>").append(userData).append("</userData>");
-                if (!(isEmpty(welcomePrompt)))
+                }
+                if (!(isEmpty(welcomePrompt))) {
                     sb.append("<welcomePrompt>").append(welcomePrompt).append("</welcomePrompt>");
-                if (!(isEmpty(playVerifyCode)))
+                }
+                if (!(isEmpty(playVerifyCode))) {
                     sb.append("<playVerifyCode>").append(playVerifyCode).append("</playVerifyCode>");
-                if (!(isEmpty(maxCallTime)))
+                }
+                if (!(isEmpty(maxCallTime))) {
                     sb.append("<maxCallTime>").append(maxCallTime).append("</maxCallTime>");
+                }
 
                 sb.append("</VoiceVerify>").toString();
                 requsetbody = sb.toString();
@@ -398,16 +422,17 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
 
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
             status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -419,8 +444,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
 
         logger.info("voiceVerify response body = " + result);
@@ -453,18 +479,20 @@ public class CCPRestSDK {
      * @param txtBgsound 可选参数 文本转语音后的背景音编号，目前云通讯平台支持6种背景音，1到6的六种背景音编码，0为不需要背景音。
      *                   暂时不支持第三方自定义背景音。当mediaTxt有效才生效。
      * @param playMode   可选参数 是否同时播放文本和语音文件 , 0、否 1、是，默认0。优先播放文本。
-     * @return
      */
     public HashMap<String, Object> landingCall(String to, String mediaName, String mediaTxt, String displayNum,
                                                String playTimes, String respUrl, String userData, String txtSpeed, String txtVolume, String txtPitch,
                                                String txtBgsound, String playMode) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
-        if (isEmpty(to))
+        }
+        if (isEmpty(to)) {
             throw new IllegalArgumentException("必选参数:" + (isEmpty(to) ? " 被叫号码 " : "") + "为空");
-        if ((isEmpty(mediaName)) && (isEmpty(mediaTxt)))
+        }
+        if ((isEmpty(mediaName)) && (isEmpty(mediaTxt))) {
             throw new IllegalArgumentException("参数语音文件名称和参数语音文本内容不能同时为空");
+        }
         SSLHttpClient chc = new SSLHttpClient();
         DefaultHttpClient httpclient = null;
         try {
@@ -482,63 +510,85 @@ public class CCPRestSDK {
                 json.addProperty("appId", App_ID);
                 json.addProperty("to", to);
 
-                if (!(isEmpty(mediaName)))
+                if (!(isEmpty(mediaName))) {
                     json.addProperty("mediaName", mediaName);
+                }
 
-                if (!(isEmpty(mediaTxt)))
+                if (!(isEmpty(mediaTxt))) {
                     json.addProperty("mediaTxt", mediaTxt);
+                }
 
-                if (!(isEmpty(displayNum)))
+                if (!(isEmpty(displayNum))) {
                     json.addProperty("displayNum", displayNum);
-                if (!(isEmpty(playTimes)))
+                }
+                if (!(isEmpty(playTimes))) {
                     json.addProperty("playTimes", playTimes);
+                }
 
-                if (!(isEmpty(respUrl)))
+                if (!(isEmpty(respUrl))) {
                     json.addProperty("respUrl", respUrl);
-                if (!(isEmpty(userData)))
+                }
+                if (!(isEmpty(userData))) {
                     json.addProperty("userData", userData);
-                if (!(isEmpty(txtSpeed)))
+                }
+                if (!(isEmpty(txtSpeed))) {
                     json.addProperty("txtSpeed", txtSpeed);
-                if (!(isEmpty(txtVolume)))
+                }
+                if (!(isEmpty(txtVolume))) {
                     json.addProperty("txtVolume", txtVolume);
-                if (!(isEmpty(txtPitch)))
+                }
+                if (!(isEmpty(txtPitch))) {
                     json.addProperty("txtPitch", txtPitch);
-                if (!(isEmpty(txtBgsound)))
+                }
+                if (!(isEmpty(txtBgsound))) {
                     json.addProperty("txtBgsound", txtBgsound);
-                if (!(isEmpty(playMode)))
+                }
+                if (!(isEmpty(playMode))) {
                     json.addProperty("playMode", playMode);
+                }
 
                 requsetbody = json.toString();
             } else {
                 StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><LandingCall>");
                 sb.append("<appId>").append(App_ID).append("</appId>").append("<to>").append(to).append("</to>");
-                if (!(isEmpty(mediaName)))
+                if (!(isEmpty(mediaName))) {
                     sb.append("<mediaName>").append(mediaName).append("</mediaName>");
-                else if (!(isEmpty(mediaName)))
+                } else if (!(isEmpty(mediaName))) {
                     sb.append("<mediaName>").append(mediaName).append("</mediaName>");
+                }
 
-                if (!(isEmpty(mediaTxt)))
+                if (!(isEmpty(mediaTxt))) {
                     sb.append("<mediaTxt>").append(mediaTxt).append("</mediaTxt>");
+                }
 
-                if (!(isEmpty(displayNum)))
+                if (!(isEmpty(displayNum))) {
                     sb.append("<displayNum>").append(displayNum).append("</displayNum>");
-                if (!(isEmpty(playTimes)))
+                }
+                if (!(isEmpty(playTimes))) {
                     sb.append("<playTimes>").append(playTimes).append("</playTimes>");
+                }
 
-                if (!(isEmpty(respUrl)))
+                if (!(isEmpty(respUrl))) {
                     sb.append("<respUrl>").append(respUrl).append("</respUrl>");
-                if (!(isEmpty(userData)))
+                }
+                if (!(isEmpty(userData))) {
                     sb.append("<userData>").append(userData).append("</userData>");
-                if (!(isEmpty(txtSpeed)))
+                }
+                if (!(isEmpty(txtSpeed))) {
                     sb.append("<txtSpeed>").append(txtSpeed).append("</txtSpeed>");
-                if (!(isEmpty(txtVolume)))
+                }
+                if (!(isEmpty(txtVolume))) {
                     sb.append("<txtVolume>").append(txtVolume).append("</txtVolume>");
-                if (!(isEmpty(txtPitch)))
+                }
+                if (!(isEmpty(txtPitch))) {
                     sb.append("<txtPitch>").append(txtPitch).append("</txtPitch>");
-                if (!(isEmpty(txtBgsound)))
+                }
+                if (!(isEmpty(txtBgsound))) {
                     sb.append("<txtBgsound>").append(txtBgsound).append("</txtBgsound>");
-                if (!(isEmpty(playMode)))
+                }
+                if (!(isEmpty(playMode))) {
                     sb.append("<playMode>").append(playMode).append("</playMode>");
+                }
 
                 sb.append("</LandingCall>").toString();
                 requsetbody = sb.toString();
@@ -547,16 +597,17 @@ public class CCPRestSDK {
 
             logger.info("请求的包体：" + requsetbody);
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
             status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -568,8 +619,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
 
         logger.info("landingCall response body = " + result);
@@ -592,15 +644,16 @@ public class CCPRestSDK {
      * @param to         必选参数 短信接收端手机号码集合，用英文逗号分开，每批发送的手机号数量不得超过100个
      * @param templateId 必选参数 模板Id
      * @param datas      可选参数 内容数据，用于替换模板中{序号}
-     * @return
      */
     public HashMap<String, Object> sendTemplateSMS(String to, String templateId, String[] datas) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
-        if ((isEmpty(to)) || (isEmpty(App_ID)) || (isEmpty(templateId)))
+        }
+        if ((isEmpty(to)) || (isEmpty(App_ID)) || (isEmpty(templateId))) {
             throw new IllegalArgumentException(
                     "必选参数:" + (isEmpty(to) ? " 手机号码 " : "") + (isEmpty(templateId) ? " 模板Id " : "") + "为空");
+        }
         SSLHttpClient chc = new SSLHttpClient();
         DefaultHttpClient httpclient = null;
         try {
@@ -622,7 +675,7 @@ public class CCPRestSDK {
                 if (datas != null) {
                     StringBuilder sb = new StringBuilder("[");
                     for (String s : datas) {
-                        sb.append("\"" + s + "\"" + ",");
+                        sb.append("\"").append(s).append("\"").append(",");
                     }
                     sb.replace(sb.length() - 1, sb.length(), "]");
                     JsonParser parser = new JsonParser();
@@ -648,8 +701,8 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
             logger.info("sendTemplateSMS Request body =  " + requsetbody);
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
 
             HttpResponse response = httpclient.execute(httppost);
@@ -661,8 +714,9 @@ public class CCPRestSDK {
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -674,8 +728,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
 
         logger.info("sendTemplateSMS response body = " + result);
@@ -696,12 +751,12 @@ public class CCPRestSDK {
      * 获取子帐号信息
      *
      * @param friendlyName 必选参数 子帐号名称
-     * @return
      */
     public HashMap<String, Object> querySubAccount(String friendlyName) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         if ((isEmpty(friendlyName))) {
             logger.error("必选参数: 子帐号名称 为空");
             throw new IllegalArgumentException("必选参数: 子帐号名称 为空");
@@ -731,16 +786,17 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
 
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
             status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -752,8 +808,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
 
         logger.info("querySubAccount result " + result);
@@ -776,12 +833,12 @@ public class CCPRestSDK {
      *
      * @param startNo 可选参数 开始的序号，默认从0开始
      * @param offset  可选参数 一次查询的最大条数，最小是1条，最大是100条
-     * @return
      */
     public HashMap<String, Object> getSubAccounts(String startNo, String offset) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         SSLHttpClient chc = new SSLHttpClient();
         DefaultHttpClient httpclient = null;
         try {
@@ -797,18 +854,22 @@ public class CCPRestSDK {
             if (BODY_TYPE == BodyType.Type_JSON) {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
-                if (!(isEmpty(startNo)))
+                if (!(isEmpty(startNo))) {
                     json.addProperty("startNo", startNo);
-                if (!(isEmpty(offset)))
+                }
+                if (!(isEmpty(offset))) {
                     json.addProperty("offset", offset);
+                }
                 requsetbody = json.toString();
             } else {
                 StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><SubAccount>");
                 sb.append("<appId>").append(App_ID).append("</appId>");
-                if (!(isEmpty(startNo)))
+                if (!(isEmpty(startNo))) {
                     sb.append("<startNo>").append(startNo).append("</startNo>");
-                if (!(isEmpty(offset)))
+                }
+                if (!(isEmpty(offset))) {
                     sb.append("<offset>").append(offset).append("</offset>");
+                }
                 sb.append("</SubAccount>").toString();
                 requsetbody = sb.toString();
             }
@@ -816,16 +877,17 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
 
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
             status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -837,8 +899,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("getSubAccounts result " + result);
 
@@ -857,7 +920,6 @@ public class CCPRestSDK {
     /**
      * 获取主帐号信息查询
      *
-     * @return
      */
     public HashMap<String, Object> queryAccountInfo() {
         if ((isEmpty(SERVER_IP))) {
@@ -890,8 +952,9 @@ public class CCPRestSDK {
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -903,8 +966,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("queryAccountInfo response body = " + result);
         try {
@@ -923,12 +987,12 @@ public class CCPRestSDK {
      * 创建子帐号
      *
      * @param friendlyName 必选参数 子帐号名称。可由英文字母和阿拉伯数字组成子帐号唯一名称，推荐使用电子邮箱地址
-     * @return
      */
     public HashMap<String, Object> createSubAccount(String friendlyName) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         if (isEmpty(friendlyName)) {
             logger.error("必选参数: 子帐号名称 为空");
             throw new IllegalArgumentException("必选参数: 子帐号名称 为空");
@@ -961,8 +1025,8 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
 
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
 
             HttpResponse response = httpclient.execute(httppost);
@@ -986,8 +1050,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("createSubAccount response body = " + result);
         try {
@@ -1006,12 +1071,12 @@ public class CCPRestSDK {
      * 短信模板查询
      *
      * @param templateId 可选参数 模板Id，不带此参数查询全部可用模板
-     * @return
      */
     public HashMap<String, Object> QuerySMSTemplate(String templateId) {
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
 
         SSLHttpClient chc = new SSLHttpClient();
         DefaultHttpClient httpclient = null;
@@ -1040,8 +1105,8 @@ public class CCPRestSDK {
             // 打印包体
             logger.info("请求的包体：" + requsetbody);
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
 
             HttpResponse response = httpclient.execute(httppost);
@@ -1068,8 +1133,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("QuerySMSTemplate response body = " + result);
         try {
@@ -1089,13 +1155,13 @@ public class CCPRestSDK {
      *
      * @param callid 必选参数 呼叫Id
      * @param action 可选参数 查询结果通知的回调url地址
-     * @return
      */
     public HashMap<String, Object> QueryCallState(String callid, String action) {
 
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         if ((isEmpty(callid))) {
             logger.error("必选参数: callid  为空");
             throw new IllegalArgumentException("必选参数: callid 为空");
@@ -1119,8 +1185,9 @@ public class CCPRestSDK {
                 JsonObject json2 = new JsonObject();
                 json.addProperty("Appid", App_ID);
                 json2.addProperty("callid", callid);
-                if (!(isEmpty(action)))
+                if (!(isEmpty(action))) {
                     json2.addProperty("action", action);
+                }
                 json.addProperty("QueryCallState", json2.toString());
                 requsetbody = json.toString();
             } else {
@@ -1138,16 +1205,17 @@ public class CCPRestSDK {
             logger.info("请求的包体：" + requsetbody);
 
             BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes("UTF-8")));
-            requestBody.setContentLength(requsetbody.getBytes("UTF-8").length);
+            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
+            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
             httppost.setEntity(requestBody);
             HttpResponse response = httpclient.execute(httppost);
             status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -1159,8 +1227,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("billRecords response body = " + result);
         try {
@@ -1179,7 +1248,6 @@ public class CCPRestSDK {
      * 呼叫结果查询
      *
      * @param callSid 必选参数 呼叫Id
-     * @return
      */
     public HashMap<String, Object> CallResult(String callSid) {
         if ((isEmpty(SERVER_IP))) {
@@ -1213,8 +1281,9 @@ public class CCPRestSDK {
 
             logger.info("Https请求返回状态码：" + status);
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -1226,8 +1295,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("queryAccountInfo response body = " + result);
         try {
@@ -1245,19 +1315,15 @@ public class CCPRestSDK {
     /**
      * 语音文件上传
      *
-     * @param filename
-     * 必选参数 文件名
-     * @param fis
-     * 必选参数 二进制数据流
-     * @return
      */
     public String Filename;
 
     public HashMap<String, Object> MediaFileUpload(String filename, FileInputStream fis) {
 
         HashMap<String, Object> validate = accountValidate();
-        if (validate != null)
+        if (validate != null) {
             return validate;
+        }
         if ((isEmpty(filename))) {
             logger.error("必选参数: filename  为空");
             throw new IllegalArgumentException("必选参数: filename 为空");
@@ -1293,8 +1359,9 @@ public class CCPRestSDK {
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
-            if (entity != null)
+            if (entity != null) {
                 result = EntityUtils.toString(entity, "UTF-8");
+            }
 
             EntityUtils.consume(entity);
         } catch (IOException e) {
@@ -1306,8 +1373,9 @@ public class CCPRestSDK {
             logger.error(e.getMessage());
             return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null)
+            if (httpclient != null) {
                 httpclient.getConnectionManager().shutdown();
+            }
         }
         logger.info("billRecords response body = " + result);
         try {
@@ -1323,22 +1391,22 @@ public class CCPRestSDK {
     }
 
     private HashMap<String, Object> jsonToMap(String result) {
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         JsonParser parser = new JsonParser();
         JsonObject asJsonObject = parser.parse(result).getAsJsonObject();
         Set<Entry<String, JsonElement>> entrySet = asJsonObject.entrySet();
-        HashMap<String, Object> hashMap2 = new HashMap<String, Object>();
+        HashMap<String, Object> hashMap2 = new HashMap<>();
 
         for (Entry<String, JsonElement> m : entrySet) {
-            if ("statusCode".equals(m.getKey()) || "statusMsg".equals(m.getKey()))
+            if ("statusCode".equals(m.getKey()) || "statusMsg".equals(m.getKey())) {
                 hashMap.put(m.getKey(), m.getValue().getAsString());
-            else {
+            } else {
                 if ("SubAccount".equals(m.getKey()) || "totalCount".equals(m.getKey())
                         || "smsTemplateList".equals(m.getKey()) || "token".equals(m.getKey())
                         || "callSid".equals(m.getKey()) || "state".equals(m.getKey()) || "downUrl".equals(m.getKey())) {
-                    if (!"SubAccount".equals(m.getKey()) && !"smsTemplateList".equals(m.getKey()))
+                    if (!"SubAccount".equals(m.getKey()) && !"smsTemplateList".equals(m.getKey())) {
                         hashMap2.put(m.getKey(), m.getValue().getAsString());
-                    else {
+                    } else {
                         try {
                             if ((m.getValue().toString().trim().length() <= 2)
                                     && !m.getValue().toString().contains("[")) {
@@ -1352,10 +1420,10 @@ public class CCPRestSDK {
                                 continue;
                             }
                             JsonArray asJsonArray = parser.parse(m.getValue().toString()).getAsJsonArray();
-                            ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
+                            ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
                             for (JsonElement j : asJsonArray) {
                                 Set<Entry<String, JsonElement>> entrySet2 = j.getAsJsonObject().entrySet();
-                                HashMap<String, Object> hashMap3 = new HashMap<String, Object>();
+                                HashMap<String, Object> hashMap3 = new HashMap<>();
                                 for (Entry<String, JsonElement> m2 : entrySet2) {
                                     hashMap3.put(m2.getKey(), m2.getValue().getAsString());
                                 }
@@ -1365,7 +1433,7 @@ public class CCPRestSDK {
                         } catch (Exception e) {
                             JsonObject asJsonObject2 = parser.parse(m.getValue().toString()).getAsJsonObject();
                             Set<Entry<String, JsonElement>> entrySet2 = asJsonObject2.entrySet();
-                            HashMap<String, Object> hashMap3 = new HashMap<String, Object>();
+                            HashMap<String, Object> hashMap3 = new HashMap<>();
                             for (Entry<String, JsonElement> m2 : entrySet2) {
                                 hashMap3.put(m2.getKey(), m2.getValue().getAsString());
                             }
@@ -1379,11 +1447,11 @@ public class CCPRestSDK {
 
                     JsonObject asJsonObject2 = parser.parse(m.getValue().toString()).getAsJsonObject();
                     Set<Entry<String, JsonElement>> entrySet2 = asJsonObject2.entrySet();
-                    HashMap<String, Object> hashMap3 = new HashMap<String, Object>();
+                    HashMap<String, Object> hashMap3 = new HashMap<>();
                     for (Entry<String, JsonElement> m2 : entrySet2) {
                         hashMap3.put(m2.getKey(), m2.getValue().getAsString());
                     }
-                    if (hashMap3.size() != 0) {
+                    if (!hashMap3.isEmpty()) {
                         hashMap2.put(m.getKey(), hashMap3);
                     } else {
                         hashMap2.put(m.getKey(), m.getValue().getAsString());
@@ -1396,23 +1464,22 @@ public class CCPRestSDK {
     }
 
     /**
-     * @param xml
      * @return Map
      * @description 将xml字符串转换成map
      */
     private HashMap<String, Object> xmlToMap(String xml) {
-        HashMap<String, Object> map = new HashMap<String, Object>();
+        HashMap<String, Object> map = new HashMap<>();
         Document doc = null;
         try {
             doc = DocumentHelper.parseText(xml); // 将字符串转为XML
             Element rootElt = doc.getRootElement(); // 获取根节点
-            HashMap<String, Object> hashMap2 = new HashMap<String, Object>();
-            ArrayList<HashMap<String, Object>> arrayList = new ArrayList<HashMap<String, Object>>();
+            HashMap<String, Object> hashMap2 = new HashMap<>();
+            ArrayList<HashMap<String, Object>> arrayList = new ArrayList<>();
             for (Iterator<?> i = rootElt.elementIterator(); i.hasNext(); ) {
                 Element e = (Element) i.next();
-                if ("statusCode".equals(e.getName()) || "statusMsg".equals(e.getName()))
+                if ("statusCode".equals(e.getName()) || "statusMsg".equals(e.getName())) {
                     map.put(e.getName(), e.getText());
-                else {
+                } else {
                     if ("SubAccount".equals(e.getName()) || "TemplateSMS".equals(e.getName())
                             || "totalCount".equals(e.getName()) || "token".equals(e.getName())
                             || "callSid".equals(e.getName()) || "state".equals(e.getName())
@@ -1421,7 +1488,7 @@ public class CCPRestSDK {
                             hashMap2.put(e.getName(), e.getText());
                         } else if ("SubAccount".equals(e.getName())) {
 
-                            HashMap<String, Object> hashMap3 = new HashMap<String, Object>();
+                            HashMap<String, Object> hashMap3 = new HashMap<>();
                             for (Iterator<?> i2 = e.elementIterator(); i2.hasNext(); ) {
                                 Element e2 = (Element) i2.next();
                                 hashMap3.put(e2.getName(), e2.getText());
@@ -1430,7 +1497,7 @@ public class CCPRestSDK {
                             hashMap2.put("SubAccount", arrayList);
                         } else if ("TemplateSMS".equals(e.getName())) {
 
-                            HashMap<String, Object> hashMap3 = new HashMap<String, Object>();
+                            HashMap<String, Object> hashMap3 = new HashMap<>();
                             for (Iterator<?> i2 = e.elementIterator(); i2.hasNext(); ) {
                                 Element e2 = (Element) i2.next();
                                 hashMap3.put(e2.getName(), e2.getText());
@@ -1441,13 +1508,13 @@ public class CCPRestSDK {
                         map.put("data", hashMap2);
                     } else {
 
-                        HashMap<String, Object> hashMap3 = new HashMap<String, Object>();
+                        HashMap<String, Object> hashMap3 = new HashMap<>();
                         for (Iterator<?> i2 = e.elementIterator(); i2.hasNext(); ) {
                             Element e2 = (Element) i2.next();
                             // hashMap2.put(e2.getName(),e2.getText());
                             hashMap3.put(e2.getName(), e2.getText());
                         }
-                        if (hashMap3.size() != 0) {
+                        if (!hashMap3.isEmpty()) {
                             hashMap2.put(e.getName(), hashMap3);
                         } else {
                             hashMap2.put(e.getName(), e.getText());
@@ -1489,7 +1556,7 @@ public class CCPRestSDK {
         }
         String signature = eu.md5Digest(sig);
 
-        String url = getBaseUrl().append("/" + acountType + "/").append(acountName).append("/" + action + "?sig=")
+        String url = getBaseUrl().append("/").append(acountType).append("/").append(acountName).append("/").append(action).append("?sig=")
                 .append(signature).toString();
         if (callResult.equals(action)) {
             url = url + "&callsid=" + Callsid;
@@ -1503,12 +1570,13 @@ public class CCPRestSDK {
         logger.info(getmethodName(action) + " url = " + url);
         // logger.info(getmethodName(action) + " url = " + url);
         HttpRequestBase mHttpRequestBase = null;
-        if (get == Request_Get)
+        if (get == Request_Get) {
             mHttpRequestBase = new HttpGet(url);
-        else if (get == Request_Post)
+        } else if (get == Request_Post) {
             mHttpRequestBase = new HttpPost(url);
+        }
         if (IvrDial.equals(action)) {
-            setHttpHeaderXML(mHttpRequestBase);
+            setHttpHeaderXML(Objects.requireNonNull(mHttpRequestBase));
         } else if (mediaFileUpload.equals(action)) {
             setHttpHeaderMedia(mHttpRequestBase);
         } else {
@@ -1518,36 +1586,26 @@ public class CCPRestSDK {
         String src = acountName + ":" + timestamp;
 
         String auth = eu.base64Encoder(src);
-        mHttpRequestBase.setHeader("Authorization", auth);
+        Objects.requireNonNull(mHttpRequestBase).setHeader("Authorization", auth);
         logger.info("请求的Url：" + mHttpRequestBase);// 打印Url
         return mHttpRequestBase;
 
     }
 
     private String getmethodName(String action) {
-        if (action.equals(Account_Info)) {
-            return "queryAccountInfo";
-        } else if (action.equals(Create_SubAccount)) {
-            return "createSubAccount";
-        } else if (action.equals(Get_SubAccounts)) {
-            return "getSubAccounts";
-        } else if (action.equals(Query_SubAccountByName)) {
-            return "querySubAccount";
-        } else if (action.equals(SMSMessages)) {
-            return "sendSMS";
-        } else if (action.equals(TemplateSMS)) {
-            return "sendTemplateSMS";
-        } else if (action.equals(LandingCalls)) {
-            return "landingCalls";
-        } else if (action.equals(VoiceVerify)) {
-            return "voiceVerify";
-        } else if (action.equals(IvrDial)) {
-            return "ivrDial";
-        } else if (action.equals(BillRecords)) {
-            return "billRecords";
-        } else {
-            return "";
-        }
+        return switch (action) {
+            case Account_Info -> "queryAccountInfo";
+            case Create_SubAccount -> "createSubAccount";
+            case Get_SubAccounts -> "getSubAccounts";
+            case Query_SubAccountByName -> "querySubAccount";
+            case SMSMessages -> "sendSMS";
+            case TemplateSMS -> "sendTemplateSMS";
+            case LandingCalls -> "landingCalls";
+            case VoiceVerify -> "voiceVerify";
+            case IvrDial -> "ivrDial";
+            case BillRecords -> "billRecords";
+            default -> "";
+        };
     }
 
     private void setHttpHeaderXML(AbstractHttpMessage httpMessage) {
@@ -1588,7 +1646,7 @@ public class CCPRestSDK {
     }
 
     private HashMap<String, Object> getMyError(String code, String msg) {
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("statusCode", code);
         hashMap.put("statusMsg", msg);
         return hashMap;

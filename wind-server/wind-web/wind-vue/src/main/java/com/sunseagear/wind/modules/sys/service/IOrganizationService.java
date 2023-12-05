@@ -16,5 +16,5 @@ public interface IOrganizationService extends ITreeCommonService<Organization, L
     /**
      * 通过用户ID查找角色
      */
-    public List<Organization> findListByUserId(Long userId);
+    List<Organization> findListByUserId(Long userId);
 }

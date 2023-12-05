@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * 文件上传操作助手
@@ -71,7 +72,7 @@ public class OSSUploadHelper {
         allowedExtension = extension.split(",");
         clientType = propertiesUtil.getString("upload.client.type");
         this.ossClient = OSSClientFactory.build(clientType);
-        this.ossClient.init();
+        Objects.requireNonNull(this.ossClient).init();
     }
 
     public void init(OssConfig ossConfig) {
@@ -83,7 +84,7 @@ public class OSSUploadHelper {
         allowedExtension = extension.split(",");
         clientType = ossConfig.getClientType();
         this.ossClient = OSSClientFactory.build(clientType);
-        this.ossClient.init(ossConfig);
+        Objects.requireNonNull(this.ossClient).init(ossConfig);
     }
 
     /**
@@ -92,11 +93,6 @@ public class OSSUploadHelper {
      * @param request 当前请求
      * @param file    上传的文件
      *                添加出错信息
-     * @return
-     * @throws IOException
-     * @throws FileNameLengthLimitExceededException
-     * @throws InvalidExtensionException
-     * @throws FileSizeLimitExceededException
      */
     public String upload(HttpServletRequest request, MultipartFile file, String baseDir)
             throws FileSizeLimitExceededException, InvalidExtensionException, FileNameLengthLimitExceededException,
@@ -111,11 +107,6 @@ public class OSSUploadHelper {
      * @param file             上传的文件
      *                         添加出错信息
      * @param allowedExtension 允许上传的文件类型
-     * @return
-     * @throws IOException
-     * @throws FileNameLengthLimitExceededException
-     * @throws InvalidExtensionException
-     * @throws FileSizeLimitExceededException
      */
     public String upload(HttpServletRequest request, MultipartFile file, String baseDir, String[] allowedExtension)
             throws FileSizeLimitExceededException, InvalidExtensionException, FileNameLengthLimitExceededException,
@@ -142,7 +133,7 @@ public class OSSUploadHelper {
                          String[] allowedExtension, long maxSize, boolean needDatePath)
             throws InvalidExtensionException, FileSizeLimitExceededException, IOException,
             FileNameLengthLimitExceededException {
-        int fileNamelength = file.getOriginalFilename().length();
+        int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNamelength > OSSUploadHelper.DEFAULT_FILE_NAME_LENGTH) {
             throw new FileNameLengthLimitExceededException(file.getOriginalFilename(), fileNamelength,
                     OSSUploadHelper.DEFAULT_FILE_NAME_LENGTH);
@@ -160,15 +151,13 @@ public class OSSUploadHelper {
      * @param remoteUrl        上传的文件
      * @param allowedExtension 文件类型 null 表示允许所有
      * @param maxSize          最大大小 字节为单位 -1表示不限制
-     * @return
      * @throws InvalidExtensionException      如果MIME类型不允许
-     * @throws FileSizeLimitExceededException 如果超出最大大小
      */
     public void assertAllowed(String remoteUrl, String[] allowedExtension, long maxSize)
-            throws InvalidExtensionException, FileSizeLimitExceededException {
+            throws InvalidExtensionException {
 
         String extension = FilenameUtils.getExtension(remoteUrl);
-        if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
+        if (allowedExtension != null && isAllowedExtension(extension, allowedExtension)) {
             if (allowedExtension == IMAGE_EXTENSION) {
                 throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
                         remoteUrl);
@@ -184,8 +173,7 @@ public class OSSUploadHelper {
         }
     }
 
-    public String extractFilename(MultipartFile file, String baseDir, boolean needDatePath)
-            throws UnsupportedEncodingException {
+    public String extractFilename(MultipartFile file, String baseDir, boolean needDatePath) {
         if (!StringUtils.isEmpty(this.ossBaseDir)) {
             if (!StringUtils.isEmpty(baseDir)) {
                 baseDir = this.ossBaseDir + "/" + baseDir;
@@ -210,7 +198,6 @@ public class OSSUploadHelper {
     /**
      * 日期路径 即年/月/日 如2013/01/03
      *
-     * @return
      */
     private String datePath() {
         Date now = new Date();
@@ -223,7 +210,6 @@ public class OSSUploadHelper {
      * @param file             上传的文件
      * @param allowedExtension 文件类型 null 表示允许所有
      * @param maxSize          最大大小 字节为单位 -1表示不限制
-     * @return
      * @throws InvalidExtensionException      如果MIME类型不允许
      * @throws FileSizeLimitExceededException 如果超出最大大小
      */
@@ -233,7 +219,7 @@ public class OSSUploadHelper {
         String filename = file.getOriginalFilename();
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
 
-        if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
+        if (allowedExtension != null && isAllowedExtension(extension, allowedExtension)) {
             if (allowedExtension == IMAGE_EXTENSION) {
                 throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
                         filename);
@@ -257,21 +243,18 @@ public class OSSUploadHelper {
     /**
      * 判断MIME类型是否是允许的MIME类型
      *
-     * @param extension
-     * @param allowedExtension
-     * @return
      */
     public boolean isAllowedExtension(String extension, String[] allowedExtension) {
         for (String str : allowedExtension) {
             if (str.trim().equalsIgnoreCase(extension.trim())) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
 
-    public void delete(HttpServletRequest request, String filename) throws IOException {
+    public void delete(HttpServletRequest request, String filename) {
         if (StringUtils.isEmpty(filename)) {
             return;
         }

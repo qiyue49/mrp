@@ -30,12 +30,8 @@ public class TencentSmsClient implements ISmsClient {
     //签名
     private String signName;
 
-    private SmsConfigProperties smsConfigProperties;
-
     // 短信应用SDK AppID
     private Integer appId = 0;
-    // 短信应用SDK AppKey
-    private String appKey = "";
     // 授权用户的SecretId
     private String secretId = "";
     // 授权用户的SecretKey
@@ -43,13 +39,13 @@ public class TencentSmsClient implements ISmsClient {
 
     @Override
     public void init(SmsConfigProperties smsConfigProperties) {
-        this.smsConfigProperties = smsConfigProperties;
-        isOpen = this.smsConfigProperties.getOpen();
-        signName = this.smsConfigProperties.getSignName();
-        appId = this.smsConfigProperties.getTencent().getAppId();
-        appKey = this.smsConfigProperties.getTencent().getAppKey();
-        secretId = this.smsConfigProperties.getTencent().getSecretId();
-        secretKey = this.smsConfigProperties.getTencent().getSecretKey();
+        isOpen = smsConfigProperties.getOpen();
+        signName = smsConfigProperties.getSignName();
+        appId = smsConfigProperties.getTencent().getAppId();
+        // 短信应用SDK AppKey
+        String appKey = smsConfigProperties.getTencent().getAppKey();
+        secretId = smsConfigProperties.getTencent().getSecretId();
+        secretKey = smsConfigProperties.getTencent().getSecretKey();
     }
 
     @Override

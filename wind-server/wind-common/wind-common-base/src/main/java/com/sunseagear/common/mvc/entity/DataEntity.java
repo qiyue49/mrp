@@ -3,7 +3,9 @@ package com.sunseagear.common.mvc.entity;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.sunseagear.common.mvc.constant.DataBaseConstant;
+import lombok.Getter;
 
+import java.io.Serial;
 import java.util.Date;
 
 /**
@@ -12,8 +14,10 @@ import java.util.Date;
  * @param <ID> 主键类型
  * @version 2016-12-03
  */
+@Getter
 public abstract class DataEntity<ID> extends AbstractEntity<ID> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @TableField(value = "remarks")
@@ -39,48 +43,24 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
         this.delFlag = DataBaseConstant.DEL_FLAG_NORMAL;
     }
 
-    public String getRemarks() {
-        return remarks;
-    }
-
     public void setRemarks(String remarks) {
         this.remarks = remarks;
-    }
-
-    public Long getCreateBy() {
-        return createBy;
     }
 
     public void setCreateBy(Long createBy) {
         this.createBy = createBy;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
-    }
-
-    public Long getUpdateBy() {
-        return updateBy;
     }
 
     public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
 
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public int getDelFlag() {
-        return delFlag;
     }
 
     public void setDelFlag(int delFlag) {

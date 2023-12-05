@@ -11,6 +11,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Objects;
+
 /**
  * All rights Reserved, Designed By www.sunseagear.com
  *
@@ -28,14 +30,13 @@ public class SmsConfig {
 
     @Bean
     public SmsDao smsDao() {
-        SmsDao smsDao = new SmsDaoImpl();
-        return smsDao;
+        return new SmsDaoImpl();
     }
 
     @Bean
     public ISmsClient smsClient() {
         ISmsClient smsClient = SmsClientFactory.build(smsConfigProperties.getSmsType());
-        smsClient.init(smsConfigProperties);
+        Objects.requireNonNull(smsClient).init(smsConfigProperties);
         return smsClient;
     }
 

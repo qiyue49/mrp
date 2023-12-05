@@ -66,7 +66,7 @@ public class ReflectionUtils {
         Object result = null;
         try {
             result = field.get(obj);
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException ignored) {
 
         }
         return result;
@@ -84,7 +84,7 @@ public class ReflectionUtils {
 
         try {
             field.set(obj, value);
-        } catch (IllegalAccessException e) {
+        } catch (IllegalAccessException ignored) {
 
         }
     }
@@ -112,14 +112,14 @@ public class ReflectionUtils {
      * 用于一次性调用的情况，否则应使用getAccessibleMethodByName()函数获得Method后反复调用.
      * 只匹配函数名，如果有多个同名函数调用第一个。
      */
-    public static Object invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
+    public static void invokeMethodByName(final Object obj, final String methodName, final Object[] args) {
         Method method = getAccessibleMethodByName(obj, methodName);
         if (method == null) {
             throw new IllegalArgumentException("Could not find method [" + methodName + "] on target [" + obj + "]");
         }
 
         try {
-            return method.invoke(obj, args);
+            method.invoke(obj, args);
         } catch (Exception e) {
             throw convertReflectionExceptionToUnchecked(e);
         }
@@ -141,7 +141,7 @@ public class ReflectionUtils {
                 return field;
             } catch (NoSuchFieldException e) {// NOSONAR
                 // Field不在当前类定义,继续向上转型
-                continue;// new add
+                // new add
             }
         }
         return null;
@@ -167,7 +167,7 @@ public class ReflectionUtils {
                 return method;
             } catch (NoSuchMethodException e) {
                 // Method不在当前类定义,继续向上转型
-                continue;// new add
+                // new add
             }
         }
         return null;
@@ -262,7 +262,7 @@ public class ReflectionUtils {
 
     public static Class<?> getUserClass(Object instance) {
         Class clazz = instance.getClass();
-        if (clazz != null && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
+        if (clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
             Class<?> superClass = clazz.getSuperclass();
             if (superClass != null && !Object.class.equals(superClass)) {
                 return superClass;
@@ -313,9 +313,6 @@ public class ReflectionUtils {
     /**
      * 通过反射, 获得 Class 定义中声明的父类的泛型参数类型 如:
      *
-     * @param <T>
-     * @param clazz
-     * @return
      */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> getSuperGenericType(Class<?> clazz) {

@@ -12,21 +12,18 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class DataRuleHandler {
 
 
-    HashMap<String, List<String>> roleDataRuleModelHashMap = new HashMap<>();
-    HashMap<String, DataRuleModel> dataRuleModelIdHashMap = new HashMap<>();
-    HashMap<String, DataRuleModel> dataRuleModelHashMap = new HashMap<>();
-    HashMap<String, HashMap<String, DataRuleModel>> roleDataRuleModelDataHashMap = new HashMap<>();
-    HashMap<String, Map<String, Object>> userModelHashMap = new HashMap<>();
-    HashMap<String, List<TreeEntityModel>> treeEntityModelMap = new HashMap<>();
+    final HashMap<String, List<String>> roleDataRuleModelHashMap = new HashMap<>();
+    final HashMap<String, DataRuleModel> dataRuleModelIdHashMap = new HashMap<>();
+    final HashMap<String, DataRuleModel> dataRuleModelHashMap = new HashMap<>();
+    final HashMap<String, HashMap<String, DataRuleModel>> roleDataRuleModelDataHashMap = new HashMap<>();
+    final HashMap<String, Map<String, Object>> userModelHashMap = new HashMap<>();
+    final HashMap<String, List<TreeEntityModel>> treeEntityModelMap = new HashMap<>();
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -100,7 +97,7 @@ public class DataRuleHandler {
                 break;
             }
         }
-        dataRuleModelIdHashMap.put(dataRuleModel.getId(), dataRuleModel);
+        dataRuleModelIdHashMap.put(Objects.requireNonNull(dataRuleModel).getId(), dataRuleModel);
         dataRuleModelHashMap.put(dataRuleModel.getScopeClass(), dataRuleModel);
         if (StringUtils.isEmpty(dataRuleModel.getTableName())) {
             return;
@@ -140,13 +137,9 @@ public class DataRuleHandler {
     public void refreshUser(String id) {
         UserModel userModel = jdbcTemplate.queryForObject("select * from sys_user where id = ?", new Object[]{id}, new BeanPropertyRowMapper<>(UserModel.class));
         try {
-            Map<String, Object> map = BeanUtils.convertBean(userModel);
+            Map<String, Object> map = BeanUtils.convertBean(Objects.requireNonNull(userModel));
             userModelHashMap.put(id, map);
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IntrospectionException | InvocationTargetException | IllegalAccessException e) {
             e.printStackTrace();
         }
     }

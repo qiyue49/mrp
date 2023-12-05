@@ -32,20 +32,16 @@ public class AliyunSmsClient implements ISmsClient {
     private Boolean isOpen;
     //签名
     private String signName;
-    //阿里云API的密钥Access Key ID
-    private String accessKeyId;
-    //阿里云API的密钥Access Key Secret
-    private String accessKeySecret;
-    private SmsConfigProperties smsConfigProperties;
     private IAcsClient acsClient;
 
     @Override
     public void init(SmsConfigProperties smsConfigProperties) {
-        this.smsConfigProperties = smsConfigProperties;
-        isOpen = this.smsConfigProperties.getOpen();
-        signName = this.smsConfigProperties.getSignName();
-        accessKeyId = this.smsConfigProperties.getAliyun().getAccessKeyId();
-        accessKeySecret = this.smsConfigProperties.getAliyun().getAccessKeySecret();
+        isOpen = smsConfigProperties.getOpen();
+        signName = smsConfigProperties.getSignName();
+        //阿里云API的密钥Access Key ID
+        String accessKeyId = smsConfigProperties.getAliyun().getAccessKeyId();
+        //阿里云API的密钥Access Key Secret
+        String accessKeySecret = smsConfigProperties.getAliyun().getAccessKeySecret();
         try {
             //初始化acsClient,暂不支持region化
             IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);

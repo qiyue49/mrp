@@ -32,7 +32,7 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
 
     private void setRoleMenu(Long roleId, String menuIds, String type) {
         if (!StringUtils.isEmpty(menuIds)) {
-            List<Menu> menuListAll = menuMapper.selectList(new QueryWrapper());
+            List<Menu> menuListAll = menuMapper.selectList(new QueryWrapper<>());
             HashMap<String, Menu> menuHashMapAll = new HashMap<>();
             menuListAll.forEach(menu -> {
                 menuHashMapAll.put(menu.getId().toString(), menu);

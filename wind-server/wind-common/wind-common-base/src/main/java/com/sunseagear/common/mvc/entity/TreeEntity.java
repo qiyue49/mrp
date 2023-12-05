@@ -2,6 +2,7 @@ package com.sunseagear.common.mvc.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.sunseagear.common.utils.StringUtils;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 /**
  * 树抽象实体基类
  */
+@Getter
 public abstract class TreeEntity<T> extends DataEntity<T> {
 
     @TableField(value = "name")
@@ -23,10 +25,7 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
 
 
     public boolean isRoot() {
-        if (getParentId() == null || getParentId().equals("0") || getParentId().equals("")) {
-            return true;
-        }
-        return false;
+        return getParentId() == null || getParentId().equals("0") || getParentId().equals("");
     }
 
 
@@ -64,32 +63,16 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
     }
 
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public T getParentId() {
-        return parentId;
     }
 
     public void setParentId(T parentId) {
         this.parentId = parentId;
     }
 
-    public String getParentIds() {
-        return parentIds;
-    }
-
     public void setParentIds(String parentIds) {
         this.parentIds = parentIds;
-    }
-
-    public List<TreeEntity> getChildren() {
-        return children;
     }
 
     public void setChildren(List<TreeEntity> children) {

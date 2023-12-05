@@ -118,7 +118,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             throw new RuntimeException("账号重复");
         }
         if (user.getId()==null) {
-            UserUtils.update(user.getId());
+            UserUtils.update(null);
         }
         return super.update(user);
     }

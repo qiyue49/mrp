@@ -8,19 +8,24 @@ import com.lmax.disruptor.dsl.ProducerType;
 import com.sunseagear.common.email.data.EmailResult;
 import jakarta.annotation.PostConstruct;
 import jakarta.mail.internet.MimeMessage;
+import lombok.Getter;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class EmailHelper {
+    @Getter
     private int handlerCount = 1;
+    @Getter
     private int bufferSize = 1024;
     private Disruptor<EmailEvent> disruptor;
     private EmailEventProducer emailEventProducer;
+    @Getter
     private EmailDao emailDao = null;
 
     public EmailHelper() {
@@ -45,7 +50,7 @@ public class EmailHelper {
 
         // Construct the Disruptor
         // 单线程模式，获取额外的性能
-        disruptor = new Disruptor<EmailEvent>(factory, bufferSize, executor, ProducerType.SINGLE,
+        disruptor = new Disruptor<>(factory, bufferSize, executor, ProducerType.SINGLE,
                 new BlockingWaitStrategy());
         List<EmailHandler> emailHandlers = new ArrayList<>();
         for (int i = 0; i < handlerCount; i++) {
@@ -53,7 +58,7 @@ public class EmailHelper {
         }
         disruptor.handleExceptionsWith(new IgnoreExceptionHandler());
         // 多个消费者，每个消费者竞争消费不同数据
-        disruptor.handleEventsWithWorkerPool(emailHandlers.toArray(new EmailHandler[emailHandlers.size()]));
+        disruptor.handleEventsWithWorkerPool(emailHandlers.toArray(new EmailHandler[0]));
         // Start the Disruptor, starts all threads running
         disruptor.start();
 
@@ -73,8 +78,8 @@ public class EmailHelper {
         disruptor.halt();
     }
 
-    public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
-        return emailEventProducer.send(eventId, message, mailProperties);
+    public void sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
+        emailEventProducer.send(eventId, message, mailProperties);
     }
 
     public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
@@ -93,7 +98,7 @@ public class EmailHelper {
         emailEvent.setEmailData(emailData);
         EmailResult emailResult = EmailResult.success("发送成功");
         try {
-            MailSenderFactory.build(mailProperties).send(message);
+            Objects.requireNonNull(MailSenderFactory.build(mailProperties)).send(message);
         } catch (Exception e) {
             e.printStackTrace();
             emailResult = EmailResult.fail("发送失败");
@@ -106,27 +111,15 @@ public class EmailHelper {
 
     public MimeMessage createMimeMessage(MailProperties mailProperties) {
         JavaMailSender javaMailSender = MailSenderFactory.build(mailProperties);
-        return javaMailSender.createMimeMessage();
-    }
-
-    public int getHandlerCount() {
-        return handlerCount;
+        return Objects.requireNonNull(javaMailSender).createMimeMessage();
     }
 
     public void setHandlerCount(int handlerCount) {
         this.handlerCount = handlerCount;
     }
 
-    public int getBufferSize() {
-        return bufferSize;
-    }
-
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
-    }
-
-    public EmailDao getEmailDao() {
-        return emailDao;
     }
 
     public void setEmailDao(EmailDao emailDao) {

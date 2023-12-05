@@ -36,6 +36,7 @@ public class ExceptionUtils {
     /**
      * 判断异常是否由某些底层的异常引起.
      */
+    @SafeVarargs
     public static boolean isCausedBy(Exception ex, Class<? extends Exception>... causeExceptionClasses) {
         Throwable cause = ex.getCause();
         while (cause != null) {
@@ -52,8 +53,6 @@ public class ExceptionUtils {
     /**
      * 在request中获取异常类
      *
-     * @param request
-     * @return
      */
     public static Throwable getThrowable(HttpServletRequest request) {
         Throwable ex = null;

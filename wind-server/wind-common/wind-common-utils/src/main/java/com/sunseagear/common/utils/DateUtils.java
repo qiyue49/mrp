@@ -18,7 +18,7 @@ import java.util.Date;
 
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
-    private static String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
+    private static final String[] parsePatterns = {"yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
             "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM", "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss",
             "yyyy.MM.dd HH:mm", "yyyy.MM"};
 
@@ -29,10 +29,10 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         String res = "";
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            long lt = new Long(s);
+            long lt = Long.parseLong(s);
             Date date = new Date(lt);
             res = simpleDateFormat.format(date);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return res;
@@ -149,8 +149,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * 获取过去的天数
      *
-     * @param date
-     * @return
      */
     public static long pastDays(Date date) {
         long t = new Date().getTime() - date.getTime();
@@ -160,8 +158,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * 获取过去的小时
      *
-     * @param date
-     * @return
      */
     public static long pastHour(Date date) {
         long t = new Date().getTime() - date.getTime();
@@ -171,8 +167,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * 获取过去的分钟
      *
-     * @param date
-     * @return
      */
     public static long pastMinutes(Date date) {
         long t = new Date().getTime() - date.getTime();
@@ -182,8 +176,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * 转换为时间（天,时:分:秒.毫秒）
      *
-     * @param timeMillis
-     * @return
      */
     public static String formatDateTime(long timeMillis) {
         long day = timeMillis / (24 * 60 * 60 * 1000);
@@ -197,21 +189,17 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     /**
      * 获取两个日期之间的天数
      *
-     * @param before
-     * @param after
-     * @return
      */
     public static double getDistanceOfTwoDate(Date before, Date after) {
         long beforeTime = before.getTime();
         long afterTime = after.getTime();
-        return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
+        return (double) (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
     }
 
     /**
      * 将一个时间戳转换成提示性时间字符串，如刚刚，1秒前
      *
      * @param before 时间格式化
-     * @return
      */
     public static String convertTimeToFormat(Date before) {
         return convertTimeToFormat(before.getTime());
@@ -265,10 +253,8 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 
     /**
-     * @param args
-     * @throws ParseException
      */
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         // System.out.println(formatDate(parseDate("2010/3/6")));
         // System.out.println(getDate("yyyy年MM月dd日 E"));
         // long time = new Date().getTime()-parseDate("2012-11-19").getTime();

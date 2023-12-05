@@ -26,22 +26,17 @@ public class HuyiSmsClient implements ISmsClient {
     static final String serverUrl = "http://106.ihuyi.com/webservice/sms.php";
     //是否开启
     private Boolean isOpen;
-    //签名
-    private String signName;
-    //应用ID
-    private String accountApiId = "";
-    //密钥
-    private String accountApikey = "";
-    private SmsConfigProperties smsConfigProperties;
     private HuyiRestSDK huyiRestSDK;
 
     @Override
     public void init(SmsConfigProperties smsConfigProperties) {
-        this.smsConfigProperties = smsConfigProperties;
-        isOpen = this.smsConfigProperties.getOpen();
-        signName = this.smsConfigProperties.getSignName();
-        accountApiId = this.smsConfigProperties.getHuyi().getAccountApiId();
-        accountApikey = this.smsConfigProperties.getHuyi().getAccountApiKey();
+        isOpen = smsConfigProperties.getOpen();
+        //签名
+        String signName = smsConfigProperties.getSignName();
+        //应用ID
+        String accountApiId = smsConfigProperties.getHuyi().getAccountApiId();
+        //密钥
+        String accountApikey = smsConfigProperties.getHuyi().getAccountApiKey();
         try {
             huyiRestSDK = new HuyiRestSDK();
             huyiRestSDK.init(serverUrl);

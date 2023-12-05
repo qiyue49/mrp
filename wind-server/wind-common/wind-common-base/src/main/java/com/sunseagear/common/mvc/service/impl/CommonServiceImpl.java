@@ -47,11 +47,11 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public boolean insertOrUpdate(T entity) {
+    public void insertOrUpdate(T entity) {
         if (isDemo) {
-            return true;
+            return;
         }
-        return saveOrUpdate(entity);
+        saveOrUpdate(entity);
     }
 
     @Override
@@ -106,11 +106,11 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public boolean delete(Wrapper<T> wrapper) {
+    public void delete(Wrapper<T> wrapper) {
         if (isDemo) {
-            return true;
+            return;
         }
-        return remove(wrapper);
+        remove(wrapper);
     }
 
     @Override

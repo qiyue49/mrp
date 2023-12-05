@@ -26,8 +26,8 @@ import java.util.List;
 public class SmsSendLogServiceImpl extends CommonServiceImpl<SmsSendLogMapper, SmsSendLog> implements ISmsSendLogService {
 
     @Override
-    public boolean retrySend(List<? extends Serializable> idList) {
-        List<SmsSendLog> smsSendLogList = new ArrayList<SmsSendLog>();
+    public void retrySend(List<? extends Serializable> idList) {
+        List<SmsSendLog> smsSendLogList = new ArrayList<>();
         for (Serializable id : idList) {
             SmsSendLog smsSendLog = selectById(id);
             smsSendLog.setTryNum(0);
@@ -35,7 +35,6 @@ public class SmsSendLogServiceImpl extends CommonServiceImpl<SmsSendLogMapper, S
             smsSendLogList.add(smsSendLog);
         }
         insertOrUpdateBatch(smsSendLogList);
-        return false;
     }
 
 }

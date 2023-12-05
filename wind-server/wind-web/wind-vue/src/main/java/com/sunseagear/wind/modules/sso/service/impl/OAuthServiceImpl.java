@@ -6,7 +6,6 @@ import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
-import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
@@ -132,7 +131,7 @@ public class OAuthServiceImpl implements IOAuthService {
     }
 
     @Override
-    public Page<Principal> activePrincipal(Page page, HttpServletRequest request) {
+    public Page activePrincipal(Page page, HttpServletRequest request) {
         List<Principal> activePrincipalList = activePrincipal();
         int currentRow = (int) ((page.getCurrent() - 1) * page.getSize());
         List<Principal> dataList = new ArrayList<>();

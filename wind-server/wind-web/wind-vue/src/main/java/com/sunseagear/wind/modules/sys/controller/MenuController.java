@@ -36,8 +36,6 @@ public class MenuController extends BaseBeanController<Menu> {
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
@@ -95,7 +93,6 @@ public class MenuController extends BaseBeanController<Menu> {
     /**
      * 获得菜单列表
      *
-     * @throws IOException
      */
     @GetMapping(value = "getMenus")
     public String getMenus() {
@@ -114,7 +111,6 @@ public class MenuController extends BaseBeanController<Menu> {
     /**
      * 获得菜单列表
      *
-     * @throws IOException
      */
     @GetMapping(value = "getPermissions")
     public String getPermissions() {

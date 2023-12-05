@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +30,7 @@ import java.lang.reflect.Method;
  * @version V1.0
  * @package com.sunseagear.wind.config
  * @title:
- * @description: Redis缓存类 https://blog.csdn.net/guokezhongdeyuzhou/article/details/79789629 * @date: 2018/3/10 10:12
+ * @description: Redis缓存类 <a href="https://blog.csdn.net/guokezhongdeyuzhou/article/details/79789629">...</a> * @date: 2018/3/10 10:12
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 @Configuration
@@ -39,8 +40,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
+            @NotNull
             @Override
-            public Object generate(Object target, Method method, Object... params) {
+            public Object generate(@NotNull Object target, @NotNull Method method, @NotNull Object... params) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(target.getClass().getName());
                 sb.append(method.getName());
@@ -55,8 +57,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     /**
      * 自定义redisTemplate
      *
-     * @param factory
-     * @return
      */
     @Bean()
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {

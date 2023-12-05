@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -20,6 +21,7 @@ import lombok.Data;
  * @copyright: www.sunseagear.com Inc. All rights reserved.
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_tenant")
 @SuppressWarnings("serial")

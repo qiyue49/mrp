@@ -57,8 +57,6 @@ public class RoleController extends BaseBeanController<Role> {
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
@@ -88,12 +86,11 @@ public class RoleController extends BaseBeanController<Role> {
     /**
      * 获取可用的用户列表
      *
-     * @throws IOException
      */
     @GetMapping(value = "usable/list")
     @PreAuthorize("hasAuthority('sys:role:list')")
-    public String usableLst() throws IOException {
-        QueryWrapper<Role> queryWrapper = new QueryWrapper<Role>();
+    public String usableLst() {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (UserUtils.getUser().getTenantId().equals(TenantProperties.getInstance().getDefaultTenantId())) {
             queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         } else {
@@ -138,8 +135,6 @@ public class RoleController extends BaseBeanController<Role> {
     /**
      * 通过用户ID获得角色
      *
-     * @param uid
-     * @return
      */
     @PostMapping(value = "{uid}/findListByUserId")
     @PreAuthorize("hasAuthority('sys:role:list')")
@@ -160,7 +155,7 @@ public class RoleController extends BaseBeanController<Role> {
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
         if (role.getCode().equals("admin")) {
-            QueryWrapper<Menu> queryWrapper = new QueryWrapper<Menu>();
+            QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
             treeNodeList = menuService.selectList(queryWrapper);
         } else {

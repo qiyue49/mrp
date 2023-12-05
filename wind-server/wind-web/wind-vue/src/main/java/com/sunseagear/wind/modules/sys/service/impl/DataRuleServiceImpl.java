@@ -52,10 +52,9 @@ public class DataRuleServiceImpl extends CommonServiceImpl<DataRuleMapper, DataR
     }
 
     @Override
-    public boolean insertOrUpdate(DataRule entity) {
+    public void insertOrUpdate(DataRule entity) {
         boolean result = super.saveOrUpdate(entity);
         dataRuleHandler.refreshDataRule(entity.getId().toString());
-        return result;
     }
 
     @Override

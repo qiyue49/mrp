@@ -44,8 +44,6 @@ public class ExpandTableController extends BaseBeanController<ExpandTable> {
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)

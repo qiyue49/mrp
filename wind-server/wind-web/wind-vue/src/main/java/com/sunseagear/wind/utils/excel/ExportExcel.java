@@ -41,7 +41,7 @@ public class ExportExcel {
     public static final int DATA = 1;
     public static final int TEMPLATE = 2;
 
-    private static Logger log = LoggerFactory.getLogger(ExportExcel.class);
+    private static final Logger log = LoggerFactory.getLogger(ExportExcel.class);
 
     /**
      * 工作薄对象
@@ -66,7 +66,7 @@ public class ExportExcel {
     /**
      * 注解列表（Object[]{ ExcelField, Field/Method }）
      */
-    List<Object[]> annotationList = Lists.newArrayList();
+    final List<Object[]> annotationList = Lists.newArrayList();
 
     /**
      * 构造函数

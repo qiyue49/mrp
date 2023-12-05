@@ -79,11 +79,11 @@ public class QiniuOSSClient extends AbstractOSSClient {
     private String upload(byte[] data, String path) {
         try {
             String fileType = path.substring(path.lastIndexOf("."));
-            String fileName = new Date().getTime() + "" + fileType;
+            String fileName = new Date().getTime() + fileType;
             String filepath = prefix + fileName;
             Response res = uploadManager.put(data, filepath, token);
             if (!res.isOK()) {
-                throw new RuntimeException("上传七牛出错：" + res.toString());
+                throw new RuntimeException("上传七牛出错：" + res);
             }
             return domain + "/" + filepath;
         } catch (Exception e) {

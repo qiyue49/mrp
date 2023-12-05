@@ -19,7 +19,6 @@ import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
@@ -63,8 +62,6 @@ public class UserController extends BaseBeanController<User> {
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
@@ -159,7 +156,7 @@ public class UserController extends BaseBeanController<User> {
         String[] roleIdList = request.getParameterValues("roleIdList");
         if (roleIdList != null && roleIdList.length > 0) {
             userRoleService.delete(new QueryWrapper<UserRole>().eq("user_id", entity.getId()));
-            List<UserRole> userRoleList = new ArrayList<UserRole>();
+            List<UserRole> userRoleList = new ArrayList<>();
             for (String roleId : roleIdList) {
                 UserRole userRole = new UserRole();
                 userRole.setUserId(entity.getId());
@@ -207,26 +204,18 @@ public class UserController extends BaseBeanController<User> {
     /**
      * 获取用户信息
      *
-     * @return
      */
     @GetMapping(value = "info")
     @PreAuthorize("hasAuthority('sys:user:list')")
     public String info() {
         User user = UserUtils.getUser();
-        if (user == null) {
-            return Response.failJson("获取失败");
-        } else {
-            user.setRoles(roleService.findListByUserId(user.getId()));
-            return Response.successJson(user);
-        }
+        user.setRoles(roleService.findListByUserId(user.getId()));
+        return Response.successJson(user);
     }
 
     /**
      * 更新用户信息
      *
-     * @param user
-     * @param request
-     * @return
      */
     @PostMapping("my/update")
     @Log(logType = LogType.UPDATE, title = "用户更新")
@@ -243,10 +232,6 @@ public class UserController extends BaseBeanController<User> {
     /**
      * 更新用户信息
      *
-     * @param oldPassword
-     * @param password
-     * @param request
-     * @return
      */
     @PostMapping("my/changePassword")
     @Log(logType = LogType.OTHER, title = "用户修改密码")

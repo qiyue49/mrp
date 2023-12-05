@@ -17,13 +17,11 @@ import java.util.Map;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 public class SmsEventProducer {
-    private static Logger logger = LoggerFactory.getLogger(SmsEventProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(SmsEventProducer.class);
     private final RingBuffer<SmsEvent> ringBuffer;
-    private SmsDao smsDao;
 
     public SmsEventProducer(RingBuffer<SmsEvent> ringBuffer, SmsDao smsDao) {
         this.ringBuffer = ringBuffer;
-        this.smsDao = smsDao;
     }
 
     private Long sendSms(Long eventId, SmsData smsData, SmsHandlerCallBack callBack) {

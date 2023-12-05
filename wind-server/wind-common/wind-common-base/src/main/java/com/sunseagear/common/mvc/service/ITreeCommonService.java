@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ITreeCommonService<T extends TreeEntity<ID>, ID extends Serializable>
         extends ICommonService<T> {
-    public List<T> selectTreeList(Wrapper<T> wrapper);
+    List<T> selectTreeList(Wrapper<T> wrapper);
 
 }

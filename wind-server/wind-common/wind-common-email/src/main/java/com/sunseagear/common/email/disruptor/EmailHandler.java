@@ -3,6 +3,8 @@ package com.sunseagear.common.email.disruptor;
 import com.lmax.disruptor.WorkHandler;
 import com.sunseagear.common.email.data.EmailResult;
 
+import java.util.Objects;
+
 /**
  * All rights Reserved, Designed By www.sunseagear.com
  *
@@ -13,7 +15,7 @@ import com.sunseagear.common.email.data.EmailResult;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 public class EmailHandler implements WorkHandler<EmailEvent> {
-    private EmailDao emailDao;
+    private final EmailDao emailDao;
 
     public EmailHandler(EmailDao emailDao) {
         this.emailDao = emailDao;
@@ -23,7 +25,7 @@ public class EmailHandler implements WorkHandler<EmailEvent> {
     public void onEvent(EmailEvent event) throws Exception {
         EmailResult emailResult = EmailResult.success("发送成功");
         try {
-            MailSenderFactory.build(event.getEmailData().getMailProperties()).send(event.getEmailData().getMimeMessage());
+            Objects.requireNonNull(MailSenderFactory.build(event.getEmailData().getMailProperties())).send(event.getEmailData().getMimeMessage());
         } catch (Exception e) {
             e.printStackTrace();
             emailResult = EmailResult.fail("发送失败");

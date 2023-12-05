@@ -38,10 +38,10 @@ import java.util.Properties;
 public class QuartzConfig implements ApplicationRunner {
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         // 任务初始化
         String openCluster = env.getProperty("quartz.open-cluster");
-        if (StringUtils.isEmpty(openCluster) || !Boolean.valueOf(openCluster)) {
+        if (StringUtils.isEmpty(openCluster) || !Boolean.parseBoolean(openCluster)) {
             Map<String, QuartzInitCallback> quartzInitCallbackBeans = SpringContextHolder.getApplicationContext().getBeansOfType(QuartzInitCallback.class);
             for (QuartzInitCallback quartzInitCallback : quartzInitCallbackBeans.values()) {
                 try {
@@ -58,8 +58,7 @@ public class QuartzConfig implements ApplicationRunner {
 
     @Bean
     public QuartzManager quartzManager() {
-        QuartzManager quartzManager = new QuartzManager();
-        return quartzManager;
+        return new QuartzManager();
     }
 
     @Bean
@@ -120,7 +119,7 @@ public class QuartzConfig implements ApplicationRunner {
      */
     @Bean
     @ConditionalOnProperty(name = "quartz.open-cluster", havingValue = "true")
-    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) throws IOException {
+    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) {
         return schedulerFactoryBean.getScheduler();
     }
 

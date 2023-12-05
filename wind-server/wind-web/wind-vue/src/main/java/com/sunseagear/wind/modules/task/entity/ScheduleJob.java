@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
  * @Description: 任务
  * @date 2017-05-09 23:22:51
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("task_schedule_job")
 public class ScheduleJob extends AbstractEntity<Long> {

@@ -1,5 +1,6 @@
 package com.sunseagear.common.oss.exception;
 
+import lombok.Getter;
 import org.apache.commons.fileupload.FileUploadException;
 
 /**
@@ -8,12 +9,13 @@ import org.apache.commons.fileupload.FileUploadException;
  * <p>Date: 13-3-8 下午8:44
  * <p>Version: 1.0
  */
+@Getter
 @SuppressWarnings("serial")
 public class FileNameLengthLimitExceededException extends FileUploadException {
 
-    private int length;
-    private int maxLength;
-    private String filename;
+    private final int length;
+    private final int maxLength;
+    private final String filename;
 
     public FileNameLengthLimitExceededException(String filename, int length, int maxLength) {
         super("file name : [" + filename + "], length : [" + length + "], max length : [" + maxLength + "]");
@@ -22,17 +24,5 @@ public class FileNameLengthLimitExceededException extends FileUploadException {
         this.filename = filename;
     }
 
-    public String getFilename() {
-        return filename;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-
-    public int getMaxLength() {
-        return maxLength;
-    }
 
 }

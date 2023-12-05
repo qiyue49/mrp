@@ -13,6 +13,6 @@ public interface DataBaseConstant {
     /**
      * 删除标记（0：正常；1：删除 ）
      */
-    public static final int DEL_FLAG_NORMAL = 0;
-    public static final int DEL_FLAG_DELETE = 1;
+    int DEL_FLAG_NORMAL = 0;
+    int DEL_FLAG_DELETE = 1;
 }

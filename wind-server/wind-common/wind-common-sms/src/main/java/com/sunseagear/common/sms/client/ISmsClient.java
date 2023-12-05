@@ -18,14 +18,12 @@ public interface ISmsClient {
     /**
      * 客户端初始化
      *
-     * @param smsConfigProperties
      */
     void init(SmsConfigProperties smsConfigProperties);
 
     /**
      * @param phone    手机号码
      * @param template 模版
-     * @return
      */
     SmsResult send(String phone, String template);
 
@@ -33,7 +31,6 @@ public interface ISmsClient {
      * @param phone    手机号码
      * @param template 模版
      * @param datas    数据
-     * @return
      */
     SmsResult send(String phone, String template, Map<String, Object> datas);
 }

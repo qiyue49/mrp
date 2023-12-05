@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -145,12 +144,11 @@ public class EmailSendServiceImpl implements IEmailSendService {
     }
 
     @Override
-    public boolean retrySend(List<Long> idList) {
+    public void retrySend(List<Long> idList) {
         for (Long id : idList) {
             EmailSendLog sendLog = emailSendLogService.selectById(id);
             Map<String, Object> datas = JSON.parseObject(StringEscapeUtils.unescapeHtml4(sendLog.getSendData()), Map.class);
             send(id, sendLog.getEmail().split(","), sendLog.getSendCode(), datas);
         }
-        return true;
     }
 }

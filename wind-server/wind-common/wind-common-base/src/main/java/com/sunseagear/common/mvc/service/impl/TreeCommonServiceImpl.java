@@ -42,9 +42,9 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEn
     }
 
     @Override
-    public boolean insertOrUpdate(T entity) {
+    public void insertOrUpdate(T entity) {
         if (isDemo) {
-            return true;
+            return;
         }
 
         if (!ObjectUtils.isNullOrEmpty(entity.getParentId())) {
@@ -54,7 +54,6 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEn
             entity.setParentId(null);
             updateSelftAndChild(entity, null, null);
         }
-        return true;
     }
 
 

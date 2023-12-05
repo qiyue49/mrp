@@ -101,12 +101,7 @@ public class AttachmentHelper {
      * @param fileName 文件OSS带域名地址的路径
      */
     public void deleteFile(HttpServletRequest request, String fileName) {
-        try {
-            uploadHelper.delete(request, fileName);
-        } catch (IOException e) {
-            log.error("删除文件失败");
-            throw new OSSException("删除文件失败", e);
-        }
+        uploadHelper.delete(request, fileName);
     }
 
     /**
@@ -116,12 +111,7 @@ public class AttachmentHelper {
      */
     public void deleteFile(String fileName) {
         HttpServletRequest request = ServletUtils.getRequest();
-        try {
-            uploadHelper.delete(request, fileName);
-        } catch (IOException e) {
-            log.error("删除文件失败");
-            throw new OSSException("删除文件失败", e);
-        }
+        uploadHelper.delete(request, fileName);
     }
 
 }

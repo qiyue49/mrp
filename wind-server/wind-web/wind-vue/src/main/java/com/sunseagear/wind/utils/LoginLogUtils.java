@@ -10,6 +10,7 @@ import com.sunseagear.wind.modules.monitor.service.impl.LoginLogServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -75,7 +76,7 @@ public class LoginLogUtils {
      * @param message  消息
      */
     public static void recordLoginLog(String username, String status, String message) {
-        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        final UserAgent userAgent = UserAgent.parseUserAgentString(Objects.requireNonNull(ServletUtils.getRequest()).getHeader("User-Agent"));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         //创建异步任务
         Task task = new Task() {

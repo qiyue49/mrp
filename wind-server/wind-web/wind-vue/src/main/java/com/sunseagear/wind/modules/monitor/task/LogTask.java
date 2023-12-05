@@ -5,6 +5,7 @@ import com.sunseagear.wind.modules.monitor.entity.LoginLog;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
 import com.sunseagear.wind.modules.monitor.service.ILoginLogService;
 import com.sunseagear.wind.modules.monitor.service.IOperationLogService;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class LogTask implements ApplicationListener<ContextRefreshedEvent> {
      * 这里把发送中的邮件恢复发送
      */
     @Override
-    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+    public void onApplicationEvent(@NotNull ContextRefreshedEvent contextRefreshedEvent) {
     }
 
     public void run() {

@@ -22,10 +22,10 @@ public class TenantConfiguration {
         return new CommonTenantHandler();
     }
 
-    /**
-     * 分页插件
-     *
-     * @param tenantHandler 自定义租户处理器
+    /*
+      分页插件
+
+      @param tenantHandler 自定义租户处理器
      * @return PaginationInterceptor
      *//*
     @Bean

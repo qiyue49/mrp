@@ -1,5 +1,7 @@
 package com.sunseagear.wind.modules.oss.model;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,39 +10,24 @@ import java.util.Map;
 /**
  * 列表回掉
  */
+@Getter
 public class ReturnListImage {
     private String state;//上传状态SUCCESS 一定要大写
     private Integer start;
     private Integer total;
-    private List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+    private List<Map<String, String>> list = new ArrayList<>();
 
-
-    public String getState() {
-        return state;
-    }
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public Integer getStart() {
-        return start;
     }
 
     public void setStart(Integer start) {
         this.start = start;
     }
 
-    public Integer getTotal() {
-        return total;
-    }
-
     public void setTotal(Integer total) {
         this.total = total;
-    }
-
-    public List<Map<String, String>> getList() {
-        return list;
     }
 
     public void setList(List<Map<String, String>> list) {
@@ -48,7 +35,7 @@ public class ReturnListImage {
     }
 
     public void putUrl(String url) {
-        Map<String, String> urlMap = new HashMap<String, String>();
+        Map<String, String> urlMap = new HashMap<>();
         urlMap.put("url", url);
         list.add(urlMap);
     }

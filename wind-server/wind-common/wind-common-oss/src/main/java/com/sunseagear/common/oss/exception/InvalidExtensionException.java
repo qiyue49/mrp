@@ -1,5 +1,6 @@
 package com.sunseagear.common.oss.exception;
 
+import lombok.Getter;
 import org.apache.commons.fileupload.FileUploadException;
 
 import java.util.Arrays;
@@ -7,12 +8,13 @@ import java.util.Arrays;
 /**
  *
  */
+@Getter
 @SuppressWarnings("serial")
 public class InvalidExtensionException extends FileUploadException {
 
-    private String[] allowedExtension;
-    private String extension;
-    private String filename;
+    private final String[] allowedExtension;
+    private final String extension;
+    private final String filename;
 
     public InvalidExtensionException(String[] allowedExtension, String extension, String filename) {
         super("filename : [" + filename + "], extension : [" + extension + "], allowed extension : ["
@@ -20,18 +22,6 @@ public class InvalidExtensionException extends FileUploadException {
         this.allowedExtension = allowedExtension;
         this.extension = extension;
         this.filename = filename;
-    }
-
-    public String[] getAllowedExtension() {
-        return allowedExtension;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public String getFilename() {
-        return filename;
     }
 
     public static class InvalidImageExtensionException extends InvalidExtensionException {

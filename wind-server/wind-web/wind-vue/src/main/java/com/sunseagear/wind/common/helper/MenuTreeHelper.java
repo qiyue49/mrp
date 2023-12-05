@@ -18,8 +18,7 @@ public class MenuTreeHelper implements Serializable {
 
 
     public static MenuTreeHelper create() {
-        MenuTreeHelper treeSortUtil = new MenuTreeHelper();
-        return treeSortUtil;
+        return new MenuTreeHelper();
     }
 
 

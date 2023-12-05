@@ -52,8 +52,6 @@ public class Oauth2Controller {
     /**
      * 登陆方法
      *
-     * @param request
-     * @return
      */
     @RequestMapping("/accessToken")
     @ResponseBody
@@ -134,9 +132,6 @@ public class Oauth2Controller {
     /**
      * 回收TOKEN
      *
-     * @param request
-     * @return
-     * @throws URISyntaxException
      */
     @RequestMapping("/revokeToken")
     @ResponseBody

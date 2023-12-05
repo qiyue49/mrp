@@ -50,7 +50,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
 
         });
         List<Organization> TreeTableList = new ArrayList<>(TreeTableHashMap.values());
-        TreeTableList.sort(new Comparator<Organization>() {
+        TreeTableList.sort(new Comparator<>() {
             @Override
             public int compare(Organization o1, Organization o2) {
                 return o1.getCreateDate().compareTo(o2.getCreateDate());

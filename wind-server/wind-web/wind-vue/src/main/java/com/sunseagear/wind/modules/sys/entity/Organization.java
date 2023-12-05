@@ -6,8 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.TreeEntity;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.EqualsAndHashCode;
 
 /**
  * @version V1.0
@@ -15,6 +14,7 @@ import java.util.Date;
  * @Description:
  * @date 2017-02-07 21:06:09
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_organization")
 @SuppressWarnings("serial")

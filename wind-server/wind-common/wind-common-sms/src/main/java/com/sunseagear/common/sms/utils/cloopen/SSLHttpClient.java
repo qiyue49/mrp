@@ -23,8 +23,7 @@ public class SSLHttpClient {
         SSLContext ctx = SSLContext.getInstance(protocol);
 
         X509TrustManager tm = new X509TrustManager() {
-            public void checkClientTrusted(X509Certificate[] chain, String authType)
-                    throws CertificateException {
+            public void checkClientTrusted(X509Certificate[] chain, String authType) {
             }
 
             public void checkServerTrusted(X509Certificate[] chain, String authType)
