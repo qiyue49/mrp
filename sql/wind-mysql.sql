@@ -199,6 +199,27 @@ insert  into `sys_data_rule`(`id`,`create_by`,`create_date`,`update_by`,`update_
 
 /*Table structure for table `sys_dict` */
 
+DROP TABLE IF EXISTS `sys_dict_group`;
+
+CREATE TABLE `sys_dict_group` (
+                                  `id` bigint NOT NULL COMMENT '主键',
+                                  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组名称',
+                                  `code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组编码',
+                                  `remarks` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
+                                  `create_by` bigint DEFAULT NULL,
+                                  `create_date` datetime DEFAULT NULL,
+                                  `update_by` bigint DEFAULT NULL,
+                                  `update_date` datetime DEFAULT NULL,
+                                  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+                                  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='字典分组';
+
+/*Data for the table `sys_dict_group` */
+
+insert  into `sys_dict_group`(`id`,`name`,`code`,`remarks`,`create_by`,`create_date`,`update_by`,`update_date`,`del_flag`) values (1663456260372434946,'日志类型','logType','日志类型',1663023749615980545,'2018-09-30 23:54:01',NULL,NULL,'0'),(1663456260372434947,'是否','sf_bool','是否',1663023749615980545,'2018-10-30 14:41:17',NULL,NULL,'0'),(1663456260372434948,'性别','sex','性别',NULL,NULL,NULL,NULL,'0'),(1663456260372434949,'是否','sf','是否',NULL,NULL,NULL,NULL,'0'),(1663456260372434950,'用户登陆状态','onlinestatus','',NULL,NULL,NULL,NULL,'0'),(1663456260372434951,'短信业务类型','business_type','短信业务类型',NULL,NULL,1663023749615980545,'2022-08-10 22:06:30','0'),(1663456260372434952,'分页数组','page','',1663023749615980545,'2019-04-22 11:31:44',1663023749615980545,'2019-05-04 14:13:28','0'),(1663456260372434953,'任务加载方式','load_way','任务加载方式',NULL,NULL,1663023749615980545,'2022-08-10 22:04:26','0'),(1663456260372434954,'菜单类型','menu_type','',NULL,NULL,1663023749615980545,'2022-08-10 22:02:18','0'),(1663456260372434955,'执行策略','misfirePolicy','执行策略',1663023749615980545,'2018-09-17 15:37:42',NULL,NULL,'0'),(1663456260372434956,'登陆状态','login_status','登陆状态',NULL,NULL,1663023749615980545,'2022-08-10 21:58:14','0'),(1663456260372434957,'数据权限类型','data_rule_type','',NULL,NULL,1663023749615980545,'2022-08-10 22:01:41','0');
+
+/*Table structure for table `sys_login_log` */
+
 DROP TABLE IF EXISTS `sys_dict`;
 
 CREATE TABLE `sys_dict` (
@@ -224,26 +245,6 @@ insert  into `sys_dict`(`id`,`gid`,`label`,`value`,`sort`,`remarks`,`create_by`,
 
 /*Table structure for table `sys_dict_group` */
 
-DROP TABLE IF EXISTS `sys_dict_group`;
-
-CREATE TABLE `sys_dict_group` (
-  `id` bigint NOT NULL COMMENT '主键',
-  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组名称',
-  `code` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '分组编码',
-  `remarks` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL COMMENT '备注',
-  `create_by` bigint DEFAULT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `update_by` bigint DEFAULT NULL,
-  `update_date` datetime DEFAULT NULL,
-  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='字典分组';
-
-/*Data for the table `sys_dict_group` */
-
-insert  into `sys_dict_group`(`id`,`name`,`code`,`remarks`,`create_by`,`create_date`,`update_by`,`update_date`,`del_flag`) values (1663456260372434946,'日志类型','logType','日志类型',1663023749615980545,'2018-09-30 23:54:01',NULL,NULL,'0'),(1663456260372434947,'是否','sf_bool','是否',1663023749615980545,'2018-10-30 14:41:17',NULL,NULL,'0'),(1663456260372434948,'性别','sex','性别',NULL,NULL,NULL,NULL,'0'),(1663456260372434949,'是否','sf','是否',NULL,NULL,NULL,NULL,'0'),(1663456260372434950,'用户登陆状态','onlinestatus','',NULL,NULL,NULL,NULL,'0'),(1663456260372434951,'短信业务类型','business_type','短信业务类型',NULL,NULL,1663023749615980545,'2022-08-10 22:06:30','0'),(1663456260372434952,'分页数组','page','',1663023749615980545,'2019-04-22 11:31:44',1663023749615980545,'2019-05-04 14:13:28','0'),(1663456260372434953,'任务加载方式','load_way','任务加载方式',NULL,NULL,1663023749615980545,'2022-08-10 22:04:26','0'),(1663456260372434954,'菜单类型','menu_type','',NULL,NULL,1663023749615980545,'2022-08-10 22:02:18','0'),(1663456260372434955,'执行策略','misfirePolicy','执行策略',1663023749615980545,'2018-09-17 15:37:42',NULL,NULL,'0'),(1663456260372434956,'登陆状态','login_status','登陆状态',NULL,NULL,1663023749615980545,'2022-08-10 21:58:14','0'),(1663456260372434957,'数据权限类型','data_rule_type','',NULL,NULL,1663023749615980545,'2022-08-10 22:01:41','0');
-
-/*Table structure for table `sys_login_log` */
 
 DROP TABLE IF EXISTS `sys_login_log`;
 
