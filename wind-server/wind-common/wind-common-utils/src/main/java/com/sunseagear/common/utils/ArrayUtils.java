@@ -14,9 +14,7 @@ public class ArrayUtils extends org.apache.commons.lang3.ArrayUtils {
 
     public static String join(final List<String> str, final String separatorChar) {
         final StringBuffer strList = new StringBuffer();
-        str.forEach(item -> {
-            strList.append(separatorChar).append(item);
-        });
+        str.forEach(item -> strList.append(separatorChar).append(item));
         return strList.substring(1);
     }
 }

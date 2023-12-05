@@ -6,9 +6,9 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.text.StringEscapeUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +26,7 @@ import java.util.Map;
 @RequestMapping("/email/send")
 @Log(title = "邮件发送")
 public class EmailSendController {
-    @Autowired
+    @Resource
     private IEmailSendService emailSendService;
 
     @PostMapping(value = "/massSendEmailByCode")

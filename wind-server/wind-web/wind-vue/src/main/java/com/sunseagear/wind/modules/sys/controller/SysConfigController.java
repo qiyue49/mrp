@@ -11,9 +11,9 @@ import com.sunseagear.wind.common.helper.SysConfigHelper;
 import com.sunseagear.wind.modules.sys.entity.SysConfig;
 import com.sunseagear.wind.modules.sys.service.ISysConfigService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +37,7 @@ import java.util.List;
 @PreAuthorize("hasAuthority('sys:config')")
 @Log(title = "系统配置")
 public class SysConfigController extends BaseBeanController<SysConfig> {
-    @Autowired
+    @Resource
     private ISysConfigService sysConfigService;
 
     @PostMapping(value = "list")

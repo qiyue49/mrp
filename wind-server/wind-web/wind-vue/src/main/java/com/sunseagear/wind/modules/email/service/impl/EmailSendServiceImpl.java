@@ -10,13 +10,13 @@ import com.sunseagear.wind.modules.email.entity.EmailTemplate;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
 import com.sunseagear.wind.modules.email.service.IEmailTemplateService;
+import jakarta.annotation.Resource;
 import jakarta.mail.internet.MimeMessage;
 import org.apache.commons.text.StringEscapeUtils;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
 import org.beetl.core.resource.StringTemplateResourceLoader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -38,11 +38,11 @@ import java.util.Map;
 @Service("emailSendService")
 public class EmailSendServiceImpl implements IEmailSendService {
 
-    @Autowired
+    @Resource
     private IEmailTemplateService emailTemplateService;
-    @Autowired
+    @Resource
     private IEmailSendLogService emailSendLogService;
-    @Autowired
+    @Resource
     private EmailHelper emailHelper; //自动注入的Bean
 
     @Value("${spring.mail.sender}")

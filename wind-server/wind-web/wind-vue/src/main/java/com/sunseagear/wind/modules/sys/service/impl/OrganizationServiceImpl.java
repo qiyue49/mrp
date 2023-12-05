@@ -9,7 +9,7 @@ import com.sunseagear.wind.modules.sys.entity.Organization;
 import com.sunseagear.wind.modules.sys.mapper.OrganizationMapper;
 import com.sunseagear.wind.modules.sys.service.IOrganizationService;
 import com.sunseagear.wind.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +22,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
         implements IOrganizationService {
 
     //所有数据更新都需要刷新数据权限
-    @Autowired
+    @Resource
     private DataRuleHandler dataRuleHandler;
 
     @Override
@@ -34,9 +34,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
     private List<Organization> getTreeTables(List<Organization> treeNodeList) {
         List<Organization> TreeTableListAll = list(new QueryWrapper<Organization>().eq("tenant_id", UserUtils.getTenantId()));
         HashMap<String, Organization> TreeTableHashMapAll = new HashMap<>();
-        TreeTableListAll.forEach(Organization -> {
-            TreeTableHashMapAll.put(Organization.getId().toString(), Organization);
-        });
+        TreeTableListAll.forEach(Organization -> TreeTableHashMapAll.put(Organization.getId().toString(), Organization));
         HashMap<String, Organization> TreeTableHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
             String parentIds = treeNode.getParentIds();
@@ -50,12 +48,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
 
         });
         List<Organization> TreeTableList = new ArrayList<>(TreeTableHashMap.values());
-        TreeTableList.sort(new Comparator<>() {
-            @Override
-            public int compare(Organization o1, Organization o2) {
-                return o1.getCreateDate().compareTo(o2.getCreateDate());
-            }
-        });
+        TreeTableList.sort((o1, o2) -> o1.getCreateDate().compareTo(o2.getCreateDate()));
         return TreeTableList;
     }
 

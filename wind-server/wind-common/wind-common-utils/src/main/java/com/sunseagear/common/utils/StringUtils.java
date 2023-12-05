@@ -385,10 +385,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             String temp = after.replaceAll("\\p{P}", "");
             char[] ch = temp.trim().toCharArray();
             int length = ch.length;
-            for (int i = 0; i < length; i++) {
-                char c = ch[i];
+            for (char c : ch) {
                 if (!Character.isLetterOrDigit(c)) {
-                    String str = "" + ch[i];
+                    String str = "" + c;
                     if (!str.matches("[一-龥]+")) {
                         return true;
                     }

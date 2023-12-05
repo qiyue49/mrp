@@ -13,16 +13,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.Objects;
 
 /**
  * 文件上传操作助手
  */
+@Component
 public class OSSUploadHelper {
     public static final String DEFAULT_CONFIG_FILE = "upload.properties";
 

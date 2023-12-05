@@ -125,12 +125,9 @@ public class LogAspect {
             }
             // 保存日志
             //创建异步任务
-            Task task = new Task() {
-                @Override
-                public void run() {
-                    // 封装对象
-                    SpringContextHolder.getBean(OperationLogServiceImpl.class).insert(operationLog);
-                }
+            Task task = () -> {
+                // 封装对象
+                SpringContextHolder.getBean(OperationLogServiceImpl.class).insert(operationLog);
             };
             // 运行任务
             SpringContextHolder.getBean(TaskHelper.class).doTask(task);

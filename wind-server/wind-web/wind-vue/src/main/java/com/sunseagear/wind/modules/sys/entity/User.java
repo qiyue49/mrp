@@ -5,8 +5,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.google.gson.annotations.JsonAdapter;
-import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import com.sunseagear.common.utils.StringUtils;
 import lombok.Data;
@@ -48,7 +46,7 @@ public class User extends DataEntity<Long> {
     @Excel(name = "姓名")
     private String realname;
     // 头像
-    @JsonAdapter(Response.ContextUrlAdapter.class)
+    //@JsonAdapter(Response.ContextUrlAdapter.class)
     private String portrait;
     // 密码
     private String password;
@@ -92,9 +90,7 @@ public class User extends DataEntity<Long> {
 
     public String findRoleIds() {
         List<Long> roleIds = new ArrayList<>();
-        roles.forEach(item -> {
-            roleIds.add(item.getId());
-        });
+        roles.forEach(item -> roleIds.add(item.getId()));
         return StringUtils.join(roleIds, ",");
     }
 }

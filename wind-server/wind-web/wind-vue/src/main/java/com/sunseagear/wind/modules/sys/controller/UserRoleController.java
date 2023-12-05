@@ -8,7 +8,7 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sys.entity.UserRole;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ import java.util.Objects;
 @Log(title = "用户管理")
 public class UserRoleController extends BaseBeanController<UserRole> {
 
-    @Autowired
+    @Resource
     private IUserRoleService userRoleService;
 
 

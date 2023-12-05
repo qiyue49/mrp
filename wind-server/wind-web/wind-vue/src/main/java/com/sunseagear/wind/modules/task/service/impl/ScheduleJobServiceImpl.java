@@ -27,7 +27,7 @@ import java.util.List;
 public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper, ScheduleJob>
         implements IScheduleJobService, QuartzInitCallback {
 
-    //    @Autowired
+    //    @Resource
     private final QuartzManager quartzManager = new QuartzManager();
 
     @Override

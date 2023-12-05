@@ -48,12 +48,8 @@ public class SysConfigHelper {
             configList = new ArrayList<>();
         }
         List<SysConfig> defaultConfigList = sysConfigMap.get(TenantProperties.getInstance().getDefaultTenantId());
-        defaultConfigList.forEach(item -> {
-            sysConfigHashMap.put(item.getCode(), item);
-        });
-        configList.forEach(item -> {
-            sysConfigHashMap.put(item.getCode(), item);
-        });
+        defaultConfigList.forEach(item -> sysConfigHashMap.put(item.getCode(), item));
+        configList.forEach(item -> sysConfigHashMap.put(item.getCode(), item));
         return new ArrayList<>(sysConfigHashMap.values());
     }
 

@@ -25,9 +25,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
     private List<Menu> getMenus(List<Menu> treeNodeList) {
         List<Menu> menuListAll = list(new QueryWrapper<>());
         HashMap<String, Menu> menuHashMapAll = new HashMap<>();
-        menuListAll.forEach(menu -> {
-            menuHashMapAll.put(menu.getId().toString(), menu);
-        });
+        menuListAll.forEach(menu -> menuHashMapAll.put(menu.getId().toString(), menu));
         HashMap<String, Menu> menuHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
             String parentIds = treeNode.getParentIds();
@@ -46,12 +44,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
         });
         List<Menu> menuList = new ArrayList<>();
         menuList.addAll(menuHashMap.values());
-        menuList.sort(new Comparator<>() {
-            @Override
-            public int compare(Menu o1, Menu o2) {
-                return o1.getSort() - o2.getSort();
-            }
-        });
+        menuList.sort((o1, o2) -> o1.getSort() - o2.getSort());
         return menuList;
     }
 

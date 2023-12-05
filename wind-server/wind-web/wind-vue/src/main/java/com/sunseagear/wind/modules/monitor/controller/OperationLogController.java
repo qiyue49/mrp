@@ -10,12 +10,11 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
 import com.sunseagear.wind.modules.monitor.service.IOperationLogService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,7 +35,7 @@ import java.util.List;
 @Log(title = "操作日志")
 public class OperationLogController extends BaseBeanController<OperationLog> {
 
-    @Autowired
+    @Resource
     private IOperationLogService operationLogService;
 
     static {

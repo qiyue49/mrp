@@ -8,12 +8,12 @@ import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.UserUtils;
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,10 +28,10 @@ import java.util.regex.Pattern;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
-    @Autowired
+    @Resource
     private JWTHelper jwtService;
 
-    @Autowired
+    @Resource
     private IOAuthService oAuthService;
 
     @Override

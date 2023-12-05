@@ -9,9 +9,9 @@ import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import com.sunseagear.wind.utils.BASE64DecodedMultipartFile;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,10 +32,10 @@ import java.util.Objects;
 @RequestMapping("json/oss")
 public class OSSUploadJsonController {
 
-    @Autowired
+    @Resource
     private IAttachmentService attachmentService;
 
-    @Autowired
+    @Resource
     private AttachmentHelper attachmentHelper;
 
     /**

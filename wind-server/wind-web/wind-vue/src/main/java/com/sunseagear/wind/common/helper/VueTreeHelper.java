@@ -22,9 +22,7 @@ public class VueTreeHelper {
     public <T extends TreeEntity<M>, M extends Serializable> List<T> sort(List<T> treeNodes) {
         List<T> treeNodeList = new ArrayList<>();
         Map<M, T> treeEntityHashMap = treeNodes.stream().collect(Collectors.toMap(TreeEntity<M>::getId, Function.identity()));
-        treeNodes.forEach(item -> {
-            treeEntityHashMap.put(item.getId(), item);
-        });
+        treeNodes.forEach(item -> treeEntityHashMap.put(item.getId(), item));
         treeNodes.forEach(item -> {
             if (item.getParentId() != null
                     && treeEntityHashMap.containsKey(item.getParentId())) {

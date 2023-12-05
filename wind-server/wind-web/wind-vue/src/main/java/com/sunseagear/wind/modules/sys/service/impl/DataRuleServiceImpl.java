@@ -8,7 +8,7 @@ import com.sunseagear.wind.modules.sys.entity.RoleDataRule;
 import com.sunseagear.wind.modules.sys.mapper.DataRuleMapper;
 import com.sunseagear.wind.modules.sys.mapper.RoleDataRuleMapper;
 import com.sunseagear.wind.modules.sys.service.IDataRuleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,9 +32,9 @@ import java.util.Collection;
 public class DataRuleServiceImpl extends CommonServiceImpl<DataRuleMapper, DataRule> implements IDataRuleService {
 
     //所有数据更新都需要刷新数据权限
-    @Autowired
+    @Resource
     private DataRuleHandler dataRuleHandler;
-    @Autowired
+    @Resource
     private RoleDataRuleMapper roleDataRuleMapper;
 
     @Override

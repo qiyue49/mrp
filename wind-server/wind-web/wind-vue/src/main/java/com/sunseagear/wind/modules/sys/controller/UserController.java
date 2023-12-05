@@ -18,17 +18,16 @@ import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,13 +49,13 @@ import java.util.List;
 @PreAuthorize("hasAuthority('sys:user')")
 @Log(title = "用户管理")
 public class UserController extends BaseBeanController<User> {
-    @Autowired
+    @Resource
     private IUserService userService;
 
-    @Autowired
+    @Resource
     private IUserRoleService userRoleService;
 
-    @Autowired
+    @Resource
     private IRoleService roleService;
 
     /**

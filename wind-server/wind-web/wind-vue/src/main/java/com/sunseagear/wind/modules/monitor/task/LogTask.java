@@ -5,10 +5,10 @@ import com.sunseagear.wind.modules.monitor.entity.LoginLog;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
 import com.sunseagear.wind.modules.monitor.service.ILoginLogService;
 import com.sunseagear.wind.modules.monitor.service.IOperationLogService;
+import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -27,9 +27,9 @@ import java.util.Calendar;
 @Component("logTask")
 public class LogTask implements ApplicationListener<ContextRefreshedEvent> {
     public final Logger log = LoggerFactory.getLogger(getClass());
-    @Autowired
+    @Resource
     private IOperationLogService operationLogService;
-    @Autowired
+    @Resource
     private ILoginLogService loginLogService;
 
     /**

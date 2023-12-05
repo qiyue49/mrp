@@ -14,14 +14,13 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.monitor.entity.LoginLog;
 import com.sunseagear.wind.modules.monitor.service.ILoginLogService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -44,7 +43,7 @@ import java.util.List;
 @Log(title = "登陆日志")
 public class LoginLogController extends BaseBeanController<LoginLog> {
 
-    @Autowired
+    @Resource
     private ILoginLogService loginLogService;
 
 

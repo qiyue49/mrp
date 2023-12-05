@@ -14,9 +14,9 @@ import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,10 +40,10 @@ import java.util.List;
 @Log(title = "附件日志")
 public class AttachmentController extends BaseBeanController<Attachment> {
 
-    @Autowired
+    @Resource
     private IAttachmentService attachmentService;
 
-    @Autowired
+    @Resource
     private AttachmentHelper attachmentHelper;
 
     /**

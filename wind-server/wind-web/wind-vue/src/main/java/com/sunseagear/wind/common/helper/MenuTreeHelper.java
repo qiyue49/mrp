@@ -25,9 +25,7 @@ public class MenuTreeHelper implements Serializable {
     public List<MenuTreeNode> sort(List<Menu> treeNodes) {
         List<MenuTreeNode> treeNodeList = new ArrayList<>();
         HashMap<Long, MenuTreeNode> treeEntityHashMap = new HashMap<>();
-        treeNodes.forEach(item -> {
-            treeEntityHashMap.put(item.getId(), new MenuTreeNode(item));
-        });
+        treeNodes.forEach(item -> treeEntityHashMap.put(item.getId(), new MenuTreeNode(item)));
         treeNodes.forEach(item -> {
             MenuTreeNode menuTreeNode = treeEntityHashMap.get(item.getId());
             if (item.getParentId() != null

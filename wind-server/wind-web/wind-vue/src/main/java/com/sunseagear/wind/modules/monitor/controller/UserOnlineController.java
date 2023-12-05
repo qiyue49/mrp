@@ -7,12 +7,10 @@ import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 /**
  * @version V1.0
@@ -26,7 +24,7 @@ import java.io.IOException;
 @Log(title = "在线用户")
 public class UserOnlineController extends BaseBeanController<Principal> {
 
-    @Autowired
+    @Resource
     private IOAuthService oAuthService;
 
     /**

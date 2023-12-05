@@ -9,14 +9,13 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.test.twotable.entity.CarModel;
 import com.sunseagear.wind.modules.test.twotable.service.ICarModelService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,7 +35,7 @@ import java.util.List;
 @Log(title = "车辆型号管理")
 public class CarModelController extends BaseBeanController<CarModel> {
 
-    @Autowired
+    @Resource
     private ICarModelService carModelService;
 
 

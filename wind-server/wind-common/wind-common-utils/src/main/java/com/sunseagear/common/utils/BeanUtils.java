@@ -551,11 +551,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
         }
         if (obj instanceof Map) {
             Map<String, Object> map = extracted(obj);
-            if (map.containsKey(fieldname)) {
-                return map.get(fieldname);
-            } else {
-                return null;
-            }
+            return map.getOrDefault(fieldname, null);
         } else {
 
             if (!fieldname.isEmpty()) {

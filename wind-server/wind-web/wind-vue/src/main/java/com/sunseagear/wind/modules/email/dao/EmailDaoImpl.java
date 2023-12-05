@@ -5,7 +5,8 @@ import com.sunseagear.common.email.disruptor.EmailDao;
 import com.sunseagear.common.email.disruptor.EmailData;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -18,9 +19,10 @@ import java.util.Date;
  * @description: 短信信息返回 * @date: 2017年6月8日 上午11:20:04
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
+@Component
 public class EmailDaoImpl implements EmailDao {
 
-    @Autowired
+    @Resource
     private IEmailSendLogService emailSendLogService;
 
     @Override

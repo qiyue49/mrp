@@ -10,14 +10,13 @@ import com.sunseagear.wind.common.helper.VueTreeHelper;
 import com.sunseagear.wind.modules.sys.entity.Organization;
 import com.sunseagear.wind.modules.sys.service.IOrganizationService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import java.util.List;
 @Log(title = "部门管理")
 public class OrganizationController extends BaseBeanController<Organization> {
 
-    @Autowired
+    @Resource
     private IOrganizationService organizationService;
 
 

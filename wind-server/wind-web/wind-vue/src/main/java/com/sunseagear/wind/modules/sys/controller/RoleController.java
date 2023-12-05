@@ -16,14 +16,13 @@ import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,11 +46,11 @@ import java.util.Map;
 @Log(title = "角色管理")
 public class RoleController extends BaseBeanController<Role> {
 
-    @Autowired
+    @Resource
     private IRoleService roleService;
-    @Autowired
+    @Resource
     private IMenuService menuService;
-    @Autowired
+    @Resource
     private IRoleMenuService roleMenuService;
 
     /**

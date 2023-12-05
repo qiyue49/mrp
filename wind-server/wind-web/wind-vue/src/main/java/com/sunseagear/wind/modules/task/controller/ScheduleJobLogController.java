@@ -9,8 +9,8 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.task.entity.ScheduleJobLog;
 import com.sunseagear.wind.modules.task.service.IScheduleJobLogService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +34,7 @@ import java.util.List;
 @Log(title = "计划任务日志")
 public class ScheduleJobLogController extends BaseBeanController<ScheduleJobLog> {
 
-    @Autowired
+    @Resource
     private IScheduleJobLogService scheduleJobLogService;
 
     @GetMapping(value = "list")

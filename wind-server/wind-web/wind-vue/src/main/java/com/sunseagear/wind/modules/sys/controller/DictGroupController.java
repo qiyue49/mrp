@@ -10,14 +10,13 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sys.entity.DictGroup;
 import com.sunseagear.wind.modules.sys.service.IDictGroupService;
 import com.sunseagear.wind.utils.DictUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +27,7 @@ import java.util.List;
 @Log(title = "字典分组")
 public class DictGroupController extends BaseBeanController<DictGroup> {
 
-    @Autowired
+    @Resource
     private IDictGroupService dictGroupService;
 
 
