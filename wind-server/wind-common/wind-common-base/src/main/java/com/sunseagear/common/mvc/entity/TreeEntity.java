@@ -25,7 +25,7 @@ public abstract class TreeEntity<T> extends DataEntity<T> {
 
 
     public boolean isRoot() {
-        return getParentId() == null || getParentId().equals("0") || getParentId().equals("");
+        return getParentId() == null || "0".equals(getParentId()) || "".equals(getParentId());
     }
 
 

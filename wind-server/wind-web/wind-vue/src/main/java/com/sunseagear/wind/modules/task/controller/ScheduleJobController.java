@@ -88,7 +88,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     public String changeJobStatus(@PathVariable("id") Long id, HttpServletRequest request) {
         String cmd = request.getParameter("cmd");
         String label = "停止";
-        if (cmd.equals("start")) {
+        if ("start".equals(cmd)) {
             label = "启动";
         } else {
             label = "停止";

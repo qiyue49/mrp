@@ -47,13 +47,13 @@ public class SmsEventProducer {
         return sendSms(eventId, smsData, null);
     }
 
-    public Long sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
+    public void sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
         SmsData smsData = new SmsData();
         smsData.setPhone(phone);
         smsData.setSmsTemplate(smsTemplate);
         smsData.setDatas(datas);
         smsData.setSmsConfigProperties(smsConfigProperties);
-        return sendSms(eventId, smsData);
+        sendSms(eventId, smsData);
     }
 
     public Long sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas, SmsHandlerCallBack callBack) {

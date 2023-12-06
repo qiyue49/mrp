@@ -1,5 +1,6 @@
 package com.sunseagear.common.oss.config;
 
+import jakarta.annotation.Resource;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -28,6 +29,7 @@ public class OssConfig {
     boolean needDatePath = false;
     boolean originalName = false;
 
+    @Resource
     private AliyunConfig aliyun;
 
     private LocalConfig local;

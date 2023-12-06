@@ -154,7 +154,7 @@ public class LogAspect {
      * 是否类注解，如果存在就获取
      */
     private Log getClazzAnnotationLog(JoinPoint joinPoint) {
-        Class<? extends Object> clazz = joinPoint.getTarget().getClass();
+        Class<?> clazz = joinPoint.getTarget().getClass();
         return (Log) clazz.getAnnotation(Log.class);
     }
 

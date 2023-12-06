@@ -3,6 +3,7 @@ package com.sunseagear.wind.modules.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.datarule.handler.DataRuleHandler;
+import com.sunseagear.common.mvc.entity.DataEntity;
 import com.sunseagear.common.mvc.service.impl.TreeCommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.sys.entity.Organization;
@@ -48,7 +49,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
 
         });
         List<Organization> TreeTableList = new ArrayList<>(TreeTableHashMap.values());
-        TreeTableList.sort((o1, o2) -> o1.getCreateDate().compareTo(o2.getCreateDate()));
+        TreeTableList.sort(Comparator.comparing(DataEntity::getCreateDate));
         return TreeTableList;
     }
 

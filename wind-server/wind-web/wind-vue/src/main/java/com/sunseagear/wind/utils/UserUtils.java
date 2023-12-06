@@ -30,7 +30,6 @@ import java.util.Set;
  * @description: 用户工具类 * @date: 2017年6月26日 下午6:00:39
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-@SuppressWarnings("unchecked")
 public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     private UserUtils() {

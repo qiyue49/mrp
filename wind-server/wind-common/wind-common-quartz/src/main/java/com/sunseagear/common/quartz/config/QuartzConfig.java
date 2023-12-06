@@ -7,7 +7,6 @@ import com.sunseagear.common.utils.StringUtils;
 import jakarta.activation.DataSource;
 import jakarta.annotation.Resource;
 import org.quartz.Scheduler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -68,14 +67,12 @@ public class QuartzConfig implements ApplicationRunner {
     public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) throws IOException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         String dataSourceBean = env.getProperty("quartz.data-source");
-        if (StringUtils.isEmpty(dataSourceBean) || dataSourceBean.equals("default")) {
+        if (StringUtils.isEmpty(dataSourceBean) || "default".equals(dataSourceBean)) {
             schedulerFactoryBean.setDataSource((javax.sql.DataSource) dataSource);
-        } else {
-           /* dataSource = SpringContextHolder.getBean(dataSourceBean);
+        }  /* dataSource = SpringContextHolder.getBean(dataSourceBean);
             if (dataSource != null) {
                 schedulerFactoryBean.setDataSource(dataSource);
             }*/
-        }
         schedulerFactoryBean.setQuartzProperties(quartzProperties());
         schedulerFactoryBean.setSchedulerName("windScheduler");
         // 启动时延期1秒开始任务

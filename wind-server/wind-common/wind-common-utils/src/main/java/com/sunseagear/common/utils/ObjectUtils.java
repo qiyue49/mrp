@@ -29,7 +29,7 @@ public final class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
         }
 
         if (obj instanceof CharSequence) {
-            return ((CharSequence) obj).length() == 0;
+            return ((CharSequence) obj).isEmpty();
         }
 
         if (obj instanceof Collection) {

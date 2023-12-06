@@ -20,11 +20,10 @@ public class ScheduleJobinvoke {
             Object object = null;
             Class<?> clazz = null;
             Method method = null;
-            if (scheduleJob.getLoadWay().equals("1")) {
+            if ("1".equals(scheduleJob.getLoadWay())) {
                 object = SpringContextHolder.getBean(scheduleJob.getExecuteClass());
             } else if (StringUtils.isNotBlank(scheduleJob.getExecuteClass())) {
-                clazz = Class.forName(scheduleJob.getExecuteClass());
-                object = clazz.newInstance();
+                object = Class.forName(scheduleJob.getExecuteClass()).getDeclaredConstructor().newInstance();
             }
             if (object == null) {
                 throw new QuartzException("任务对象不存在");

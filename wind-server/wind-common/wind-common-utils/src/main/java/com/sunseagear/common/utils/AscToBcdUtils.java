@@ -1,7 +1,5 @@
 package com.sunseagear.common.utils;
 
-import java.io.IOException;
-
 public class AscToBcdUtils {
     public static void main(String[] args) {
         // TODO Auto-generated method stub

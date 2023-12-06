@@ -2,6 +2,7 @@ package com.sunseagear.common.oss.config;
 
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -13,7 +14,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 @Getter
-@ConfigurationProperties(prefix = "oss")
+@Component
+@ConfigurationProperties(prefix = "oss.local")
 public class LocalConfig {
     //外部访问域名
     String domain = "";

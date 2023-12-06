@@ -15,10 +15,7 @@ import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -316,22 +313,24 @@ public class Response {
         @Override
         public JsonElement serialize(String s, Type type, JsonSerializationContext jsonSerializationContext) {
             s = StringEscapeUtils.unescapeHtml4(StringEscapeUtils.unescapeHtml4(s));
-            JsonElement el = JsonParser.parseString(s);
-
-            if (el.isJsonArray()) {
+            try {
                 List<OssFile> ossFileList = JsonUtils.jsonStringToListBean(s, OssFile.class);
-                ossFileList.forEach(item -> {
-                    if (!StringUtils.isEmpty(item.url) && !StringUtils.startsWith(item.url, "http")) {
-                        item.setUrl(ServletUtils.getContextUrl(ServletUtils.getRequest()) + item.getUrl());;
-                    }
-                });
-                return  new JsonPrimitive(new Gson().toJson(ossFileList));
-            } else {
+                JsonElement el = JsonParser.parseString(s);
+                if (el.isJsonArray()) {
+                    ossFileList.forEach(item -> {
+                        if (!StringUtils.isEmpty(item.url) && !StringUtils.startsWith(item.url, "http")) {
+                            item.setUrl(ServletUtils.getContextUrl(Objects.requireNonNull(ServletUtils.getRequest())) + item.getUrl());;
+                        }
+                    });
+                    return new JsonPrimitive(new Gson().toJson(ossFileList));
+                }
+            } catch (Exception e) {
                 if (!StringUtils.isEmpty(s) && !StringUtils.startsWith(s, "http")) {
-                    return new JsonPrimitive(ServletUtils.getContextUrl(ServletUtils.getRequest()) + s);
+                    return new JsonPrimitive(ServletUtils.getContextUrl(Objects.requireNonNull(ServletUtils.getRequest())) + s);
                 }
                 return new JsonPrimitive(s);
             }
+            return null;
         }
     }
 
@@ -340,6 +339,5 @@ public class Response {
         private String name;
         private String url;
     }
-
 
 }

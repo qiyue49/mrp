@@ -361,7 +361,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
         PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
         for (PropertyDescriptor descriptor : propertyDescriptors) {
             String propertyName = descriptor.getName();
-            if (!propertyName.equals("class")) {
+            if (!"class".equals(propertyName)) {
                 Method readMethod = descriptor.getReadMethod();
                 Object result = readMethod.invoke(bean);
                 returnMap.put(propertyName, Objects.requireNonNullElse(result, ""));
@@ -430,17 +430,17 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     public static Object Caster(Class<?> type, String value) {
 
         Object returnValue = null;
-        if (value == null || value.equals("null") || value.isEmpty()) {
+        if (value == null || "null".equals(value) || value.isEmpty()) {
             return null;
         }
 
-        if (type.getName().equals("java.util.Date")) {
+        if ("java.util.Date".equals(type.getName())) {
             if (value.contains("Z") && value.contains("T")) {
                 returnValue = value;
             } else {
                 returnValue = DateUtils.parseDate(value);
             }
-        } else if (type.getName().equals("java.sql.Timestamp")) {
+        } else if ("java.sql.Timestamp".equals(type.getName())) {
             if (value.contains("Z") && value.contains("T")) {
                 value = value.replace("Z", "");
                 value = value.replace("T", " ");
@@ -594,11 +594,11 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     }
 
     public static void setFieldValue(Object obj, String fieldname, Object value) throws SecurityException,
-            NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+            IllegalArgumentException {
         if (value != null) {
             setFieldValue(obj, fieldname, value, value.getClass());
         } else {
-            setFieldValue(obj, fieldname, value, null);
+            setFieldValue(obj, fieldname, null, null);
         }
 
     }
@@ -694,8 +694,6 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                     // m = Utils.getMethod(obj.getClass(), methodname);
                     if (m != null) {
                         m.invoke(obj, value);
-                    } else {
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -746,7 +744,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             return obj;
         }
         if (obj == null) {
-            return obj;
+            return null;
         }
         Iterator it = json.keys();
         // 遍历jsonObject数据，添加到Map对象
@@ -797,13 +795,14 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                             try {
                                 Object newObject = method.getReturnType().newInstance();
                                 json2Objec(newObject, (JSONObject) value, true);
-                            } catch (Exception ec) {
+                            } catch (Exception ignored) {
 
                             }
                         }
 
                     }
-                } else if (value instanceof JSONArray jarray) {
+                } else {
+                    JSONArray jarray = (JSONArray) value;
                     for (Object jobj : jarray) {
                         if (jobj instanceof JSONObject jsonObj) {
                             if (applyChildren) {
@@ -812,7 +811,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                                     try {
                                         Object newObject = method.getReturnType().newInstance();
                                         json2Objec(newObject, jsonObj, true);
-                                    } catch (Exception ec) {
+                                    } catch (Exception ignored) {
 
                                     }
                                 }

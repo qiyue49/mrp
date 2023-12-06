@@ -89,26 +89,26 @@ public class CCPRestSDK {
     }
 
     /**
-     * 初始化主帐号信息
+     * 初始化账号信息
      *
-     * @param accountSid   必选参数 主帐号
-     * @param accountToken 必选参数 主帐号TOKEN
+     * @param accountSid   必选参数 主账号
+     * @param accountToken 必选参数 主账号TOKEN
      */
     public void setAccount(String accountSid, String accountToken) {
         if (isEmpty(accountSid) || isEmpty(accountToken)) {
             logger.error("初始化异常:accountSid或accountToken为空");
             throw new IllegalArgumentException(
-                    "必选参数:" + (isEmpty(accountSid) ? " 主帐号" : "") + (isEmpty(accountToken) ? " 主帐号TOKEN " : "") + "为空");
+                    "必选参数:" + (isEmpty(accountSid) ? " 主账号" : "") + (isEmpty(accountToken) ? " 主账号TOKEN " : "") + "为空");
         }
         ACCOUNT_SID = accountSid;
         ACCOUNT_TOKEN = accountToken;
     }
 
     /**
-     * 初始化子帐号信息
+     * 初始化子账号信息
      *
-     * @param subAccountSid   必选参数 子帐号
-     * @param subAccountToken 必选参数 子帐号TOKEN
+     * @param subAccountSid   必选参数 子账号
+     * @param subAccountToken 必选参数 子账号TOKEN
      */
     public void setSubAccount(String subAccountSid, String subAccountToken) {
         if (isEmpty(subAccountSid) || isEmpty(subAccountToken)) {
@@ -553,8 +553,6 @@ public class CCPRestSDK {
                 sb.append("<appId>").append(App_ID).append("</appId>").append("<to>").append(to).append("</to>");
                 if (!(isEmpty(mediaName))) {
                     sb.append("<mediaName>").append(mediaName).append("</mediaName>");
-                } else if (!(isEmpty(mediaName))) {
-                    sb.append("<mediaName>").append(mediaName).append("</mediaName>");
                 }
 
                 if (!(isEmpty(mediaTxt))) {
@@ -748,9 +746,9 @@ public class CCPRestSDK {
     }
 
     /**
-     * 获取子帐号信息
+     * 获取子账号信息
      *
-     * @param friendlyName 必选参数 子帐号名称
+     * @param friendlyName 必选参数 子账号名称
      */
     public HashMap<String, Object> querySubAccount(String friendlyName) {
         HashMap<String, Object> validate = accountValidate();
@@ -829,7 +827,7 @@ public class CCPRestSDK {
     }
 
     /**
-     * 获取子帐号
+     * 获取子账号
      *
      * @param startNo 可选参数 开始的序号，默认从0开始
      * @param offset  可选参数 一次查询的最大条数，最小是1条，最大是100条
@@ -918,7 +916,7 @@ public class CCPRestSDK {
     }
 
     /**
-     * 获取主帐号信息查询
+     * 获取主账号信息查询
      *
      */
     public HashMap<String, Object> queryAccountInfo() {
@@ -929,10 +927,10 @@ public class CCPRestSDK {
             return getMyError("172005", "端口错误");
         }
         if ((isEmpty(ACCOUNT_SID))) {
-            return getMyError("172006", "主帐号为空");
+            return getMyError("172006", "主账号为空");
         }
         if ((isEmpty(ACCOUNT_TOKEN))) {
-            return getMyError("172007", "主帐号TOKEN为空");
+            return getMyError("172007", "主账号TOKEN为空");
         }
 
         SSLHttpClient chc = new SSLHttpClient();
@@ -984,9 +982,9 @@ public class CCPRestSDK {
     }
 
     /**
-     * 创建子帐号
+     * 创建子账号
      *
-     * @param friendlyName 必选参数 子帐号名称。可由英文字母和阿拉伯数字组成子帐号唯一名称，推荐使用电子邮箱地址
+     * @param friendlyName 必选参数 子账号名称。可由英文字母和阿拉伯数字组成子账号唯一名称，推荐使用电子邮箱地址
      */
     public HashMap<String, Object> createSubAccount(String friendlyName) {
         HashMap<String, Object> validate = accountValidate();
@@ -994,8 +992,8 @@ public class CCPRestSDK {
             return validate;
         }
         if (isEmpty(friendlyName)) {
-            logger.error("必选参数: 子帐号名称 为空");
-            throw new IllegalArgumentException("必选参数: 子帐号名称 为空");
+            logger.error("必选参数: 子账号名称 为空");
+            throw new IllegalArgumentException("必选参数: 子账号名称 为空");
         }
 
         SSLHttpClient chc = new SSLHttpClient();

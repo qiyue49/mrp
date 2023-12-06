@@ -56,7 +56,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @author Robin Chang
      */
     public static boolean isEmpty(String s) {
-        return s == null || s.equals("");
+        return s == null || s.isEmpty();
     }
 
 
@@ -372,10 +372,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 判断字符串是否是乱码
+     * 判断字符串是否乱码
      *
      * @param strName 字符串
-     * @return 是否是乱码
+     * @return 是否乱码
      */
     public static boolean isMessyCode(String strName) {
         try {

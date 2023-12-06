@@ -9,17 +9,17 @@ import java.security.NoSuchAlgorithmException;
 
 public class EncryptUtil {
 
-    public String md5Digest(String src) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public String md5Digest(String src) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] b = md.digest(src.getBytes(StandardCharsets.UTF_8));
         return byte2HexStr(b);
     }
 
-    public String base64Encoder(String src) throws UnsupportedEncodingException {
+    public String base64Encoder(String src) {
         return Base64.encodeBase64String(src.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String base64Decoder(String dest) throws UnsupportedEncodingException {
+    public String base64Decoder(String dest) {
         return new String(Base64.decodeBase64(dest.getBytes(StandardCharsets.UTF_8)));
     }
 

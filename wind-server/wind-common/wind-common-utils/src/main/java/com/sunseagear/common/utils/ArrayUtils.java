@@ -6,9 +6,8 @@ import java.util.List;
 
 public class ArrayUtils extends org.apache.commons.lang3.ArrayUtils {
     public static List<String> split(final String str, final String separatorChar) {
-        List<String> strList = new ArrayList<>();
         String[] strs = StringUtils.split(str, separatorChar);
-        strList.addAll(Arrays.asList(strs));
+        List<String> strList = new ArrayList<>(Arrays.asList(strs));
         return strList;
     }
 

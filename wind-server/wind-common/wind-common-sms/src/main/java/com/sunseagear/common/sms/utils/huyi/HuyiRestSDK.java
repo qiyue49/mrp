@@ -57,7 +57,7 @@ public class HuyiRestSDK {
     }
 
     /**
-     * 设置帐号
+     * 设置账号
      *
      */
     public void setAccount(String accountName, String accountPassword) {

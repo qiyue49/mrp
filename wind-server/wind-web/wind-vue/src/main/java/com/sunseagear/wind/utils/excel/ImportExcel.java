@@ -107,11 +107,10 @@ public class ImportExcel {
      * @param file       导入文件对象
      * @param headerNum  标题行号，数据行号=标题行号+1
      * @param sheetIndex 工作表编号
-     * @throws InvalidFormatException
      * @throws IOException
      */
     public ImportExcel(File file, int headerNum, int sheetIndex)
-            throws InvalidFormatException, IOException {
+            throws IOException {
         this(file.getName(), new FileInputStream(file), headerNum, sheetIndex);
     }
 
@@ -121,11 +120,10 @@ public class ImportExcel {
      * @param multipartFile 导入文件对象
      * @param headerNum     标题行号，数据行号=标题行号+1
      * @param sheetIndex    工作表编号
-     * @throws InvalidFormatException
      * @throws IOException
      */
     public ImportExcel(MultipartFile multipartFile, int headerNum, int sheetIndex)
-            throws InvalidFormatException, IOException {
+            throws IOException {
         this(multipartFile.getOriginalFilename(), multipartFile.getInputStream(), headerNum, sheetIndex);
     }
 

@@ -82,7 +82,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         }
         flag = true;
         File[] files = dirFile.listFiles();// 获得传入路径下的所有文件
-        for (File value : files) {// 循环遍历删除文件夹下的所有文件(包括子目录)
+        for (File value : Objects.requireNonNull(files)) {// 循环遍历删除文件夹下的所有文件(包括子目录)
             if (value.isFile()) {// 删除子文件
                 flag = deleteFile(value.getAbsolutePath());
                 //System.out.println(files[i].getAbsolutePath() + " 删除成功");
@@ -260,7 +260,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             File a = new File(source);
             String[] file = a.list();
             File temp = null;
-            for (String s : file) {
+            for (String s : Objects.requireNonNull(file)) {
                 if (source.endsWith(File.separator)) {
                     temp = new File(source + s);
                 } else {
@@ -268,7 +268,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 }
                 if (temp.isFile()) {
                     FileInputStream input = new FileInputStream(temp);
-                    FileOutputStream output = new FileOutputStream(target + "/" + (temp.getName()).toString());
+                    FileOutputStream output = new FileOutputStream(target + "/" + (temp.getName()));
                     byte[] b = new byte[1024];
                     int len;
                     while ((len = input.read(b)) != -1) {
@@ -386,7 +386,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         List rs = new ArrayList();
         for (File file : fs) {
             String fName = file.getName();
-            if (fName.length() > 0 && fName.toLowerCase().endsWith(filterName.toLowerCase())) {
+            if (!fName.isEmpty() && fName.toLowerCase().endsWith(filterName.toLowerCase())) {
                 rs.add(file);
             }
         }
@@ -406,7 +406,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 fs.add(file);
             } else if (file.isDirectory()) {
                 String[] filelist = file.list();
-                for (String s : filelist) {
+                for (String s : Objects.requireNonNull(filelist)) {
                     File readfile = new File(filepath + "\\" + s);
                     if (!readfile.isDirectory()) {
                         fs.add(readfile);

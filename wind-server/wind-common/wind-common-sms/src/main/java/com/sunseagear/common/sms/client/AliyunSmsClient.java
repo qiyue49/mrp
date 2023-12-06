@@ -88,7 +88,7 @@ public class AliyunSmsClient implements ISmsClient {
 
             //hint 此处可能会抛出异常，注意catch
             SendSmsResponse sendSmsResponse = acsClient.getAcsResponse(request);
-            if (sendSmsResponse.getCode().equals("OK")) {
+            if ("OK".equals(sendSmsResponse.getCode())) {
                 smsResult = SmsResult.success(sendSmsResponse.getMessage());
             } else {
                 smsResult = SmsResult.fail(sendSmsResponse.getMessage());

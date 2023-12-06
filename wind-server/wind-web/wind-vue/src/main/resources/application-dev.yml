@@ -37,7 +37,6 @@ spring:
 #文件上传配置
 #使用的上传存储空间,local本地,aliyun:阿里云
 oss:
-
   local:
     #文件域名
     domain: http://localhost:8080

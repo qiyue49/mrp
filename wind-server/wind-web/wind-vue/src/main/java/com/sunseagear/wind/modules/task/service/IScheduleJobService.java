@@ -3,7 +3,6 @@ package com.sunseagear.wind.modules.task.service;
 
 import com.sunseagear.common.mvc.service.ICommonService;
 import com.sunseagear.wind.modules.task.entity.ScheduleJob;
-import org.quartz.SchedulerException;
 
 /**
  * @version V1.0

@@ -26,7 +26,7 @@ public class MessageUtils {
                 messageSource = SpringContextHolder.getBean(MessageSource.class);
             }
             return messageSource.getMessage(code, args, null);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return "";
@@ -44,7 +44,7 @@ public class MessageUtils {
                 messageSource = SpringContextHolder.getBean(MessageSource.class);
             }
             return messageSource.getMessage(code, args, defaultMessage, null);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return "";

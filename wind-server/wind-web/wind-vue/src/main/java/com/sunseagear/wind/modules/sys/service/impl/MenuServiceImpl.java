@@ -42,9 +42,8 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
             menuHashMap.put(treeNode.getId().toString(), menuHashMapAll.get(treeNode.getId().toString()));
 
         });
-        List<Menu> menuList = new ArrayList<>();
-        menuList.addAll(menuHashMap.values());
-        menuList.sort((o1, o2) -> o1.getSort() - o2.getSort());
+        List<Menu> menuList = new ArrayList<>(menuHashMap.values());
+        menuList.sort(Comparator.comparingInt(Menu::getSort));
         return menuList;
     }
 

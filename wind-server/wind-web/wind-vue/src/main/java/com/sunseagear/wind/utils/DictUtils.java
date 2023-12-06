@@ -26,7 +26,7 @@ public class DictUtils {
 
     protected final static String DICT_CACHE_NAME = "sys_dict";
 
-    public static Map<String, List<Dict>> getDict() {
+    public static Map getDict() {
         //数据字典
         CacheUtils.getCacheMap(DICT_CACHE_NAME);
         return CacheUtils.getCacheMap(DICT_CACHE_NAME);

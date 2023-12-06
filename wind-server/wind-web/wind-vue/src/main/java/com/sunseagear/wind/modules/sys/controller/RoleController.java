@@ -153,7 +153,7 @@ public class RoleController extends BaseBeanController<Role> {
         Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (role.getCode().equals("admin")) {
+        if ("admin".equals(role.getCode())) {
             QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
             treeNodeList = menuService.selectList(queryWrapper);
@@ -178,7 +178,7 @@ public class RoleController extends BaseBeanController<Role> {
         Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (role.getCode().equals("admin")) {
+        if ("admin".equals(role.getCode())) {
             QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("sort");
             treeNodeList = menuService.selectList(queryWrapper);
