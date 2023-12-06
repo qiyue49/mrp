@@ -34,20 +34,21 @@ public class SpringSecurityConfig {
             try {
                 // 根据配置放行外部接口
                 if (Boolean.parseBoolean(SysConfigHelper.getInstance().getSysConfig("openAPI").getValue())) {
+                    // 放行接口目录
                     authorize.requestMatchers("/json/oss/**", "/json/**").permitAll();
                 }
                 // 放行资源目录
                 authorize.requestMatchers("/sso/oauth2/**", "/static/**", "/resources/**").permitAll()
                         // 其余的都需要权限校验
-                        .anyRequest().authenticated()
-                        .and()
-                        .sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        .and()
-                        .authenticationProvider(authenticationProvider())
-                        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                        // 防跨站请求伪造
-                        .csrf(AbstractHttpConfigurer::disable);
+                        .anyRequest().authenticated();
+                // Session管理
+                http.sessionManagement(sessionAuthenticationStrategy -> sessionAuthenticationStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // AuthenticationProvider设置
+                http.authenticationProvider(authenticationProvider());
+                // 添加Filter
+                http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+                // 禁用跨站请求伪造防护
+                http.csrf(AbstractHttpConfigurer::disable);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

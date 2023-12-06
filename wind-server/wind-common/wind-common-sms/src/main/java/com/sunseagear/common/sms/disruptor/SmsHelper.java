@@ -14,8 +14,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 public class SmsHelper {
     @Getter
@@ -46,7 +45,9 @@ public class SmsHelper {
     @PostConstruct
     private void start() {
         // Executor that will be used to construct new threads for consumers
-        Executor executor = Executors.newCachedThreadPool();
+        //Executor executor = Executors.newCachedThreadPool();
+        ExecutorService executor = new ThreadPoolExecutor(2, 5, 3, TimeUnit.SECONDS, new LinkedBlockingDeque<>(3), Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
+
 
         // The factory for the event
         SmsEventFactory factory = new SmsEventFactory();
