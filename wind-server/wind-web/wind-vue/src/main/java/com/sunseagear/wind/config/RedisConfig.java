@@ -1,6 +1,7 @@
 package com.sunseagear.wind.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -9,7 +10,9 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +32,7 @@ import java.lang.reflect.Method;
  * @version V1.0
  * @package com.sunseagear.wind.config
  * @title:
- * @description: Redis缓存类 https://blog.csdn.net/guokezhongdeyuzhou/article/details/79789629 * @date: 2018/3/10 10:12
+ * @description: Redis缓存类 <a href="https://blog.csdn.net/guokezhongdeyuzhou/article/details/79789629">...</a> * @date: 2018/3/10 10:12
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 @Configuration
@@ -39,8 +42,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return new KeyGenerator() {
+            @NotNull
             @Override
-            public Object generate(Object target, Method method, Object... params) {
+            public Object generate(@NotNull Object target, @NotNull Method method, @NotNull Object... params) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(target.getClass().getName());
                 sb.append(method.getName());
@@ -55,23 +59,21 @@ public class RedisConfig extends CachingConfigurerSupport {
     /**
      * 自定义redisTemplate
      *
-     * @param factory
-     * @return
      */
     @Bean()
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(factory);
-        // JSON的序列化
-        Jackson2JsonRedisSerializer<Object> objectJackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(Object.class);
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
         // 只反序列化存在的属性
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         objectMapper.registerModule(new SimpleModule().addDeserializer(
                 SimpleGrantedAuthority.class, new SimpleGrantedAuthorityDeserializer()));
-        objectJackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+        // JSON的序列化
+        Jackson2JsonRedisSerializer<Object> objectJackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(objectMapper, Object.class);
 
         StringRedisSerializer stringRedisSerializer = new StringRedisSerializer();
 

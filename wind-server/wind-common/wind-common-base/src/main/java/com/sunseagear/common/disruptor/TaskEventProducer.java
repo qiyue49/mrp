@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 public class TaskEventProducer {
-    private static Logger logger = LoggerFactory.getLogger(TaskEventProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(TaskEventProducer.class);
     private final RingBuffer<TaskEvent> ringBuffer;
 
     public TaskEventProducer(RingBuffer<TaskEvent> ringBuffer) {

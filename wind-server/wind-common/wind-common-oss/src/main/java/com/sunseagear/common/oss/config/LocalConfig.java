@@ -1,6 +1,8 @@
 package com.sunseagear.common.oss.config;
 
+import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -11,23 +13,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * @description: 阿里云配置 * @date: 2018/4/26 9:39
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-@ConfigurationProperties(prefix = "oss")
+@Getter
+@Component
+@ConfigurationProperties(prefix = "oss.local")
 public class LocalConfig {
     //外部访问域名
     String domain = "";
     //上传路径
     String uploadFilePath = "";
 
-    public String getDomain() {
-        return domain;
-    }
-
     public void setDomain(String domain) {
         this.domain = domain;
-    }
-
-    public String getUploadFilePath() {
-        return uploadFilePath;
     }
 
     public void setUploadFilePath(String uploadFilePath) {

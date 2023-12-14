@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.TreeEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_menu")
 @SuppressWarnings("serial")

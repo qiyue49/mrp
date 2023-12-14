@@ -12,14 +12,13 @@ import com.sunseagear.wind.modules.sys.entity.DataRule;
 import com.sunseagear.wind.modules.sys.entity.RoleDataRule;
 import com.sunseagear.wind.modules.sys.service.IDataRuleService;
 import com.sunseagear.wind.modules.sys.service.IRoleDataRuleService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,17 +42,16 @@ import java.util.List;
 @Log(title = "角色数据权限关联表")
 public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
-    @Autowired
+    @Resource
     private IRoleDataRuleService roleDataRuleService;
-    @Autowired
+    @Resource
     private IDataRuleService dataRuleService;
-    @Autowired
+    @Resource
     private DataRuleHandler dataRuleHandler;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)
@@ -78,13 +76,11 @@ public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
         }
         // 预处理
         Page<DataRule> pageBean = dataRuleService.selectPage(getPage(), queryWrapper);
-        pageBean.getRecords().forEach(item -> {
-            list.forEach(roleDataRule -> {
-                if (item.getId().equals(roleDataRule.getScopeId())) {
-                    item.setSelect(true);
-                }
-            });
-        });
+        pageBean.getRecords().forEach(item -> list.forEach(roleDataRule -> {
+            if (item.getId().equals(roleDataRule.getScopeId())) {
+                item.setSelect(true);
+            }
+        }));
         return Response.successPageJson(pageBean, "scopeValue", false);
     }
 

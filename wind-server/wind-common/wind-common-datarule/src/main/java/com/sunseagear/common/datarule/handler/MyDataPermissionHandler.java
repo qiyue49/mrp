@@ -36,7 +36,7 @@ import java.util.stream.Collectors;
 public class MyDataPermissionHandler implements DataPermissionHandler {
 
     private final DataRuleHandler dataRuleHandler;
-    private static GroupTemplate groupTemplate;
+    private static final GroupTemplate groupTemplate;
 
     static {
         StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
@@ -52,7 +52,6 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
     /**
      * @param where             原SQL Where 条件表达式
      * @param mappedStatementId Mapper接口方法ID
-     * @return
      */
     @SneakyThrows
     @Override
@@ -64,7 +63,6 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
         }
         Map<String, Object> userMap = dataRuleHandler.getUser(principal.getId().toString());
         DataRuleModel dataScope = dataRuleHandler.getDataRule(mappedStatementId, principal.getRoleId());
-        ;
         //如果还不行，那就只有不处理了
         if (dataScope == null) {
             return where;

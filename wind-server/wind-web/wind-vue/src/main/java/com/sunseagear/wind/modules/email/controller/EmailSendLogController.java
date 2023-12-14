@@ -10,12 +10,11 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -36,9 +35,9 @@ import java.util.List;
 @Log(title = "邮件发送日志")
 public class EmailSendLogController extends BaseBeanController<EmailSendLog> {
 
-    @Autowired
+    @Resource
     private IEmailSendLogService emailSendLogService;
-    @Autowired
+    @Resource
     private IEmailSendService emailSendService;
 
 

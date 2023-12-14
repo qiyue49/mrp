@@ -5,7 +5,8 @@ import com.sunseagear.common.sms.disruptor.SmsDao;
 import com.sunseagear.common.sms.disruptor.SmsData;
 import com.sunseagear.wind.modules.sms.entity.SmsSendLog;
 import com.sunseagear.wind.modules.sms.service.ISmsSendLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
@@ -18,9 +19,10 @@ import java.util.Date;
  * @description: 短信信息返回 * @date: 2017年6月8日 上午11:20:04
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
+@Component
 public class SmsDaoImpl implements SmsDao {
 
-    @Autowired
+    @Resource
     private ISmsSendLogService smsSendLogService;
 
     @Override

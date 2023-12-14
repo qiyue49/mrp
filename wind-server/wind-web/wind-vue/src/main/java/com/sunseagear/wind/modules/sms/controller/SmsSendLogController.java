@@ -9,12 +9,11 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sms.entity.SmsSendLog;
 import com.sunseagear.wind.modules.sms.service.ISmsSendLogService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -35,7 +34,7 @@ import java.util.List;
 @Log(title = "短信发送日志")
 public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
 
-    @Autowired
+    @Resource
     private ISmsSendLogService smsSendLogService;
 
 

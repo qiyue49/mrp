@@ -5,8 +5,8 @@ import com.sunseagear.common.quartz.callback.QuartzInitCallback;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.StringUtils;
 import jakarta.activation.DataSource;
+import jakarta.annotation.Resource;
 import org.quartz.Scheduler;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -38,10 +38,10 @@ import java.util.Properties;
 public class QuartzConfig implements ApplicationRunner {
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
         // 任务初始化
         String openCluster = env.getProperty("quartz.open-cluster");
-        if (StringUtils.isEmpty(openCluster) || !Boolean.valueOf(openCluster)) {
+        if (StringUtils.isEmpty(openCluster) || !Boolean.parseBoolean(openCluster)) {
             Map<String, QuartzInitCallback> quartzInitCallbackBeans = SpringContextHolder.getApplicationContext().getBeansOfType(QuartzInitCallback.class);
             for (QuartzInitCallback quartzInitCallback : quartzInitCallbackBeans.values()) {
                 try {
@@ -53,13 +53,12 @@ public class QuartzConfig implements ApplicationRunner {
         }
     }
 
-    @Autowired
+    @Resource
     private Environment env;
 
     @Bean
     public QuartzManager quartzManager() {
-        QuartzManager quartzManager = new QuartzManager();
-        return quartzManager;
+        return new QuartzManager();
     }
 
     @Bean
@@ -68,14 +67,12 @@ public class QuartzConfig implements ApplicationRunner {
     public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) throws IOException {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         String dataSourceBean = env.getProperty("quartz.data-source");
-        if (StringUtils.isEmpty(dataSourceBean) || dataSourceBean.equals("default")) {
+        if (StringUtils.isEmpty(dataSourceBean) || "default".equals(dataSourceBean)) {
             schedulerFactoryBean.setDataSource((javax.sql.DataSource) dataSource);
-        } else {
-           /* dataSource = SpringContextHolder.getBean(dataSourceBean);
+        }  /* dataSource = SpringContextHolder.getBean(dataSourceBean);
             if (dataSource != null) {
                 schedulerFactoryBean.setDataSource(dataSource);
             }*/
-        }
         schedulerFactoryBean.setQuartzProperties(quartzProperties());
         schedulerFactoryBean.setSchedulerName("windScheduler");
         // 启动时延期1秒开始任务
@@ -120,7 +117,7 @@ public class QuartzConfig implements ApplicationRunner {
      */
     @Bean
     @ConditionalOnProperty(name = "quartz.open-cluster", havingValue = "true")
-    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) throws IOException {
+    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) {
         return schedulerFactoryBean.getScheduler();
     }
 

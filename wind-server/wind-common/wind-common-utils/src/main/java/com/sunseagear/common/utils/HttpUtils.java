@@ -4,6 +4,7 @@ import com.sunseagear.common.utils.entity.RequestParams;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class HttpUtils {
@@ -24,7 +25,7 @@ public class HttpUtils {
     }
 
     //创建okHttpClient对象
-    private static OkHttpClient mOkHttpClient = new OkHttpClient().newBuilder()
+    private static final OkHttpClient mOkHttpClient = new OkHttpClient().newBuilder()
             .connectTimeout(60, TimeUnit.SECONDS)//设置超时时间
             .readTimeout(60, TimeUnit.SECONDS)//设置读取超时时间
             .writeTimeout(10, TimeUnit.SECONDS)//设置写入超时时间
@@ -48,7 +49,7 @@ public class HttpUtils {
     private static String execute(Request request) {
         try {
             Response response = mOkHttpClient.newCall(request).execute();
-            return response.body().string();
+            return Objects.requireNonNull(response.body()).string();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -23,11 +23,9 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
     }
 
     private List<Menu> getMenus(List<Menu> treeNodeList) {
-        List<Menu> menuListAll = list(new QueryWrapper());
+        List<Menu> menuListAll = list(new QueryWrapper<>());
         HashMap<String, Menu> menuHashMapAll = new HashMap<>();
-        menuListAll.forEach(menu -> {
-            menuHashMapAll.put(menu.getId().toString(), menu);
-        });
+        menuListAll.forEach(menu -> menuHashMapAll.put(menu.getId().toString(), menu));
         HashMap<String, Menu> menuHashMap = new HashMap<>();
         treeNodeList.forEach(treeNode -> {
             String parentIds = treeNode.getParentIds();
@@ -44,16 +42,8 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
             menuHashMap.put(treeNode.getId().toString(), menuHashMapAll.get(treeNode.getId().toString()));
 
         });
-        List<Menu> menuList = new ArrayList<>();
-        menuHashMap.values().forEach(item -> {
-            menuList.add(item);
-        });
-        menuList.sort(new Comparator<Menu>() {
-            @Override
-            public int compare(Menu o1, Menu o2) {
-                return o1.getSort() - o2.getSort();
-            }
-        });
+        List<Menu> menuList = new ArrayList<>(menuHashMap.values());
+        menuList.sort(Comparator.comparingInt(Menu::getSort));
         return menuList;
     }
 
@@ -97,12 +87,12 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
                                String[] permissions,
                                String[] permissionTitles, Boolean additional) {
         if (!additional) {
-            QueryWrapper<Menu> deleteEntityWrapper = new QueryWrapper();
+            QueryWrapper<Menu> deleteEntityWrapper = new QueryWrapper<>();
             deleteEntityWrapper.eq("parent_id", menuId);
             deleteEntityWrapper.eq("type", 3);
             delete(deleteEntityWrapper);
         }
-        QueryWrapper<Menu> countEntityWrapper = new QueryWrapper();
+        QueryWrapper<Menu> countEntityWrapper = new QueryWrapper<>();
         countEntityWrapper.eq("t.parent_id", menuId);
         countEntityWrapper.eq("t.type", 3);
 

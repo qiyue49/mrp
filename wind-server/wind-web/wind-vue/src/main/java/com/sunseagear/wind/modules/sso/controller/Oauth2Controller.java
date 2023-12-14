@@ -10,9 +10,9 @@ import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.LoginLogUtils;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,21 +38,19 @@ import java.util.Map;
 @RequestMapping("/sso/oauth2")
 public class Oauth2Controller {
 
-    @Autowired
+    @Resource
     private IOAuthService oAuthService;
-    @Autowired
+    @Resource
     private JWTHelper jwtHelper;
-    @Autowired
+    @Resource
     private DataRuleHandler dataRuleHandler;
 
-    @Autowired
+    @Resource
     private AuthenticationManager authenticationManager;
 
     /**
      * 登陆方法
      *
-     * @param request
-     * @return
      */
     @RequestMapping("/accessToken")
     @ResponseBody
@@ -134,9 +131,6 @@ public class Oauth2Controller {
     /**
      * 回收TOKEN
      *
-     * @param request
-     * @return
-     * @throws URISyntaxException
      */
     @RequestMapping("/revokeToken")
     @ResponseBody

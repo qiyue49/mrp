@@ -8,15 +8,13 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sys.entity.UserRole;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.utils.UserUtils;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -33,7 +31,7 @@ import java.util.List;
 @Log(title = "用户管理")
 public class UserRoleController extends BaseBeanController<UserRole> {
 
-    @Autowired
+    @Resource
     private IUserRoleService userRoleService;
 
 
@@ -52,9 +50,6 @@ public class UserRoleController extends BaseBeanController<UserRole> {
     /**
      * 新增关系
      *
-     * @param userId
-     * @param roleIds
-     * @return
      */
     @PostMapping("{userId}/insertByUserId")
     @Log(logType = LogType.INSERT)
@@ -66,16 +61,13 @@ public class UserRoleController extends BaseBeanController<UserRole> {
             userRole.setRoleId(roleId);
             userRoleService.insertByRoleId(userId, roleId);
         }
-        UserUtils.clearCache(UserUtils.get(userId));
+        UserUtils.clearCache(Objects.requireNonNull(UserUtils.get(userId)));
         return Response.ok("添加成功");
     }
 
     /**
      * 删除关系
      *
-     * @param userId
-     * @param roleIds
-     * @return
      */
     @PostMapping("{userId}/deleteByUserId")
     @Log(logType = LogType.DELETE)
@@ -85,7 +77,7 @@ public class UserRoleController extends BaseBeanController<UserRole> {
         queryWrapper.eq("user_id", userId);
         queryWrapper.in("role_id", roleIds);
         userRoleService.delete(queryWrapper);
-        UserUtils.clearCache(UserUtils.get(userId));
+        UserUtils.clearCache(Objects.requireNonNull(UserUtils.get(userId)));
         return Response.ok("删除成功");
     }
 

@@ -18,5 +18,5 @@ public interface EmailDao {
      * @description:响应
      * @return: void
      */
-    public void doResult(Long eventId, EmailData emailData, EmailResult emailResult);
+    void doResult(Long eventId, EmailData emailData, EmailResult emailResult);
 }

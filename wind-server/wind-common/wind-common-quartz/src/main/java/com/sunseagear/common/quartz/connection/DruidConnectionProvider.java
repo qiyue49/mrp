@@ -258,7 +258,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
         return datasource.getConnection();
     }
 
-    public void shutdown() throws SQLException {
+    public void shutdown() {
         datasource.close();
     }
 
@@ -268,7 +268,7 @@ public class DruidConnectionProvider implements ConnectionProvider {
             initialize(this.driver, this.URL, this.user, this.password, this.maxConnections,
                     DEFAULT_DB_MAX_CACHED_STATEMENTS_PER_CONNECTION, this.validationQuery, false, 50, 0);
         } catch (SchedulerException e) {
-
+            throw new RuntimeException(e);
         }
     }
 

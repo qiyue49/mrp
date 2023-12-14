@@ -61,9 +61,9 @@ mybatis-plus:
   type-aliases-package: com.sunseagear.wind.modules.*.entity
   global-config:
     db-config:
-      #主键类型 com.baomidou.mybatisplus.annotation.IdType";
+      #主键类型 com.baomidou.mybatisplus.annotation.IdType
       id-type: ASSIGN_ID
-      #字段策略 com.baomidou.mybatisplus.annotation.FieldStrategy"
+      #字段策略 com.baomidou.mybatisplus.annotation.FieldStrategy
       where-strategy: NOT_EMPTY
       insert-strategy: NOT_EMPTY
       update-strategy: IGNORED

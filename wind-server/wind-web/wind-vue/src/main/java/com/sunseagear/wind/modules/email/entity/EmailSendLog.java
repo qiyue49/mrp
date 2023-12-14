@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -20,6 +21,7 @@ import java.util.Date;
  * @copyright: 2018 www.sunseagear.com Inc. All rights reserved.
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("email_send_log")
 @SuppressWarnings("serial")

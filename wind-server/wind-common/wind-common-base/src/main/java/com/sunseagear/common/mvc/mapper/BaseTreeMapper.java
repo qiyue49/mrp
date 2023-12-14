@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface BaseTreeMapper<T> extends BaseMapper<T> {
     /**
-     * @param id
-     * @return
      * @title: selectByPrimaryKey
      * @description: 查找主键
      * @return: Menu
@@ -18,8 +16,6 @@ public interface BaseTreeMapper<T> extends BaseMapper<T> {
     T selectByTreeId(Serializable id);
 
     /**
-     * @param wrapper
-     * @return
      * @title: selectTreeList
      * @description: 查找列表
      * @return: List<T>
@@ -27,8 +23,6 @@ public interface BaseTreeMapper<T> extends BaseMapper<T> {
     List<T> selectTreeList(@Param("ew") Wrapper<T> wrapper);
 
     /**
-     * @param newParentIds
-     * @param oldParentIds
      * @title: updateSunTreeParentId
      * @description: 更新ParentIds
      * @return: void
@@ -36,8 +30,6 @@ public interface BaseTreeMapper<T> extends BaseMapper<T> {
     void updateSunTreeParentIds(@Param("newParentIds") String newParentIds, @Param("oldParentIds") String oldParentIds);
 
     /**
-     * @param parentIds
-     * @return
      * @title: selectTreeList
      * @description: 查找列表
      * @return: List<T>

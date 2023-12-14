@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import java.util.Date;
  * @copyright: 2018 www.sunseagear.com Inc. All rights reserved.
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_operation_log")
 @SuppressWarnings("serial")

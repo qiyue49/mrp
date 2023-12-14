@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class BaseBeanController<Entity extends Serializable> {
 
@@ -33,7 +34,7 @@ public abstract class BaseBeanController<Entity extends Serializable> {
     /**
      * 日志对象
      */
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     protected BaseBeanController() {
         this.entityClass = ReflectionUtils.getSuperGenericType(getClass());
@@ -43,7 +44,6 @@ public abstract class BaseBeanController<Entity extends Serializable> {
     /**
      * 初始化数据绑定
      *
-     * @param binder
      */
     @InitBinder
     void initBinder(ServletRequestDataBinder binder) {
@@ -57,7 +57,7 @@ public abstract class BaseBeanController<Entity extends Serializable> {
     }
 
     public Page getPage() {
-        String page = ServletUtils.getRequest().getParameter("page");
+        String page = Objects.requireNonNull(ServletUtils.getRequest()).getParameter("page");
         String limit = ServletUtils.getRequest().getParameter("limit");
         int pageInt = !StringUtils.isEmpty(page) ? Integer.parseInt(page) : 1;
         int limitInt = !StringUtils.isEmpty(limit) ? Integer.parseInt(limit) : 20;
@@ -67,12 +67,10 @@ public abstract class BaseBeanController<Entity extends Serializable> {
     /**
      * 共享的验证规则 验证失败返回true
      *
-     * @param entity
-     * @param result
      * @return boolean
      */
     protected boolean hasError(Entity entity, BindingResult result) {
-        Assert.notNull(entity);
+        Assert.notNull(entity, "entity不能为空");
         return result.hasErrors();
     }
 
@@ -89,24 +87,22 @@ public abstract class BaseBeanController<Entity extends Serializable> {
     }
 
     /**
-     * @param result
-     * @return
      * @title: errorMsg
      * @description: 错误信息组装
      * @return: String
      */
     protected String errorMsg(BindingResult result) {
-        String errorMsg = "";
+        StringBuilder errorMsg = new StringBuilder();
         if (result.getErrorCount() > 0) {
             List<ObjectError> objectErrorList = result.getAllErrors();
             for (ObjectError objectError : objectErrorList) {
                 String message = MessageUtils.getMessage(objectError.getCode(), objectError.getDefaultMessage(),
                         objectError.getArguments());
                 if (!StringUtils.isEmpty(message)) {
-                    errorMsg = errorMsg + message + "<br />";
+                    errorMsg.append(message).append("<br />");
                 }
             }
         }
-        return errorMsg;
+        return errorMsg.toString();
     }
 }

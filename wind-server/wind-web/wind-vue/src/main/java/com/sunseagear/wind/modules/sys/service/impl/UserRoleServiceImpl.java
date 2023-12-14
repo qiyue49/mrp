@@ -7,7 +7,7 @@ import com.sunseagear.wind.modules.sys.entity.UserRole;
 import com.sunseagear.wind.modules.sys.mapper.UserRoleMapper;
 import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("userRoleService")
 public class UserRoleServiceImpl extends CommonServiceImpl<UserRoleMapper, UserRole> implements IUserRoleService {
 
-    @Autowired
+    @Resource
     private IRoleService roleService;
 
     @Override

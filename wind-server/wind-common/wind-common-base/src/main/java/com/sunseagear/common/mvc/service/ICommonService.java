@@ -15,13 +15,13 @@ public interface ICommonService<T> extends IService<T> {
 
     void insertBatch(List<T> userRoleList);
 
-    boolean insertOrUpdate(T entity);
+    void insertOrUpdate(T entity);
 
     boolean insertOrUpdateBatch(List<T> list);
 
     boolean deleteById(Serializable id);
 
-    boolean delete(Wrapper<T> wrapper);
+    void delete(Wrapper<T> wrapper);
 
     void deleteBatchIds(List<Serializable> idList);
 

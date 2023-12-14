@@ -1,7 +1,7 @@
 package com.sunseagear.wind.security;
 
 import com.sunseagear.wind.common.helper.SysConfigHelper;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,9 +23,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SpringSecurityConfig {
 
-    @Autowired
+    @Resource
     com.sunseagear.wind.modules.sys.service.impl.UserDetailsService userDetailsService;
-    @Autowired
+    @Resource
     private JwtAuthFilter authFilter;
 
     @Bean
@@ -33,20 +34,21 @@ public class SpringSecurityConfig {
             try {
                 // 根据配置放行外部接口
                 if (Boolean.parseBoolean(SysConfigHelper.getInstance().getSysConfig("openAPI").getValue())) {
+                    // 放行接口目录
                     authorize.requestMatchers("/json/oss/**", "/json/**").permitAll();
                 }
                 // 放行资源目录
                 authorize.requestMatchers("/sso/oauth2/**", "/static/**", "/resources/**").permitAll()
                         // 其余的都需要权限校验
-                        .anyRequest().authenticated()
-                        .and()
-                        .sessionManagement()
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                        .and()
-                        .authenticationProvider(authenticationProvider())
-                        .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)
-                        // 防跨站请求伪造
-                        .csrf(csrf -> csrf.disable());
+                        .anyRequest().authenticated();
+                // Session管理
+                http.sessionManagement(sessionAuthenticationStrategy -> sessionAuthenticationStrategy.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // AuthenticationProvider设置
+                http.authenticationProvider(authenticationProvider());
+                // 添加Filter
+                http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class);
+                // 禁用跨站请求伪造防护
+                http.csrf(AbstractHttpConfigurer::disable);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }

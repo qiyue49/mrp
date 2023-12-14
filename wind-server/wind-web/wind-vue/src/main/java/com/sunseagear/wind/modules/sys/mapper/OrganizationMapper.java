@@ -10,8 +10,6 @@ import java.util.List;
 public interface OrganizationMapper extends BaseTreeMapper<Organization> {
 
     /**
-     * @param userId
-     * @return
      * @title: findListByUserId
      * @description: 通过用户查找组织机构
      * @return: List<Organization>

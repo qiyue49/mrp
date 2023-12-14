@@ -1,5 +1,7 @@
 package com.sunseagear.wind.modules.oss.model;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,20 +9,13 @@ import java.util.List;
 /**
  * 列表回掉
  */
+@Getter
 public class ReturnCatchimageListImage {
     private String state;//上传状态SUCCESS 一定要大写
-    private List<CatchImageItem> list = new ArrayList<CatchImageItem>();
-
-    public String getState() {
-        return state;
-    }
+    private List<CatchImageItem> list = new ArrayList<>();
 
     public void setState(String state) {
         this.state = state;
-    }
-
-    public List<CatchImageItem> getList() {
-        return list;
     }
 
     public void setList(List<CatchImageItem> list) {
@@ -32,7 +27,8 @@ public class ReturnCatchimageListImage {
         list.add(catchImageItem);
     }
 
-    public class CatchImageItem implements Serializable {
+    @Getter
+    public static class CatchImageItem implements Serializable {
         private String url;
         private String source;
         private String state;
@@ -47,24 +43,12 @@ public class ReturnCatchimageListImage {
             this.state = state;
         }
 
-        public String getUrl() {
-            return url;
-        }
-
         public void setUrl(String url) {
             this.url = url;
         }
 
-        public String getSource() {
-            return source;
-        }
-
         public void setSource(String source) {
             this.source = source;
-        }
-
-        public String getState() {
-            return state;
         }
 
         public void setState(String state) {

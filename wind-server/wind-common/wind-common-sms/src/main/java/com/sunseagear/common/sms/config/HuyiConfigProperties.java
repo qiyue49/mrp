@@ -1,6 +1,7 @@
 package com.sunseagear.common.sms.config;
 
 import com.sunseagear.common.utils.PropertiesUtil;
+import lombok.Getter;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -11,6 +12,7 @@ import com.sunseagear.common.utils.PropertiesUtil;
  * @description: 互易配置 * @date: 2018/4/26 9:39
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
+@Getter
 public class HuyiConfigProperties {
     public static final String DEFAULT_CONFIG_FILE = "huyi.sms.properties";
     //应用ID
@@ -35,16 +37,8 @@ public class HuyiConfigProperties {
         return smsConfigProperties;
     }
 
-    public String getAccountApiId() {
-        return accountApiId;
-    }
-
     public void setAccountApiId(String accountApiId) {
         this.accountApiId = accountApiId;
-    }
-
-    public String getAccountApiKey() {
-        return accountApiKey;
     }
 
     public void setAccountApiKey(String accountApiKey) {

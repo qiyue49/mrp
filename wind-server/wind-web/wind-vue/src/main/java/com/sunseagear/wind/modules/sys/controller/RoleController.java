@@ -16,14 +16,13 @@ import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,18 +46,16 @@ import java.util.Map;
 @Log(title = "角色管理")
 public class RoleController extends BaseBeanController<Role> {
 
-    @Autowired
+    @Resource
     private IRoleService roleService;
-    @Autowired
+    @Resource
     private IMenuService menuService;
-    @Autowired
+    @Resource
     private IRoleMenuService roleMenuService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
@@ -88,12 +85,11 @@ public class RoleController extends BaseBeanController<Role> {
     /**
      * 获取可用的用户列表
      *
-     * @throws IOException
      */
     @GetMapping(value = "usable/list")
     @PreAuthorize("hasAuthority('sys:role:list')")
-    public String usableLst() throws IOException {
-        QueryWrapper<Role> queryWrapper = new QueryWrapper<Role>();
+    public String usableLst() {
+        QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
         if (UserUtils.getUser().getTenantId().equals(TenantProperties.getInstance().getDefaultTenantId())) {
             queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         } else {
@@ -138,8 +134,6 @@ public class RoleController extends BaseBeanController<Role> {
     /**
      * 通过用户ID获得角色
      *
-     * @param uid
-     * @return
      */
     @PostMapping(value = "{uid}/findListByUserId")
     @PreAuthorize("hasAuthority('sys:role:list')")
@@ -159,8 +153,8 @@ public class RoleController extends BaseBeanController<Role> {
         Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (role.getCode().equals("admin")) {
-            QueryWrapper<Menu> queryWrapper = new QueryWrapper<Menu>();
+        if ("admin".equals(role.getCode())) {
+            QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("sort").ne("type", Menu.BUTTON);
             treeNodeList = menuService.selectList(queryWrapper);
         } else {
@@ -184,7 +178,7 @@ public class RoleController extends BaseBeanController<Role> {
         Role role = roleService.getById(roleId);
         Map<String, Object> dataMap = new HashMap<>();
         List<Menu> treeNodeList;
-        if (role.getCode().equals("admin")) {
+        if ("admin".equals(role.getCode())) {
             QueryWrapper<Menu> queryWrapper = new QueryWrapper<>();
             queryWrapper.orderByAsc("sort");
             treeNodeList = menuService.selectList(queryWrapper);

@@ -27,8 +27,8 @@ import java.util.List;
 public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper, ScheduleJob>
         implements IScheduleJobService, QuartzInitCallback {
 
-    //    @Autowired
-    private QuartzManager quartzManager = new QuartzManager();
+    //    @Resource
+    private final QuartzManager quartzManager = new QuartzManager();
 
     @Override
     public void updateCron(Long jobId) {
@@ -83,7 +83,7 @@ public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper,
     public void initSchedule() {
         try {
             // 这里获取任务信息数据
-            List<ScheduleJob> jobList = selectList(new QueryWrapper<ScheduleJob>());
+            List<ScheduleJob> jobList = selectList(new QueryWrapper<>());
             for (ScheduleJob scheduleJob : jobList) {
                 quartzManager.addJob(ScheduleJobUtils.entityToData(scheduleJob));
             }

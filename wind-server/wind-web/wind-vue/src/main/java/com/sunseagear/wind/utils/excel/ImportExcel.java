@@ -44,7 +44,7 @@ import java.util.List;
  */
 public class ImportExcel {
 
-    private static Logger log = LoggerFactory.getLogger(ImportExcel.class);
+    private static final Logger log = LoggerFactory.getLogger(ImportExcel.class);
 
     /**
      * 工作薄对象
@@ -107,11 +107,10 @@ public class ImportExcel {
      * @param file       导入文件对象
      * @param headerNum  标题行号，数据行号=标题行号+1
      * @param sheetIndex 工作表编号
-     * @throws InvalidFormatException
      * @throws IOException
      */
     public ImportExcel(File file, int headerNum, int sheetIndex)
-            throws InvalidFormatException, IOException {
+            throws IOException {
         this(file.getName(), new FileInputStream(file), headerNum, sheetIndex);
     }
 
@@ -121,11 +120,10 @@ public class ImportExcel {
      * @param multipartFile 导入文件对象
      * @param headerNum     标题行号，数据行号=标题行号+1
      * @param sheetIndex    工作表编号
-     * @throws InvalidFormatException
      * @throws IOException
      */
     public ImportExcel(MultipartFile multipartFile, int headerNum, int sheetIndex)
-            throws InvalidFormatException, IOException {
+            throws IOException {
         this(multipartFile.getOriginalFilename(), multipartFile.getInputStream(), headerNum, sheetIndex);
     }
 
@@ -135,11 +133,10 @@ public class ImportExcel {
      * @param fileName   导入文件对象
      * @param headerNum  标题行号，数据行号=标题行号+1
      * @param sheetIndex 工作表编号
-     * @throws InvalidFormatException
      * @throws IOException
      */
     public ImportExcel(String fileName, InputStream is, int headerNum, int sheetIndex)
-            throws InvalidFormatException, IOException {
+            throws IOException {
         if (StringUtils.isBlank(fileName)) {
             throw new RuntimeException("导入文档为空!");
         } else if (fileName.toLowerCase().endsWith("xls")) {

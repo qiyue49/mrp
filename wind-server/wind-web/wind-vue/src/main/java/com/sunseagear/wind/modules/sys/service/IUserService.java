@@ -16,41 +16,30 @@ public interface IUserService extends ICommonService<User> {
     /**
      * 修改密码
      *
-     * @param userId
-     * @param newPassword
      */
     void changePassword(Long userId, String newPassword);
 
     /**
      * 根据用户名查找用户
      *
-     * @param username
-     * @return
      */
-    public User findByUsername(String username);
+    User findByUsername(String username);
 
     /**
      * 根据Email查找用户
      *
-     * @param email
-     * @return
      */
     User findByEmail(String email);
 
     /**
      * 根据Email查找用户
      *
-     * @param phone
-     * @return
      */
     User findByPhone(String phone);
 
     /**
      * 检查密码
      *
-     * @param userId
-     * @param password
-     * @return
      */
     Boolean checkPassword(Long userId, String password);
 

@@ -10,6 +10,7 @@ import com.sunseagear.common.http.Response;
 import com.sunseagear.common.mvc.entity.DataEntity;
 import com.sunseagear.common.utils.StringUtils;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
  * @Description:
  * @date 2016-12-03 21:31:50
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_user")
 @SuppressWarnings("serial")
@@ -43,7 +45,7 @@ public class User extends DataEntity<Long> {
     @Excel(name = "用户名", orderNum = "1")
     private String username;
     // 用户名
-    @Excel(name = "姓名", orderNum = "0")
+    @Excel(name = "姓名")
     private String realname;
     // 头像
     @JsonAdapter(Response.ContextUrlAdapter.class)
@@ -90,9 +92,7 @@ public class User extends DataEntity<Long> {
 
     public String findRoleIds() {
         List<Long> roleIds = new ArrayList<>();
-        roles.forEach(item -> {
-            roleIds.add(item.getId());
-        });
+        roles.forEach(item -> roleIds.add(item.getId()));
         return StringUtils.join(roleIds, ",");
     }
 }

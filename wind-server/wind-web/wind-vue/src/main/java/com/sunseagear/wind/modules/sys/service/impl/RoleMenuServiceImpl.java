@@ -9,7 +9,7 @@ import com.sunseagear.wind.modules.sys.mapper.MenuMapper;
 import com.sunseagear.wind.modules.sys.mapper.RoleMenuMapper;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @Service("roleMenuService")
 public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleMenu> implements IRoleMenuService {
 
-    @Autowired
+    @Resource
     private MenuMapper menuMapper;
 
     @Override
@@ -32,11 +32,9 @@ public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleM
 
     private void setRoleMenu(Long roleId, String menuIds, String type) {
         if (!StringUtils.isEmpty(menuIds)) {
-            List<Menu> menuListAll = menuMapper.selectList(new QueryWrapper());
+            List<Menu> menuListAll = menuMapper.selectList(new QueryWrapper<>());
             HashMap<String, Menu> menuHashMapAll = new HashMap<>();
-            menuListAll.forEach(menu -> {
-                menuHashMapAll.put(menu.getId().toString(), menu);
-            });
+            menuListAll.forEach(menu -> menuHashMapAll.put(menu.getId().toString(), menu));
 
             String[] selectMenus = menuIds.split(",");
             List<RoleMenu> roleMenuList = new ArrayList<>();

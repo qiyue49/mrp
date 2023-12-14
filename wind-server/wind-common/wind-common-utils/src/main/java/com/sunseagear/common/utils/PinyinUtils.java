@@ -17,7 +17,9 @@ public class PinyinUtils {
                 tempPinyin = pinyin == null ? null : pinyin[0];
                 if (tempPinyin == null) {
                     sb.append(str.charAt(i));
-                } else sb.append(tempPinyin);
+                } else {
+                    sb.append(tempPinyin);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,18 +31,18 @@ public class PinyinUtils {
     }
 
     public static String getPinYinHeadChar(String str) {
-        String convert = "";
+        StringBuilder convert = new StringBuilder();
         for (int j = 0; j < str.length(); j++) {
             char word = str.charAt(j);
 
             String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
-            if (pinyinArray != null)
-                convert = convert + pinyinArray[0].charAt(0);
-            else {
-                convert = convert + word;
+            if (pinyinArray != null) {
+                convert.append(pinyinArray[0].charAt(0));
+            } else {
+                convert.append(word);
             }
         }
-        return convert.toUpperCase();
+        return convert.toString().toUpperCase();
     }
 
     static {

@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.email.service;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +21,6 @@ public interface IEmailSendService {
 
     void send(Long eventId, String[] emails, String code, Map<String, Object> datas);
 
-    boolean retrySend(List<Long> idList);
+    void retrySend(List<Long> idList);
 
 }

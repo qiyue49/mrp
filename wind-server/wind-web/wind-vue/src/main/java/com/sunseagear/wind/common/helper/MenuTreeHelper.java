@@ -18,17 +18,14 @@ public class MenuTreeHelper implements Serializable {
 
 
     public static MenuTreeHelper create() {
-        MenuTreeHelper treeSortUtil = new MenuTreeHelper();
-        return treeSortUtil;
+        return new MenuTreeHelper();
     }
 
 
     public List<MenuTreeNode> sort(List<Menu> treeNodes) {
         List<MenuTreeNode> treeNodeList = new ArrayList<>();
         HashMap<Long, MenuTreeNode> treeEntityHashMap = new HashMap<>();
-        treeNodes.forEach(item -> {
-            treeEntityHashMap.put(item.getId(), new MenuTreeNode(item));
-        });
+        treeNodes.forEach(item -> treeEntityHashMap.put(item.getId(), new MenuTreeNode(item)));
         treeNodes.forEach(item -> {
             MenuTreeNode menuTreeNode = treeEntityHashMap.get(item.getId());
             if (item.getParentId() != null

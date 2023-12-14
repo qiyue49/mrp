@@ -22,7 +22,6 @@ public interface ISmsSendLogService extends ICommonService<SmsSendLog> {
      * </p>
      *
      * @param idList 主键ID列表
-     * @return boolean
      */
-    boolean retrySend(List<? extends Serializable> idList);
+    void retrySend(List<? extends Serializable> idList);
 }

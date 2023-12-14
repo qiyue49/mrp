@@ -3,7 +3,6 @@ package com.sunseagear.wind.modules.task.service;
 
 import com.sunseagear.common.mvc.service.ICommonService;
 import com.sunseagear.wind.modules.task.entity.ScheduleJob;
-import org.quartz.SchedulerException;
 
 /**
  * @version V1.0
@@ -13,7 +12,6 @@ import org.quartz.SchedulerException;
  */
 public interface IScheduleJobService extends ICommonService<ScheduleJob> {
     /**
-     * @throws SchedulerException
      * @title: initSchedule
      * @description: 初始化任务
      * @return: void
@@ -23,28 +21,24 @@ public interface IScheduleJobService extends ICommonService<ScheduleJob> {
     /**
      * 更改状态
      *
-     * @throws SchedulerException
      */
     void changeStatus(Long jobId, String cmd);
 
     /**
      * 更改任务 cron表达式
      *
-     * @throws SchedulerException
      */
     void updateCron(Long jobId);
 
     /**
      * 执行一次
      *
-     * @throws SchedulerException
      */
     void runAJobNow(Long jobId);
 
     /**
      * 刷新任务
      *
-     * @throws SchedulerException
      */
     void refreshTask();
 }

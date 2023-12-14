@@ -2,6 +2,7 @@ package com.sunseagear.wind;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan({"com.sunseagear.common.datarule.config", "com.sunseagear.common.tenant", "com.sunseagear.common.quartz.config", "com.sunseagear.common.oss", "com.sunseagear.common.sms", "com.sunseagear.wind"})
 @SpringBootApplication
+@EnableConfigurationProperties
 public class VueWebBootApplication {
     public static void main(String[] args) {
         SpringApplication.run(VueWebBootApplication.class, args);

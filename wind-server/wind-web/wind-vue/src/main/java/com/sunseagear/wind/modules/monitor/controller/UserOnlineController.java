@@ -7,12 +7,10 @@ import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 /**
  * @version V1.0
@@ -26,20 +24,19 @@ import java.io.IOException;
 @Log(title = "在线用户")
 public class UserOnlineController extends BaseBeanController<Principal> {
 
-    @Autowired
+    @Resource
     private IOAuthService oAuthService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @throws IOException
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('monitor:user:online:list')")
     public String list(HttpServletRequest request) {
         // 预处理
-        Page pageBean = oAuthService.activePrincipal(getPage(), request);
+        Page<Principal> pageBean = oAuthService.activePrincipal(getPage(), request);
         return Response.successPageJson(pageBean);
     }
 

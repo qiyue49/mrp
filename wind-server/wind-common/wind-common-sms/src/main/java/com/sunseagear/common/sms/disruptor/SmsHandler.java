@@ -14,8 +14,8 @@ import com.sunseagear.common.sms.data.SmsResult;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 public class SmsHandler implements WorkHandler<SmsEvent> {
-    private ISmsClient smsClient;
-    private SmsDao smsDao;
+    private final ISmsClient smsClient;
+    private final SmsDao smsDao;
 
     public SmsHandler(ISmsClient smsClient, SmsDao smsDao) {
         this.smsClient = smsClient;

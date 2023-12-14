@@ -70,6 +70,7 @@ export default {
       immediate: true,
       handler(val) {
         this.imageList = []
+        this.noneBtnImg = false
         if (this.isNull(val)) {
           return
         }

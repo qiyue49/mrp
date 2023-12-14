@@ -5,7 +5,6 @@ import com.sunseagear.common.quartz.constant.ScheduleConstants;
 import com.sunseagear.common.quartz.data.ScheduleJob;
 import com.sunseagear.common.utils.SpringContextHolder;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.QuartzJobBean;
@@ -20,10 +19,10 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 public class QuartzJobFactory extends QuartzJobBean {
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    protected void executeInternal(JobExecutionContext context) throws JobExecutionException {
+    protected void executeInternal(JobExecutionContext context) {
         ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
         QuartzExecuteCallback quartzExecuteCallback = SpringContextHolder.getBean(QuartzExecuteCallback.class);
         long startTime = System.currentTimeMillis();

@@ -10,8 +10,6 @@ import java.util.List;
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {
     /**
-     * @param userId
-     * @return
      * @title: findRoleByUserId
      * @description: 通过用户查找角色
      * @return: List<Role>

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @version V1.0
@@ -13,6 +14,7 @@ import lombok.Data;
  * @Description:
  * @date 2017-02-21 12:54:43
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_role_menu")
 @SuppressWarnings("serial")

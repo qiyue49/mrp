@@ -7,7 +7,7 @@ import com.sunseagear.wind.modules.sys.entity.DictGroup;
 import com.sunseagear.wind.modules.sys.mapper.DictGroupMapper;
 import com.sunseagear.wind.modules.sys.service.IDictGroupService;
 import com.sunseagear.wind.modules.sys.service.IDictService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +17,7 @@ import java.util.List;
 @Transactional
 @Service("dictGroupService")
 public class DictGroupServiceImpl extends CommonServiceImpl<DictGroupMapper, DictGroup> implements IDictGroupService {
-    @Autowired
+    @Resource
     private IDictService dictService;
 
     @Override

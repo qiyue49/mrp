@@ -1,6 +1,7 @@
 package com.sunseagear.wind.utils;
 
 import org.apache.commons.codec.binary.Base64;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -18,6 +19,7 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
         this.header = header.split(";")[0];
     }
 
+    @NotNull
     @Override
     public String getName() {
         // TODO - implementation depends on your requirements
@@ -27,7 +29,7 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
     @Override
     public String getOriginalFilename() {
         // TODO - implementation depends on your requirements
-        return System.currentTimeMillis() + (int) Math.random() * 10000 + "." + header.split("/")[1];
+        return System.currentTimeMillis() + (int) (Math.random() * 10000) + "." + header.split("/")[1];
     }
 
     @Override
@@ -46,36 +48,36 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
         return imgContent.length;
     }
 
+    @NotNull
     @Override
-    public byte[] getBytes() throws IOException {
+    public byte[] getBytes() {
         return imgContent;
     }
 
+    @NotNull
     @Override
-    public InputStream getInputStream() throws IOException {
+    public InputStream getInputStream() {
         return new ByteArrayInputStream(imgContent);
     }
 
     @Override
-    public void transferTo(File dest) throws IOException, IllegalStateException {
+    public void transferTo(@NotNull File dest) throws IOException, IllegalStateException {
         new FileOutputStream(dest).write(imgContent);
     }
 
     /**
      * base64转MultipartFile文件
      *
-     * @param base64
-     * @return
      */
     public static MultipartFile base64ToMultipart(String base64) {
         String[] baseStrs = base64.split(",");
 
         Base64 decoder = new Base64();
-        byte[] b = decoder.decodeBase64(baseStrs[1]);
+        byte[] b = Base64.decodeBase64(baseStrs[1]);
 
         for (int i = 0; i < b.length; ++i) {
             if (b[i] < 0) {
-                b[i] += 256;
+                b[i] += (byte) 256;
             }
         }
 

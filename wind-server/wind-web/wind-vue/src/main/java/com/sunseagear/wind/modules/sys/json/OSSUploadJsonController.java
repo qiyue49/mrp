@@ -9,13 +9,14 @@ import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.common.helper.AttachmentHelper;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import com.sunseagear.wind.utils.BASE64DecodedMultipartFile;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.fileupload.FileUploadBase;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -31,15 +32,13 @@ import java.io.IOException;
 @RequestMapping("json/oss")
 public class OSSUploadJsonController {
 
-    @Autowired
+    @Resource
     private IAttachmentService attachmentService;
 
-    @Autowired
+    @Resource
     private AttachmentHelper attachmentHelper;
 
     /**
-     * @param request,file,directory
-     * @return
      * @title: ajaxUpload
      * @description: 文件上传
      * @return: AjaxUploadResponse
@@ -48,13 +47,8 @@ public class OSSUploadJsonController {
     public String upload(HttpServletRequest request, MultipartFile[] file, @RequestParam(required = false, defaultValue = "") String dir) {
         try {
             return Response.successJson((Object) attachmentHelper.upload(request, file, dir));
-        } catch (IOException e) {
-            return Response.error(MessageUtils.getMessage("upload.server.error"));
-        } catch (InvalidExtensionException e) {
-            return Response.error(MessageUtils.getMessage("upload.server.error"));
-        } catch (FileUploadBase.FileSizeLimitExceededException e) {
-            return Response.error(MessageUtils.getMessage("upload.server.error"));
-        } catch (FileNameLengthLimitExceededException e) {
+        } catch (IOException | FileNameLengthLimitExceededException | FileUploadBase.FileSizeLimitExceededException |
+                 InvalidExtensionException e) {
             return Response.error(MessageUtils.getMessage("upload.server.error"));
         }
     }
@@ -63,7 +57,7 @@ public class OSSUploadJsonController {
     public String uploadImg(MultipartFile file) {
 
         String fileType = file.getOriginalFilename();
-        fileType = FileUtils.getFileType(fileType).toLowerCase();
+        fileType = Objects.requireNonNull(FileUtils.getFileType(fileType)).toLowerCase();
         String base64 = FileUtils.fileToBase64(file);
         if (base64 == null) {
             Response.error("转换失败");
@@ -80,13 +74,8 @@ public class OSSUploadJsonController {
             try {
                 MultipartFile[] array = {multipartFile};
                 return Response.successJson((Object) attachmentHelper.upload(request, array, dir));
-            } catch (IOException e) {
-                return Response.error(MessageUtils.getMessage("upload.server.error"));
-            } catch (InvalidExtensionException e) {
-                return Response.error(MessageUtils.getMessage("upload.server.error"));
-            } catch (FileUploadBase.FileSizeLimitExceededException e) {
-                return Response.error(MessageUtils.getMessage("upload.server.error"));
-            } catch (FileNameLengthLimitExceededException e) {
+            } catch (IOException | FileNameLengthLimitExceededException |
+                     FileUploadBase.FileSizeLimitExceededException | InvalidExtensionException e) {
                 return Response.error(MessageUtils.getMessage("upload.server.error"));
             }
         } else {

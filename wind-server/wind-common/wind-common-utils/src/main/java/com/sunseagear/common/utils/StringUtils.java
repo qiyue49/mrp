@@ -17,8 +17,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 转换为字节数组
      *
-     * @param str
-     * @return
      */
     public static byte[] getBytes(String str) {
         if (str != null) {
@@ -38,7 +36,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         if (Character.isLowerCase(s.charAt(0))) {
             return s;
         } else {
-            return (new StringBuilder()).append(Character.toLowerCase(s.charAt(0))).append(s.substring(1)).toString();
+            return Character.toLowerCase(s.charAt(0)) + s.substring(1);
         }
     }
 
@@ -48,30 +46,23 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         if (Character.isUpperCase(s.charAt(0))) {
             return s;
         } else {
-            return (new StringBuilder()).append(Character.toUpperCase(s.charAt(0))).append(s.substring(1)).toString();
+            return Character.toUpperCase(s.charAt(0)) + s.substring(1);
         }
     }
 
     /**
      * 判断是否是空字符串 null和"" 都返回 true
      *
-     * @param s
-     * @return
      * @author Robin Chang
      */
     public static boolean isEmpty(String s) {
-        if (s != null && !s.equals("")) {
-            return false;
-        }
-        return true;
+        return s == null || s.isEmpty();
     }
 
 
     /**
      * 判断是否为数字
      *
-     * @param str
-     * @return
      * @Title: isNumeric
      * @Description: 判断是否为数字
      * @return: boolean
@@ -86,14 +77,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * @param param
-     * @return
      * @title: camelToUnderline
      * @description: 驼峰转下划线
      * @return: String
      */
     public static String camelToUnderline(String param) {
-        if (param == null || "".equals(param.trim())) {
+        if (param == null || param.trim().isEmpty()) {
             return "";
         }
         int len = param.length();
@@ -111,14 +100,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * @param param
-     * @return
      * @title: underlineToCamel
      * @description:下划线转驼峰
      * @return: String
      */
     public static String underlineToCamel(String param) {
-        if (param == null || "".equals(param.trim())) {
+        if (param == null || param.trim().isEmpty()) {
             return "";
         }
         int len = param.length();
@@ -137,14 +124,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * @param param
-     * @return
      * @title: camelToUnderline
      * @description: 驼峰转下划线
      * @return: String
      */
     public static String camelToStrikethrough(String param) {
-        if (param == null || "".equals(param.trim())) {
+        if (param == null || param.trim().isEmpty()) {
             return "";
         }
         int len = param.length();
@@ -162,14 +147,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * @param param
-     * @return
      * @title: underlineToCamel
      * @description:下划线转驼峰
      * @return: String
      */
     public static String strikethroughToCamel(String param) {
-        if (param == null || "".equals(param.trim())) {
+        if (param == null || param.trim().isEmpty()) {
             return "";
         }
         int len = param.length();
@@ -204,12 +187,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     public static String bytesToHexString2(byte[] src) {
-        StringBuilder stringBuilder = new StringBuilder("");
-        if (src == null || src.length <= 0) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (src == null || src.length == 0) {
             return null;
         }
-        for (int i = 0; i < src.length; i++) {
-            int v = src[i] & 0xFF;
+        for (byte b : src) {
+            int v = b & 0xFF;
             String hv = Integer.toHexString(v);
             if (hv.length() < 2) {
                 stringBuilder.append(0);
@@ -222,8 +205,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     private static String bytesToHexString(byte[] bytes) {
         // http://stackoverflow.com/questions/332079
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < bytes.length; i++) {
-            String hex = Integer.toHexString(0xFF & bytes[i]);
+        for (byte aByte : bytes) {
+            String hex = Integer.toHexString(0xFF & aByte);
             if (hex.length() == 1) {
                 sb.append('0');
             }
@@ -233,14 +216,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * @param filename
-     * @return
      * @title: getExtensionName
      * @description: Java文件操作 获取文件扩展名
      * @return: String
      */
     public static String getExtensionName(String filename) {
-        if ((filename != null) && (filename.length() > 0)) {
+        if ((filename != null) && (!filename.isEmpty())) {
             int dot = filename.lastIndexOf('.');
             if ((dot > -1) && (dot < (filename.length() - 1))) {
                 return filename.substring(dot + 1);
@@ -250,16 +231,14 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * @param filename
-     * @return
      * @title: getFileNameNoEx
      * @description: Java文件操作 获取不带扩展名的文件名
      * @return: String
      */
     public static String getFileNameNoEx(String filename) {
-        if ((filename != null) && (filename.length() > 0)) {
+        if ((filename != null) && (!filename.isEmpty())) {
             int dot = filename.lastIndexOf('.');
-            if ((dot > -1) && (dot < (filename.length()))) {
+            if (dot > -1) {
                 return filename.substring(0, dot);
             }
         }
@@ -274,7 +253,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static String randomString(int length) { //length表示生成字符串的长度
         String base = "abcdefghijklmnopqrstuvwxyz0123456789";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = random.nextInt(base.length());
             sb.append(base.charAt(number));
@@ -285,7 +264,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     public static String randomNumber(int length) { //length表示生成字符串的长度
         String base = "0123456789";
         Random random = new Random();
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i++) {
             int number = random.nextInt(base.length());
             sb.append(base.charAt(number));
@@ -294,15 +273,12 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     public static boolean isNumericAndDot(String str) {
-        if (str == null || str.trim().equals("")) {
+        if (str == null || str.trim().isEmpty()) {
             return false;
         }
         Pattern pattern = Pattern.compile("-?[0-9]+.?[0-9]*([Ee]{1}[0-9]+)?");
         Matcher isNum = pattern.matcher(str);
-        if (!isNum.matches()) {
-            return false;
-        }
-        return true;
+        return isNum.matches();
     }
 
     /**
@@ -331,7 +307,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      *
      * @param str    目标字符串
      * @param length 截取长度
-     * @return
      */
     public static String abbr(String str, int length) {
         if (str == null) {
@@ -366,8 +341,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         String regEx = "<.+?>";
         Pattern p = Pattern.compile(regEx);
         Matcher m = p.matcher(html);
-        String s = m.replaceAll("");
-        return s;
+        return m.replaceAll("");
     }
 
     public static <T> String toFormatterValue(List<T> datas, String label, String value) {
@@ -388,8 +362,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 转换为字节数组
      *
-     * @param bytes
-     * @return
      */
     public static String toString(byte[] bytes) {
         try {
@@ -400,10 +372,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 判断字符串是否是乱码
+     * 判断字符串是否乱码
      *
      * @param strName 字符串
-     * @return 是否是乱码
+     * @return 是否乱码
      */
     public static boolean isMessyCode(String strName) {
         try {
@@ -412,12 +384,11 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
             String after = m.replaceAll("");
             String temp = after.replaceAll("\\p{P}", "");
             char[] ch = temp.trim().toCharArray();
-            int length = (ch != null) ? ch.length : 0;
-            for (int i = 0; i < length; i++) {
-                char c = ch[i];
+            int length = ch.length;
+            for (char c : ch) {
                 if (!Character.isLetterOrDigit(c)) {
-                    String str = "" + ch[i];
-                    if (!str.matches("[\u4e00-\u9fa5]+")) {
+                    String str = "" + c;
+                    if (!str.matches("[一-龥]+")) {
                         return true;
                     }
                 }
@@ -431,12 +402,10 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 去掉前面的下划线
      *
-     * @param filename
-     * @return
      */
     public static String trimDiagonal(String filename) {
         if (filename.startsWith("/")) {
-            filename = filename.substring(1, filename.length());
+            filename = filename.substring(1);
             //下一次
             return trimDiagonal(filename);
         } else {

@@ -10,10 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.List;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -25,10 +23,8 @@ import java.util.zip.ZipOutputStream;
  */
 public class FileUtils extends org.apache.commons.io.FileUtils {
 
-    protected static Logger logger = LoggerFactory.getLogger(FileUtils.class);
+    protected static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
-    // 验证字符串是否为正确路径名的正则表达式
-    private static String matches = "[A-Za-z]:\\\\[^:?\"><*]*";
     boolean flag = false;
     File file;
     private static final String[] IMAGES_SUFFIXES = {"bmp", "jpg", "jpeg", "gif", "png", "tiff"};
@@ -36,19 +32,16 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     /**
      * 传入路径，返回是否是绝对路径，是绝对路径返回true，反之
      *
-     * @param path
-     * @return
      * @since 2015年4月21日
      */
     public static boolean isAbsolutePath(String path) {
-        if (path.startsWith("/") || path.indexOf(":") > 0) {
-            return true;
-        }
-        return false;
+        return path.startsWith("/") || path.indexOf(":") > 0;
     }
 
     public boolean deleteFolder(String deletePath) {// 根据路径删除指定的目录或文件，无论存在与否
         flag = false;
+        // 验证字符串是否为正确路径名的正则表达式
+        String matches = "[A-Za-z]:\\\\[^:?\"><*]*";
         if (deletePath.matches(matches)) {
             file = new File(deletePath);
             if (!file.exists()) {// 判断目录或文件是否存在
@@ -89,58 +82,54 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         }
         flag = true;
         File[] files = dirFile.listFiles();// 获得传入路径下的所有文件
-        for (int i = 0; i < files.length; i++) {// 循环遍历删除文件夹下的所有文件(包括子目录)
-            if (files[i].isFile()) {// 删除子文件
-                flag = deleteFile(files[i].getAbsolutePath());
+        for (File value : Objects.requireNonNull(files)) {// 循环遍历删除文件夹下的所有文件(包括子目录)
+            if (value.isFile()) {// 删除子文件
+                flag = deleteFile(value.getAbsolutePath());
                 //System.out.println(files[i].getAbsolutePath() + " 删除成功");
-                if (!flag)
+                if (!flag) {
                     break;// 如果删除失败，则跳出
+                }
             } else {// 运用递归，删除子目录
-                flag = deleteDirectory(files[i].getAbsolutePath());
-                if (!flag)
+                flag = deleteDirectory(value.getAbsolutePath());
+                if (!flag) {
                     break;// 如果删除失败，则跳出
+                }
             }
         }
-        if (!flag)
-            return false;
-        if (dirFile.delete()) {// 删除当前目录
-            return true;
-        } else {
+        if (!flag) {
             return false;
         }
+        // 删除当前目录
+        return dirFile.delete();
     }
 
     // 创建单个文件
-    public static boolean createFile(String filePath) {
+    public static void createFile(String filePath) {
         File file = new File(filePath);
         if (file.exists()) {// 判断文件是否存在
             //System.out.println("目标文件已存在" + filePath);
-            return false;
+            return;
         }
         if (filePath.endsWith(File.separator)) {// 判断文件是否为目录
             //System.out.println("目标文件不能为目录！");
-            return false;
+            return;
         }
         if (!file.getParentFile().exists()) {// 判断目标文件所在的目录是否存在
             // 如果目标文件所在的文件夹不存在，则创建父文件夹
             //System.out.println("目标文件所在目录不存在，准备创建它！");
             if (!file.getParentFile().mkdirs()) {// 判断创建目录是否成功
                 //System.out.println("创建目标文件所在的目录失败！");
-                return false;
+                return;
             }
         }
         try {
-            if (file.createNewFile()) {// 创建目标文件
-                //System.out.println("创建文件成功:" + filePath);
-                return true;
-            } else {
-                //System.out.println("创建文件失败！");
-                return false;
-            }
+            // 创建目标文件
+            //System.out.println("创建文件成功:" + filePath);
+            //System.out.println("创建文件失败！");
+            file.createNewFile();
         } catch (IOException e) {// 捕获异常
             e.printStackTrace();
             //System.out.println("创建文件失败！" + e.getMessage());
-            return false;
         }
     }
 
@@ -182,7 +171,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      *
      * @param filePath 完整的文件路径
      * @param mkdir    是否创建相关的文件夹
-     * @throws Exception
      */
     public static void mkFile(String filePath, boolean mkdir) throws Exception {
         File file = new File(filePath);
@@ -238,13 +226,13 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             if (file.isFile()) {
                 return file.delete();
             } else if (file.isDirectory()) {
-                if (file.listFiles().length == 0) {
+                if (Objects.requireNonNull(file.listFiles()).length == 0) {
                     return file.delete();
                 } else {
-                    int zfiles = file.listFiles().length;
+                    int zfiles = Objects.requireNonNull(file.listFiles()).length;
                     File[] delfile = file.listFiles();
                     for (int i = 0; i < zfiles; i++) {
-                        if (delfile[i].isDirectory()) {
+                        if (Objects.requireNonNull(delfile)[i].isDirectory()) {
                             delDir(delfile[i].getAbsolutePath(), true);
                         }
                         delfile[i].delete();
@@ -265,7 +253,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @param source   源文件（夹）
      * @param target   目标文件（夹）
      * @param isFolder 若进行文件夹复制，则为True；反之为False
-     * @throws Exception
      */
     public static void copy(String source, String target, boolean isFolder) throws Exception {
         if (isFolder) {
@@ -273,15 +260,15 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             File a = new File(source);
             String[] file = a.list();
             File temp = null;
-            for (int i = 0; i < file.length; i++) {
+            for (String s : Objects.requireNonNull(file)) {
                 if (source.endsWith(File.separator)) {
-                    temp = new File(source + file[i]);
+                    temp = new File(source + s);
                 } else {
-                    temp = new File(source + File.separator + file[i]);
+                    temp = new File(source + File.separator + s);
                 }
                 if (temp.isFile()) {
                     FileInputStream input = new FileInputStream(temp);
-                    FileOutputStream output = new FileOutputStream(target + "/" + (temp.getName()).toString());
+                    FileOutputStream output = new FileOutputStream(target + "/" + (temp.getName()));
                     byte[] b = new byte[1024];
                     int len;
                     while ((len = input.read(b)) != -1) {
@@ -292,7 +279,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                     input.close();
                 }
                 if (temp.isDirectory()) {
-                    copy(source + "/" + file[i], target + "/" + file[i], true);
+                    copy(source + "/" + s, target + "/" + s, true);
                 }
             }
         } else {
@@ -320,8 +307,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @param source   源文件（夹）
      * @param target   目标文件（夹）
      * @param isFolder 若为文件夹，则为True；反之为False
-     * @return
-     * @throws Exception
      */
     public static boolean move(String source, String target, boolean isFolder) throws Exception {
         copy(source, target, isFolder);
@@ -335,18 +320,13 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     /**
      * 将文件转字节数组
      *
-     * @param filePath
-     * @return
-     * @throws IOException
      */
     public static byte[] toByteArray(String filePath) throws IOException {
         FileInputStream in = null;
         File file = new File(filePath);
         in = new FileInputStream(file);
         byte[] bytes = IOUtils.toByteArray(in);
-        if (in != null) {
-            in.close();
-        }
+        in.close();
         return bytes;
     }
 
@@ -391,27 +371,22 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         String[] rs = null;
         List<File> fs = readDirFiles(filePath, isAll);
         int i;
-        if (fs != null) {
-            rs = new String[fs.size()];
-            i = 0;
-            for (File file : fs) {
-                rs[i] = file.getName();
-                i++;
-            }
-        } else {
-            rs = new String[0];
+        rs = new String[fs.size()];
+        i = 0;
+        for (File file : fs) {
+            rs[i] = file.getName();
+            i++;
         }
 
         return rs;
     }
 
-    public static List<File> readDirFilesFilter(String filePath, boolean isAll, String filterName) {
+    public static List readDirFilesFilter(String filePath, boolean isAll, String filterName) {
         List<File> fs = readDirFiles(filePath, isAll);
         List rs = new ArrayList();
         for (File file : fs) {
             String fName = file.getName();
-            if ((fName != null) && (fName.length() > 0) &&
-                    (fName.toLowerCase().endsWith(filterName.toLowerCase()))) {
+            if (!fName.isEmpty() && fName.toLowerCase().endsWith(filterName.toLowerCase())) {
                 rs.add(file);
             }
         }
@@ -419,24 +394,25 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return rs;
     }
 
-    public static List<File> readDirFiles(String filepath, boolean isAll) {
+    public static List readDirFiles(String filepath, boolean isAll) {
         List fs = new ArrayList();
         try {
             File file = new File(filepath);
             if ((!isAll) && (file.isDirectory())) {
-                fs.addAll(Arrays.asList(file.listFiles()));
+                fs.addAll(Arrays.asList(Objects.requireNonNull(file.listFiles())));
                 return fs;
             }
             if (!file.isDirectory()) {
                 fs.add(file);
             } else if (file.isDirectory()) {
                 String[] filelist = file.list();
-                for (int i = 0; i < filelist.length; i++) {
-                    File readfile = new File(filepath + "\\" + filelist[i]);
-                    if (!readfile.isDirectory())
+                for (String s : Objects.requireNonNull(filelist)) {
+                    File readfile = new File(filepath + "\\" + s);
+                    if (!readfile.isDirectory()) {
                         fs.add(readfile);
-                    else if (readfile.isDirectory())
-                        readDirFiles(filepath + "\\" + filelist[i], isAll);
+                    } else if (readfile.isDirectory()) {
+                        readDirFiles(filepath + "\\" + s, isAll);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -464,8 +440,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         if ((null == list) || (list.length == 0)) {
             return file.delete();
         }
-        for (int i = 0; i < list.length; i++) {
-            deleteFilePath(filePath + File.separator + list[i]);
+        for (String s : list) {
+            deleteFilePath(filePath + File.separator + s);
             deleteFilePath(filePath);
         }
         return true;
@@ -477,8 +453,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             fileZip(out, new File(srcFileName), "");
             out.flush();
             out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -488,8 +462,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         if (file.isDirectory()) {
             File[] files = file.listFiles();
             base = base + "/";
-            for (File tmpFile : files)
+            for (File tmpFile : Objects.requireNonNull(files)) {
                 fileZip(out, tmpFile, base + tmpFile.getName());
+            }
         } else {
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 10240);
             out.putNextEntry(new ZipEntry(base));
@@ -517,8 +492,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     private void fileUnZip(ZipInputStream zis, File file) throws Exception {
         ZipEntry zip = zis.getNextEntry();
-        if (zip == null)
+        if (zip == null) {
             return;
+        }
         String name = zip.getName();
         File f = new File(file.getAbsolutePath() + "/" + name);
         if (zip.isDirectory()) {
@@ -549,11 +525,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             fr = new FileInputStream(file);
             int length = fr.read(content);
             if (length == file.length()) {
-                byte[] arrayOfByte1 = content;
-                return arrayOfByte1;
+                return content;
             }
-        } catch (FileNotFoundException e) {
-            logger.info("File:" + filePath + " getFileContent error", e);
         } catch (IOException e) {
             logger.info("File:" + filePath + " getFileContent error", e);
         } finally {
@@ -576,7 +549,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         FileOutputStream outputStream = null;
         try {
             fis = new FileInputStream(sFile);
-            outputStream = new FileOutputStream(new File(targetPath + "\\" + tFileName));
+            outputStream = new FileOutputStream(targetPath + "\\" + tFileName);
             byte[] buff = new byte[2048];
             int temp = 0;
             while ((temp = fis.read(buff, 0, 2048)) != -1) {
@@ -584,8 +557,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             }
             fis.close();
             outputStream.close();
-            String str1 = targetPath + "\\" + tFileName;
-            return str1;
+            return targetPath + "\\" + tFileName;
         } catch (Exception e) {
             System.err.println(e.getMessage());
         } finally {
@@ -593,8 +565,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 if (fis != null) {
                     fis.close();
                 }
-                if (outputStream != null)
+                if (outputStream != null) {
                     outputStream.close();
+                }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
@@ -602,8 +575,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return null;
     }
 
-    public static void downloadFile(HttpServletRequest request, HttpServletResponse response, String filePath)
-            throws IOException {
+    public static void downloadFile(HttpServletRequest request, HttpServletResponse response, String filePath) {
         File file = new File(filePath);
         downloadFile(request, response, filePath, file.getName());
     }
@@ -617,7 +589,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
             long fileLength = new File(filePath).length();
 
-            response.setHeader("content-disposition", String.format("attachment;filename=\"%s\"", new Object[]{fileName}));
+            response.setHeader("content-disposition", String.format("attachment;filename=\"%s\"", fileName));
             response.setHeader("content-length", String.valueOf(fileLength));
             byte[] buff = new byte[2048];
             int bytesRead;
@@ -634,7 +606,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     public static void fileDownload(HttpServletResponse response, String filePath, String fileName) throws Exception {
         byte[] data = toByteArray(filePath);
-        fileName = URLEncoder.encode(fileName, "UTF-8");
+        fileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8);
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
         response.addHeader("Content-Length", "" + data.length);
@@ -648,34 +620,37 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     }
 
     public static void safeCloseReader(Reader reader) {
-        if (null != reader)
+        if (null != reader) {
             try {
                 reader.close();
             } catch (IOException e) {
                 logger.error("close file error:" + e.getMessage(), e);
             }
+        }
     }
 
     public static void safeCloseOutputStream(OutputStream out) {
-        if (null != out)
+        if (null != out) {
             try {
                 out.close();
             } catch (IOException e) {
                 logger.error("close file error:" + e.getMessage(), e);
             }
+        }
     }
 
     public static void safeCloseInputStream(InputStream in) {
-        if (null != in)
+        if (null != in) {
             try {
                 in.close();
             } catch (IOException e) {
                 logger.error("close file error:" + e.getMessage(), e);
             }
+        }
     }
 
     public static void safeFlushAndCloseOutputStream(OutputStream out) {
-        if (null != out)
+        if (null != out) {
             try {
                 out.flush();
             } catch (IOException e) {
@@ -687,6 +662,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                     logger.error("close file error:" + e.getMessage(), e);
                 }
             }
+        }
     }
 
     public static String getFileType(String url) {
@@ -701,8 +677,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     public static boolean base64ToFile(String destPath, String base64, String fileName) {
         File file = null;
         //创建文件目录
-        String filePath = destPath;
-        File dir = new File(filePath);
+        File dir = new File(destPath);
         if (!dir.exists() && !dir.isDirectory()) {
             dir.mkdirs();
         }
@@ -710,7 +685,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         FileOutputStream fos = null;
         try {
             byte[] bytes = Base64.getDecoder().decode(base64);
-            file = new File(filePath + "/" + fileName);
+            file = new File(destPath + "/" + fileName);
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
             bos.write(bytes);
@@ -737,7 +712,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     }
 
     /**
-     * @param path
      * @return String
      * @description 将文件转base64字符串
      * @date 2018年3月20日
@@ -781,12 +755,11 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     /**
      * 是否是图片附件
      *
-     * @param filename
-     * @return
      */
     public static boolean isImage(String filename) {
-        if (filename == null || filename.trim().length() == 0)
+        if (filename == null || filename.trim().isEmpty()) {
             return false;
+        }
         return ArrayUtils.contains(IMAGES_SUFFIXES, FilenameUtils.getExtension(filename).toLowerCase());
     }
 

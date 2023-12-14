@@ -9,7 +9,6 @@ import lombok.Data;
  * @date 2016-12-03 21:31:50
  */
 @Data
-@SuppressWarnings("serial")
 public class UserModel {
 
     private String id;

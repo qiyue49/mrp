@@ -10,6 +10,7 @@ import com.sunseagear.wind.modules.monitor.service.impl.LoginLogServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -75,29 +76,26 @@ public class LoginLogUtils {
      * @param message  消息
      */
     public static void recordLoginLog(String username, String status, String message) {
-        final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        final UserAgent userAgent = UserAgent.parseUserAgentString(Objects.requireNonNull(ServletUtils.getRequest()).getHeader("User-Agent"));
         final String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         //创建异步任务
-        Task task = new Task() {
-            @Override
-            public void run() {
-                // 获取客户端操作系统
-                String os = userAgent.getOperatingSystem().getName();
-                // 获取客户端浏览器
-                String browser = userAgent.getBrowser().getName();
-                // 封装对象
-                LoginLog loginLog = new LoginLog();
-                loginLog.setLoginName(username);
-                loginLog.setLoginIp(ip);
-                loginLog.setTenantId(UserUtils.getTenantId());
+        Task task = () -> {
+            // 获取客户端操作系统
+            String os = userAgent.getOperatingSystem().getName();
+            // 获取客户端浏览器
+            String browser = userAgent.getBrowser().getName();
+            // 封装对象
+            LoginLog loginLog = new LoginLog();
+            loginLog.setLoginName(username);
+            loginLog.setLoginIp(ip);
+            loginLog.setTenantId(UserUtils.getTenantId());
 //                loginLog.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
-                loginLog.setBrowser(browser);
-                loginLog.setOs(os);
-                loginLog.setMsg(message);
-                loginLog.setStatus(status);
-                loginLog.setLoginTime(new Date());
-                SpringContextHolder.getBean(LoginLogServiceImpl.class).insert(loginLog);
-            }
+            loginLog.setBrowser(browser);
+            loginLog.setOs(os);
+            loginLog.setMsg(message);
+            loginLog.setStatus(status);
+            loginLog.setLoginTime(new Date());
+            SpringContextHolder.getBean(LoginLogServiceImpl.class).insert(loginLog);
         };
         // 运行任务
         SpringContextHolder.getBean(TaskHelper.class).doTask(task);

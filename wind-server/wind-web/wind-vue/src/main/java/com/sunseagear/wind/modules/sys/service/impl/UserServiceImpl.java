@@ -10,7 +10,7 @@ import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.utils.UserUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +21,11 @@ import java.util.Collection;
 @Transactional
 @Service("userService")
 public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> implements IUserService {
-    @Autowired
+    @Resource
     PasswordService passwordService;
-    @Autowired
+    @Resource
     private IUserRoleService userRoleService;
-    @Autowired
+    @Resource
     private IRoleService roleService;
 
     @Override
@@ -118,7 +118,7 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
             throw new RuntimeException("账号重复");
         }
         if (user.getId()==null) {
-            UserUtils.update(user.getId());
+            UserUtils.update(null);
         }
         return super.update(user);
     }

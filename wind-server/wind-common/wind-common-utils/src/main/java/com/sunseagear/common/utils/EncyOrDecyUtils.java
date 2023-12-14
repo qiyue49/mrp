@@ -11,6 +11,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
@@ -20,15 +21,15 @@ public class EncyOrDecyUtils {
     private static final int ITERATIONCOUNT = 50000;
     private static final String DEFAULT_KEY = "Tr7WE0J2z3uJod4p";
 
-    public static final String MD5(byte[] data) {
+    public static String MD5(byte[] data) {
         return DigestUtils.md5Hex(data);
     }
 
-    public static final String MD5(String data) {
+    public static String MD5(String data) {
         return DigestUtils.md5Hex(data);
     }
 
-    public static final String generateKey(char[] password, int keyLength) {
+    public static String generateKey(char[] password, int keyLength) {
         try {
             SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             byte[] salt = new byte[SALT_SIZE];
@@ -43,11 +44,11 @@ public class EncyOrDecyUtils {
         return null;
     }
 
-    public static final String desEncrypt(String content) {
+    public static String desEncrypt(String content) {
         return desEncrypt(content, DEFAULT_KEY);
     }
 
-    public static final String desDecrypt(String content) {
+    public static String desDecrypt(String content) {
         return desDecrypt(content, DEFAULT_KEY);
     }
 
@@ -86,7 +87,7 @@ public class EncyOrDecyUtils {
                 LOGGER.warn("Key长度不是16位");
                 return null;
             }
-            byte[] raw = sKey.getBytes("ASCII");
+            byte[] raw = sKey.getBytes(StandardCharsets.US_ASCII);
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             IvParameterSpec iv = new IvParameterSpec("0102030405060708".getBytes());
@@ -94,8 +95,7 @@ public class EncyOrDecyUtils {
             byte[] encrypted1 = Base64.decodeBase64(sSrc);
             try {
                 byte[] original = cipher.doFinal(encrypted1);
-                String originalString = new String(original);
-                return originalString;
+                return new String(original);
             } catch (Exception e) {
                 return null;
             }

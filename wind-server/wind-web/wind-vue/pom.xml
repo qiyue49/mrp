@@ -164,13 +164,6 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
-            <!--            <resource>-->
-            <!--                <directory>${lib.path}</directory>-->
-            <!--                <targetPath>BOOT-INF/lib/</targetPath>-->
-            <!--                <includes>-->
-            <!--                    <include>**/*.jar</include>-->
-            <!--                </includes>-->
-            <!--            </resource>-->
         </resources>
 
         <plugins>
@@ -178,7 +171,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <fork>true</fork>
                     <executable>true</executable>
                     <jvmArguments>-Dfile.encoding=UTF-8</jvmArguments>
                 </configuration>

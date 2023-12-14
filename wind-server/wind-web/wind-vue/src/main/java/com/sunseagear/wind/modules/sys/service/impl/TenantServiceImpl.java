@@ -9,7 +9,7 @@ import com.sunseagear.wind.modules.sys.mapper.TenantMapper;
 import com.sunseagear.wind.modules.sys.service.ITenantService;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,11 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("tenantService")
 public class TenantServiceImpl extends CommonServiceImpl<TenantMapper, Tenant> implements ITenantService {
 
-    @Autowired
+    @Resource
     private OrganizationMapper organizationMapper;
-    @Autowired
+    @Resource
     private IUserService userService;
-    @Autowired
+    @Resource
     private IUserRoleService userRoleService;
 
     @Override

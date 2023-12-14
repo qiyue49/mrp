@@ -1,7 +1,10 @@
 package com.sunseagear.common.sms.data;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 
+@Getter
 @SuppressWarnings("serial")
 public class SmsResult implements Serializable {
     public static final int OK_CODE = 0;
@@ -24,32 +27,16 @@ public class SmsResult implements Serializable {
         this.msg = "返回成功";
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public void setCode(int code) {
         this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
     }
 
     public void setMsg(String msg) {
         this.msg = msg;
     }
 
-    public String getSmsid() {
-        return smsid;
-    }
-
     public void setSmsid(String smsid) {
         this.smsid = smsid;
-    }
-
-    public String getReponseData() {
-        return reponseData;
     }
 
     public void setReponseData(String reponseData) {

@@ -4,17 +4,16 @@ import com.sunseagear.common.oss.OSSUploadHelper;
 import com.sunseagear.common.oss.config.OssConfig;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
-import com.sunseagear.common.oss.exception.OSSException;
 import com.sunseagear.common.utils.*;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,11 +37,11 @@ import java.util.List;
 @Slf4j
 public class AttachmentHelper {
 
-    @Autowired
+    @Resource
     private IAttachmentService attachmentService;
-    @Autowired
+    @Resource
     private OssConfig ossConfig;
-
+    @Resource
     private OSSUploadHelper uploadHelper;
 
     @PostConstruct
@@ -101,12 +100,7 @@ public class AttachmentHelper {
      * @param fileName 文件OSS带域名地址的路径
      */
     public void deleteFile(HttpServletRequest request, String fileName) {
-        try {
-            uploadHelper.delete(request, fileName);
-        } catch (IOException e) {
-            log.error("删除文件失败");
-            throw new OSSException("删除文件失败", e);
-        }
+        uploadHelper.delete(request, fileName);
     }
 
     /**
@@ -116,12 +110,7 @@ public class AttachmentHelper {
      */
     public void deleteFile(String fileName) {
         HttpServletRequest request = ServletUtils.getRequest();
-        try {
-            uploadHelper.delete(request, fileName);
-        } catch (IOException e) {
-            log.error("删除文件失败");
-            throw new OSSException("删除文件失败", e);
-        }
+        uploadHelper.delete(request, fileName);
     }
 
 }

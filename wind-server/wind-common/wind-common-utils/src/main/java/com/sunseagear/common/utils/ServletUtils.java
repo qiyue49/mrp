@@ -6,6 +6,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.PrintWriter;
+import java.util.Objects;
 
 
 public class ServletUtils {
@@ -13,11 +14,10 @@ public class ServletUtils {
     /**
      * 获取当前请求对象
      *
-     * @return
      */
     public static HttpServletRequest getRequest() {
         try {
-            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+            return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         } catch (Exception e) {
             return null;
         }
@@ -26,11 +26,10 @@ public class ServletUtils {
     /**
      * 获取当前请求对象
      *
-     * @return
      */
     public static HttpServletResponse getResponse() {
         try {
-            return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
+            return ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getResponse();
         } catch (Exception e) {
             return null;
         }
@@ -39,10 +38,9 @@ public class ServletUtils {
     /**
      * 判断是否是Ajax
      *
-     * @return
      */
     public static Boolean isAjax() {
-        String requestType = getRequest().getHeader("X-Requested-With");
+        String requestType = Objects.requireNonNull(getRequest()).getHeader("X-Requested-With");
         if ("XMLHttpRequest".equalsIgnoreCase(requestType)) {
             return Boolean.TRUE;
         } else {
@@ -53,8 +51,6 @@ public class ServletUtils {
     /**
      * 打印JSON
      *
-     * @param response
-     * @param content
      */
     public static void printJson(HttpServletResponse response, String content) {
         try {
@@ -71,8 +67,6 @@ public class ServletUtils {
     /**
      * 获取域名
      *
-     * @param request
-     * @return
      */
     public static String getContextUrl(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();

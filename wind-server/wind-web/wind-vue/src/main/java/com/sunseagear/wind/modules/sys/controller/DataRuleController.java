@@ -9,14 +9,13 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sys.entity.DataRule;
 import com.sunseagear.wind.modules.sys.service.IDataRuleService;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -39,14 +38,12 @@ import java.util.List;
 @Log(title = "数据权限表")
 public class DataRuleController extends BaseBeanController<DataRule> {
 
-    @Autowired
+    @Resource
     private IDataRuleService dataRuleService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @throws IOException
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)

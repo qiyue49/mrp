@@ -16,13 +16,11 @@ import org.springframework.boot.autoconfigure.mail.MailProperties;
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
 public class EmailEventProducer {
-    private static Logger logger = LoggerFactory.getLogger(EmailEventProducer.class);
+    private static final Logger logger = LoggerFactory.getLogger(EmailEventProducer.class);
     private final RingBuffer<EmailEvent> ringBuffer;
-    private EmailDao emailDao;
 
     public EmailEventProducer(RingBuffer<EmailEvent> ringBuffer, EmailDao emailDao) {
         this.ringBuffer = ringBuffer;
-        this.emailDao = emailDao;
     }
 
     private Long send(Long eventId, EmailData emailData, EmailHandlerCallBack callBack) {
@@ -44,8 +42,8 @@ public class EmailEventProducer {
         return eventId;
     }
 
-    public Long send(Long eventId, MimeMessage message, MailProperties mailProperties) {
-        return send(eventId, message, mailProperties, null);
+    public void send(Long eventId, MimeMessage message, MailProperties mailProperties) {
+        send(eventId, message, mailProperties, null);
     }
 
     public Long send(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {

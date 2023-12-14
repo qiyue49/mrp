@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -22,6 +23,7 @@ import java.util.Date;
  * @copyright: 2018 www.sunseagear.com Inc. All rights reserved.
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("sys_login_log")
 @SuppressWarnings("serial")
@@ -35,7 +37,7 @@ public class LoginLog extends AbstractEntity<Long> {
     /**
      * 登录账号
      */
-    @Excel(name = "登录账号", orderNum = "0", width = 15)
+    @Excel(name = "登录账号", width = 15)
     @TableField(value = "login_name")
     private String loginName;
     /**

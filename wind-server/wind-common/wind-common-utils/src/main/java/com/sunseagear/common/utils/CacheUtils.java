@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class CacheUtils {
 
-    private static RedisTemplate redisTemplate;
+    private static final RedisTemplate redisTemplate;
     private static final String SYS_CACHE = "sys_cache";
 
     static {
@@ -98,7 +99,7 @@ public class CacheUtils {
      * @return true=设置成功；false=设置失败
      */
     public static boolean expire(final String key, final long timeout, final TimeUnit unit) {
-        return redisTemplate.expire(key, timeout, unit);
+        return Boolean.TRUE.equals(redisTemplate.expire(key, timeout, unit));
     }
 
     /**
@@ -114,25 +115,19 @@ public class CacheUtils {
 
     /**
      * 删除对象
-     *
-     * @param cacheName
-     * @return
      */
-    public static boolean clear(final String cacheName) {
+    public static void clear(final String cacheName) {
         Set<String> keys = redisTemplate.keys(cacheName + "*");
-        long count = redisTemplate.delete(keys);
-        return keys.size() == count;
+        long count = redisTemplate.delete(Objects.requireNonNull(keys));
     }
 
-    public static Set<String> keys(final String cacheName){
+    public static Set keys(final String cacheName){
         return redisTemplate.keys(cacheName + "*");
     }
 
     /**
      * 缓存Map
      *
-     * @param key
-     * @param dataMap
      */
     public static <T> void setCacheMap(final String key, final Map<String, T> dataMap) {
         if (dataMap != null) {
@@ -142,19 +137,14 @@ public class CacheUtils {
 
     /**
      * 获得缓存的Map
-     *
-     * @param key
-     * @return
      */
-    public static <T> Map<String, T> getCacheMap(final String key) {
+    public static <T> Map getCacheMap(final String key) {
         return redisTemplate.opsForHash().entries(key);
     }
 
     /**
      * 缓存SET对象，名称为SYS_CACHE
      *
-     * @param key
-     * @return
      */
     public static void put(String key, Object value) {
         put(SYS_CACHE, key, value);
@@ -163,9 +153,6 @@ public class CacheUtils {
     /**
      * 缓存SET对象
      *
-     * @param cacheName
-     * @param key
-     * @param value
      */
     public static void put(String cacheName, String key, Object value) {
         getCache(cacheName).put(key, value);
@@ -174,8 +161,6 @@ public class CacheUtils {
     /**
      * 获取SET对象，名称为SYS_CACHE
      *
-     * @param key
-     * @return
      */
     public static Object get(String key) {
         return get(SYS_CACHE, key);
@@ -194,19 +179,14 @@ public class CacheUtils {
 
     /**
      * 获得缓存的set的全部成员
-     *
-     * @param key
-     * @return
      */
-    public static <T> Set<T> getCacheSet(final String key) {
+    public static <T> Set getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);
     }
 
     /**
      * 从SYS_CACHE缓存中移除SET对象，名称为SYS_CACHE
      *
-     * @param key
-     * @return
      */
     public static void remove(String key) {
         remove(SYS_CACHE, key);
@@ -215,8 +195,6 @@ public class CacheUtils {
     /**
      * 从缓存中移除SET对象
      *
-     * @param cacheName
-     * @param key
      */
     public static void remove(String cacheName, String key) {
         getCache(cacheName).delete(key);
@@ -225,8 +203,6 @@ public class CacheUtils {
     /**
      * 获得一个Cache，没有则创建一个。
      *
-     * @param cacheName
-     * @return
      */
     public static BoundHashOperations getCache(String cacheName) {
         return redisTemplate.boundHashOps(cacheName);

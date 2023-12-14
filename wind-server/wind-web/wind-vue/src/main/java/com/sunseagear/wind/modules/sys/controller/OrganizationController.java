@@ -10,15 +10,13 @@ import com.sunseagear.wind.common.helper.VueTreeHelper;
 import com.sunseagear.wind.modules.sys.entity.Organization;
 import com.sunseagear.wind.modules.sys.service.IOrganizationService;
 import com.sunseagear.wind.utils.UserUtils;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,22 +27,19 @@ import java.util.List;
 @Log(title = "部门管理")
 public class OrganizationController extends BaseBeanController<Organization> {
 
-    @Autowired
+    @Resource
     private IOrganizationService organizationService;
 
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
      *
-     * @param request
-     * @param response
-     * @throws IOException
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('sys:organization:list')")
     public String list(HttpServletRequest request) {
-        QueryWrapper<Organization> queryWrapper = new QueryWrapper<Organization>();
+        QueryWrapper<Organization> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("tenant_id", UserUtils.getTenantId());
         //加入条件
         String name = request.getParameter("name");

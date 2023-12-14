@@ -32,7 +32,8 @@ public class CommonTenantHandler implements TenantLineHandler {
      */
     @Override
     public String getTenantIdColumn() {
-        return TenantProperties.getInstance().getInstance().getColumn();
+        TenantProperties.getInstance();
+        return TenantProperties.getInstance().getColumn();
     }
 
     /**

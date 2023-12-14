@@ -37,7 +37,7 @@ public class HuyiRestSDK {
     /**
      * 日志对象
      */
-    protected Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String SERVER_URL;
     private String ACCOUNT_NAME;
@@ -57,10 +57,8 @@ public class HuyiRestSDK {
     }
 
     /**
-     * 设置帐号
+     * 设置账号
      *
-     * @param accountName
-     * @param accountPassword
      */
     public void setAccount(String accountName, String accountPassword) {
         if (StringUtils.isEmpty(accountName) || StringUtils.isEmpty(accountPassword)) {
@@ -73,16 +71,17 @@ public class HuyiRestSDK {
     }
 
     public Map<String, Object> sendMsg(String mobile, String content) {
-        Map<String, Object> resultData = new HashMap<String, Object>();
+        Map<String, Object> resultData = new HashMap<>();
         HttpClient httpClient = new DefaultHttpClient();
-        if ((StringUtils.isEmpty(mobile)) || (StringUtils.isEmpty(content)))
+        if ((StringUtils.isEmpty(mobile)) || (StringUtils.isEmpty(content))) {
             throw new IllegalArgumentException(
                     "必选参数:" + (StringUtils.isEmpty(mobile) ? " 手机号码 " : "") + (StringUtils.isEmpty(content) ? " 內容 " : "") + "为空");
+        }
         int status = 0;
         try {
             HttpPost httppost = new HttpPost(SERVER_URL + "?method=Submit");
             // 设置参数
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<>();
             // 查看密码请登录用户中心->验证码、通知短信->帐户及签名设置->APIKEY
             params.add(new BasicNameValuePair("account", ACCOUNT_NAME));
             params.add(new BasicNameValuePair("password", ACCOUNT_PASSWORD));
@@ -97,9 +96,7 @@ public class HuyiRestSDK {
                 // 获取返回数据
                 HttpEntity responseEntity = httpresponse.getEntity();
                 String body = EntityUtils.toString(responseEntity);
-                if (responseEntity != null) {
-                    responseEntity.consumeContent();
-                }
+                responseEntity.consumeContent();
 
                 Document doc = DocumentHelper.parseText(body);
                 Element root = doc.getRootElement();
@@ -137,19 +134,18 @@ public class HuyiRestSDK {
     /**
      * 获得发送的内容
      *
-     * @return
      * @title: getReply
      * @description: TODO(这里用一句话描述这个方法的作用)
      * @return: Map<String, Object>
      */
     public Map<String, Object> getReply() {
-        Map<String, Object> resultData = new HashMap<String, Object>();
+        Map<String, Object> resultData = new HashMap<>();
         HttpClient httpClient = new DefaultHttpClient();
         int status = 0;
         try {
             HttpPost httppost = new HttpPost(SERVER_URL + "?method=GetReply");
             // 设置参数
-            List<NameValuePair> params = new ArrayList<NameValuePair>();
+            List<NameValuePair> params = new ArrayList<>();
             // 查看密码请登录用户中心->验证码、通知短信->帐户及签名设置->APIKEY
             params.add(new BasicNameValuePair("account", ACCOUNT_NAME));
             params.add(new BasicNameValuePair("password", ACCOUNT_PASSWORD));
@@ -162,9 +158,7 @@ public class HuyiRestSDK {
                 // 获取返回数据
                 HttpEntity responseEntity = httpresponse.getEntity();
                 String body = EntityUtils.toString(responseEntity);
-                if (responseEntity != null) {
-                    responseEntity.consumeContent();
-                }
+                responseEntity.consumeContent();
 
                 Document doc = DocumentHelper.parseText(body);
                 Element root = doc.getRootElement();
@@ -198,7 +192,7 @@ public class HuyiRestSDK {
     }
 
     private HashMap<String, Object> getMyError(String code, String msg) {
-        HashMap<String, Object> hashMap = new HashMap<String, Object>();
+        HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("code", code);
         hashMap.put("msg", msg);
         return hashMap;

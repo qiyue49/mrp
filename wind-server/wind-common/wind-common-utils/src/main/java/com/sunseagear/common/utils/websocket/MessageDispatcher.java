@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class MessageDispatcher {
 
-    private HashMap<Integer, JsonProcessor> jsonProcessorHashMap = new HashMap<>();
+    private final HashMap<Integer, JsonProcessor> jsonProcessorHashMap = new HashMap<>();
 
     private JsonProcessor errorProcessor;
 
@@ -52,7 +52,7 @@ public class MessageDispatcher {
         String data = jsonObject.get("data").toString();
         Long userId = jsonObject.get("userId").getAsLong();
         String message = jsonObject.get("message").getAsString();
-        Boolean isSuccess = jsonObject.get("success").getAsBoolean();
+        boolean isSuccess = jsonObject.get("success").getAsBoolean();
 
         SocketMessage socketMessage = new SocketMessage();
         socketMessage.setCode(code);
@@ -70,7 +70,7 @@ public class MessageDispatcher {
 
     public void processError(String errorMessage) {
         if (errorProcessor != null) {
-            SocketMessage<String> message = new SocketMessage();
+            SocketMessage<String> message = new SocketMessage<>();
             message.setCode(SocketMessage.ERROR_CODE);
             message.setRawData(errorMessage);
             errorProcessor.process(message);

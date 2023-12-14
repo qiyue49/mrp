@@ -20,8 +20,7 @@ public class EmailConfig {
 
     @Bean
     public EmailDao emailDao() {
-        EmailDao emailDao = new EmailDaoImpl();
-        return emailDao;
+        return new EmailDaoImpl();
     }
 
     @Bean

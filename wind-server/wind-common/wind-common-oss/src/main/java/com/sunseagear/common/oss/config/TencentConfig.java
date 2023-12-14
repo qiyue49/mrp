@@ -2,9 +2,11 @@ package com.sunseagear.common.oss.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
 
 @Data
-@ConfigurationProperties(prefix = "oss")
+@Component
+@ConfigurationProperties(prefix = "oss.tencent")
 public class TencentConfig {
     //API密钥secretId
     private String secretId = "";

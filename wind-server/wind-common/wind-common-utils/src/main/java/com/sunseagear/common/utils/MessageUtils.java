@@ -3,9 +3,9 @@ package com.sunseagear.common.utils;
 import org.springframework.context.MessageSource;
 
 /**
- * http://blog.csdn.net/hj7jay/article/details/51383248 Java
- * SpringMVC实现国际化整合案例分析（i18n） http://www.cnblogs.com/liukemng/p/3750117.html
- * SpringMVC学习系列（8） 之 国际化 http://blog.csdn.net/qyf_5445/article/details/8124306
+ * <a href="http://blog.csdn.net/hj7jay/article/details/51383248">...</a> Java
+ * SpringMVC<a href="实现国际化整合案例分析（i18n）">http://www.cnblogs.com/liuke</a>mng/p/3750117<a href=".html
+ ">* SpringMVC学习系列（8） 之 国际化 http://blog.csdn.net/</a>qyf_5445/article/details/8124306
  * spring中MessageSource的配置使用方法1
  *
  * @author Administrator
@@ -19,7 +19,6 @@ public class MessageUtils {
      *
      * @param code 消息键
      * @param args 参数
-     * @return
      */
     public static String getMessage(String code, Object... args) {
         try {
@@ -27,7 +26,7 @@ public class MessageUtils {
                 messageSource = SpringContextHolder.getBean(MessageSource.class);
             }
             return messageSource.getMessage(code, args, null);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return "";
@@ -38,7 +37,6 @@ public class MessageUtils {
      *
      * @param code 消息键
      * @param args 参数
-     * @return
      */
     public static String getMessage(String code, String defaultMessage, Object... args) {
         try {
@@ -46,7 +44,7 @@ public class MessageUtils {
                 messageSource = SpringContextHolder.getBean(MessageSource.class);
             }
             return messageSource.getMessage(code, args, defaultMessage, null);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
 
         }
         return "";
@@ -57,7 +55,6 @@ public class MessageUtils {
      *
      * @param code 消息键
      * @param args 参数
-     * @return
      */
     public static String getMessageOrSelf(String code, Object... args) {
         String message = "";

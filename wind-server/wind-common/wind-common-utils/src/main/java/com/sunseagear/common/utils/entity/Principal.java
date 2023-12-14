@@ -9,14 +9,17 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Data
 public class Principal implements UserDetails, Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private Long id; // 编号
@@ -64,7 +67,7 @@ public class Principal implements UserDetails, Serializable {
     }
 
     private void init() {
-        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        UserAgent userAgent = UserAgent.parseUserAgentString(Objects.requireNonNull(ServletUtils.getRequest()).getHeader("User-Agent"));
         String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
         // 获取客户端操作系统
         String os = userAgent.getOperatingSystem().getName();

@@ -1,15 +1,14 @@
 package com.sunseagear.common.email.data;
 
+import lombok.Getter;
+
 import java.io.Serializable;
 
 public class EmailResult implements Serializable {
 
+    @Getter
     private String msg; // 返回消息
     private Boolean success;// 是否成功
-
-    public String getMsg() {
-        return msg;
-    }
 
     public void setMsg(String msg) {
         this.msg = msg;

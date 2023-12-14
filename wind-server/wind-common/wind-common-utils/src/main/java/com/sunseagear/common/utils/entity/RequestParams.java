@@ -9,7 +9,7 @@ import java.util.Set;
  */
 
 public class RequestParams {
-    HashMap<String, Object> map = new HashMap<>();
+    final HashMap<String, Object> map = new HashMap<>();
 
     public void put(String name, Object value) {
         map.put(name, value);

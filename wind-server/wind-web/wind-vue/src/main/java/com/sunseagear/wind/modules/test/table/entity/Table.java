@@ -8,6 +8,7 @@ import com.sunseagear.common.mvc.entity.DataEntity;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.utils.excel.annotation.ExcelField;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import java.util.Date;
 
@@ -21,6 +22,7 @@ import java.util.Date;
  * @copyright: 2018 www.sunseagear.com Inc. All rights reserved.
  */
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @TableName("test_table")
 @SuppressWarnings("serial")
