@@ -80,7 +80,7 @@ public class Oauth2Controller {
 
             //将用户信息缓存到数据权限模块
             dataRuleHandler.refreshUser(principal.getId().toString());
-            LoginLogUtils.recordSuccessLoginLog(UserUtils.getUser().getUsername(), "退出成功");
+            LoginLogUtils.recordSuccessLoginLog(username, "登录成功");
 
             return Response.successJson(new Token(accessToken, refreshToken));
 
