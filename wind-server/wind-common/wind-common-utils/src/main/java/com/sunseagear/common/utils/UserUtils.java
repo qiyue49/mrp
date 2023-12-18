@@ -38,10 +38,18 @@ public class UserUtils {
     public static String getTenantId() {
         Principal principal = getPrincipal();
         if (principal == null) {
-            return null;
+            //principal为null说明是公开接口
+            if (ServletUtils.getRequest() == null){
+                // ServletUtils.getRequest()为null说明是socket
+                return null;
+            }
+            String tenantId = ServletUtils.getRequest().getHeader("tenantId");
+            if (StringUtils.isEmpty(tenantId)){
+                return null;
+            }
+            return tenantId;
         }
-        return principal.getTenantId();
-    }
+        return principal.getTenantId();    }
 
 
 }

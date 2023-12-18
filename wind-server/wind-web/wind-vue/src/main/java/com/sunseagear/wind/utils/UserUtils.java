@@ -2,10 +2,8 @@ package com.sunseagear.wind.utils;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
-import com.sunseagear.common.utils.CacheUtils;
-import com.sunseagear.common.utils.ObjectUtils;
-import com.sunseagear.common.utils.SpringContextHolder;
-import com.sunseagear.common.utils.StringUtils;
+import com.sun.jna.platform.win32.WinDef;
+import com.sunseagear.common.utils.*;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.sys.entity.Menu;
 import com.sunseagear.wind.modules.sys.entity.Role;
@@ -59,9 +57,21 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
                 return user;
             }
             return new User();
+        } else {
+            // 偶可能是socket，ServletUtils.getRequest()会为空
+            if (ServletUtils.getRequest() == null) {
+                return new User();
+            }
+            String userId = ServletUtils.getRequest().getHeader("userId");
+            if (StringUtils.isEmpty(userId)) {
+                return new User();
+            }
+            User user = get(Long.valueOf(userId));
+            if (user != null) {
+                return user;
+            }
+            return new User();
         }
-        // 如果没有登录，则返回实例化空的User对象。
-        return new User();
     }
 
     /**
