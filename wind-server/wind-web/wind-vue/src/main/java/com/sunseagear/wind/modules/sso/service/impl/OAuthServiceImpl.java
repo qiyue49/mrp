@@ -6,7 +6,9 @@ import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
+import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -95,6 +97,10 @@ public class OAuthServiceImpl implements IOAuthService {
 
     @Override
     public void revokeToken(String accessToken) {
+        Principal principal = getPrincipalByAccessToken(accessToken);
+        if (principal != null) {
+             UserUtils.clearCache(principal);
+        }
         CacheUtils.deleteCacheObject(ACCESS_TOKEN + accessToken);
     }
 

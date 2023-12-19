@@ -150,6 +150,10 @@ export default {
           urlArray.push({ name: item.name, url: item.response.data })
         }
       })
+      if (urlArray.length === 0) {
+        this.emitInput(undefined)
+        return
+      }
       const str = JSON.stringify(urlArray)
       this.emitInput(str)
     },

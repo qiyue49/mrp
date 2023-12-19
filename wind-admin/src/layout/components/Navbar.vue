@@ -72,7 +72,7 @@ export default {
       return this.$store.settingStore.topMenu
     },
     avatarUrl() {
-      if (this.avatar === undefined) {
+      if (this.isNull(this.avatar)) {
         return defaultAvatar
       }
       return this.avatar

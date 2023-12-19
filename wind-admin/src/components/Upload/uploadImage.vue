@@ -43,10 +43,6 @@ export default {
       type: String,
       default: ''
     },
-    span: {
-      type: Number,
-      default: 6
-    },
     maxCount: {
       type: Number,
       default: 4
@@ -99,7 +95,11 @@ export default {
       this.emitInput(this.imageList)
     },
     emitInput(val) {
-      this.$emit('update:modelValue', JSON.stringify(val))
+      if (this.isNull(val)) {
+        this.$emit('update:modelValue', undefined)
+      } else {
+        this.$emit('update:modelValue', JSON.stringify(val))
+      }
       this.noneBtnImg = this.imageList.length >= this.maxCount
     },
     handleUploadSuccess(response, file) {

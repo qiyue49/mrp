@@ -264,6 +264,15 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
         CacheUtils.clear(USER_CACHE_USER_NAME + user.getUsername());
         CacheUtils.clear(CACHE_ROLE_LIST + user.getId());
     }
+    /**
+     * 清除指定用户缓存
+     *
+     */
+    public static void clearCache(Principal user) {
+        CacheUtils.clear(USER_CACHE_ID + user.getId());
+        CacheUtils.clear(USER_CACHE_USER_NAME + user.getUsername());
+        CacheUtils.clear(CACHE_ROLE_LIST + user.getId());
+    }
 
     /**
      * 清除权限缓存

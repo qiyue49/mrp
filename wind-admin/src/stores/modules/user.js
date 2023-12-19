@@ -13,6 +13,7 @@ import { resetRouter } from '@/router'
 import { store } from '@/stores'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import { isNull } from '@/utils'
 
 export const userStore = defineStore('user', () => {
   const userInfo = ref()
@@ -59,6 +60,15 @@ export const userStore = defineStore('user', () => {
           reject(response)
         }
         userInfo.value = data
+        if (!isNull(userInfo.value.portrait)) {
+          try {
+            const portrait = JSON.parse(userInfo.value.portrait)
+            userInfo.value.portrait = portrait[0].url
+          } catch {
+            resolve(data)
+            return
+          }
+        }
         resolve(data)
       }).catch(error => {
         store.userStore.logout().then(() => {
