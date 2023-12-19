@@ -23,6 +23,7 @@ export const mixin = {
     }
     return {
       title: this.$store.settingStore.title,
+      subTitle: this.$store.settingStore.subTitle,
       identifyCode: undefined,
       isLogin: false,
       errorTime: 0,

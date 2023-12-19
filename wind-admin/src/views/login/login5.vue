@@ -3,11 +3,11 @@
     <div class="all-box">
       <div class="left">
         <div class="left-contain">
-          <span class="left-f2">欢迎使用飞廉系统</span>
+          <span class="left-f2">{{ title }}</span>
           <div class="left-f1">
             <img src="../../assets/img/login/login5/bottomPicture.png" alt=""/>
             <div><img src="../../assets/img/login/login5/yellowDot.png" alt="" class="img1"/>
-              <span>为中小企业提供便捷服务，提升企业影响力</span>
+              <span>{{ subTitle }}</span>
               <img src="../../assets/img/login/login5/yellowDot.png" alt="" class="img2"/>
             </div>
           </div>

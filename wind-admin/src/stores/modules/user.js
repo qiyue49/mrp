@@ -61,6 +61,10 @@ export const userStore = defineStore('user', () => {
         userInfo.value = data
         resolve(data)
       }).catch(error => {
+        store.userStore.logout().then(() => {
+          // this.$router.push(`/login`)
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
         reject(error)
       })
     })

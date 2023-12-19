@@ -5,7 +5,7 @@
         <div class="title">{{ title }}</div>
         <div class="fuTitle">
           <span></span>
-          <p>提升中小企业影响力</p>
+          <p>{{ subTitle }}</p>
           <span></span>
         </div>
       </div>

@@ -135,7 +135,7 @@ public class Oauth2Controller {
     @RequestMapping("/revokeToken")
     @ResponseBody
     public String revokeToken(HttpServletRequest request) {
-        String accessToken = request.getHeader("accessToken");
+        String accessToken = request.getHeader("access_token");
         oAuthService.revokeToken(accessToken);
         LoginLogUtils.recordLogoutLoginLog(UserUtils.getUser().getUsername(), "退出成功");
         return Response.successJson("退出成功");

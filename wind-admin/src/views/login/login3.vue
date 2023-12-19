@@ -81,7 +81,7 @@
             </div>
 
             <div>
-              <el-form-item prop="username">
+              <el-form-item>
                 <el-row>
                   <el-col :span="6">
                     <el-button :loading="loading" color="#233A97" style="width:100%;margin-bottom:30px;" @click="handleLogin">

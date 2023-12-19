@@ -6,6 +6,7 @@ export const settingStore = defineStore('setting', () => {
   const fullScreenFun = ref()
   const topMenu = ref(defaultSettings.topMenu)
   const title = ref(defaultSettings.title)
+  const subTitle = ref(defaultSettings.subTitle)
   const sidebarLogo = ref(defaultSettings.sidebarLogo)
 
   function changeSetting({ key, value }) {
@@ -32,6 +33,6 @@ export const settingStore = defineStore('setting', () => {
     fullScreenFun.value()
   }
 
-  return { title, topMenu, sidebarLogo, changeSetting, setFun, toggleFullScreen }
+  return { title, subTitle, topMenu, sidebarLogo, changeSetting, setFun, toggleFullScreen }
 })
 

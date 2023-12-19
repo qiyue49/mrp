@@ -2,7 +2,7 @@
   <div class="all">
     <div class="left-text">
       <p>{{ title }}</p>
-      <p>为中小企业提供便捷服务，提升企业影响力</p>
+      <p>{{ subTitle }}</p>
     </div>
     <div class="right-text">
       <div class="title">登录</div>
