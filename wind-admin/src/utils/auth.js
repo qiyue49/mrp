@@ -2,14 +2,16 @@ import Cookies from 'js-cookie'
 
 const TokenKey = 'Admin-Token'
 
-const useSession = true
+const useSession = false
+
+const expireDate = 1 // 1天
 
 export function getToken() {
   return useSession ? sessionStorage.getItem(TokenKey) : Cookies.get(TokenKey)
 }
 
 export function setToken(token) {
-  return useSession ? sessionStorage.setItem(TokenKey, token) : Cookies.set(TokenKey, token)
+  return useSession ? sessionStorage.setItem(TokenKey, token) : Cookies.set(TokenKey, token, { expires: expireDate })
 }
 
 export function removeToken() {
@@ -23,7 +25,7 @@ export function getRefreshToken() {
 }
 
 export function setRefreshToken(token) {
-  return useSession ? sessionStorage.setItem(RefreshTokenKey, token) : Cookies.set(RefreshTokenKey, token)
+  return useSession ? sessionStorage.setItem(RefreshTokenKey, token) : Cookies.set(RefreshTokenKey, token, { expires: expireDate })
 }
 
 export function removeRefreshToken() {
