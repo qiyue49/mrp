@@ -1,9 +1,20 @@
 package com.sunseagear.common.datarule.constant;
 
-public interface DataScopeConstant {
+public enum DataScopeConstant {
+    /**
+     * 数据权限字段
+     */
+    DEFAULT_FIELD("organizationId"),
+    DEFAULT_COLUMN("organization_id"),
+    DEFAULT_TABLE("sys_organization");
 
-    String DEFAULT_FIELD = "organizationId";
-    String DEFAULT_COLUMN = "organization_id";
-    String DEFAULT_TABLE = "sys_organization";
+    private String value;
 
+    DataScopeConstant(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
 }

@@ -1,5 +1,6 @@
 package com.sunseagear.common.sms.utils.cloopen;
 
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -7,11 +8,13 @@ import com.google.gson.JsonParser;
 import com.sunseagear.common.utils.DateUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.util.EntityUtils;
 import org.dom4j.Document;
@@ -36,24 +39,24 @@ public class CCPRestSDK {
      */
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     int status;
-    private static final int Request_Get = 0;
+    private static final int REQUEST_GET = 0;
 
-    private static final int Request_Post = 1;
-    private static final String Account_Info = "AccountInfo";
-    private static final String Create_SubAccount = "SubAccounts";
-    private static final String Get_SubAccounts = "GetSubAccounts";
-    private static final String Query_SubAccountByName = "QuerySubAccountByName";
+    private static final int REQUEST_POST = 1;
+    private static final String ACCOUNT_INFO = "AccountInfo";
+    private static final String CREATE_SUBACCOUNT = "SubAccounts";
+    private static final String GET_SUBACCOUNTS = "GetSubAccounts";
+    private static final String QUERY_SUBACCOUNT_BY_NAME = "QuerySubAccountByName";
 
-    private static final String SMSMessages = "SMS/Messages";
-    private static final String TemplateSMS = "SMS/TemplateSMS";
-    private static final String Query_SMSTemplate = "SMS/QuerySMSTemplate";
-    private static final String LandingCalls = "Calls/LandingCalls";
-    private static final String VoiceVerify = "Calls/VoiceVerify";
-    private static final String IvrDial = "ivr/dial";
-    private static final String BillRecords = "BillRecords";
-    private static final String queryCallState = "ivr/call";
-    private static final String callResult = "CallResult";
-    private static final String mediaFileUpload = "Calls/MediaFileUpload";
+    private static final String SMS_MESSAGES = "SMS/Messages";
+    private static final String TEMPLATE_SMS = "SMS/TemplateSMS";
+    private static final String QUERY_SMS_TEMPLATE = "SMS/QuerySMSTemplate";
+    private static final String LANDING_CALLS = "Calls/LandingCalls";
+    private static final String VOICE_VERIFY = "Calls/VoiceVerify";
+    private static final String IVR_DIAL = "ivr/dial";
+    private static final String BILL_RECORDS = "BillRecords";
+    private static final String QUERY_CALL_STATE = "ivr/call";
+    private static final String CALL_RESULT = "CallResult";
+    private static final String MEDIA_FILE_UPLOAD = "Calls/MediaFileUpload";
     private String SERVER_IP;
     private String SERVER_PORT;
     private String ACCOUNT_SID;
@@ -61,15 +64,15 @@ public class CCPRestSDK {
     private String SUBACCOUNT_SID;
     private String SUBACCOUNT_Token;
     public String App_ID;
-    private final BodyType BODY_TYPE = BodyType.Type_XML;
+    private final BodyType BODY_TYPE = BodyType.TYPE_XML;
     public String Callsid;
 
     public enum BodyType {
-        Type_XML, Type_JSON
+        TYPE_XML, TYPE_JSON
     }
 
     public enum AccountType {
-        Accounts, SubAccounts
+        ACCOUNTS, SUBACCOUNTS
     }
 
     /**
@@ -150,7 +153,7 @@ public class CCPRestSDK {
             throw new IllegalArgumentException("必选参数: 日期  为空");
         }
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -160,9 +163,9 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, BillRecords);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, BILL_RECORDS);
             String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
                 json.addProperty("date", date);
@@ -196,7 +199,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -215,7 +218,7 @@ public class CCPRestSDK {
         }
         logger.info("billRecords response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -244,7 +247,7 @@ public class CCPRestSDK {
             throw new IllegalArgumentException("必选参数: 待呼叫号码   为空");
         }
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -253,7 +256,7 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, IvrDial);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, IVR_DIAL);
             String requsetbody = "";
 
             StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><Request>");
@@ -285,7 +288,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -339,7 +342,7 @@ public class CCPRestSDK {
                     "必选参数:" + (isEmpty(verifyCode) ? " 验证码内容 " : "") + (isEmpty(to) ? " 接收号码 " : "") + "为空");
         }
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -348,9 +351,9 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, VoiceVerify);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, VOICE_VERIFY);
             String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
                 json.addProperty("verifyCode", verifyCode);
@@ -431,7 +434,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -452,7 +455,7 @@ public class CCPRestSDK {
         logger.info("voiceVerify response body = " + result);
 
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -494,7 +497,7 @@ public class CCPRestSDK {
             throw new IllegalArgumentException("参数语音文件名称和参数语音文本内容不能同时为空");
         }
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -503,9 +506,9 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, LandingCalls);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, LANDING_CALLS);
             String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
                 json.addProperty("to", to);
@@ -604,7 +607,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -625,7 +628,7 @@ public class CCPRestSDK {
         logger.info("landingCall response body = " + result);
 
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -653,7 +656,7 @@ public class CCPRestSDK {
                     "必选参数:" + (isEmpty(to) ? " 手机号码 " : "") + (isEmpty(templateId) ? " 模板Id " : "") + "为空");
         }
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -663,9 +666,9 @@ public class CCPRestSDK {
         String result = "";
 
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, TemplateSMS);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, TEMPLATE_SMS);
             String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
                 json.addProperty("to", to);
@@ -677,8 +680,8 @@ public class CCPRestSDK {
                     }
                     sb.replace(sb.length() - 1, sb.length(), "]");
                     JsonParser parser = new JsonParser();
-                    JsonArray Jarray = parser.parse(sb.toString()).getAsJsonArray();
-                    json.add("datas", Jarray);
+                    JsonArray jsonArray = parser.parse(sb.toString()).getAsJsonArray();
+                    json.add("datas", jsonArray);
                 }
                 requsetbody = json.toString();
             } else {
@@ -713,7 +716,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -734,7 +737,7 @@ public class CCPRestSDK {
         logger.info("sendTemplateSMS response body = " + result);
 
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -760,7 +763,7 @@ public class CCPRestSDK {
             throw new IllegalArgumentException("必选参数: 子帐号名称 为空");
         }
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -769,9 +772,9 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, Query_SubAccountByName);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, QUERY_SUBACCOUNT_BY_NAME);
             String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 JsonObject json = new JsonObject();
                 json.addProperty("appId", App_ID);
                 json.addProperty("friendlyName", friendlyName);
@@ -793,7 +796,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -814,7 +817,7 @@ public class CCPRestSDK {
         logger.info("querySubAccount result " + result);
 
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -837,83 +840,90 @@ public class CCPRestSDK {
         if (validate != null) {
             return validate;
         }
-        SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+
+        CloseableHttpClient httpClient = null;
         try {
-            httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
+            httpClient = HttpClients.custom().useSystemProperties().build();
         } catch (Exception e1) {
             e1.printStackTrace();
             throw new RuntimeException("初始化httpclient异常" + e1.getMessage());
         }
+
         String result = "";
+        HttpPost httppost = new HttpPost("https://" + SERVER_IP + ":" + SERVER_PORT + "/" + GET_SUBACCOUNTS);
+        String requestBody = "";
+
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, Get_SubAccounts);
-            String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
-                JsonObject json = new JsonObject();
-                json.addProperty("appId", App_ID);
-                if (!(isEmpty(startNo))) {
-                    json.addProperty("startNo", startNo);
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
+                JSONObject json = new JSONObject();
+                json.put("appId", App_ID);
+                if (!isEmpty(startNo)) {
+                    json.put("startNo", startNo);
                 }
-                if (!(isEmpty(offset))) {
-                    json.addProperty("offset", offset);
+                if (!isEmpty(offset)) {
+                    json.put("offset", offset);
                 }
-                requsetbody = json.toString();
+                requestBody = json.toString();
             } else {
                 StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><SubAccount>");
                 sb.append("<appId>").append(App_ID).append("</appId>");
-                if (!(isEmpty(startNo))) {
+                if (!isEmpty(startNo)) {
                     sb.append("<startNo>").append(startNo).append("</startNo>");
                 }
-                if (!(isEmpty(offset))) {
+                if (!isEmpty(offset)) {
                     sb.append("<offset>").append(offset).append("</offset>");
                 }
-                sb.append("</SubAccount>").toString();
-                requsetbody = sb.toString();
+                sb.append("</SubAccount>");
+                requestBody = sb.toString();
             }
-            logger.info("GetSubAccounts Request body =  " + requsetbody);
-            logger.info("请求的包体：" + requsetbody);
 
-            BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
-            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
-            httppost.setEntity(requestBody);
-            HttpResponse response = httpclient.execute(httppost);
-            status = response.getStatusLine().getStatusCode();
+            logger.info("GetSubAccounts Request body =  " + requestBody);
+            logger.info("请求的包体：" + requestBody);
+
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8)));
+            entity.setContentLength(requestBody.getBytes(StandardCharsets.UTF_8).length);
+            httppost.setEntity(entity);
+
+            HttpResponse response = httpClient.execute(httppost);
+            int status = response.getStatusLine().getStatusCode();
+
             logger.info("Https请求返回状态码：" + status);
 
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+            HttpEntity responseEntity = response.getEntity();
+
+            if (responseEntity != null) {
+                result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
             }
 
-            EntityUtils.consume(entity);
+            EntityUtils.consume(responseEntity);
         } catch (IOException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
             return getMyError("172001", "网络错误");
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-            return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null) {
-                httpclient.getConnectionManager().shutdown();
+            if (httpClient != null) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
         logger.info("getSubAccounts result " + result);
 
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
             }
         } catch (Exception e) {
-
             return getMyError("172003", "返回包体错误");
         }
     }
+
 
     /**
      * 获取主账号信息查询
@@ -934,7 +944,7 @@ public class CCPRestSDK {
         }
 
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -944,14 +954,14 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpGet httpGet = (HttpGet) getHttpRequestBase(0, Account_Info);
+            HttpGet httpGet = (HttpGet) getHttpRequestBase(0, ACCOUNT_INFO);
             HttpResponse response = httpclient.execute(httpGet);
             status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -970,7 +980,7 @@ public class CCPRestSDK {
         }
         logger.info("queryAccountInfo response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -991,76 +1001,78 @@ public class CCPRestSDK {
         if (validate != null) {
             return validate;
         }
+
         if (isEmpty(friendlyName)) {
             logger.error("必选参数: 子账号名称 为空");
             throw new IllegalArgumentException("必选参数: 子账号名称 为空");
         }
 
-        SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        CloseableHttpClient httpClient = null;
         try {
-            httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
+            httpClient = HttpClients.custom().useSystemProperties().build();
         } catch (Exception e1) {
             e1.printStackTrace();
             logger.error(e1.getMessage());
             throw new RuntimeException("初始化httpclient异常" + e1.getMessage());
         }
-        String result = "";
-        try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, Create_SubAccount);
-            String requsetbody = "";
 
-            if (BODY_TYPE == BodyType.Type_JSON) {
-                JsonObject json = new JsonObject();
-                json.addProperty("appId", App_ID);
-                json.addProperty("friendlyName", friendlyName);
-                requsetbody = json.toString();
+        String result = "";
+        HttpPost httppost = new HttpPost("https://" + SERVER_IP + ":" + SERVER_PORT + "/" + CREATE_SUBACCOUNT);
+        String requestBody = "";
+
+        try {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
+                JSONObject json = new JSONObject();
+                json.put("appId", App_ID);
+                json.put("friendlyName", friendlyName);
+                requestBody = json.toString();
             } else {
-                requsetbody = "<?xml version='1.0' encoding='utf-8'?><SubAccount>" + "<appId>" + App_ID + "</appId>"
+                requestBody = "<?xml version='1.0' encoding='utf-8'?><SubAccount>" + "<appId>" + App_ID + "</appId>"
                         + "<friendlyName>" + friendlyName + "</friendlyName>" + "</SubAccount>";
             }
-            logger.info("CreateSubAccount Request body =  " + requsetbody);
-            logger.info("请求的包体：" + requsetbody);
 
-            BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
-            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
-            httppost.setEntity(requestBody);
+            logger.info("CreateSubAccount Request body =  " + requestBody);
+            logger.info("请求的包体：" + requestBody);
 
-            HttpResponse response = httpclient.execute(httppost);
-            status = response.getStatusLine().getStatusCode();
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8)));
+            entity.setContentLength(requestBody.getBytes(StandardCharsets.UTF_8).length);
+            httppost.setEntity(entity);
+
+            HttpResponse response = httpClient.execute(httppost);
+            int status = response.getStatusLine().getStatusCode();
 
             logger.info("Https请求返回状态码：" + status);
 
-            HttpEntity entity = response.getEntity();
+            HttpEntity responseEntity = response.getEntity();
 
-            if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+            if (responseEntity != null) {
+                result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
             }
 
-            EntityUtils.consume(entity);
+            EntityUtils.consume(responseEntity);
         } catch (IOException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
             return getMyError("172001", "网络错误");
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-            return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null) {
-                httpclient.getConnectionManager().shutdown();
+            if (httpClient != null) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
         logger.info("createSubAccount response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
             }
         } catch (Exception e) {
-
             return getMyError("172003", "返回包体错误");
         }
     }
@@ -1076,74 +1088,73 @@ public class CCPRestSDK {
             return validate;
         }
 
-        SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        CloseableHttpClient httpClient = null;
         try {
-            httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
+            httpClient = HttpClients.custom().useSystemProperties().build();
         } catch (Exception e1) {
             e1.printStackTrace();
             logger.error(e1.getMessage());
             throw new RuntimeException("初始化httpclient异常" + e1.getMessage());
         }
-        String result = "";
-        try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, Query_SMSTemplate);
-            String requsetbody = "";
 
-            if (BODY_TYPE == BodyType.Type_JSON) {
-                JsonObject json = new JsonObject();
-                json.addProperty("appId", App_ID);
-                json.addProperty("templateId", templateId);
-                requsetbody = json.toString();
+        String result = "";
+        HttpPost httppost = new HttpPost("https://" + SERVER_IP + ":" + SERVER_PORT + "/" + QUERY_SMS_TEMPLATE);
+        String requestBody = "";
+
+        try {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
+                JSONObject json = new JSONObject();
+                json.put("appId", App_ID);
+                json.put("templateId", templateId);
+                requestBody = json.toString();
             } else {
-                requsetbody = "<?xml version='1.0' encoding='utf-8'?><Request>" + "<appId>" + App_ID + "</appId>"
+                requestBody = "<?xml version='1.0' encoding='utf-8'?><Request>" + "<appId>" + App_ID + "</appId>"
                         + "<templateId>" + templateId + "</templateId>" + "</Request>";
             }
-            logger.info("QuerySMSTemplate Request body =  " + requsetbody);
-            // 打印包体
-            logger.info("请求的包体：" + requsetbody);
-            BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
-            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
-            httppost.setEntity(requestBody);
 
-            HttpResponse response = httpclient.execute(httppost);
+            logger.info("QuerySMSTemplate Request body =  " + requestBody);
+            logger.info("请求的包体：" + requestBody);
 
-            // 获取响应码
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8)));
+            entity.setContentLength(requestBody.getBytes(StandardCharsets.UTF_8).length);
+            httppost.setEntity(entity);
 
-            status = response.getStatusLine().getStatusCode();
+            HttpResponse response = httpClient.execute(httppost);
+
+            int status = response.getStatusLine().getStatusCode();
 
             logger.info("Https请求返回状态码：" + status);
 
-            HttpEntity entity = response.getEntity();
+            HttpEntity responseEntity = response.getEntity();
 
-            if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+            if (responseEntity != null) {
+                result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
             }
 
-            EntityUtils.consume(entity);
+            EntityUtils.consume(responseEntity);
         } catch (IOException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
             return getMyError("172001", "网络错误");
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-            return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null) {
-                httpclient.getConnectionManager().shutdown();
+            if (httpClient != null) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
         logger.info("QuerySMSTemplate response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
             }
         } catch (Exception e) {
-
             return getMyError("172003", "返回包体错误");
         }
     }
@@ -1155,39 +1166,35 @@ public class CCPRestSDK {
      * @param action 可选参数 查询结果通知的回调url地址
      */
     public HashMap<String, Object> QueryCallState(String callid, String action) {
-
-        HashMap<String, Object> validate = accountValidate();
-        if (validate != null) {
-            return validate;
-        }
-        if ((isEmpty(callid))) {
-            logger.error("必选参数: callid  为空");
+        if (isEmpty(callid)) {
+            logger.error("必选参数: callid 为空");
             throw new IllegalArgumentException("必选参数: callid 为空");
         }
         Callsid = callid;
-        SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        CloseableHttpClient httpClient = null;
         try {
-            httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
+            httpClient = HttpClients.custom().useSystemProperties().build();
         } catch (Exception e1) {
             e1.printStackTrace();
             logger.error(e1.getMessage());
             throw new RuntimeException("初始化httpclient异常" + e1.getMessage());
         }
+
         String result = "";
+        HttpPost httppost = new HttpPost("https://" + SERVER_IP + ":" + SERVER_PORT + "/" + QUERY_CALL_STATE);
+        String requestBody = "";
+
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, queryCallState);
-            String requsetbody = "";
-            if (BODY_TYPE == BodyType.Type_JSON) {
-                JsonObject json = new JsonObject();
-                JsonObject json2 = new JsonObject();
-                json.addProperty("Appid", App_ID);
-                json2.addProperty("callid", callid);
-                if (!(isEmpty(action))) {
-                    json2.addProperty("action", action);
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
+                JSONObject json = new JSONObject();
+                JSONObject json2 = new JSONObject();
+                json.put("Appid", App_ID);
+                json2.put("callid", callid);
+                if (!isEmpty(action)) {
+                    json2.put("action", action);
                 }
-                json.addProperty("QueryCallState", json2.toString());
-                requsetbody = json.toString();
+                json.put("QueryCallState", json2);
+                requestBody = json.toString();
             } else {
                 StringBuilder sb = new StringBuilder("<?xml version='1.0' encoding='utf-8'?><Request>");
                 sb.append("<Appid>").append(App_ID).append("</Appid>").append("<QueryCallState callid=").append("\"")
@@ -1197,47 +1204,49 @@ public class CCPRestSDK {
                 }
 
                 sb.append("></Request>").toString();
-                requsetbody = sb.toString();
+                requestBody = sb.toString();
             }
-            logger.info("queryCallState Request body = : " + requsetbody);
-            logger.info("请求的包体：" + requsetbody);
 
-            BasicHttpEntity requestBody = new BasicHttpEntity();
-            requestBody.setContent(new ByteArrayInputStream(requsetbody.getBytes(StandardCharsets.UTF_8)));
-            requestBody.setContentLength(requsetbody.getBytes(StandardCharsets.UTF_8).length);
-            httppost.setEntity(requestBody);
-            HttpResponse response = httpclient.execute(httppost);
-            status = response.getStatusLine().getStatusCode();
+            logger.info("queryCallState Request body = : " + requestBody);
+            logger.info("请求的包体：" + requestBody);
+
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(new ByteArrayInputStream(requestBody.getBytes(StandardCharsets.UTF_8)));
+            entity.setContentLength(requestBody.getBytes(StandardCharsets.UTF_8).length);
+            httppost.setEntity(entity);
+
+            HttpResponse response = httpClient.execute(httppost);
+            int status = response.getStatusLine().getStatusCode();
             logger.info("Https请求返回状态码：" + status);
 
-            HttpEntity entity = response.getEntity();
-            if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+            HttpEntity responseEntity = response.getEntity();
+            if (responseEntity != null) {
+                result = EntityUtils.toString(responseEntity, StandardCharsets.UTF_8);
             }
 
-            EntityUtils.consume(entity);
+            EntityUtils.consume(responseEntity);
         } catch (IOException e) {
             e.printStackTrace();
             logger.error(e.getMessage());
             return getMyError("172001", "网络错误");
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.error(e.getMessage());
-            return getMyError("172002", "无返回");
         } finally {
-            if (httpclient != null) {
-                httpclient.getConnectionManager().shutdown();
+            if (httpClient != null) {
+                try {
+                    httpClient.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
+
         logger.info("billRecords response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
             }
         } catch (Exception e) {
-
             return getMyError("172003", "返回包体错误");
         }
     }
@@ -1262,7 +1271,7 @@ public class CCPRestSDK {
         }
         Callsid = callSid;
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = null;
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -1272,7 +1281,7 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpGet httpGet = (HttpGet) getHttpRequestBase(0, callResult);
+            HttpGet httpGet = (HttpGet) getHttpRequestBase(0, CALL_RESULT);
             HttpResponse response = httpclient.execute(httpGet);
 
             status = response.getStatusLine().getStatusCode();
@@ -1280,7 +1289,7 @@ public class CCPRestSDK {
             logger.info("Https请求返回状态码：" + status);
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -1299,7 +1308,7 @@ public class CCPRestSDK {
         }
         logger.info("queryAccountInfo response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -1333,7 +1342,7 @@ public class CCPRestSDK {
 
         Filename = filename;
         SSLHttpClient chc = new SSLHttpClient();
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
         } catch (Exception e1) {
@@ -1343,7 +1352,7 @@ public class CCPRestSDK {
         }
         String result = "";
         try {
-            HttpPost httppost = (HttpPost) getHttpRequestBase(1, mediaFileUpload);
+            HttpPost httppost = (HttpPost) getHttpRequestBase(1, MEDIA_FILE_UPLOAD);
 
             logger.info("MediaFileUpload Request body = : " + fis);
             BasicHttpEntity requestBody = new BasicHttpEntity();
@@ -1358,7 +1367,7 @@ public class CCPRestSDK {
 
             HttpEntity entity = response.getEntity();
             if (entity != null) {
-                result = EntityUtils.toString(entity, "UTF-8");
+                result = EntityUtils.toString(entity, StandardCharsets.UTF_8);
             }
 
             EntityUtils.consume(entity);
@@ -1377,7 +1386,7 @@ public class CCPRestSDK {
         }
         logger.info("billRecords response body = " + result);
         try {
-            if (BODY_TYPE == BodyType.Type_JSON) {
+            if (BODY_TYPE == BodyType.TYPE_JSON) {
                 return jsonToMap(result);
             } else {
                 return xmlToMap(result);
@@ -1533,7 +1542,7 @@ public class CCPRestSDK {
 
     private HttpRequestBase getHttpRequestBase(int get, String action)
             throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        return getHttpRequestBase(get, action, AccountType.Accounts);
+        return getHttpRequestBase(get, action, AccountType.ACCOUNTS);
     }
 
     private HttpRequestBase getHttpRequestBase(int get, String action, AccountType mAccountType)
@@ -1543,7 +1552,7 @@ public class CCPRestSDK {
         String sig = "";
         String acountName = "";
         String acountType = "";
-        if (mAccountType == AccountType.Accounts) {
+        if (mAccountType == AccountType.ACCOUNTS) {
             acountName = ACCOUNT_SID;
             sig = ACCOUNT_SID + ACCOUNT_TOKEN + timestamp;
             acountType = "Accounts";
@@ -1556,26 +1565,26 @@ public class CCPRestSDK {
 
         String url = getBaseUrl().append("/").append(acountType).append("/").append(acountName).append("/").append(action).append("?sig=")
                 .append(signature).toString();
-        if (callResult.equals(action)) {
+        if (CALL_RESULT.equals(action)) {
             url = url + "&callsid=" + Callsid;
         }
-        if (queryCallState.equals(action)) {
+        if (QUERY_CALL_STATE.equals(action)) {
             url = url + "&callid=" + Callsid;
         }
-        if (mediaFileUpload.equals(action)) {
+        if (MEDIA_FILE_UPLOAD.equals(action)) {
             url = url + "&appid=" + App_ID + "&filename=" + Filename;
         }
         logger.info(getmethodName(action) + " url = " + url);
         // logger.info(getmethodName(action) + " url = " + url);
         HttpRequestBase mHttpRequestBase = null;
-        if (get == Request_Get) {
+        if (get == REQUEST_GET) {
             mHttpRequestBase = new HttpGet(url);
-        } else if (get == Request_Post) {
+        } else if (get == REQUEST_POST) {
             mHttpRequestBase = new HttpPost(url);
         }
-        if (IvrDial.equals(action)) {
+        if (IVR_DIAL.equals(action)) {
             setHttpHeaderXML(Objects.requireNonNull(mHttpRequestBase));
-        } else if (mediaFileUpload.equals(action)) {
+        } else if (MEDIA_FILE_UPLOAD.equals(action)) {
             setHttpHeaderMedia(mHttpRequestBase);
         } else {
             setHttpHeader(mHttpRequestBase);
@@ -1592,16 +1601,16 @@ public class CCPRestSDK {
 
     private String getmethodName(String action) {
         return switch (action) {
-            case Account_Info -> "queryAccountInfo";
-            case Create_SubAccount -> "createSubAccount";
-            case Get_SubAccounts -> "getSubAccounts";
-            case Query_SubAccountByName -> "querySubAccount";
-            case SMSMessages -> "sendSMS";
-            case TemplateSMS -> "sendTemplateSMS";
-            case LandingCalls -> "landingCalls";
-            case VoiceVerify -> "voiceVerify";
-            case IvrDial -> "ivrDial";
-            case BillRecords -> "billRecords";
+            case ACCOUNT_INFO -> "queryAccountInfo";
+            case CREATE_SUBACCOUNT -> "createSubAccount";
+            case GET_SUBACCOUNTS -> "getSubAccounts";
+            case QUERY_SUBACCOUNT_BY_NAME -> "querySubAccount";
+            case SMS_MESSAGES -> "sendSMS";
+            case TEMPLATE_SMS -> "sendTemplateSMS";
+            case LANDING_CALLS -> "landingCalls";
+            case VOICE_VERIFY -> "voiceVerify";
+            case IVR_DIAL -> "ivrDial";
+            case BILL_RECORDS -> "billRecords";
             default -> "";
         };
     }
@@ -1612,7 +1621,7 @@ public class CCPRestSDK {
     }
 
     private void setHttpHeaderMedia(AbstractHttpMessage httpMessage) {
-        if (BODY_TYPE == BodyType.Type_JSON) {
+        if (BODY_TYPE == BodyType.TYPE_JSON) {
             httpMessage.setHeader("Accept", "application/json");
             httpMessage.setHeader("Content-Type", "application/octet-stream;charset=utf-8;");
         } else {
@@ -1622,7 +1631,7 @@ public class CCPRestSDK {
     }
 
     private void setHttpHeader(AbstractHttpMessage httpMessage) {
-        if (BODY_TYPE == BodyType.Type_JSON) {
+        if (BODY_TYPE == BodyType.TYPE_JSON) {
             httpMessage.setHeader("Accept", "application/json");
             httpMessage.setHeader("Content-Type", "application/json;charset=utf-8");
 

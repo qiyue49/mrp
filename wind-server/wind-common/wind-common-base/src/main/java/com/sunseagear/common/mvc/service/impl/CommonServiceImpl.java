@@ -13,10 +13,10 @@ import java.util.List;
 
 @Transactional
 public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements ICommonService<T> {
-    protected static boolean isDemo = false;
+    protected boolean isDemo = false;
 
     public void setDemo(boolean isDemo) {
-        CommonServiceImpl.isDemo = isDemo;
+        this.isDemo = isDemo;
     }
     public Page<T> selectPage(Page<T> page) {
         return (Page<T>) page(page);
@@ -51,7 +51,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
         if (isDemo) {
             return;
         }
-        saveOrUpdate(entity);
+        super.saveOrUpdate(entity);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
         if (isDemo) {
             return true;
         }
-        return saveOrUpdateBatch(list);
+        return super.saveOrUpdateBatch(list);
     }
 
     @Override

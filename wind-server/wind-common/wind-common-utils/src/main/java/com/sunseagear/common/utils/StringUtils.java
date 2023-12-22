@@ -17,6 +17,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     private static final Pattern IS_MESSY_CODE_PATTERN = Pattern.compile("\\s*|\t*|\r*|\n*");
     private static final Pattern IS_NUMERIC_AND_DOT_PATTERN = Pattern.compile("-?[0-9]+.?[0-9]*([Ee]{1}[0-9]+)?");
 
+    private static final Random random = new Random();
+
     /**
      * 转换为字节数组
      *
@@ -253,25 +255,27 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         return uuid.toString().replace("-", "");
     }
 
-    public static String randomString(int length) { //length表示生成字符串的长度
-        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
+    public static String randomString(int length) {
+        StringBuilder sb = new StringBuilder(length);
+
+        char[] chars = "abcdefghijklmnopqrstuvwxyz0123456789".toCharArray();
         for (int i = 0; i < length; i++) {
-            int number = random.nextInt(base.length());
-            sb.append(base.charAt(number));
+            sb.append(chars[random.nextInt(chars.length)]);
         }
         return sb.toString();
     }
 
-    public static String randomNumber(int length) { //length表示生成字符串的长度
-        String base = "0123456789";
-        Random random = new Random();
-        StringBuilder sb = new StringBuilder();
+
+
+    public static String randomNumber(int length) {
+        //length表示生成字符串的长度
+        StringBuilder sb = new StringBuilder(length);
+
+        char[] digits = "0123456789".toCharArray();
         for (int i = 0; i < length; i++) {
-            int number = random.nextInt(base.length());
-            sb.append(base.charAt(number));
+            sb.append(digits[random.nextInt(digits.length)]);
         }
+
         return sb.toString();
     }
 

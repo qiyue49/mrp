@@ -25,9 +25,11 @@ import java.util.Map;
  */
 public class AliyunSmsClient implements ISmsClient {
     //产品名称:云通信短信API产品,开发者无需替换
-    static final String product = "Dysmsapi";
+    static final String PRODUCT = "Dysmsapi";
     //产品域名,开发者无需替换
-    static final String domain = "dysmsapi.aliyuncs.com";
+    static final String DOMAIN = "dysmsapi.aliyuncs.com";
+    static final String ENDPOINT_NAME = "cn-hangzhou";
+    static final String REGION_ID = "cn-hangzhou";
     //是否开启
     private Boolean isOpen;
     //签名
@@ -44,8 +46,8 @@ public class AliyunSmsClient implements ISmsClient {
         String accessKeySecret = smsConfigProperties.getAliyun().getAccessKeySecret();
         try {
             //初始化acsClient,暂不支持region化
-            IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", accessKeyId, accessKeySecret);
-            DefaultProfile.addEndpoint("cn-hangzhou", "cn-hangzhou", product, domain);
+            IClientProfile profile = DefaultProfile.getProfile("", accessKeyId, accessKeySecret);
+            DefaultProfile.addEndpoint(ENDPOINT_NAME, REGION_ID, PRODUCT, DOMAIN);
             this.acsClient = new DefaultAcsClient(profile);
         } catch (Exception e) {
             throw new SmsException("初始化失败");

@@ -8,9 +8,9 @@ import java.io.Serializable;
 
 public class EmailData implements Serializable {
 
-    private MimeMessage message;
+    private transient MimeMessage message;
     @Getter
-    private MailProperties mailProperties;
+    private transient MailProperties mailProperties;
 
     public MimeMessage getMimeMessage() {
         return message;

@@ -9,6 +9,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.lang.Nullable;
+import org.springframework.util.ClassUtils;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -85,7 +86,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      */
     public static <T> T newInstance(String clazzStr) {
         try {
-            Class<?> clazz = ClassUtil.forName(clazzStr, null);
+            Class<?> clazz = ClassUtils.forName(clazzStr, null);
             return newInstance(clazz);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
@@ -310,7 +311,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     public static <T> T map2bean(Map<Object, Object> map, Class<T> beanType) {
         T t = null;
         try {
-            t = beanType.newInstance();
+            t = beanType.getDeclaredConstructor().newInstance();
             PropertyDescriptor[] pds = Introspector.getBeanInfo(beanType, Object.class)
                     .getPropertyDescriptors();
             for (PropertyDescriptor pd : pds) {
@@ -322,6 +323,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             }
         } catch (InstantiationException | InvocationTargetException | IntrospectionException | IllegalAccessException e) {
             e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException(e);
         }
         return t;
     }
@@ -772,60 +775,54 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      *
      * @param obj 目标对象
      */
-    public static void json2Objec(Object obj, JSONObject json, Boolean applyChildren) {
-        if (json == null) {
+    public static void json2Objec(Object obj, JSONObject json, boolean applyChildren) {
+        if (json == null || obj == null) {
             return;
         }
-        if (obj == null) {
-            return;
-        }
-        Iterator it = json.keys();
-        // 遍历jsonObject数据，添加到Map对象
+
+        Iterator<String> it = json.keys();
         while (it.hasNext()) {
-            String key = String.valueOf(it.next());
-            Object value;
+            String key = it.next();
+            Object value = json.opt(key);
             try {
-                value = json.get(key);
-                if (!(value instanceof JSONObject) && !(value instanceof JSONArray)) {
-                    setField(obj, key, value);
-                } else if (value instanceof JSONObject) {
+                if (value instanceof JSONObject) {
                     if (applyChildren) {
                         Method method = getField(obj, key);
                         if (method != null) {
-                            try {
-                                Object newObject = method.getReturnType().newInstance();
+                            Class<?> returnType = method.getReturnType();
+                            if (returnType.isAssignableFrom(JSONObject.class)) {
+                                Object newObject = returnType.getDeclaredConstructor().newInstance();
                                 json2Objec(newObject, (JSONObject) value, true);
-                            } catch (Exception ignored) {
-
+                                setField(obj, key, newObject);
+                            } else {
+                                throw new IllegalArgumentException("Return type of the method is not assignable from JSONObject");
                             }
                         }
-
                     }
-                } else {
+                } else if (value instanceof JSONArray) {
                     JSONArray jarray = (JSONArray) value;
                     for (Object jobj : jarray) {
-                        if (jobj instanceof JSONObject jsonObj) {
-                            if (applyChildren) {
-                                Method method = getField(obj, key);
-                                if (method != null) {
-                                    try {
-                                        Object newObject = method.getReturnType().newInstance();
-                                        json2Objec(newObject, jsonObj, true);
-                                    } catch (Exception ignored) {
-
-                                    }
+                        if (jobj instanceof JSONObject && applyChildren) {
+                            Method method = getField(obj, key);
+                            if (method != null) {
+                                Class<?> returnType = method.getReturnType();
+                                if (returnType.isAssignableFrom(JSONObject.class)) {
+                                    Object newObject = returnType.getDeclaredConstructor().newInstance();
+                                    json2Objec(newObject, (JSONObject) jobj, true);
+                                    setField(obj, key, newObject);
+                                } else {
+                                    throw new IllegalArgumentException("Return type of the method is not assignable from JSONObject");
                                 }
-
                             }
                         }
                     }
+                } else {
+                    setField(obj, key, value);
                 }
-            } catch (Exception e) {
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
 }

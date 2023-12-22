@@ -1,6 +1,6 @@
 package com.sunseagear.common.sms.client;
 
-import com.sunseagear.common.sms.constant.Constants;
+import com.sunseagear.common.sms.constant.CloudClient;
 
 /**
  * 文件上传Factory
@@ -8,11 +8,11 @@ import com.sunseagear.common.sms.constant.Constants;
 public final class SmsClientFactory {
 
     public static ISmsClient build(String clientType) {
-        if (Constants.CLIENT_ALIYUN.equals(clientType)) {
+        if (CloudClient.CLIENTA_ALIYUN.getValue().equals(clientType)) {
             return new AliyunSmsClient();
-        } else if (Constants.CLIENT_TENCENT.equals(clientType)) {
+        } else if (CloudClient.CLIENTA_TENCENT.getValue().equals(clientType)) {
             return new TencentSmsClient();
-        } else if (Constants.CLIENT_HUYI.equals(clientType)) {
+        } else if (CloudClient.CLIENT_HUYI.getValue().equals(clientType)) {
             return new HuyiSmsClient();
         }
         return null;

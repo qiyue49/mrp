@@ -40,7 +40,7 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
 
     public DataEntity() {
         super();
-        this.delFlag = DataBaseConstant.DEL_FLAG_NORMAL;
+        this.delFlag = DataBaseConstant.NORMAL.getValue();
     }
 
     public void setRemarks(String remarks) {

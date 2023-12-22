@@ -25,11 +25,12 @@ public class DataRuleModel implements Serializable {
     /**
      * 数据权限字段
      */
-    private String scopeColumn = DataScopeConstant.DEFAULT_COLUMN;
+    private String scopeColumn = DataScopeConstant.DEFAULT_COLUMN.getValue();
     private String userColumn;
-    private String userEntityField = DataScopeConstant.DEFAULT_FIELD;
+    private String userEntityField = DataScopeConstant.DEFAULT_FIELD.getValue();
 
-    private String tableName = DataScopeConstant.DEFAULT_TABLE; //数据权限关联表名
+    //数据权限关联表名
+    private String tableName = DataScopeConstant.DEFAULT_TABLE.getValue();
     /**
      * 数据权限规则
      */

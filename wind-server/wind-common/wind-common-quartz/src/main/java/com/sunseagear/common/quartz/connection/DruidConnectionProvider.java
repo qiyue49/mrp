@@ -352,11 +352,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
         this.discardIdleConnectionsSeconds = discardIdleConnectionsSeconds;
     }
 
-    public DruidDataSource getDatasource() {
+    public DruidDataSource getDatasourceData() {
         return datasource;
     }
 
-    public void setDatasource(DruidDataSource datasource) {
+    public void setDatasourceData(DruidDataSource datasource) {
         this.datasource = datasource;
     }
 }

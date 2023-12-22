@@ -80,29 +80,23 @@ public class AliyunOSSClientUtil {
             long fileSize = file.length();
             //创建上传Object的Metadata
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(is.available());
+            metadata.setContentLength(fileSize);
             metadata.setCacheControl("no-cache");
             metadata.setHeader("Pragma", "no-cache");
             metadata.setContentEncoding("utf-8");
             metadata.setContentType(getContentType(fileName));
             metadata.setContentDisposition("filename/filesize=" + fileName + "/" + fileSize + "Byte.");
-            //上传文件
+
             PutObjectResult putResult = client.putObject(bucketName, diskName + fileName, is, metadata);
-            //解析结果
-            resultStr = putResult.getETag();
-        } catch (Exception e) {
+
+            is.close();
+            return putResult.getETag();
+        } catch (IOException e) {
             LOG.error("上传阿里云OSS服务器异常." + e.getMessage(), e);
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
+            throw new RuntimeException(e);
         }
-        return resultStr;
     }
+
 
     /**
      * 根据key获取OSS服务器上的文件输入流

@@ -71,7 +71,7 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
         // 删除标记
         Object delFlag = getFieldValByName(DEL_FLAG, metaObject);
         if (delFlag == null) {
-            setFieldValByName(DEL_FLAG, DataBaseConstant.DEL_FLAG_NORMAL, metaObject);
+            setFieldValByName(DEL_FLAG, DataBaseConstant.NORMAL.getValue(), metaObject);
         }
 
         // 租户标记
