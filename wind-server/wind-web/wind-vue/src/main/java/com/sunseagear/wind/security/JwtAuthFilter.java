@@ -28,6 +28,9 @@ import java.util.regex.Pattern;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
+    private static final Pattern DO_FILTER_INTERNAL_PATTERN = Pattern.compile("/sso/oauth2/\\**");
+
+
     @Resource
     private JWTHelper jwtService;
 
@@ -38,9 +41,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         String token = request.getHeader("access_token");
         if (!StringUtils.isEmpty(token)) {
-            Pattern pattern = Pattern.compile("/sso/oauth2/\\**");
             //检索匹配器对象
-            Matcher matcher = pattern.matcher(request.getRequestURI());
+            Matcher matcher = DO_FILTER_INTERNAL_PATTERN.matcher(request.getRequestURI());
             if (!matcher.find()) {
                 try {
                     jwtService.isTokenExpired(token);

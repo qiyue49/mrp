@@ -14,6 +14,9 @@ import java.util.regex.Pattern;
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
     private static final String CHARSET_NAME = "UTF-8";
 
+    private static final Pattern IS_MESSY_CODE_PATTERN = Pattern.compile("\\s*|\t*|\r*|\n*");
+    private static final Pattern IS_NUMERIC_AND_DOT_PATTERN = Pattern.compile("-?[0-9]+.?[0-9]*([Ee]{1}[0-9]+)?");
+
     /**
      * 转换为字节数组
      *
@@ -276,8 +279,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         if (str == null || str.trim().isEmpty()) {
             return false;
         }
-        Pattern pattern = Pattern.compile("-?[0-9]+.?[0-9]*([Ee]{1}[0-9]+)?");
-        Matcher isNum = pattern.matcher(str);
+        Matcher isNum = IS_NUMERIC_AND_DOT_PATTERN.matcher(str);
         return isNum.matches();
     }
 
@@ -379,8 +381,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      */
     public static boolean isMessyCode(String strName) {
         try {
-            Pattern p = Pattern.compile("\\s*|\t*|\r*|\n*");
-            Matcher m = p.matcher(strName);
+            Matcher m = IS_MESSY_CODE_PATTERN.matcher(strName);
             String after = m.replaceAll("");
             String temp = after.replaceAll("\\p{P}", "");
             char[] ch = temp.trim().toCharArray();
