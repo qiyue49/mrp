@@ -1,6 +1,7 @@
 package com.sunseagear.common.utils;
 
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import jakarta.servlet.http.HttpServletRequest;
 import okhttp3.Headers;
 
@@ -46,10 +47,10 @@ public class IpUtils {
             if (StringUtils.isEmpty(rspStr)) {
                 return address;
             }
-            JSONObject obj = JSONObject.parseObject(rspStr);
-            JSONObject data = obj.getObject("data", JSONObject.class);
-            String region = data.getString("region");
-            String city = data.getString("city");
+            Gson gson = new Gson();
+            JsonObject jsonObject = gson.fromJson(rspStr, JsonObject.class);
+            String region = jsonObject.get("region").getAsString();
+            String city = jsonObject.get("city").getAsString();
             address = region + " " + city;
         } catch (Exception e) {
             e.printStackTrace();

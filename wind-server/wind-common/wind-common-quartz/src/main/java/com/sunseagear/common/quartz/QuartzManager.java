@@ -49,16 +49,20 @@ public class QuartzManager {
             throws QuartzException {
         String misfirePolicy = scheduleJob.getMisfirePolicy();
         if (StringUtils.isEmpty(misfirePolicy)) {
-            misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
+            misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT.getValue();
         }
-        return switch (misfirePolicy) {
-            case ScheduleConstants.MISFIRE_DEFAULT -> cb;
-            case ScheduleConstants.MISFIRE_IGNORE_MISFIRES -> cb.withMisfireHandlingInstructionIgnoreMisfires();
-            case ScheduleConstants.MISFIRE_FIRE_AND_PROCEED -> cb.withMisfireHandlingInstructionFireAndProceed();
-            case ScheduleConstants.MISFIRE_DO_NOTHING -> cb.withMisfireHandlingInstructionDoNothing();
-            default -> throw new QuartzException("The task misfire policy '" + scheduleJob.getMisfirePolicy()
+        if (misfirePolicy.equals(ScheduleConstants.MISFIRE_DEFAULT.getValue())) {
+            return cb;
+        } else if (misfirePolicy.equals(ScheduleConstants.MISFIRE_IGNORE_MISFIRES.getValue())) {
+            return cb.withMisfireHandlingInstructionIgnoreMisfires();
+        } else if (misfirePolicy.equals(ScheduleConstants.MISFIRE_FIRE_AND_PROCEED.getValue())) {
+            return cb.withMisfireHandlingInstructionFireAndProceed();
+        } else if (misfirePolicy.equals(ScheduleConstants.MISFIRE_DO_NOTHING.getValue())) {
+            return cb.withMisfireHandlingInstructionDoNothing();
+        } else {
+            throw new IllegalArgumentException("The task misfire policy '" + scheduleJob.getMisfirePolicy()
                     + "' cannot be used in cron schedule tasks");
-        };
+        }
     }
 
     /**
@@ -66,7 +70,7 @@ public class QuartzManager {
      *
      */
     public void addJob(ScheduleJob job) throws SchedulerException {
-        if (job == null || !ScheduleConstants.STATUS_RUNNING.equals(job.getJobStatus())) {
+        if (job == null || !ScheduleConstants.STATUS_RUNNING.getValue().equals(job.getJobStatus())) {
             return;
         }
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -75,10 +79,10 @@ public class QuartzManager {
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
         // 不存在，创建一个
         if (null == trigger) {
-            Class<? extends Job> clazz = ScheduleConstants.CONCURRENT_IS.equals(job.getIsConcurrent())
+            Class<? extends Job> clazz = ScheduleConstants.CONCURRENT_IS.getValue().equals(job.getIsConcurrent())
                     ? QuartzJobFactory.class : QuartzJobFactoryDisallowConcurrentExecution.class;
             JobDetail jobDetail = JobBuilder.newJob(clazz).storeDurably().requestRecovery().withIdentity(getJobKey(job)).withDescription(job.getDescription()).build();
-            jobDetail.getJobDataMap().put(ScheduleConstants.TASK_JOB_BAEN_KEY, job);
+            jobDetail.getJobDataMap().put(ScheduleConstants.TASK_JOB_BAEN_KEY.getValue(), job);
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
             // 执行策略
             scheduleBuilder = handleCronScheduleMisfirePolicy(job, scheduleBuilder);
@@ -96,7 +100,7 @@ public class QuartzManager {
             scheduler.rescheduleJob(triggerKey, trigger);
         }
         // 暂停任务
-        if (job.equals(ScheduleConstants.STATUS_NOT_RUNNING)) {
+        if (job.equals(ScheduleConstants.STATUS_NOT_RUNNING.getValue())) {
             pauseJob(job);
         }
     }
@@ -114,7 +118,7 @@ public class QuartzManager {
             List<? extends Trigger> triggers = scheduler.getTriggersOfJob(jobKey);
             for (Trigger trigger : triggers) {
                 JobDetail jobDetail = scheduler.getJobDetail(jobKey);
-                ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
+                ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY.getValue());
                 Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
                 job.setJobStatus(triggerState.name());
                 if (trigger instanceof CronTrigger cronTrigger) {
@@ -139,7 +143,7 @@ public class QuartzManager {
             JobDetail jobDetail = executingJob.getJobDetail();
             JobKey jobKey = jobDetail.getKey();
             Trigger trigger = executingJob.getTrigger();
-            ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
+            ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY.getValue());
             Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
             job.setJobStatus(triggerState.name());
             if (trigger instanceof CronTrigger cronTrigger) {
@@ -205,11 +209,11 @@ public class QuartzManager {
 
         trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
         // 参数
-        trigger.getJobDataMap().put(ScheduleConstants.TASK_JOB_BAEN_KEY, scheduleJob);
+        trigger.getJobDataMap().put(ScheduleConstants.TASK_JOB_BAEN_KEY.getValue(), scheduleJob);
         scheduler.rescheduleJob(triggerKey, trigger);
 
         // 暂停任务
-        if (scheduleJob.getJobStatus().equals(ScheduleConstants.STATUS_NOT_RUNNING)) {
+        if (scheduleJob.getJobStatus().equals(ScheduleConstants.STATUS_NOT_RUNNING.getValue())) {
             pauseJob(scheduleJob);
         }
     }

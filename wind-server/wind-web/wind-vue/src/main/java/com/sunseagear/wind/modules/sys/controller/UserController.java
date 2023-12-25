@@ -173,8 +173,7 @@ public class UserController extends BaseBeanController<User> {
     public String export(HttpServletRequest request) {
         HashMap<String, Object> response = new HashMap<>();
         try {
-            TemplateExportParams params = new TemplateExportParams(
-                    "");
+            TemplateExportParams params = new TemplateExportParams("");
             //加入条件
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             // 子查询

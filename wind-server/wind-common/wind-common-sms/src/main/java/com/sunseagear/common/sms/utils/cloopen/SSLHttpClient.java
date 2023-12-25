@@ -2,6 +2,7 @@ package com.sunseagear.common.sms.utils.cloopen;
 
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import javax.net.ssl.SSLContext;
@@ -18,12 +19,13 @@ public class SSLHttpClient {
 
     public DefaultHttpClient registerSSL(String hostname, String protocol, int port, String scheme)
             throws NoSuchAlgorithmException, KeyManagementException {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+        CloseableHttpClient httpclient = null;
 
         SSLContext ctx = SSLContext.getInstance(protocol);
 
         X509TrustManager tm = new X509TrustManager() {
-            public void checkClientTrusted(X509Certificate[] chain, String authType) {
+            public void checkClientTrusted(X509Certificate[] chain, String authType)
+                    throws CertificateException {
             }
 
             public void checkServerTrusted(X509Certificate[] chain, String authType)
@@ -57,6 +59,6 @@ public class SSLHttpClient {
         Scheme sch = new Scheme(scheme, port, socketFactory);
 
         httpclient.getConnectionManager().getSchemeRegistry().register(sch);
-        return httpclient;
+        return (DefaultHttpClient) httpclient;
     }
 }

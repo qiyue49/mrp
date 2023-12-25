@@ -1,7 +1,6 @@
 package com.sunseagear.common.utils;
 
 import org.apache.commons.lang3.Validate;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -21,7 +20,7 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
 
     private static ApplicationContext applicationContext = null;
 
-    private static final Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);
+    private static Logger logger = LoggerFactory.getLogger(SpringContextHolder.class);
 
     /**
      * 取得存储在静态变量中的ApplicationContext.
@@ -62,15 +61,22 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
      * 实现ApplicationContextAware接口, 注入Context到静态变量中.
      */
     @Override
-    public void setApplicationContext(@NotNull ApplicationContext applicationContext) {
-        SpringContextHolder.applicationContext = applicationContext;
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        initializeApplicationContext(applicationContext);
+        //SpringContextHolder.applicationContext = applicationContext;
+    }
+
+    private static synchronized void initializeApplicationContext(ApplicationContext applicationContext) {
+        if (SpringContextHolder.applicationContext == null) {
+            SpringContextHolder.applicationContext = applicationContext;
+        }
     }
 
     /**
      * 实现DisposableBean接口, 在Context关闭时清理静态变量.
      */
     @Override
-    public void destroy() {
+    public void destroy() throws Exception {
         SpringContextHolder.clearHolder();
     }
 

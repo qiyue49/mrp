@@ -56,9 +56,9 @@ public class ScheduleJobServiceImpl extends CommonServiceImpl<ScheduleJobMapper,
             }
             if ("stop".equals(cmd)) {
                 quartzManager.deleteJob(ScheduleJobUtils.entityToData(scheduleJob));
-                scheduleJob.setJobStatus(ScheduleConstants.STATUS_NOT_RUNNING);
+                scheduleJob.setJobStatus(ScheduleConstants.STATUS_NOT_RUNNING.getValue());
             } else if ("start".equals(cmd)) {
-                scheduleJob.setJobStatus(ScheduleConstants.STATUS_RUNNING);
+                scheduleJob.setJobStatus(ScheduleConstants.STATUS_RUNNING.getValue());
                 quartzManager.addJob(ScheduleJobUtils.entityToData(scheduleJob));
             }
             super.insertOrUpdate(scheduleJob);

@@ -1,46 +1,46 @@
 package com.sunseagear.common.quartz.constant;
 
-/**
- * All rights Reserved, Designed By www.sunseagear.com
- *
- * @version V1.0
- * @package com.sunseagear.common.quartz.constant
- * @title:
- * @description: 任务调度排序 * @date: 2018/9/17 15:48
- * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
- */
-public interface ScheduleConstants {
+public enum ScheduleConstants {
+    TASK_JOB_KEY_PRE_("TASK_JOB_KEY_PRE_"),
+    TASK_TRIGGER_KEY_PRE_("TASK_TRIGGER_KEY_PRE_"),
+    TASK_JOB_BAEN_KEY("TASK_JOB_BAEN_KEY"),
 
-    String TASK_JOB_KEY_PRE_ = "TASK_JOB_KEY_PRE_";
+    MISFIRE_DEFAULT("0", "默认"),
+    MISFIRE_IGNORE_MISFIRES("1", "立即触发执行"),
+    MISFIRE_FIRE_AND_PROCEED("2", "触发一次执行"),
+    MISFIRE_DO_NOTHING("3", "不触发立即执行"),
 
-    String TASK_TRIGGER_KEY_PRE_ = "TASK_TRIGGER_KEY_PRE_";
+    STATUS_RUNNING("1", "运行中"),
+    STATUS_NOT_RUNNING("0", "未运行"),
+    CONCURRENT_IS("1", "允许并发"),
+    CONCURRENT_NOT("0", "禁止并发");
 
-    String TASK_JOB_BAEN_KEY = "TASK_JOB_BAEN_KEY";
+    private String value;
+    private String description;
 
-    /**
-     * 默认
-     */
-    String MISFIRE_DEFAULT = "0";
+    ScheduleConstants(String value) {
+        this.value = value;
+    }
 
-    /**
-     * 立即触发执行
-     */
-    String MISFIRE_IGNORE_MISFIRES = "1";
+    ScheduleConstants(String value, String description) {
+        this.value = value;
+        this.description = description;
+    }
 
-    /**
-     * 触发一次执行
-     */
-    String MISFIRE_FIRE_AND_PROCEED = "2";
+    public String getValue() {
+        return value;
+    }
 
-    /**
-     * 不触发立即执行
-     */
-    String MISFIRE_DO_NOTHING = "3";
+    public String getDescription() {
+        return description != null ? description : "";
+    }
 
-
-    String STATUS_RUNNING = "1";
-    String STATUS_NOT_RUNNING = "0";
-    String CONCURRENT_IS = "1";
-    String CONCURRENT_NOT = "0";
-
+    public static ScheduleConstants fromValue(String value) {
+        for (ScheduleConstants constant : values()) {
+            if (constant.getValue().equals(value)) {
+                return constant;
+            }
+        }
+        throw new IllegalArgumentException("Invalid value: " + value);
+    }
 }

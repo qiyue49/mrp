@@ -2,8 +2,10 @@ package com.sunseagear.wind.utils;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Sets;
-import com.sun.jna.platform.win32.WinDef;
-import com.sunseagear.common.utils.*;
+import com.sunseagear.common.utils.CacheUtils;
+import com.sunseagear.common.utils.ObjectUtils;
+import com.sunseagear.common.utils.ServletUtils;
+import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.sys.entity.Menu;
 import com.sunseagear.wind.modules.sys.entity.Role;
@@ -14,6 +16,7 @@ import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.modules.sys.service.impl.MenuServiceImpl;
 import com.sunseagear.wind.modules.sys.service.impl.RoleServiceImpl;
 import com.sunseagear.wind.modules.sys.service.impl.UserServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;

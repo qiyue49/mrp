@@ -23,7 +23,7 @@ public class QuartzJobFactory extends QuartzJobBean {
 
     @Override
     protected void executeInternal(JobExecutionContext context) {
-        ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
+        ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY.getValue());
         QuartzExecuteCallback quartzExecuteCallback = SpringContextHolder.getBean(QuartzExecuteCallback.class);
         long startTime = System.currentTimeMillis();
         try {

@@ -11,7 +11,6 @@ import com.sunseagear.wind.utils.DictUtils;
 import com.sunseagear.wind.utils.UserUtils;
 import com.sunseagear.wind.utils.excel.annotation.ExcelField;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -26,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -203,28 +201,31 @@ public class ImportExcel {
         try {
             Cell cell = row.getCell(column);
             if (cell != null) {
-                if (cell.getCellType() == CellType.NUMERIC) {
-                    // val = cell.getNumericCellValue();
-                    // 当excel 中的数据为数值或日期是需要特殊处理
-                    if (HSSFDateUtil.isCellDateFormatted(cell)) {
-                        double d = cell.getNumericCellValue();
-                        Date date = HSSFDateUtil.getJavaDate(d);
-                        SimpleDateFormat dformat = new SimpleDateFormat(
-                                "yyyy-MM-dd");
-                        val = dformat.format(date);
-                    } else {
-                        NumberFormat nf = NumberFormat.getInstance();
-                        nf.setGroupingUsed(false);// true时的格式：1,234,567,890
-                        val = nf.format(cell.getNumericCellValue());// 数值类型的数据为double，所以需要转换一下
-                    }
-                } else if (cell.getCellType() == CellType.STRING) {
-                    val = cell.getStringCellValue();
-                } else if (cell.getCellType() == CellType.FORMULA) {
-                    val = cell.getCellFormula();
-                } else if (cell.getCellType() == CellType.BOOLEAN) {
-                    val = cell.getBooleanCellValue();
-                } else if (cell.getCellType() == CellType.ERROR) {
-                    val = cell.getErrorCellValue();
+                switch (cell.getCellType()) {
+                    case NUMERIC:
+                        if (DateUtil.isCellDateFormatted(cell)) {
+                            Date date = cell.getDateCellValue();
+                            SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
+                            val = dformat.format(date);
+                        } else {
+                            double numericValue = cell.getNumericCellValue();
+                            val = String.format("%.02f", numericValue);
+                        }
+                        break;
+                    case STRING:
+                        val = cell.getStringCellValue();
+                        break;
+                    case FORMULA:
+                        val = cell.getCellFormula();
+                        break;
+                    case BOOLEAN:
+                        val = cell.getBooleanCellValue();
+                        break;
+                    case ERROR:
+                        val = cell.getErrorCellValue();
+                        break;
+                    default:
+                        break;
                 }
             }
         } catch (Exception e) {

@@ -250,9 +250,12 @@ public class CCPRestSDK {
         HttpClient httpclient = null;
         try {
             httpclient = chc.registerSSL(SERVER_IP, "TLS", Integer.parseInt(SERVER_PORT), "https");
-        } catch (Exception e1) {
-            e1.printStackTrace();
-            throw new RuntimeException("初始化httpclient异常" + e1.getMessage());
+        } catch (NumberFormatException e) {
+            logger.error("Failed to parse SERVER_PORT: {}", e.getMessage());
+            throw new RuntimeException("初始化httpclient异常 - 端口解析错误: " + e.getMessage());
+        } catch (Exception e) {
+            logger.error("Failed to initialize httpclient: {}", e.getMessage());
+            throw new RuntimeException("初始化httpclient异常: " + e.getMessage());
         }
         String result = "";
         try {

@@ -6,9 +6,9 @@ import com.google.gson.annotations.JsonAdapter;
 import com.sunseagear.common.utils.DateUtils;
 import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.ServletUtils;
-import com.sunseagear.common.utils.StringUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 
 import java.lang.reflect.Type;

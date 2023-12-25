@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class HuyiSmsClient implements ISmsClient {
     //产品域名,开发者无需替换
-    static final String serverUrl = "http://106.ihuyi.com/webservice/sms.php";
+    static final String SERVER_URL = "http://106.ihuyi.com/webservice/sms.php";
     //是否开启
     private Boolean isOpen;
     private HuyiRestSDK huyiRestSDK;
@@ -39,7 +39,7 @@ public class HuyiSmsClient implements ISmsClient {
         String accountApikey = smsConfigProperties.getHuyi().getAccountApiKey();
         try {
             huyiRestSDK = new HuyiRestSDK();
-            huyiRestSDK.init(serverUrl);
+            huyiRestSDK.init(SERVER_URL);
             huyiRestSDK.setAccount(accountApiId, accountApikey);
         } catch (Exception e) {
             throw new SmsException("初始化失败");

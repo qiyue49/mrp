@@ -5,6 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
@@ -80,52 +82,40 @@ public class PropertiesUtil extends ObjectSwitchHelper {
         if (StringUtils.isEmpty(this.properiesName)) {
             this.properiesName = this.resourcesPaths[0];
         }
-        InputStream is = null;
-        OutputStream os = null;
-        Properties p = new Properties();
-        try {
-            FileUtils.createFile(getAbsolutePath(this.properiesName));
-            is = new FileInputStream(getAbsolutePath(this.properiesName));
+        try (InputStream is = Files.newInputStream(Paths.get(getAbsolutePath(this.properiesName)));
+             OutputStream os = Files.newOutputStream(Paths.get(getAbsolutePath(this.properiesName)))) {
+            Properties p = new Properties();
             p.load(is);
-            os = new FileOutputStream(getAbsolutePath(this.properiesName));
             p.setProperty(key, value + "");
             p.store(os, "====配置更新====");
             os.flush();
-            os.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            IOUtils.closeQuietly(is);
-            IOUtils.closeQuietly(os);
+            this.properiesName = "";
         }
-        this.properiesName = "";
     }
 
     public void set(Map<String, Object> dataMap) {
         if (StringUtils.isEmpty(this.properiesName)) {
             this.properiesName = this.resourcesPaths[0];
         }
-        InputStream is = null;
-        OutputStream os = null;
-        Properties p = new Properties();
-        try {
+        try (InputStream is = new FileInputStream(getAbsolutePath(this.properiesName));
+             OutputStream os = new FileOutputStream(getAbsolutePath(this.properiesName));) {
+            Properties p = new Properties();
             FileUtils.createFile(getAbsolutePath(this.properiesName));
-            is = new FileInputStream(getAbsolutePath(this.properiesName));
             p.load(is);
-            os = new FileOutputStream(getAbsolutePath(this.properiesName));
             for (Map.Entry<String, Object> entry : dataMap.entrySet()) {
                 p.setProperty(entry.getKey(), entry.getValue() + "");
             }
             p.store(os, "====配置更新====");
             os.flush();
-            os.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            IOUtils.closeQuietly(is);
-            IOUtils.closeQuietly(os);
+            this.properiesName = "";
         }
-        this.properiesName = "";
+
     }
 
     @Override
@@ -133,24 +123,20 @@ public class PropertiesUtil extends ObjectSwitchHelper {
         if (StringUtils.isEmpty(this.properiesName)) {
             this.properiesName = this.resourcesPaths[0];
         }
-        InputStream is = null;
-        OutputStream os = null;
-        Properties p = new Properties();
-        try {
-            is = new FileInputStream(getAbsolutePath(this.properiesName));
+
+        try (InputStream is = new FileInputStream(getAbsolutePath(this.properiesName));
+             OutputStream os = new FileOutputStream(getAbsolutePath(this.properiesName));) {
+            Properties p = new Properties();
             p.load(is);
-            os = new FileOutputStream(getAbsolutePath(this.properiesName));
             p.remove(key);
             p.store(os, "");
             os.flush();
-            os.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            IOUtils.closeQuietly(is);
-            IOUtils.closeQuietly(os);
+            this.properiesName = "";
         }
-        this.properiesName = "";
+
     }
 
     public static void main(String[] args) {

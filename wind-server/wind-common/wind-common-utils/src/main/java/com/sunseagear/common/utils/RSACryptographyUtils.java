@@ -12,7 +12,9 @@ import java.util.Base64;
 
 public class RSACryptographyUtils {
 
-    public static final String data = "test";
+    public static final String DATA_STRING = "test";
+
+    public static final Integer KEY_LENGTH = 2048;
 
     //公钥模
     public static String modulusString = "110164495849272711202946616459372319079286499719250901440671340574963041290097354511674847858255163623581724687248801829049425284007804858435579993841022410424572621928291217650718515503750189445424238314989884966610984102758500224037057166856928439759722922436560678668443479105219017648052800023516140485813";
@@ -34,8 +36,8 @@ public class RSACryptographyUtils {
         //由n和d获取私钥
         PrivateKey privateKey = getPrivateKey(modulusString, privateExponentString);
 
-        System.out.println("加密前：" + data);
-        byte[] encryptedBytes = encrypt(data.getBytes(), privateKey);
+        System.out.println("加密前：" + DATA_STRING);
+        byte[] encryptedBytes = encrypt(DATA_STRING.getBytes(), privateKey);
         byte[] ret = AscToBcdUtils.ASCII_To_BCD(encryptedBytes, encryptedBytes.length);
         System.out.println("加密后：" + AscToBcdUtils.bcd2Str(encryptedBytes));
 
@@ -46,7 +48,7 @@ public class RSACryptographyUtils {
 
     //打印公钥私钥信息，请妥善保管
     public static void printKeyPairInfo() throws Exception {
-        KeyPair keyPair = genKeyPair(1024);
+        KeyPair keyPair = genKeyPair(KEY_LENGTH);
 
         //获取公钥，并以base64格式打印出来
         RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
@@ -69,9 +71,15 @@ public class RSACryptographyUtils {
 
     //生成密钥对
     public static KeyPair genKeyPair(int keyLength) throws Exception {
+        if (keyLength < KEY_LENGTH) {
+            throw new IllegalArgumentException("RSA key length should be at least 2048 bits for robust security.");
+        }
+
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(1024);
+        SecureRandom secureRandom = new SecureRandom();
+        keyPairGenerator.initialize(keyLength, secureRandom);
         return keyPairGenerator.generateKeyPair();
+
     }
 
     //将base64编码后的公钥字符串转成PublicKey实例
@@ -94,14 +102,14 @@ public class RSACryptographyUtils {
 
     //公钥加密
     public static byte[] encrypt(byte[] content, PrivateKey publicKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA");//java默认"RSA"="RSA/ECB/PKCS1Padding"
+        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         return cipher.doFinal(content);
     }
 
     //私钥解密
     public static byte[] decrypt(byte[] content, PublicKey privateKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA");
+        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         return cipher.doFinal(content);
     }

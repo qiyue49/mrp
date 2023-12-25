@@ -10,8 +10,8 @@ import java.util.Map;
 public class SmsData implements Serializable {
     private String phone;
     private String smsTemplate;
-    private SmsConfigProperties smsConfigProperties;
-    private Map<String, Object> datas;
+    private transient SmsConfigProperties smsConfigProperties;
+    private transient Map<String, Object> datas;
 
     public void setPhone(String phone) {
         this.phone = phone;

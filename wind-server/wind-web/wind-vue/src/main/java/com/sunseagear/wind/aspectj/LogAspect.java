@@ -1,18 +1,18 @@
 package com.sunseagear.wind.aspectj;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.sunseagear.common.disruptor.Task;
 import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
-import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.modules.monitor.entity.OperationLog;
 import com.sunseagear.wind.modules.monitor.service.impl.OperationLogServiceImpl;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.utils.UserUtils;
 import eu.bitwalker.useragentutils.UserAgent;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -120,7 +120,7 @@ public class LogAspect {
             if (methodAnnotationLog.requestParam()) {
                 // 获取参数的信息，传入到数据库中。
                 Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
-                String params = JSONObject.toJSONString(map);
+                String params = JSON.toJSONString(map);
                 operationLog.setParams(params);
             }
             // 保存日志

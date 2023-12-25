@@ -8,12 +8,12 @@ package com.sunseagear.common.sms.utils.huyi;
 
 import com.sunseagear.common.utils.StringUtils;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.dom4j.Document;
@@ -72,13 +72,12 @@ public class HuyiRestSDK {
 
     public Map<String, Object> sendMsg(String mobile, String content) {
         Map<String, Object> resultData = new HashMap<>();
-        HttpClient httpClient = new DefaultHttpClient();
         if ((StringUtils.isEmpty(mobile)) || (StringUtils.isEmpty(content))) {
             throw new IllegalArgumentException(
                     "必选参数:" + (StringUtils.isEmpty(mobile) ? " 手机号码 " : "") + (StringUtils.isEmpty(content) ? " 內容 " : "") + "为空");
         }
         int status = 0;
-        try {
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httppost = new HttpPost(SERVER_URL + "?method=Submit");
             // 设置参数
             List<NameValuePair> params = new ArrayList<>();
@@ -87,30 +86,38 @@ public class HuyiRestSDK {
             params.add(new BasicNameValuePair("password", ACCOUNT_PASSWORD));
             params.add(new BasicNameValuePair("mobile", mobile));
             params.add(new BasicNameValuePair("content", content));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "GBK");
-            httppost.setEntity(entity);
-            // 发送请求
-            HttpResponse httpresponse = httpClient.execute(httppost);
-            status = httpresponse.getStatusLine().getStatusCode();
-            if (status == 200) {
-                // 获取返回数据
-                HttpEntity responseEntity = httpresponse.getEntity();
-                String body = EntityUtils.toString(responseEntity);
-                responseEntity.consumeContent();
 
-                Document doc = DocumentHelper.parseText(body);
-                Element root = doc.getRootElement();
+            CloseableHttpResponse response = null;
+            try {
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "GBK");
+                httppost.setEntity(entity);
+                // 发送请求
+                response = httpClient.execute(httppost);
+                status = response.getStatusLine().getStatusCode();
+                if (status == 200) {
+                    // 获取返回数据
+                    HttpEntity responseEntity = response.getEntity();
+                    String body = EntityUtils.toString(responseEntity);
+                    responseEntity.consumeContent();
 
-                String code = root.elementText("code");
-                String msg = root.elementText("msg");
-                String smsid = root.elementText("smsid");
-                resultData.put("code", code);
-                resultData.put("msg", msg);
-                resultData.put("smsid", smsid);
-                if ("2".equals(code)) {
-                    logger.info("短信发送成功");
-                } else {
-                    logger.error(msg);
+                    Document doc = DocumentHelper.parseText(body);
+                    Element root = doc.getRootElement();
+
+                    String code = root.elementText("code");
+                    String msg = root.elementText("msg");
+                    String smsid = root.elementText("smsid");
+                    resultData.put("code", code);
+                    resultData.put("msg", msg);
+                    resultData.put("smsid", smsid);
+                    if ("2".equals(code)) {
+                        logger.info("短信发送成功");
+                    } else {
+                        logger.error(msg);
+                    }
+                }
+            } finally {
+                if (response != null) {
+                    response.close();
                 }
             }
         } catch (UnsupportedEncodingException e) {
@@ -140,39 +147,47 @@ public class HuyiRestSDK {
      */
     public Map<String, Object> getReply() {
         Map<String, Object> resultData = new HashMap<>();
-        HttpClient httpClient = new DefaultHttpClient();
         int status = 0;
-        try {
+
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost httppost = new HttpPost(SERVER_URL + "?method=GetReply");
             // 设置参数
             List<NameValuePair> params = new ArrayList<>();
             // 查看密码请登录用户中心->验证码、通知短信->帐户及签名设置->APIKEY
             params.add(new BasicNameValuePair("account", ACCOUNT_NAME));
             params.add(new BasicNameValuePair("password", ACCOUNT_PASSWORD));
-            UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "GBK");
-            httppost.setEntity(entity);
-            // 发送请求
-            HttpResponse httpresponse = httpClient.execute(httppost);
-            status = httpresponse.getStatusLine().getStatusCode();
-            if (status == 200) {
-                // 获取返回数据
-                HttpEntity responseEntity = httpresponse.getEntity();
-                String body = EntityUtils.toString(responseEntity);
-                responseEntity.consumeContent();
 
-                Document doc = DocumentHelper.parseText(body);
-                Element root = doc.getRootElement();
+            CloseableHttpResponse response = null;
+            try {
+                UrlEncodedFormEntity entity = new UrlEncodedFormEntity(params, "GBK");
+                httppost.setEntity(entity);
+                // 发送请求
+                response = httpClient.execute(httppost);
+                status = response.getStatusLine().getStatusCode();
+                if (status == 200) {
+                    // 获取返回数据
+                    HttpEntity responseEntity = response.getEntity();
+                    String body = EntityUtils.toString(responseEntity);
+                    responseEntity.consumeContent();
 
-                String code = root.elementText("code");
-                String msg = root.elementText("msg");
-                String smsid = root.elementText("smsid");
-                resultData.put("code", code);
-                resultData.put("msg", msg);
-                resultData.put("smsid", smsid);
-                if ("2".equals(code)) {
-                    logger.info("短信获取成功");
-                } else {
-                    logger.error(msg);
+                    Document doc = DocumentHelper.parseText(body);
+                    Element root = doc.getRootElement();
+
+                    String code = root.elementText("code");
+                    String msg = root.elementText("msg");
+                    String smsid = root.elementText("smsid");
+                    resultData.put("code", code);
+                    resultData.put("msg", msg);
+                    resultData.put("smsid", smsid);
+                    if ("2".equals(code)) {
+                        logger.info("短信获取成功");
+                    } else {
+                        logger.error(msg);
+                    }
+                }
+            } finally {
+                if (response != null) {
+                    response.close();
                 }
             }
         } catch (UnsupportedEncodingException e) {

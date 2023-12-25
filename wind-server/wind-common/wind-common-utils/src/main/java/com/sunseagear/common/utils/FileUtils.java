@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,6 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -35,7 +39,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @since 2015年4月21日
      */
     public static boolean isAbsolutePath(String path) {
-        return path.startsWith("/") || path.indexOf(":") > 0;
+        return path.startsWith("/") || path.contains(":");
     }
 
     public boolean deleteFolder(String deletePath) {// 根据路径删除指定的目录或文件，无论存在与否
@@ -254,49 +258,25 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @param target   目标文件（夹）
      * @param isFolder 若进行文件夹复制，则为True；反之为False
      */
-    public static void copy(String source, String target, boolean isFolder) throws Exception {
+    public static void copy(String source, String target, boolean isFolder) throws IOException {
         if (isFolder) {
-            (new File(target)).mkdirs();
+            Files.createDirectories(Paths.get(target));
             File a = new File(source);
-            String[] file = a.list();
-            File temp = null;
-            for (String s : Objects.requireNonNull(file)) {
-                if (source.endsWith(File.separator)) {
-                    temp = new File(source + s);
-                } else {
-                    temp = new File(source + File.separator + s);
-                }
+            String[] files = a.list();
+            for (String s : Objects.requireNonNull(files)) {
+                String srcFilePath = source.endsWith(File.separator) ? source + s : source + File.separator + s;
+                String destFilePath = target + File.separator + s;
+                File temp = new File(srcFilePath);
                 if (temp.isFile()) {
-                    FileInputStream input = new FileInputStream(temp);
-                    FileOutputStream output = new FileOutputStream(target + "/" + (temp.getName()));
-                    byte[] b = new byte[1024];
-                    int len;
-                    while ((len = input.read(b)) != -1) {
-                        output.write(b, 0, len);
-                    }
-                    output.flush();
-                    output.close();
-                    input.close();
-                }
-                if (temp.isDirectory()) {
-                    copy(source + "/" + s, target + "/" + s, true);
+                    Files.copy(temp.toPath(), new File(destFilePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } else if (temp.isDirectory()) {
+                    copy(srcFilePath, destFilePath, true);
                 }
             }
         } else {
-            int byteread = 0;
-            File oldfile = new File(source);
-            if (oldfile.exists()) {
-                InputStream inStream = new FileInputStream(source);
-                File file = new File(target);
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-                FileOutputStream fs = new FileOutputStream(file);
-                byte[] buffer = new byte[1024];
-                while ((byteread = inStream.read(buffer)) != -1) {
-                    fs.write(buffer, 0, byteread);
-                }
-                inStream.close();
-                fs.close();
+            File oldFile = new File(source);
+            if (oldFile.exists()) {
+                Files.copy(oldFile.toPath(), new File(target).toPath(), StandardCopyOption.REPLACE_EXISTING);
             }
         }
     }
@@ -334,36 +314,19 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * 根据byte数组，生成文件
      */
     public static void saveFile(byte[] bfile, String filePath, String fileName) {
-        BufferedOutputStream bos = null;
-        FileOutputStream fos = null;
-        File file = null;
-        try {
-            File dir = new File(filePath);
-            if (!dir.exists() && dir.isDirectory()) {//判断文件目录是否存在
-                dir.mkdirs();
-            }
-            file = new File(filePath + "\\" + fileName);
-            fos = new FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(getOrCreateFile(filePath, fileName)))) {
             bos.write(bfile);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
         }
+    }
+
+    private static File getOrCreateFile(String filePath, String fileName) throws IOException {
+        File dir = new File(filePath);
+        if (!dir.exists() && dir.isDirectory()) {
+            dir.mkdirs();
+        }
+        return new File(filePath + "\\" + fileName);
     }
 
 
@@ -429,22 +392,21 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     }
 
     public static boolean deleteFilePath(String filePath) {
-        System.runFinalization();
-        System.gc();
-        File file = null;
-        file = new File(filePath);
-        String[] list = file.list();
+        File file = new File(filePath);
         if (!file.exists()) {
             return true;
         }
-        if ((null == list) || (list.length == 0)) {
+
+        String[] list = file.list();
+        if (list == null) {
             return file.delete();
         }
+
         for (String s : list) {
             deleteFilePath(filePath + File.separator + s);
-            deleteFilePath(filePath);
         }
-        return true;
+
+        return file.delete();
     }
 
     public static void zipFile(String srcFileName, String zipFileName) {
@@ -466,49 +428,49 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 fileZip(out, tmpFile, base + tmpFile.getName());
             }
         } else {
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 10240);
-            out.putNextEntry(new ZipEntry(base));
+            try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file), 10240)) {
+                out.putNextEntry(new ZipEntry(base));
 
-            byte[] buf = new byte[10240];
-            int read;
-            while ((read = bis.read(buf, 0, 10240)) != -1) {
-                out.write(buf, 0, read);
+                byte[] buf = new byte[10240];
+                int read;
+                while ((read = bis.read(buf, 0, 10240)) != -1) {
+                    out.write(buf, 0, read);
+                }
             }
-            bis.close();
+            out.closeEntry();
         }
     }
 
     public void unZipFile(String unZipBeforeFile, String unZipAfterFile) {
         try {
-            ZipInputStream zis = new ZipInputStream(new FileInputStream(unZipBeforeFile));
-            File f = new File(unZipAfterFile);
-            f.mkdirs();
-            fileUnZip(zis, f);
-            zis.close();
+            try (ZipInputStream zis = new ZipInputStream(new FileInputStream(unZipBeforeFile))) {
+                File f = new File(unZipAfterFile);
+                f.mkdirs();
+                fileUnZip(zis, f);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void fileUnZip(ZipInputStream zis, File file) throws Exception {
-        ZipEntry zip = zis.getNextEntry();
-        if (zip == null) {
-            return;
-        }
-        String name = zip.getName();
-        File f = new File(file.getAbsolutePath() + "/" + name);
-        if (zip.isDirectory()) {
-            f.mkdirs();
-            fileUnZip(zis, file);
-        } else {
-            f.createNewFile();
-            FileOutputStream fos = new FileOutputStream(f);
-            byte[] b = new byte[10240];
-            int aa = 0;
-            while ((aa = zis.read(b)) != -1) {
-                fos.write(b, 0, aa);
+        ZipEntry zip;
+        while ((zip = zis.getNextEntry()) != null) {
+            String name = zip.getName();
+            File f = new File(file.getAbsolutePath() + "/" + name);
+
+            if (zip.isDirectory()) {
+                f.mkdirs();
+            } else {
+                f.createNewFile();
+                try (FileOutputStream fos = new FileOutputStream(f)) {
+                    byte[] b = new byte[10240];
+                    int aa;
+                    while ((aa = zis.read(b)) != -1) {
+                        fos.write(b, 0, aa);
+                    }
+                }
             }
-            fos.close();
             fileUnZip(zis, file);
         }
     }
@@ -518,20 +480,21 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         if (!file.exists()) {
             return new byte[0];
         }
-        InputStream fr = null;
-        try {
+
+        try (InputStream fr = new FileInputStream(file)) {
             byte[] content = new byte[(int) file.length()];
 
-            fr = new FileInputStream(file);
             int length = fr.read(content);
             if (length == file.length()) {
                 return content;
+            } else {
+                logger.info("File: " + filePath + " getFileContent error. Only read " + length + " bytes out of " + file.length());
+                return new byte[0];
             }
         } catch (IOException e) {
-            logger.info("File:" + filePath + " getFileContent error", e);
-        } finally {
-            safeCloseInputStream(fr);
+            logger.info("File: " + filePath + " getFileContent error", e);
         }
+
         return new byte[0];
     }
 
@@ -544,33 +507,19 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         }
         if (!sFile.exists()) {
             System.err.println("需要复制的文件不存在，请检查！");
+            return null;
         }
-        FileInputStream fis = null;
-        FileOutputStream outputStream = null;
-        try {
-            fis = new FileInputStream(sFile);
-            outputStream = new FileOutputStream(targetPath + "\\" + tFileName);
+
+        try(FileInputStream fis = new FileInputStream(sFile);
+            FileOutputStream outputStream = new FileOutputStream(targetPath + "\\" + tFileName);) {
             byte[] buff = new byte[2048];
             int temp = 0;
             while ((temp = fis.read(buff, 0, 2048)) != -1) {
                 outputStream.write(buff, 0, temp);
             }
-            fis.close();
-            outputStream.close();
             return targetPath + "\\" + tFileName;
         } catch (Exception e) {
             System.err.println(e.getMessage());
-        } finally {
-            try {
-                if (fis != null) {
-                    fis.close();
-                }
-                if (outputStream != null) {
-                    outputStream.close();
-                }
-            } catch (Exception e) {
-                System.err.println(e.getMessage());
-            }
         }
         return null;
     }
@@ -581,11 +530,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     }
 
     public static void downloadFile(HttpServletRequest request, HttpServletResponse response, String filePath, String fileName) {
-        BufferedInputStream bis = null;
-        BufferedOutputStream bos = null;
-        try {
-            bis = new BufferedInputStream(new FileInputStream(filePath + fileName));
-            bos = new BufferedOutputStream(response.getOutputStream());
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filePath + fileName));
+             BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())) {
 
             long fileLength = new File(filePath).length();
 
@@ -597,10 +543,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
                 bos.write(buff, 0, bytesRead);
             }
             bos.flush();
-            bis.close();
-            bos.close();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            logger.error("Failed to download file: " + filePath + fileName, e);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            try {
+                response.getWriter().write("An error occurred while downloading the file.");
+            } catch (IOException ex) {
+                logger.error("Failed to write error message to response", ex);
+            }
         }
     }
 
@@ -675,39 +625,24 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     //BASE64解码成File文件
     public static boolean base64ToFile(String destPath, String base64, String fileName) {
-        File file = null;
-        //创建文件目录
         File dir = new File(destPath);
         if (!dir.exists() && !dir.isDirectory()) {
             dir.mkdirs();
         }
-        BufferedOutputStream bos = null;
-        FileOutputStream fos = null;
-        try {
-            byte[] bytes = Base64.getDecoder().decode(base64);
-            file = new File(destPath + "/" + fileName);
-            fos = new FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
-            bos.write(bytes);
+
+        File file = new File(destPath + "/" + fileName);
+
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(file));
+             ByteArrayOutputStream baos = new ByteArrayOutputStream(Base64.getDecoder().decode(base64).length)) {
+
+            baos.write(Base64.getDecoder().decode(base64));
+            baos.writeTo(bos);
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;
-        } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
+
         return true;
     }
 
@@ -721,23 +656,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     public static String fileToBase64(String path) {
         String base64 = null;
-        InputStream in = null;
-        try {
-            File file = new File(path);
-            in = new FileInputStream(file);
-            byte[] bytes = new byte[(int) file.length()];
+        try(InputStream in = new FileInputStream(new File(path));) {
+            byte[] bytes = new byte[(int) new File(path).length()];
             in.read(bytes);
             base64 = Base64.getEncoder().encodeToString(bytes);
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
         return base64;
     }
