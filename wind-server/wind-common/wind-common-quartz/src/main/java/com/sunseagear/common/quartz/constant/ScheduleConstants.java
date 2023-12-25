@@ -1,8 +1,8 @@
 package com.sunseagear.common.quartz.constant;
 
 public enum ScheduleConstants {
-    TASK_JOB_KEY_PRE_("TASK_JOB_KEY_PRE_"),
-    TASK_TRIGGER_KEY_PRE_("TASK_TRIGGER_KEY_PRE_"),
+    TASK_JOB_KEY_PRE("TASK_JOB_KEY_PRE"),
+    TASK_TRIGGER_KEY_PRE("TASK_TRIGGER_KEY_PRE"),
     TASK_JOB_BAEN_KEY("TASK_JOB_BAEN_KEY"),
 
     MISFIRE_DEFAULT("0", "默认"),

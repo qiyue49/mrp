@@ -5,6 +5,7 @@ import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
+import com.sunseagear.common.utils.UserUtils;
 import com.sunseagear.wind.modules.monitor.entity.LoginLog;
 import com.sunseagear.wind.modules.monitor.service.impl.LoginLogServiceImpl;
 import eu.bitwalker.useragentutils.UserAgent;
