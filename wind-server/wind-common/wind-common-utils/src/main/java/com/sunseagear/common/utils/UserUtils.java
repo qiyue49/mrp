@@ -39,17 +39,18 @@ public class UserUtils {
         Principal principal = getPrincipal();
         if (principal == null) {
             //principal为null说明是公开接口
-            if (ServletUtils.getRequest() == null){
+            if (ServletUtils.getRequest() == null) {
                 // ServletUtils.getRequest()为null说明是socket
                 return null;
             }
             String tenantId = ServletUtils.getRequest().getHeader("tenantId");
-            if (StringUtils.isEmpty(tenantId)){
+            if (StringUtils.isEmpty(tenantId)) {
                 return null;
             }
             return tenantId;
         }
-        return principal.getTenantId();    }
+        return principal.getTenantId();
+    }
 
 
 }
