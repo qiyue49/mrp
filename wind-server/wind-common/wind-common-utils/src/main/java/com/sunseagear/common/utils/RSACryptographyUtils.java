@@ -102,14 +102,14 @@ public class RSACryptographyUtils {
 
     //公钥加密
     public static byte[] encrypt(byte[] content, PrivateKey publicKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+        Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         return cipher.doFinal(content);
     }
 
     //私钥解密
     public static byte[] decrypt(byte[] content, PublicKey privateKey) throws Exception {
-        Cipher cipher = Cipher.getInstance("RSA/ECB/OAEPWithSHA-256AndMGF1Padding");
+        Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         return cipher.doFinal(content);
     }
