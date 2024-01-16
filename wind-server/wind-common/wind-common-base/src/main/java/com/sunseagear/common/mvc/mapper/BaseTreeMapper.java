@@ -27,7 +27,7 @@ public interface BaseTreeMapper<T> extends BaseMapper<T> {
      * @description: 更新ParentIds
      * @return: void
      */
-    void updateSunTreeParentIds(@Param("newParentIds") String newParentIds, @Param("oldParentIds") String oldParentIds);
+    boolean updateSunTreeParentIds(@Param("newParentIds") String newParentIds, @Param("oldParentIds") String oldParentIds);
 
     /**
      * @title: selectTreeList

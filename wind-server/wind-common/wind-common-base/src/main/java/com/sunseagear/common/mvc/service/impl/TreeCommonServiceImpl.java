@@ -42,24 +42,24 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEn
     }
 
     @Override
-    public void insertOrUpdate(T entity) {
+    public boolean insertOrUpdate(T entity) {
         if (isDemo) {
-            return;
+            return true;
         }
 
         if (!ObjectUtils.isNullOrEmpty(entity.getParentId())) {
             T parent = selectById(entity.getParentId());
-            updateSelftAndChild(entity, parent.getId(), parent.makeSelfAsNewParentIds());
+            return updateSelftAndChild(entity, parent.getId(), parent.makeSelfAsNewParentIds());
         } else {
             entity.setParentId(null);
-            updateSelftAndChild(entity, null, null);
+            return updateSelftAndChild(entity, null, null);
         }
     }
 
 
-    private void updateSelftAndChild(T entity, ID newParentId, String newParentIds) {
+    private boolean updateSelftAndChild(T entity, ID newParentId, String newParentIds) {
         if (isDemo) {
-            return;
+            return true;
         }
 
         T oldEntity = selectById(entity.getId());
@@ -68,7 +68,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEn
         entity.setParentIds(newParentIds);
         super.insertOrUpdate(entity);
         String newChildrenParentIds = entity.makeSelfAsNewParentIds();
-        baseMapper.updateSunTreeParentIds(newChildrenParentIds, oldChildrenParentIds);
+        return baseMapper.updateSunTreeParentIds(newChildrenParentIds, oldChildrenParentIds);
     }
 
 

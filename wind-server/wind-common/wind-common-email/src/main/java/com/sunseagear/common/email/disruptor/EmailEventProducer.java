@@ -42,8 +42,8 @@ public class EmailEventProducer {
         return eventId;
     }
 
-    public void send(Long eventId, MimeMessage message, MailProperties mailProperties) {
-        send(eventId, message, mailProperties, null);
+    public Long send(Long eventId, MimeMessage message, MailProperties mailProperties) {
+        return send(eventId, message, mailProperties, null);
     }
 
     public Long send(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {

@@ -3,7 +3,6 @@ package com.sunseagear.common.oss;
 import com.sunseagear.common.oss.client.IOSSClient;
 import com.sunseagear.common.oss.client.OSSClientFactory;
 import com.sunseagear.common.oss.config.OssConfig;
-import com.sunseagear.common.oss.constant.CloudClient;
 import com.sunseagear.common.oss.exception.FileNameLengthLimitExceededException;
 import com.sunseagear.common.oss.exception.InvalidExtensionException;
 import com.sunseagear.common.utils.DateUtils;
@@ -58,7 +57,7 @@ public class OSSUploadHelper {
             "pdf"};
     public String[] allowedExtension = DEFAULT_ALLOWED_EXTENSION;
     //OSS上传客户端
-    private String clientType = CloudClient.CLIENT_LOCAL.getValue();
+    private String clientType = OSSClientFactory.CLIENT_LOCAL;
     private IOSSClient ossClient;
 
     public void init() {

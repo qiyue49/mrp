@@ -1,6 +1,7 @@
 package com.sunseagear.wind.common.helper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.mvc.service.impl.CommonServiceImpl;
 import com.sunseagear.common.tenant.TenantProperties;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.UserUtils;
@@ -38,7 +39,7 @@ public class SysConfigHelper {
             }
             sysConfigMap.get(tenantId).add(config);
         });
-        sysConfigService.setDemo(Boolean.parseBoolean(getDefaultConfig("isDemo").getValue()));
+        CommonServiceImpl.setDemo(Boolean.parseBoolean(getDefaultConfig("isDemo").getValue()));
     }
 
     public List<SysConfig> getSysConfigList(String tenantId) {
@@ -94,7 +95,7 @@ public class SysConfigHelper {
         sysConfigMap.get(tenantId).clear();
         sysConfigMap.get(tenantId).addAll(sysConfigService.selectList(new QueryWrapper<SysConfig>().eq("tenant_id", tenantId)));
         if (TenantProperties.getInstance().getDefaultTenantId().equals(tenantId)){
-            sysConfigService.setDemo(Boolean.parseBoolean(getDefaultConfig("isDemo").getValue()));
+            CommonServiceImpl.setDemo(Boolean.parseBoolean(getDefaultConfig("isDemo").getValue()));
         }
 
     }

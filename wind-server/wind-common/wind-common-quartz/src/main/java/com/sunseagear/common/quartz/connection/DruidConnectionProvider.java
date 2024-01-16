@@ -174,14 +174,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
                 cfg.getIntProperty(DB_DISCARD_IDLE_CONNECTIONS_SECONDS, 0));
     }
 
-    /*
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     *
-     * Interface.
-     *
-     * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-     */
-
     /**
      * Create the underlying C3PO ComboPooledDataSource with the
      * default supported properties.
@@ -240,18 +232,6 @@ public class DruidConnectionProvider implements ConnectionProvider {
                 datasource.setTestOnBorrow(true);
             datasource.setValidationQueryTimeout(idleValidationSeconds);
         }
-    }
-
-    /**
-     * Get the C3PO ComboPooledDataSource created during initialization.
-     *
-     * <p>
-     * This can be used to set additional data source properties in a
-     * subclass's constructor.
-     * </p>
-     */
-    protected DruidDataSource getDataSource() {
-        return datasource;
     }
 
     public Connection getConnection() throws SQLException {
@@ -352,11 +332,11 @@ public class DruidConnectionProvider implements ConnectionProvider {
         this.discardIdleConnectionsSeconds = discardIdleConnectionsSeconds;
     }
 
-    public DruidDataSource getDatasourceData() {
+    public DruidDataSource getDatasource() {
         return datasource;
     }
 
-    public void setDatasourceData(DruidDataSource datasource) {
+    public void setDatasource(DruidDataSource datasource) {
         this.datasource = datasource;
     }
 }

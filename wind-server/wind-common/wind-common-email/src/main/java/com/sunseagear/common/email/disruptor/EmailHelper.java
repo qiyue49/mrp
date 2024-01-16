@@ -78,8 +78,8 @@ public class EmailHelper {
         disruptor.halt();
     }
 
-    public void sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
-        emailEventProducer.send(eventId, message, mailProperties);
+    public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
+        return emailEventProducer.send(eventId, message, mailProperties);
     }
 
     public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
@@ -98,7 +98,7 @@ public class EmailHelper {
         emailEvent.setEmailData(emailData);
         EmailResult emailResult = EmailResult.success("发送成功");
         try {
-            Objects.requireNonNull(MailSenderFactory.build(mailProperties)).send(message);
+            MailSenderFactory.build(mailProperties).send(message);
         } catch (Exception e) {
             e.printStackTrace();
             emailResult = EmailResult.fail("发送失败");
@@ -111,15 +111,27 @@ public class EmailHelper {
 
     public MimeMessage createMimeMessage(MailProperties mailProperties) {
         JavaMailSender javaMailSender = MailSenderFactory.build(mailProperties);
-        return Objects.requireNonNull(javaMailSender).createMimeMessage();
+        return javaMailSender.createMimeMessage();
+    }
+
+    public int getHandlerCount() {
+        return handlerCount;
     }
 
     public void setHandlerCount(int handlerCount) {
         this.handlerCount = handlerCount;
     }
 
+    public int getBufferSize() {
+        return bufferSize;
+    }
+
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
+    }
+
+    public EmailDao getEmailDao() {
+        return emailDao;
     }
 
     public void setEmailDao(EmailDao emailDao) {

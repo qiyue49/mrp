@@ -9,19 +9,17 @@ import java.util.List;
 
 public interface ICommonService<T> extends IService<T> {
 
-    void setDemo(boolean isDemo);
-
     boolean insert(T entity);
 
     void insertBatch(List<T> userRoleList);
 
-    void insertOrUpdate(T entity);
+    boolean insertOrUpdate(T entity);
 
     boolean insertOrUpdateBatch(List<T> list);
 
     boolean deleteById(Serializable id);
 
-    void delete(Wrapper<T> wrapper);
+    boolean delete(Wrapper<T> wrapper);
 
     void deleteBatchIds(List<Serializable> idList);
 

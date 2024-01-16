@@ -13,10 +13,10 @@ import java.util.List;
 
 @Transactional
 public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements ICommonService<T> {
-    protected boolean isDemo = false;
+    protected static boolean isDemo = false;
 
-    public void setDemo(boolean isDemo) {
-        this.isDemo = isDemo;
+    public static void setDemo(boolean isDemo) {
+        CommonServiceImpl.isDemo = isDemo;
     }
     public Page<T> selectPage(Page<T> page) {
         return (Page<T>) page(page);
@@ -47,11 +47,11 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public void insertOrUpdate(T entity) {
+    public boolean insertOrUpdate(T entity) {
         if (isDemo) {
-            return;
+            return true;
         }
-        super.saveOrUpdate(entity);
+        return super.saveOrUpdate(entity);
     }
 
     @Override
@@ -106,11 +106,11 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public void delete(Wrapper<T> wrapper) {
+    public boolean delete(Wrapper<T> wrapper) {
         if (isDemo) {
-            return;
+            return true;
         }
-        remove(wrapper);
+        return remove(wrapper);
     }
 
     @Override

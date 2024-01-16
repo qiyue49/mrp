@@ -1,16 +1,14 @@
 package com.sunseagear.common.email.disruptor;
 
 import jakarta.mail.internet.MimeMessage;
-import lombok.Getter;
 import org.springframework.boot.autoconfigure.mail.MailProperties;
 
 import java.io.Serializable;
 
 public class EmailData implements Serializable {
 
-    private transient MimeMessage message;
-    @Getter
-    private transient MailProperties mailProperties;
+    private MimeMessage message;
+    private MailProperties mailProperties;
 
     public MimeMessage getMimeMessage() {
         return message;
@@ -18,6 +16,10 @@ public class EmailData implements Serializable {
 
     public void setMimeMessage(MimeMessage message) {
         this.message = message;
+    }
+
+    public MailProperties getMailProperties() {
+        return mailProperties;
     }
 
     public void setMailProperties(MailProperties mailProperties) {

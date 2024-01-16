@@ -1,7 +1,7 @@
 package com.sunseagear.wind.common.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
-import com.sunseagear.common.mvc.constant.DataBaseConstant;
+import com.sunseagear.common.mvc.entity.AbstractEntity;
 import com.sunseagear.wind.utils.UserUtils;
 import org.apache.ibatis.reflection.MetaObject;
 
@@ -71,7 +71,7 @@ public class BaseMetaObjectHandler implements MetaObjectHandler {
         // 删除标记
         Object delFlag = getFieldValByName(DEL_FLAG, metaObject);
         if (delFlag == null) {
-            setFieldValByName(DEL_FLAG, DataBaseConstant.NORMAL.getValue(), metaObject);
+            setFieldValByName(DEL_FLAG, AbstractEntity.DEL_FLAG_NORMAL, metaObject);
         }
 
         // 租户标记

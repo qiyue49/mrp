@@ -1,46 +1,46 @@
 package com.sunseagear.common.quartz.constant;
 
-public enum ScheduleConstants {
-    TASK_JOB_KEY_PRE("TASK_JOB_KEY_PRE"),
-    TASK_TRIGGER_KEY_PRE("TASK_TRIGGER_KEY_PRE"),
-    TASK_JOB_BAEN_KEY("TASK_JOB_BAEN_KEY"),
+/**
+ * All rights Reserved, Designed By www.gangwantech.com
+ *
+ * @version V1.0
+ * @package com.gangwantech.common.quartz.constant
+ * @title:
+ * @description: 任务调度排序 * @date: 2018/9/17 15:48
+ * @copyright: 2017 www.gangwantech.com Inc. All rights reserved.
+ */
+public class ScheduleConstants {
 
-    MISFIRE_DEFAULT("0", "默认"),
-    MISFIRE_IGNORE_MISFIRES("1", "立即触发执行"),
-    MISFIRE_FIRE_AND_PROCEED("2", "触发一次执行"),
-    MISFIRE_DO_NOTHING("3", "不触发立即执行"),
+    public static final String TASK_JOB_KEY_PRE_ = "TASK_JOB_KEY_PRE_";
 
-    STATUS_RUNNING("1", "运行中"),
-    STATUS_NOT_RUNNING("0", "未运行"),
-    CONCURRENT_IS("1", "允许并发"),
-    CONCURRENT_NOT("0", "禁止并发");
+    public static final String TASK_TRIGGER_KEY_PRE_ = "TASK_TRIGGER_KEY_PRE_";
 
-    private String value;
-    private String description;
+    public static final String TASK_JOB_BAEN_KEY = "TASK_JOB_BAEN_KEY";
 
-    ScheduleConstants(String value) {
-        this.value = value;
-    }
+    /**
+     * 默认
+     */
+    public static final String MISFIRE_DEFAULT = "0";
 
-    ScheduleConstants(String value, String description) {
-        this.value = value;
-        this.description = description;
-    }
+    /**
+     * 立即触发执行
+     */
+    public static final String MISFIRE_IGNORE_MISFIRES = "1";
 
-    public String getValue() {
-        return value;
-    }
+    /**
+     * 触发一次执行
+     */
+    public static final String MISFIRE_FIRE_AND_PROCEED = "2";
 
-    public String getDescription() {
-        return description != null ? description : "";
-    }
+    /**
+     * 不触发立即执行
+     */
+    public static final String MISFIRE_DO_NOTHING = "3";
 
-    public static ScheduleConstants fromValue(String value) {
-        for (ScheduleConstants constant : values()) {
-            if (constant.getValue().equals(value)) {
-                return constant;
-            }
-        }
-        throw new IllegalArgumentException("Invalid value: " + value);
-    }
+
+    public static final String STATUS_RUNNING = "1";
+    public static final String STATUS_NOT_RUNNING = "0";
+    public static final String CONCURRENT_IS = "1";
+    public static final String CONCURRENT_NOT = "0";
+
 }

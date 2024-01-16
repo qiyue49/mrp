@@ -1,21 +1,24 @@
 package com.sunseagear.common.oss.client;
 
-import com.sunseagear.common.oss.constant.CloudClient;
-
 /**
  * 文件上传Factory
  */
 public final class OSSClientFactory {
 
+    public static final String CLIENT_LOCAL = "local"; //本地
+    public static final String CLIENTA_ALIYUN = "aliyun"; //阿里云
+    public static final String CLIENTA_TENCENT = "tencent"; //腾讯云
+    public static final String CLIENTA_QINIU = "qiniu"; //七牛云
+
     public static IOSSClient build(String clientType) {
         IOSSClient ossClient;
-        if (CloudClient.CLIENT_LOCAL.getValue().equals(clientType)) {
+        if (CLIENT_LOCAL.equals(clientType)) {
             ossClient = new LocalClient();
-        } else if (CloudClient.CLIENTA_ALIYUN.getValue().equals(clientType)) {
+        } else if (CLIENTA_ALIYUN.equals(clientType)) {
             ossClient = new AliyunOSSClient();
-        } else if (CloudClient.CLIENTA_TENCENT.getValue().equals(clientType)) {
+        } else if (CLIENTA_TENCENT.equals(clientType)) {
             ossClient = new TencentCOS();
-        } else if (CloudClient.CLIENTA_QINIU.getValue().equals(clientType)) {
+        } else if (CLIENTA_QINIU.equals(clientType)) {
             ossClient = new QiniuOSSClient();
         } else {
             return null;

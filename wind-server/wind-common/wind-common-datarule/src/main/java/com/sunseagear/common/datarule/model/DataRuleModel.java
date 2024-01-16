@@ -1,6 +1,5 @@
 package com.sunseagear.common.datarule.model;
 
-import com.sunseagear.common.datarule.constant.DataScopeConstant;
 import lombok.Data;
 
 import java.io.Serial;
@@ -12,6 +11,9 @@ public class DataRuleModel implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    public static final String DEFAULT_FIELD = "organizationId";
+    public static final String DEFAULT_COLUMN = "organization_id";
+    public static final String DEFAULT_TABLE = "sys_organization";
 
     public static final int ALL = 1; //  全部
     public static final int OWN = 2; //  本人可见
@@ -25,12 +27,12 @@ public class DataRuleModel implements Serializable {
     /**
      * 数据权限字段
      */
-    private String scopeColumn = DataScopeConstant.DEFAULT_COLUMN.getValue();
+    private String scopeColumn = DEFAULT_COLUMN;
     private String userColumn;
-    private String userEntityField = DataScopeConstant.DEFAULT_FIELD.getValue();
+    private String userEntityField = DEFAULT_FIELD;
 
     //数据权限关联表名
-    private String tableName = DataScopeConstant.DEFAULT_TABLE.getValue();
+    private String tableName = DEFAULT_TABLE;
     /**
      * 数据权限规则
      */

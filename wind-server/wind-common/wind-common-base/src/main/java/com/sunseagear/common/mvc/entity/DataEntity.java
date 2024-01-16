@@ -2,7 +2,6 @@ package com.sunseagear.common.mvc.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.sunseagear.common.mvc.constant.DataBaseConstant;
 import lombok.Getter;
 
 import java.io.Serial;
@@ -14,7 +13,6 @@ import java.util.Date;
  * @param <ID> 主键类型
  * @version 2016-12-03
  */
-@Getter
 public abstract class DataEntity<ID> extends AbstractEntity<ID> {
 
     @Serial
@@ -38,29 +36,53 @@ public abstract class DataEntity<ID> extends AbstractEntity<ID> {
     @TableField(value = "del_flag", fill = FieldFill.INSERT)
     protected int delFlag = 0; // 删除标记（0：正常；1：删除 ）
 
-    public DataEntity() {
+    protected DataEntity() {
         super();
-        this.delFlag = DataBaseConstant.NORMAL.getValue();
+        this.delFlag = DEL_FLAG_NORMAL;
+    }
+
+    public String getRemarks() {
+        return remarks;
     }
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
 
+    public Long getCreateBy() {
+        return createBy;
+    }
+
     public void setCreateBy(Long createBy) {
         this.createBy = createBy;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
     }
 
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
+    public Long getUpdateBy() {
+        return updateBy;
+    }
+
     public void setUpdateBy(Long updateBy) {
         this.updateBy = updateBy;
     }
 
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public int getDelFlag() {
+        return delFlag;
     }
 
     public void setDelFlag(int delFlag) {

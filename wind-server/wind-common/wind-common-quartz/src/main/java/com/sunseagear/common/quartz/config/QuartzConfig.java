@@ -69,10 +69,7 @@ public class QuartzConfig implements ApplicationRunner {
         String dataSourceBean = env.getProperty("quartz.data-source");
         if (StringUtils.isEmpty(dataSourceBean) || "default".equals(dataSourceBean)) {
             schedulerFactoryBean.setDataSource((javax.sql.DataSource) dataSource);
-        }  /* dataSource = SpringContextHolder.getBean(dataSourceBean);
-            if (dataSource != null) {
-                schedulerFactoryBean.setDataSource(dataSource);
-            }*/
+        }
         schedulerFactoryBean.setQuartzProperties(quartzProperties());
         schedulerFactoryBean.setSchedulerName("windScheduler");
         // 启动时延期1秒开始任务
