@@ -32,9 +32,12 @@ public class OssConfig {
     @Resource
     private AliyunConfig aliyun;
 
+    @Resource
     private LocalConfig local;
 
+    @Resource
     private TencentConfig tencent;
 
+    @Resource
     private QiniuConfig qiniu;
 }
