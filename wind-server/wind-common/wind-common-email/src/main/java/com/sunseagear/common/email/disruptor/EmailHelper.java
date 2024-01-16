@@ -15,7 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.*;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class EmailHelper {
     @Getter
@@ -40,8 +41,7 @@ public class EmailHelper {
     @PostConstruct
     private void start() {
         // Executor that will be used to construct new threads for consumers
-        //Executor executor = Executors.newCachedThreadPool();
-        ExecutorService executor = new ThreadPoolExecutor(2, 5, 3, TimeUnit.SECONDS, new LinkedBlockingDeque<>(3), Executors.defaultThreadFactory(), new ThreadPoolExecutor.DiscardOldestPolicy());
+        Executor executor = Executors.newCachedThreadPool();
 
         // The factory for the event
         EmailEventFactory factory = new EmailEventFactory();
@@ -78,8 +78,8 @@ public class EmailHelper {
         disruptor.halt();
     }
 
-    public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
-        return emailEventProducer.send(eventId, message, mailProperties);
+    public void sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties) {
+        emailEventProducer.send(eventId, message, mailProperties);
     }
 
     public Long sendAsync(Long eventId, MimeMessage message, MailProperties mailProperties, EmailHandlerCallBack callBack) {
@@ -98,7 +98,7 @@ public class EmailHelper {
         emailEvent.setEmailData(emailData);
         EmailResult emailResult = EmailResult.success("发送成功");
         try {
-            MailSenderFactory.build(mailProperties).send(message);
+            Objects.requireNonNull(MailSenderFactory.build(mailProperties)).send(message);
         } catch (Exception e) {
             e.printStackTrace();
             emailResult = EmailResult.fail("发送失败");
@@ -111,27 +111,15 @@ public class EmailHelper {
 
     public MimeMessage createMimeMessage(MailProperties mailProperties) {
         JavaMailSender javaMailSender = MailSenderFactory.build(mailProperties);
-        return javaMailSender.createMimeMessage();
-    }
-
-    public int getHandlerCount() {
-        return handlerCount;
+        return Objects.requireNonNull(javaMailSender).createMimeMessage();
     }
 
     public void setHandlerCount(int handlerCount) {
         this.handlerCount = handlerCount;
     }
 
-    public int getBufferSize() {
-        return bufferSize;
-    }
-
     public void setBufferSize(int bufferSize) {
         this.bufferSize = bufferSize;
-    }
-
-    public EmailDao getEmailDao() {
-        return emailDao;
     }
 
     public void setEmailDao(EmailDao emailDao) {
