@@ -100,7 +100,7 @@ public class QuartzManager {
             scheduler.rescheduleJob(triggerKey, trigger);
         }
         // 暂停任务
-        if (job.equals(ScheduleConstants.STATUS_NOT_RUNNING)) {
+        if (job.getJobStatus().equals(ScheduleConstants.STATUS_NOT_RUNNING)) {
             pauseJob(job);
         }
     }
@@ -141,7 +141,6 @@ public class QuartzManager {
         List<ScheduleJob> jobList = new ArrayList<>(executingJobs.size());
         for (JobExecutionContext executingJob : executingJobs) {
             JobDetail jobDetail = executingJob.getJobDetail();
-            JobKey jobKey = jobDetail.getKey();
             Trigger trigger = executingJob.getTrigger();
             ScheduleJob job = (ScheduleJob) jobDetail.getJobDataMap().get(ScheduleConstants.TASK_JOB_BAEN_KEY);
             Trigger.TriggerState triggerState = scheduler.getTriggerState(trigger.getKey());
