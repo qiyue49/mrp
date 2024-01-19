@@ -36,7 +36,7 @@ public class SmsConfig {
     @Bean
     public ISmsClient smsClient() {
         ISmsClient smsClient = SmsClientFactory.build(smsConfigProperties.getSmsType());
-        Objects.requireNonNull(smsClient).init(smsConfigProperties);
+        smsClient.init(smsConfigProperties);
         return smsClient;
     }
 

@@ -10,7 +10,7 @@ import java.util.HashMap;
 
 public class MessageDispatcher {
 
-    private final HashMap<Integer, JsonProcessor> jsonProcessorHashMap = new HashMap<>();
+    private HashMap<Integer, JsonProcessor> jsonProcessorHashMap = new HashMap<>();
 
     private JsonProcessor errorProcessor;
 

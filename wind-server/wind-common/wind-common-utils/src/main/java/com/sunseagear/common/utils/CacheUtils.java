@@ -5,7 +5,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -20,13 +19,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class CacheUtils {
 
-    private static final RedisTemplate redisTemplate;
+    private static final RedisTemplate redisTemplate = SpringContextHolder.getBean("redisTemplate");
     private static final String SYS_CACHE = "sys_cache";
 
-    static {
-        redisTemplate = SpringContextHolder.getBean("redisTemplate");
-    }
-
+    private CacheUtils() {}
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -116,12 +112,13 @@ public class CacheUtils {
     /**
      * 删除对象
      */
-    public static void clear(final String cacheName) {
+    public static boolean clear(final String cacheName) {
         Set<String> keys = redisTemplate.keys(cacheName + "*");
-        long count = redisTemplate.delete(Objects.requireNonNull(keys));
+        long count = redisTemplate.delete(keys);
+        return keys.size() == count;
     }
 
-    public static Set keys(final String cacheName){
+    public static Set<String> keys(final String cacheName){
         return redisTemplate.keys(cacheName + "*");
     }
 
@@ -138,7 +135,7 @@ public class CacheUtils {
     /**
      * 获得缓存的Map
      */
-    public static <T> Map getCacheMap(final String key) {
+    public static <T> Map<String, T> getCacheMap(final String key) {
         return redisTemplate.opsForHash().entries(key);
     }
 
@@ -180,7 +177,7 @@ public class CacheUtils {
     /**
      * 获得缓存的set的全部成员
      */
-    public static <T> Set getCacheSet(final String key) {
+    public static <T> Set<T> getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);
     }
 

@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.security.SecureRandom;
 
 /**
  * base64转MultipartFile
@@ -13,28 +14,24 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
 
     private final byte[] imgContent;
     private final String header;
-
+    private SecureRandom random = new SecureRandom();
     public BASE64DecodedMultipartFile(byte[] imgContent, String header) {
         this.imgContent = imgContent;
         this.header = header.split(";")[0];
     }
 
-    @NotNull
     @Override
     public String getName() {
-        // TODO - implementation depends on your requirements
-        return System.currentTimeMillis() + Math.random() + "." + header.split("/")[1];
+        return System.currentTimeMillis() + "" + random.nextInt(10) + "." + header.split("/")[1];
     }
 
     @Override
     public String getOriginalFilename() {
-        // TODO - implementation depends on your requirements
-        return System.currentTimeMillis() + (int) (Math.random() * 10000) + "." + header.split("/")[1];
+        return System.currentTimeMillis() + "" + random.nextInt(10) + "." + header.split("/")[1];
     }
 
     @Override
     public String getContentType() {
-        // TODO - implementation depends on your requirements
         return header.split(":")[1];
     }
 
@@ -48,20 +45,18 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
         return imgContent.length;
     }
 
-    @NotNull
     @Override
     public byte[] getBytes() {
         return imgContent;
     }
 
-    @NotNull
     @Override
     public InputStream getInputStream() {
         return new ByteArrayInputStream(imgContent);
     }
 
     @Override
-    public void transferTo(@NotNull File dest) throws IOException {
+    public void transferTo(File dest) throws IOException {
         try (FileOutputStream outputStream = new FileOutputStream(dest)) {
             outputStream.write(imgContent);
         } catch (IllegalArgumentException e) {
@@ -71,12 +66,10 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
 
     /**
      * base64转MultipartFile文件
-     *
      */
     public static MultipartFile base64ToMultipart(String base64) {
         String[] baseStrs = base64.split(",");
 
-        Base64 decoder = new Base64();
         byte[] b = Base64.decodeBase64(baseStrs[1]);
 
         for (int i = 0; i < b.length; ++i) {

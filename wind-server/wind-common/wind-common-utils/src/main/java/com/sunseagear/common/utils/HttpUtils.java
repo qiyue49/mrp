@@ -8,6 +8,8 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class HttpUtils {
+    private HttpUtils() {
+    }
 
     public static String SyncGet(final String webUrl, Headers headers) {
         final Request request = new Request.Builder()
@@ -49,7 +51,7 @@ public class HttpUtils {
     private static String execute(Request request) {
         try {
             Response response = mOkHttpClient.newCall(request).execute();
-            return Objects.requireNonNull(response.body()).string();
+            return response.body().string();
         } catch (IOException e) {
             e.printStackTrace();
         }

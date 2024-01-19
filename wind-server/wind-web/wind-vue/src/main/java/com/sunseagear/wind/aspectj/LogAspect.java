@@ -1,9 +1,9 @@
 package com.sunseagear.wind.aspectj;
 
-import com.alibaba.fastjson.JSON;
 import com.sunseagear.common.disruptor.Task;
 import com.sunseagear.common.disruptor.TaskHelper;
 import com.sunseagear.common.utils.IpUtils;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.wind.aspectj.annotation.Log;
@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -81,7 +80,7 @@ public class LogAspect {
             operationLog.setStatus(OperationLog.OPERATION_LOG_SUCCESS);
             // 请求的地址
             // 获取客户端操作系统
-            final UserAgent userAgent = UserAgent.parseUserAgentString(Objects.requireNonNull(ServletUtils.getRequest()).getHeader("User-Agent"));
+            final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
             String os = userAgent.getOperatingSystem().getName();
             // 获取客户端浏览器
             String browser = userAgent.getBrowser().getName();
@@ -120,7 +119,7 @@ public class LogAspect {
             if (methodAnnotationLog.requestParam()) {
                 // 获取参数的信息，传入到数据库中。
                 Map<String, String[]> map = ServletUtils.getRequest().getParameterMap();
-                String params = JSON.toJSONString(map);
+                String params = JsonUtils.objectToJsonString(map);
                 operationLog.setParams(params);
             }
             // 保存日志

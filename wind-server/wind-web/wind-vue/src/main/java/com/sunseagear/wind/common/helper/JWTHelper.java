@@ -84,11 +84,11 @@ public class JWTHelper {
     }
 
     public static long getExpireIn() {
-        return (long) (long) Integer.parseInt(SysConfigHelper.getInstance().getSysConfig("tokenExpire").getValue()) * 60 * 1000;
+        return (long) Integer.parseInt(SysConfigHelper.getInstance().getSysConfig("tokenExpire").getValue()) * 60 * 1000;
     }
 
     public static long getRefreshExpireIn() {
-        return (long) (long) Integer.parseInt(SysConfigHelper.getInstance().getSysConfig("refreshTokenExpire").getValue()) * 60 * 1000;
+        return (long) Integer.parseInt(SysConfigHelper.getInstance().getSysConfig("refreshTokenExpire").getValue()) * 60 * 1000;
     }
 
 }

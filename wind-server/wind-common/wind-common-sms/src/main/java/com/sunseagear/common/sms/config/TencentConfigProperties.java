@@ -1,7 +1,6 @@
 package com.sunseagear.common.sms.config;
 
 import com.sunseagear.common.utils.PropertiesUtil;
-import lombok.Getter;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -12,7 +11,6 @@ import lombok.Getter;
  * @description: 腾讯云配置 * @date: 2018/4/26 9:39
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-@Getter
 public class TencentConfigProperties {
     public static final String DEFAULT_CONFIG_FILE = "tencent.sms.properties";
 
@@ -43,16 +41,32 @@ public class TencentConfigProperties {
         return smsConfigProperties;
     }
 
+    public Integer getAppId() {
+        return appId;
+    }
+
     public void setAppId(Integer appId) {
         this.appId = appId;
+    }
+
+    public String getAppKey() {
+        return appKey;
     }
 
     public void setAppKey(String appKey) {
         this.appKey = appKey;
     }
 
+    public String getSecretId() {
+        return secretId;
+    }
+
     public void setSecretId(String secretId) {
         this.secretId = secretId;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
     }
 
     public void setSecretKey(String secretKey) {

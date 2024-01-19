@@ -24,18 +24,23 @@ import java.util.Map;
  */
 public class DictUtils {
 
-    protected final static String DICT_CACHE_NAME = "sys_dict";
+    protected static final String DICT_CACHE_NAME = "sys_dict";
 
-    public static Map getDict() {
+    private DictUtils() {
+    }
+
+    public static Map<String, List<Dict>> getDict() {
         //数据字典
-        CacheUtils.getCacheMap(DICT_CACHE_NAME);
+        if (CacheUtils.getCacheMap(DICT_CACHE_NAME) == null) {
+            initDict();
+        }
         return CacheUtils.getCacheMap(DICT_CACHE_NAME);
     }
 
     /**
      * 数据字典初始化
      */
-    public static void initDict() {
+    public static Map<String, List<Dict>> initDict() {
         clear();
         Map<String, List<Dict>> dictMap = new HashMap<>();
         for (com.sunseagear.wind.modules.sys.entity.Dict dict : SpringContextHolder.getBean(DictServiceImpl.class).selectDictList()) {
@@ -48,11 +53,14 @@ public class DictUtils {
             }
         }
         putDict(dictMap);
+        return dictMap;
     }
 
     public static List<Dict> getDictList(String code) {
         //数据字典
-        CacheUtils.getCacheMap(DICT_CACHE_NAME);
+        if (CacheUtils.getCacheMap(DICT_CACHE_NAME) == null) {
+            initDict();
+        }
         Map<String, List<Dict>> dictMap = CacheUtils.getCacheMap(DICT_CACHE_NAME);
         List<Dict> dictList = dictMap.get(code);
         if (dictList == null) {
@@ -84,7 +92,7 @@ public class DictUtils {
         if (StringUtils.isNotBlank(code) && StringUtils.isNotBlank(values)) {
             List<String> valueList = new ArrayList<>();
             for (String value : StringUtils.split(values, ",")) {
-                valueList.add(getDictLabel(value, code, defaultValue));
+                valueList.add(getDictLabel(code, value, defaultValue));
             }
             return StringUtils.join(valueList, ",");
         }
@@ -112,7 +120,6 @@ public class DictUtils {
     /**
      * 返回字典
      */
-    @Getter
     public static class Dict implements Serializable {
         private String label;
         private String value;
@@ -126,8 +133,16 @@ public class DictUtils {
             this.value = value;
         }
 
+        public String getLabel() {
+            return label;
+        }
+
         public void setLabel(String label) {
             this.label = label;
+        }
+
+        public String getValue() {
+            return value;
         }
 
         public void setValue(String value) {

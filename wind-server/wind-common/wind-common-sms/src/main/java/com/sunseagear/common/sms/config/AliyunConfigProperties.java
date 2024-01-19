@@ -1,7 +1,6 @@
 package com.sunseagear.common.sms.config;
 
 import com.sunseagear.common.utils.PropertiesUtil;
-import lombok.Getter;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -12,7 +11,6 @@ import lombok.Getter;
  * @description: 阿里云配置 * @date: 2018/4/26 9:39
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
  */
-@Getter
 public class AliyunConfigProperties {
     public static final String DEFAULT_CONFIG_FILE = "aliyun.sms.properties";
 
@@ -37,8 +35,16 @@ public class AliyunConfigProperties {
         return smsConfigProperties;
     }
 
+    public String getAccessKeyId() {
+        return accessKeyId;
+    }
+
     public void setAccessKeyId(String accessKeyId) {
         this.accessKeyId = accessKeyId;
+    }
+
+    public String getAccessKeySecret() {
+        return accessKeySecret;
     }
 
     public void setAccessKeySecret(String accessKeySecret) {

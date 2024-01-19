@@ -67,16 +67,13 @@ public class Principal implements UserDetails, Serializable {
     }
 
     private void init() {
-        UserAgent userAgent = UserAgent.parseUserAgentString(Objects.requireNonNull(ServletUtils.getRequest()).getHeader("User-Agent"));
-        String ip = IpUtils.getIpAddr(ServletUtils.getRequest());
+        UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
+        this.loginIp = IpUtils.getIpAddr(ServletUtils.getRequest());
         // 获取客户端操作系统
-        String os = userAgent.getOperatingSystem().getName();
+        this.os = userAgent.getOperatingSystem().getName();
         // 获取客户端浏览器
-        String browser = userAgent.getBrowser().getName();
+        this.browser = userAgent.getBrowser().getName();
         this.startTime = new Date();
-        this.browser = browser;
-        this.os = os;
-        this.loginIp = ip;
     }
 
 

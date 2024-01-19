@@ -1,18 +1,18 @@
 package com.sunseagear.common.sms.client;
 
-import com.sunseagear.common.sms.constant.CloudClient;
-
 /**
  * 文件上传Factory
  */
 public final class SmsClientFactory {
-
+    private static final String CLIENT_ALIYUN = "aliyun"; //阿里云
+    private static final String CLIENT_TENCENT = "tencent"; //腾讯云
+    private static final String CLIENT_HUYI = "huyi"; //互易
     public static ISmsClient build(String clientType) {
-        if (CloudClient.CLIENTA_ALIYUN.getValue().equals(clientType)) {
+        if (CLIENT_ALIYUN.equals(clientType)) {
             return new AliyunSmsClient();
-        } else if (CloudClient.CLIENTA_TENCENT.getValue().equals(clientType)) {
+        } else if (CLIENT_TENCENT.equals(clientType)) {
             return new TencentSmsClient();
-        } else if (CloudClient.CLIENT_HUYI.getValue().equals(clientType)) {
+        } else if (CLIENT_HUYI.equals(clientType)) {
             return new HuyiSmsClient();
         }
         return null;

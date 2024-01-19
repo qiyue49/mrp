@@ -23,8 +23,6 @@ public class EncyOrDecyUtils {
     private static final int ITERATION_COUNT = 50000;
     private static final char[] DEFAULT_KEY = "Tr7WE0J2z3uJod4p".toCharArray();
 
-    private static final Integer KEY_LENGTH = 16;
-
     public static String MD5(byte[] data) {
         return DigestUtils.md5Hex(data);
     }

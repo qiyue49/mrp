@@ -32,7 +32,6 @@ public class CommonTenantHandler implements TenantLineHandler {
      */
     @Override
     public String getTenantIdColumn() {
-        TenantProperties.getInstance();
         return TenantProperties.getInstance().getColumn();
     }
 
@@ -44,7 +43,7 @@ public class CommonTenantHandler implements TenantLineHandler {
      */
     @Override
     public boolean ignoreTable(String tableName) {
-        if (!TenantProperties.getInstance().getEnable()) {
+        if (!TenantProperties.getInstance().isEnable()) {
             return true;
         }
         return StringUtils.isEmpty(UserUtils.getTenantId()) || TenantProperties.getInstance().getIgnoreTables().contains(tableName);

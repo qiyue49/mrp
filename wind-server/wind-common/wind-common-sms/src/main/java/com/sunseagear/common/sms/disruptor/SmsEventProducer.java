@@ -20,7 +20,7 @@ public class SmsEventProducer {
     private static final Logger logger = LoggerFactory.getLogger(SmsEventProducer.class);
     private final RingBuffer<SmsEvent> ringBuffer;
 
-    public SmsEventProducer(RingBuffer<SmsEvent> ringBuffer, SmsDao smsDao) {
+    public SmsEventProducer(RingBuffer<SmsEvent> ringBuffer) {
         this.ringBuffer = ringBuffer;
     }
 
@@ -47,13 +47,13 @@ public class SmsEventProducer {
         return sendSms(eventId, smsData, null);
     }
 
-    public void sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
+    public Long sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas) {
         SmsData smsData = new SmsData();
         smsData.setPhone(phone);
         smsData.setSmsTemplate(smsTemplate);
         smsData.setDatas(datas);
         smsData.setSmsConfigProperties(smsConfigProperties);
-        sendSms(eventId, smsData);
+        return sendSms(eventId, smsData);
     }
 
     public Long sendSms(Long eventId, String phone, String smsTemplate, SmsConfigProperties smsConfigProperties, Map<String, Object> datas, SmsHandlerCallBack callBack) {

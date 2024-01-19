@@ -1,7 +1,5 @@
 package com.sunseagear.common.utils;
 
-import java.util.Arrays;
-
 /**
  * 加载基础
  */
@@ -20,7 +18,7 @@ public abstract class ObjectSwitchHelper {
     }
 
     public void setByte(String key, byte[] value) {
-        setString(key, Arrays.toString(value));
+        setString(key, String.valueOf(value));
     }
 
     public void setShort(String key, short value) {

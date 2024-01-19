@@ -8,8 +8,7 @@ import java.util.List;
 public class ArrayUtils extends org.apache.commons.lang3.ArrayUtils {
     public static List<String> split(final String str, final String separatorChar) {
         String[] strs = StringUtils.split(str, separatorChar);
-        List<String> strList = new ArrayList<>(Arrays.asList(strs));
-        return strList;
+        return new ArrayList<>(Arrays.asList(strs));
     }
 
     public static String join(final List<String> str, final String separatorChar) {

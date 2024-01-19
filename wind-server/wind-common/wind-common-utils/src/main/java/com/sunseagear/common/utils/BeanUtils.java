@@ -9,7 +9,6 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.lang.Nullable;
-import org.springframework.util.ClassUtils;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -86,7 +85,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      */
     public static <T> T newInstance(String clazzStr) {
         try {
-            Class<?> clazz = ClassUtils.forName(clazzStr, null);
+            Class<?> clazz = ClassUtil.forName(clazzStr, null);
             return newInstance(clazz);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
