@@ -9,9 +9,9 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.email.entity.EmailTemplate;
 import com.sunseagear.wind.modules.email.service.IEmailTemplateService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -37,12 +37,11 @@ import java.util.List;
 @Log(title = "邮件模板")
 public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
 
-    @Resource
+    @Autowired
     private IEmailTemplateService emailTemplateService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)

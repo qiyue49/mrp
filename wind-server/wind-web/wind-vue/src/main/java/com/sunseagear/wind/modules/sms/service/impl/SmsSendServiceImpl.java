@@ -8,7 +8,7 @@ import com.sunseagear.wind.modules.sms.entity.SmsTemplate;
 import com.sunseagear.wind.modules.sms.service.ISmsSendLogService;
 import com.sunseagear.wind.modules.sms.service.ISmsSendService;
 import com.sunseagear.wind.modules.sms.service.ISmsTemplateService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -27,11 +27,11 @@ import java.util.Map;
 @Service("smsSendService")
 public class SmsSendServiceImpl implements ISmsSendService {
 
-    @Resource
+    @Autowired
     private ISmsTemplateService smsTemplateService;
-    @Resource
+    @Autowired
     private ISmsSendLogService smsSendLogService;
-    @Resource
+    @Autowired
     private SmsHelper smsHelper; //自动注入的Bean
 
     @Override

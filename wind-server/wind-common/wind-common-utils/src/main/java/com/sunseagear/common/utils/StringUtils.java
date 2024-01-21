@@ -21,7 +21,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 转换为字节数组
-     *
      */
     public static byte[] getBytes(String str) {
         if (str != null) {
@@ -266,7 +265,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
 
-
     public static String randomNumber(int length) {
         //length表示生成字符串的长度
         StringBuilder sb = new StringBuilder(length);
@@ -367,7 +365,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 转换为字节数组
-     *
      */
     public static String toString(byte[] bytes) {
         try {
@@ -406,7 +403,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     /**
      * 去掉前面的下划线
-     *
      */
     public static String trimDiagonal(String filename) {
         if (filename.startsWith("/")) {

@@ -13,7 +13,6 @@ public class ScheduleJobinvoke {
 
     /**
      * 通过反射调用scheduleJob中定义的方法
-     *
      */
     public static void invokeMethod(ScheduleJob scheduleJob) {
         try {

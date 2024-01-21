@@ -10,7 +10,7 @@ import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.common.helper.VueTreeHelper;
 import com.sunseagear.wind.modules.sys.entity.Organization;
 import com.sunseagear.wind.modules.sys.service.impl.OrganizationServiceImpl;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.util.List;
 @Log(title = "组织机构")
 public class OrganizationJsonController extends BaseBeanController<Organization> {
 
-    @Resource
+    @Autowired
     private OrganizationServiceImpl organizationService;
 
     @PostMapping("/list")

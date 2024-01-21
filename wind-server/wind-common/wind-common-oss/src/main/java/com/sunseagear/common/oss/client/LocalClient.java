@@ -47,7 +47,6 @@ public class LocalClient extends AbstractOSSClient {
 
     /**
      * 判断文件地址保存文件
-     *
      */
     private File getAbsoluteFile(String path) throws IOException {
         String basePath = uploadFilePath;
@@ -63,7 +62,6 @@ public class LocalClient extends AbstractOSSClient {
 
     /**
      * 文件上传
-     *
      */
     @Override
     public String upload(InputStream inputStream, String path) {

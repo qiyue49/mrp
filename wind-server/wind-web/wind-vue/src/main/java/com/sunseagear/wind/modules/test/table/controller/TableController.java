@@ -12,10 +12,10 @@ import com.sunseagear.wind.modules.test.table.entity.Table;
 import com.sunseagear.wind.modules.test.table.service.ITableService;
 import com.sunseagear.wind.utils.excel.ExportExcel;
 import com.sunseagear.wind.utils.excel.ImportExcel;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.commons.text.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -45,12 +45,11 @@ import java.util.List;
 @Log(title = "综合表格")
 public class TableController extends BaseBeanController<Table> {
 
-    @Resource
+    @Autowired
     private ITableService tableService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)

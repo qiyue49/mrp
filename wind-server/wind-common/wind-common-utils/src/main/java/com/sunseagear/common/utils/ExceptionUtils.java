@@ -51,7 +51,6 @@ public class ExceptionUtils {
 
     /**
      * 在request中获取异常类
-     *
      */
     public static Throwable getThrowable(HttpServletRequest request) {
         Throwable ex = null;

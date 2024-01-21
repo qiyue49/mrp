@@ -3,7 +3,10 @@
 <mapper namespace="com.sunseagear.wind.modules.test.treeandtable.mapper.TreeAndTableMapper">
 
     <sql id="Base_Column_List">
-       a.id,
+        a
+        .
+        id
+        ,
        a.name,
        a.type,
        a.tag,
@@ -14,7 +17,7 @@
        a.remarks,
        a.del_flag,
        a.create_by
-	</sql>
+    </sql>
     <sql id="tableJoins">
 
     </sql>

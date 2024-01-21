@@ -9,11 +9,11 @@ import com.sunseagear.common.utils.entity.Principal;
 import com.sunseagear.wind.modules.oss.entity.Attachment;
 import com.sunseagear.wind.modules.oss.service.IAttachmentService;
 import jakarta.annotation.PostConstruct;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.fileupload.FileUploadBase;
 import org.apache.commons.fileupload.FileUploadBase.FileSizeLimitExceededException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,11 +37,11 @@ import java.util.List;
 @Slf4j
 public class AttachmentHelper {
 
-    @Resource
+    @Autowired
     private IAttachmentService attachmentService;
-    @Resource
+    @Autowired
     private OssConfig ossConfig;
-    @Resource
+    @Autowired
     private OSSUploadHelper uploadHelper;
 
     @PostConstruct

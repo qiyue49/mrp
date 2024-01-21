@@ -3,16 +3,19 @@
 <mapper namespace="com.sunseagear.wind.modules.test.table.mapper.TableMapper">
 
     <sql id="Base_Column_List">
-       a.*,
+        a
+        .
+        *
+        ,
        b.realname as "user.realname",
        b.username as "user.username"
-	</sql>
+    </sql>
     <sql id="tableJoins">
         left join sys_user b on b.id = a.author
     </sql>
     <select
-        id="selectPage"
-        resultType="com.sunseagear.wind.modules.test.table.entity.Table">
+            id="selectPage"
+            resultType="com.sunseagear.wind.modules.test.table.entity.Table">
         select
         <include refid="Base_Column_List"/>
         from test_table a

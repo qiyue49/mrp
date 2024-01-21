@@ -10,9 +10,9 @@ import com.sunseagear.wind.common.response.ResponseError;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.LoginLogUtils;
 import com.sunseagear.wind.utils.UserUtils;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -38,19 +38,18 @@ import java.util.Map;
 @RequestMapping("/sso/oauth2")
 public class Oauth2Controller {
 
-    @Resource
+    @Autowired
     private IOAuthService oAuthService;
-    @Resource
+    @Autowired
     private JWTHelper jwtHelper;
-    @Resource
+    @Autowired
     private DataRuleHandler dataRuleHandler;
 
-    @Resource
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     /**
      * 登陆方法
-     *
      */
     @RequestMapping("/accessToken")
     @ResponseBody
@@ -130,7 +129,6 @@ public class Oauth2Controller {
 
     /**
      * 回收TOKEN
-     *
      */
     @RequestMapping("/revokeToken")
     @ResponseBody

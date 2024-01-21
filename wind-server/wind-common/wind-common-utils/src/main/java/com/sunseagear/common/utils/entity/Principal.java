@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Data
 public class Principal implements UserDetails, Serializable {

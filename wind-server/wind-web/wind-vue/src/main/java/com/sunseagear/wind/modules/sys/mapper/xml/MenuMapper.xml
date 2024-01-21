@@ -3,7 +3,10 @@
 <mapper namespace="com.sunseagear.wind.modules.sys.mapper.MenuMapper">
 
     <sql id="Base_Column_List">
-        t.*,
+        t
+        .
+        *
+        ,
         p.name AS "parentName",
         (select count(*) from sys_menu s
         WHERE s.parent_id=t.id) as
@@ -44,7 +47,8 @@
 
     <!-- 删除子树 -->
     <delete id="deleteSunTree">
-        delete from sys_menu
+        delete
+        from sys_menu
         where parent_ids like concat('%', concat(#{oldParentIds}, '%'))
     </delete>
 
@@ -107,9 +111,13 @@
     </select>
 
     <delete id="deleteRoleMenu">
-        delete rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and (m.type = 2 or m.type = 1)and rm.role_id = #{roleId}
+        delete
+        rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and (m.type = 2 or m.type = 1)and rm.role_id =
+        #{roleId}
     </delete>
     <delete id="deleteRolePermission">
-        delete rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and m.type = 3 and rm.role_id = #{roleId}
+        delete
+        rm from sys_role_menu rm, sys_menu m where m.id = rm.menu_id and m.type = 3 and rm.role_id =
+        #{roleId}
     </delete>
 </mapper>

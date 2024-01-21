@@ -21,5 +21,5 @@ public class TenantConfiguration {
     public TenantLineHandler tenantHandler() {
         return new CommonTenantHandler();
     }
-    
+
 }

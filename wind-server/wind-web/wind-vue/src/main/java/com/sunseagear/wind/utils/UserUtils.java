@@ -97,7 +97,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 根据用户名获取用户
-     *
      */
     public static User getByUserName(String username) {
         User user = CacheUtils.getCacheObject(USER_CACHE_USER_NAME + username);
@@ -114,7 +113,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 获取当前用户角色列表
-     *
      */
     public static List<Role> getRoleList() {
         User user = getUser();
@@ -132,7 +130,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 获取角色列表
-     *
      */
     public static Set<String> getRoleStringList() {
         Set<Role> roles = Sets.newConcurrentHashSet(getRoleList());
@@ -141,7 +138,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 是否有特定的角色
-     *
      */
     public static boolean hasRole(String roleCode) {
         Set<String> roleCodeList = getRoleStringList();
@@ -155,7 +151,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 获取权限列表
-     *
      */
     public static Set<String> getPermissionSet() {
         User user = getUser();
@@ -190,7 +185,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 获取当前用户授权菜单
-     *
      */
     public static List<String> getPermissionList() {
         User user = getUser();
@@ -238,7 +232,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 更新用户
-     *
      */
     public static void update(Long id) {
         User user = userService.selectById(id);
@@ -260,16 +253,15 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 清除指定用户缓存
-     *
      */
     public static void clearCache(User user) {
         CacheUtils.clear(USER_CACHE_ID + user.getId());
         CacheUtils.clear(USER_CACHE_USER_NAME + user.getUsername());
         CacheUtils.clear(CACHE_ROLE_LIST + user.getId());
     }
+
     /**
      * 清除指定用户缓存
-     *
      */
     public static void clearCache(Principal user) {
         CacheUtils.clear(USER_CACHE_ID + user.getId());
@@ -279,7 +271,6 @@ public class UserUtils extends com.sunseagear.common.utils.UserUtils {
 
     /**
      * 清除权限缓存
-     *
      */
     public static void clearPermissionCache(Long roleId) {
         CacheUtils.clear(CACHE_PERMISSION_LIST + roleId);

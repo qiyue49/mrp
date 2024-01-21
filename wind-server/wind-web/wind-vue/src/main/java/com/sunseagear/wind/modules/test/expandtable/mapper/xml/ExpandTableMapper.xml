@@ -3,7 +3,10 @@
 <mapper namespace="com.sunseagear.wind.modules.test.expandtable.mapper.ExpandTableMapper">
 
     <sql id="Base_Column_List">
-       a.id,
+        a
+        .
+        id
+        ,
        a.name,
        a.shop,
        a.category,
@@ -16,7 +19,7 @@
        a.remarks,
        a.del_flag,
        a.create_by
-	</sql>
+    </sql>
     <sql id="tableJoins">
 
     </sql>

@@ -148,7 +148,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取过去的天数
-     *
      */
     public static long pastDays(Date date) {
         long t = System.currentTimeMillis() - date.getTime();
@@ -157,7 +156,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取过去的小时
-     *
      */
     public static long pastHour(Date date) {
         long t = System.currentTimeMillis() - date.getTime();
@@ -166,7 +164,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取过去的分钟
-     *
      */
     public static long pastMinutes(Date date) {
         long t = System.currentTimeMillis() - date.getTime();
@@ -175,7 +172,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 转换为时间（天,时:分:秒.毫秒）
-     *
      */
     public static String formatDateTime(long timeMillis) {
         long day = timeMillis / (24 * 60 * 60 * 1000);
@@ -188,7 +184,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
     /**
      * 获取两个日期之间的天数
-     *
      */
     public static double getDistanceOfTwoDate(Date before, Date after) {
         long beforeTime = before.getTime();
@@ -253,6 +248,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 
     /**
+     *
      */
     public static void main(String[] args) {
         // System.out.println(formatDate(parseDate("2010/3/6")));

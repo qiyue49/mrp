@@ -18,6 +18,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     public static void setDemo(boolean isDemo) {
         CommonServiceImpl.isDemo = isDemo;
     }
+
     public Page<T> selectPage(Page<T> page) {
         return (Page<T>) page(page);
     }

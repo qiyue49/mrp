@@ -7,9 +7,9 @@ import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sms.service.ISmsSendService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +27,7 @@ import java.util.Map;
 @RequestMapping("/sms/send")
 @Log(title = "短信发送")
 public class SmsSendController {
-    @Resource
+    @Autowired
     private ISmsSendService smsSendService;
 
     @PostMapping(value = "/sendSmsByCode")

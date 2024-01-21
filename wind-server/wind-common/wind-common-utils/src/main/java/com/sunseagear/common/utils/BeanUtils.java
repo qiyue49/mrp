@@ -320,7 +320,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                     }
                 }
             }
-        } catch (InstantiationException | InvocationTargetException | IntrospectionException | IllegalAccessException e) {
+        } catch (InstantiationException | InvocationTargetException | IntrospectionException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
@@ -427,7 +428,6 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
     /**
      * 字符串到其他类型转换
-     *
      */
     public static Object Caster(Class<?> type, String value) {
 
@@ -739,7 +739,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
     /**
      * 将json中存在的属性填充到Object对象对应的属性中去,如果Json对象中不存在的将忽略
      *
-     * @param obj  目标对象
+     * @param obj 目标对象
      */
     public static Object json2Objec(Object obj, JSONObject json) {
         if (json == null) {
@@ -818,7 +818,8 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
                 } else {
                     setField(obj, key, value);
                 }
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
+                     InvocationTargetException e) {
                 e.printStackTrace();
             }
         }

@@ -20,25 +20,21 @@ public interface IScheduleJobService extends ICommonService<ScheduleJob> {
 
     /**
      * 更改状态
-     *
      */
     void changeStatus(Long jobId, String cmd);
 
     /**
      * 更改任务 cron表达式
-     *
      */
     void updateCron(Long jobId);
 
     /**
      * 执行一次
-     *
      */
     void runAJobNow(Long jobId);
 
     /**
      * 刷新任务
-     *
      */
     void refreshTask();
 }

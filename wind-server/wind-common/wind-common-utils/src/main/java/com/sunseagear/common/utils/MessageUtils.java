@@ -5,7 +5,7 @@ import org.springframework.context.MessageSource;
 /**
  * <a href="http://blog.csdn.net/hj7jay/article/details/51383248">...</a> Java
  * SpringMVC<a href="实现国际化整合案例分析（i18n）">http://www.cnblogs.com/liuke</a>mng/p/3750117<a href=".html
- ">* SpringMVC学习系列（8） 之 国际化 http://blog.csdn.net/</a>qyf_5445/article/details/8124306
+ * ">* SpringMVC学习系列（8） 之 国际化 http://blog.csdn.net/</a>qyf_5445/article/details/8124306
  * spring中MessageSource的配置使用方法1
  *
  * @author Administrator

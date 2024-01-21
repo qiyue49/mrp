@@ -18,11 +18,11 @@ import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserRoleService;
 import com.sunseagear.wind.modules.sys.service.IUserService;
 import com.sunseagear.wind.utils.UserUtils;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -49,18 +49,17 @@ import java.util.List;
 @PreAuthorize("hasAuthority('sys:user')")
 @Log(title = "用户管理")
 public class UserController extends BaseBeanController<User> {
-    @Resource
+    @Autowired
     private IUserService userService;
 
-    @Resource
+    @Autowired
     private IUserRoleService userRoleService;
 
-    @Resource
+    @Autowired
     private IRoleService roleService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
      */
     @RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
     @Log(logType = LogType.SELECT)
@@ -82,7 +81,7 @@ public class UserController extends BaseBeanController<User> {
         }
         String organizationId = request.getParameter("organization.id");
         if (!StringUtils.isEmpty(organizationId)) {
-            queryWrapper.nested(i->i.eq("t.organization_id", organizationId).or().like("b.parent_ids",organizationId));
+            queryWrapper.nested(i -> i.eq("t.organization_id", organizationId).or().like("b.parent_ids", organizationId));
         }
         // 预处理
         Page pageBean = userService.selectPage(getPage(), queryWrapper);
@@ -201,7 +200,6 @@ public class UserController extends BaseBeanController<User> {
 
     /**
      * 获取用户信息
-     *
      */
     @GetMapping(value = "info")
     @PreAuthorize("hasAuthority('sys:user:list')")
@@ -213,7 +211,6 @@ public class UserController extends BaseBeanController<User> {
 
     /**
      * 更新用户信息
-     *
      */
     @PostMapping("my/update")
     @Log(logType = LogType.UPDATE, title = "用户更新")
@@ -229,7 +226,6 @@ public class UserController extends BaseBeanController<User> {
 
     /**
      * 更新用户信息
-     *
      */
     @PostMapping("my/changePassword")
     @Log(logType = LogType.OTHER, title = "用户修改密码")

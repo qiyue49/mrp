@@ -2,7 +2,6 @@ package com.sunseagear.common.mvc.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import lombok.Getter;
 
 import java.io.Serial;
 import java.util.Date;

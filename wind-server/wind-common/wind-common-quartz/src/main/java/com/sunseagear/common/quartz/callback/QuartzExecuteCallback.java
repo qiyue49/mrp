@@ -15,19 +15,16 @@ public interface QuartzExecuteCallback {
 
     /**
      * 执行开始
-     *
      */
     void onStart(ScheduleJob scheduleJob);
 
     /**
      * 当执行成功
-     *
      */
     void onSuccess(ScheduleJob scheduleJob, String message);
 
     /**
      * 执行失败
-     *
      */
     void onFailure(ScheduleJob scheduleJob, Exception e, String message);
 }

@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
-import jakarta.annotation.Resource;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -29,9 +29,9 @@ import java.util.Map;
 @Component("emailTask")
 public class EmailTask implements ApplicationListener<ContextRefreshedEvent> {
     public final Logger log = LoggerFactory.getLogger(getClass());
-    @Resource
+    @Autowired
     private IEmailSendLogService emailSendLogService;
-    @Resource
+    @Autowired
     private IEmailSendService emailSendService;
     private Boolean isRun = Boolean.FALSE;
 

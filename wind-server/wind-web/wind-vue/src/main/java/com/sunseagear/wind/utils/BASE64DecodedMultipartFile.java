@@ -1,7 +1,6 @@
 package com.sunseagear.wind.utils;
 
 import org.apache.commons.codec.binary.Base64;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
@@ -15,6 +14,7 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
     private final byte[] imgContent;
     private final String header;
     private SecureRandom random = new SecureRandom();
+
     public BASE64DecodedMultipartFile(byte[] imgContent, String header) {
         this.imgContent = imgContent;
         this.header = header.split(";")[0];

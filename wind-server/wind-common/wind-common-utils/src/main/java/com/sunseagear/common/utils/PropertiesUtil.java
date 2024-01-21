@@ -56,7 +56,6 @@ public class PropertiesUtil extends ObjectSwitchHelper {
 
     /**
      * 更新与删除时指定文件名称
-     *
      */
     public void setOptProperiesName(String properiesName) {
         this.properiesName = properiesName;

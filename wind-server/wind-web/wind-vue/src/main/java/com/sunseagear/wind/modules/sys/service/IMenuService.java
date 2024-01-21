@@ -20,25 +20,21 @@ public interface IMenuService extends ITreeCommonService<Menu, Long> {
 
     /**
      * 通过用户ID查找菜单
-     *
      */
     List<Menu> findMenuByUserId(Long userId);
 
     /**
      * 通过角色查找菜单
-     *
      */
     List<Menu> findMenuByRoleId(Long roleId);
 
     /**
      * 通过用户ID查找菜单
-     *
      */
     List<Menu> findPermissionByUserId(Long userId);
 
     /**
      * 通过用户ID查找菜单
-     *
      */
     List<Menu> findPermissionByRoleId(Long roleId);
 

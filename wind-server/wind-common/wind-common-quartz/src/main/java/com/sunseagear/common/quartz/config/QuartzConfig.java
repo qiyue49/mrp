@@ -5,8 +5,8 @@ import com.sunseagear.common.quartz.callback.QuartzInitCallback;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.common.utils.StringUtils;
 import jakarta.activation.DataSource;
-import jakarta.annotation.Resource;
 import org.quartz.Scheduler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -53,7 +53,7 @@ public class QuartzConfig implements ApplicationRunner {
         }
     }
 
-    @Resource
+    @Autowired
     private Environment env;
 
     @Bean

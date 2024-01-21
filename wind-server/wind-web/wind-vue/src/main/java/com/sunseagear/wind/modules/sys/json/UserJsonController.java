@@ -10,8 +10,8 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.sys.entity.User;
 import com.sunseagear.wind.modules.sys.service.IUserService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("json/user")
 @Log(title = "用户管理")
 public class UserJsonController extends BaseBeanController<User> {
-    @Resource
+    @Autowired
     private IUserService userService;
 
     @PostMapping(value = "list")

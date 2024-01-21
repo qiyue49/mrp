@@ -13,7 +13,6 @@ public class ServletUtils {
 
     /**
      * 获取当前请求对象
-     *
      */
     public static HttpServletRequest getRequest() {
         try {
@@ -25,7 +24,6 @@ public class ServletUtils {
 
     /**
      * 获取当前请求对象
-     *
      */
     public static HttpServletResponse getResponse() {
         try {
@@ -37,7 +35,6 @@ public class ServletUtils {
 
     /**
      * 判断是否是Ajax
-     *
      */
     public static Boolean isAjax() {
         String requestType = Objects.requireNonNull(getRequest()).getHeader("X-Requested-With");
@@ -50,7 +47,6 @@ public class ServletUtils {
 
     /**
      * 打印JSON
-     *
      */
     public static void printJson(HttpServletResponse response, String content) {
         try {
@@ -66,7 +62,6 @@ public class ServletUtils {
 
     /**
      * 获取域名
-     *
      */
     public static String getContextUrl(HttpServletRequest request) {
         StringBuffer url = request.getRequestURL();

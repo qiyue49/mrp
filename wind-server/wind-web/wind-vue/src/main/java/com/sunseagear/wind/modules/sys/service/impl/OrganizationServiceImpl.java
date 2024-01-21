@@ -10,7 +10,7 @@ import com.sunseagear.common.utils.UserUtils;
 import com.sunseagear.wind.modules.sys.entity.Organization;
 import com.sunseagear.wind.modules.sys.mapper.OrganizationMapper;
 import com.sunseagear.wind.modules.sys.service.IOrganizationService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +23,7 @@ public class OrganizationServiceImpl extends TreeCommonServiceImpl<OrganizationM
         implements IOrganizationService {
 
     //所有数据更新都需要刷新数据权限
-    @Resource
+    @Autowired
     private DataRuleHandler dataRuleHandler;
 
     @Override

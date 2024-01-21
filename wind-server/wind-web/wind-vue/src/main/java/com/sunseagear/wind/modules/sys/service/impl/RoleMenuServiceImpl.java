@@ -9,7 +9,7 @@ import com.sunseagear.wind.modules.sys.mapper.MenuMapper;
 import com.sunseagear.wind.modules.sys.mapper.RoleMenuMapper;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.utils.UserUtils;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,7 +21,7 @@ import java.util.List;
 @Service("roleMenuService")
 public class RoleMenuServiceImpl extends CommonServiceImpl<RoleMenuMapper, RoleMenu> implements IRoleMenuService {
 
-    @Resource
+    @Autowired
     private MenuMapper menuMapper;
 
     @Override

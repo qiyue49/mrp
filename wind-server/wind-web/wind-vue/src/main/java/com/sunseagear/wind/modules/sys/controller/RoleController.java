@@ -15,10 +15,10 @@ import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleMenuService;
 import com.sunseagear.wind.modules.sys.service.IRoleService;
 import com.sunseagear.wind.utils.UserUtils;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -46,16 +46,15 @@ import java.util.Map;
 @Log(title = "角色管理")
 public class RoleController extends BaseBeanController<Role> {
 
-    @Resource
+    @Autowired
     private IRoleService roleService;
-    @Resource
+    @Autowired
     private IMenuService menuService;
-    @Resource
+    @Autowired
     private IRoleMenuService roleMenuService;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
      */
     @GetMapping(value = "list")
     @Log(logType = LogType.SELECT)
@@ -84,7 +83,6 @@ public class RoleController extends BaseBeanController<Role> {
 
     /**
      * 获取可用的用户列表
-     *
      */
     @GetMapping(value = "usable/list")
     @PreAuthorize("hasAuthority('sys:role:list')")
@@ -133,7 +131,6 @@ public class RoleController extends BaseBeanController<Role> {
 
     /**
      * 通过用户ID获得角色
-     *
      */
     @PostMapping(value = "{uid}/findListByUserId")
     @PreAuthorize("hasAuthority('sys:role:list')")

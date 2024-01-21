@@ -9,9 +9,9 @@ import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.test.twotable.entity.Car;
 import com.sunseagear.wind.modules.test.twotable.service.ICarService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,13 +25,12 @@ import java.util.List;
 @Log(title = "车辆品牌分组")
 public class CarController extends BaseBeanController<Car> {
 
-    @Resource
+    @Autowired
     private ICarService carService;
 
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)

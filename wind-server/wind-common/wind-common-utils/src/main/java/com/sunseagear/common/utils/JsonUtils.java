@@ -66,7 +66,8 @@ public class JsonUtils {
 
         gsonBuilder.setExclusionStrategies(new ExclusionStrategy() {
             @Override
-            public boolean shouldSkipField(FieldAttributes fieldAttributes) {if (fieldSet.contains(fieldAttributes.getName())) {
+            public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+                if (fieldSet.contains(fieldAttributes.getName())) {
                     return !isInclude;
                 }
 

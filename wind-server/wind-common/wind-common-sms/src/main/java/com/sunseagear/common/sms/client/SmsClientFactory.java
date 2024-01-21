@@ -7,6 +7,7 @@ public final class SmsClientFactory {
     private static final String CLIENT_ALIYUN = "aliyun"; //阿里云
     private static final String CLIENT_TENCENT = "tencent"; //腾讯云
     private static final String CLIENT_HUYI = "huyi"; //互易
+
     public static ISmsClient build(String clientType) {
         if (CLIENT_ALIYUN.equals(clientType)) {
             return new AliyunSmsClient();

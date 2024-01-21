@@ -13,7 +13,10 @@
     </resultMap>-->
 
     <sql id="Base_Column_List">
-    a.id,
+        a
+        .
+        id
+        ,
     a.filename,
     a.userid,
     a.uploadtime,
@@ -25,7 +28,7 @@
     a.userid as "user.id",
     u.realname as "user.realname",
     u.username as "user.username"
-  </sql>
+    </sql>
     <select id="selectAttachmentPage" resultType="com.sunseagear.wind.modules.oss.entity.Attachment">
         select
         <include refid="Base_Column_List"/>

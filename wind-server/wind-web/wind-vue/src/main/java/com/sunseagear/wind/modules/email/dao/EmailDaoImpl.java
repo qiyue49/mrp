@@ -5,7 +5,7 @@ import com.sunseagear.common.email.disruptor.EmailDao;
 import com.sunseagear.common.email.disruptor.EmailData;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,7 +22,7 @@ import java.util.Date;
 @Component
 public class EmailDaoImpl implements EmailDao {
 
-    @Resource
+    @Autowired
     private IEmailSendLogService emailSendLogService;
 
     @Override

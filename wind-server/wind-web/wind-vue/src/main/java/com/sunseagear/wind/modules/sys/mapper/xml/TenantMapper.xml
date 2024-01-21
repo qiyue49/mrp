@@ -3,15 +3,18 @@
 <mapper namespace="com.sunseagear.wind.modules.sys.mapper.TenantMapper">
 
     <sql id="Base_Column_List">
-       a.*,
+        a
+        .
+        *
+        ,
        b.username as "username"
-	</sql>
+    </sql>
     <sql id="tableJoins">
-    left join sys_user b on b.id = a.user_id
-  </sql>
+        left join sys_user b on b.id = a.user_id
+    </sql>
     <select
-        id="selectPage"
-        resultType="com.sunseagear.wind.modules.sys.entity.Tenant">
+            id="selectPage"
+            resultType="com.sunseagear.wind.modules.sys.entity.Tenant">
         select
         <include refid="Base_Column_List"/>
         from sys_tenant a
@@ -28,8 +31,8 @@
         </if>
     </select>
     <select
-        id="selectById"
-        resultType="com.sunseagear.wind.modules.sys.entity.Tenant">
+            id="selectById"
+            resultType="com.sunseagear.wind.modules.sys.entity.Tenant">
         select
         <include refid="Base_Column_List"/>
         from sys_tenant a

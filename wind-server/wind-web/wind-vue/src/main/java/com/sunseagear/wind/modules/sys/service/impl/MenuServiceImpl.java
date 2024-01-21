@@ -34,7 +34,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
                     Menu menu = menuHashMapAll.get(id);
                     menuHashMap.put(id, menu);
                 });
-            } else if (treeNode.getParentId()!=null) {
+            } else if (treeNode.getParentId() != null) {
                 String parentId = treeNode.getParentId().toString();
                 Menu menu = menuHashMapAll.get(parentId);
                 menuHashMap.put(parentId, menu);

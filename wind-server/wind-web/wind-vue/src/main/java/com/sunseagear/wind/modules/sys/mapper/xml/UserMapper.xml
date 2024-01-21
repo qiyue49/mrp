@@ -3,7 +3,10 @@
 <mapper namespace="com.sunseagear.wind.modules.sys.mapper.UserMapper">
 
     <sql id="Base_Column_List">
-        t.*,
+        t
+        .
+        *
+        ,
         t.organization_id as "organization.id",
         b.parent_ids as "organization.parentIds",
         b.name as "organization.name"
@@ -14,8 +17,8 @@
     </sql>
 
     <select
-        id="selectPage"
-        resultType="com.sunseagear.wind.modules.sys.entity.User">
+            id="selectPage"
+            resultType="com.sunseagear.wind.modules.sys.entity.User">
         select
         <include refid="Base_Column_List"/>
         from sys_user t

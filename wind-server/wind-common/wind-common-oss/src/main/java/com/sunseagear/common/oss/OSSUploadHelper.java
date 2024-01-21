@@ -151,7 +151,7 @@ public class OSSUploadHelper {
      * @param remoteUrl        上传的文件
      * @param allowedExtension 文件类型 null 表示允许所有
      * @param maxSize          最大大小 字节为单位 -1表示不限制
-     * @throws InvalidExtensionException      如果MIME类型不允许
+     * @throws InvalidExtensionException 如果MIME类型不允许
      */
     public void assertAllowed(String remoteUrl, String[] allowedExtension, long maxSize)
             throws InvalidExtensionException {
@@ -197,7 +197,6 @@ public class OSSUploadHelper {
 
     /**
      * 日期路径 即年/月/日 如2013/01/03
-     *
      */
     private String datePath() {
         Date now = new Date();
@@ -242,7 +241,6 @@ public class OSSUploadHelper {
 
     /**
      * 判断MIME类型是否是允许的MIME类型
-     *
      */
     public boolean isAllowedExtension(String extension, String[] allowedExtension) {
         for (String str : allowedExtension) {

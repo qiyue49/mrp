@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -58,7 +57,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 自定义redisTemplate
-     *
      */
     @Bean()
     public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {

@@ -4,7 +4,6 @@ import com.sunseagear.common.utils.entity.RequestParams;
 import okhttp3.*;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class HttpUtils {

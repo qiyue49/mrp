@@ -12,9 +12,9 @@ import com.sunseagear.wind.modules.sys.entity.DataRule;
 import com.sunseagear.wind.modules.sys.entity.RoleDataRule;
 import com.sunseagear.wind.modules.sys.service.IDataRuleService;
 import com.sunseagear.wind.modules.sys.service.IRoleDataRuleService;
-import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -42,16 +42,15 @@ import java.util.List;
 @Log(title = "角色数据权限关联表")
 public class RoleDataRuleController extends BaseBeanController<RoleDataRule> {
 
-    @Resource
+    @Autowired
     private IRoleDataRuleService roleDataRuleService;
-    @Resource
+    @Autowired
     private IDataRuleService dataRuleService;
-    @Resource
+    @Autowired
     private DataRuleHandler dataRuleHandler;
 
     /**
      * 根据页码和每页记录数，以及查询条件动态加载数据
-     *
      */
     @PostMapping(value = "list")
     @Log(logType = LogType.SELECT)

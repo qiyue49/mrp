@@ -312,7 +312,6 @@ public class ReflectionUtils {
 
     /**
      * 通过反射, 获得 Class 定义中声明的父类的泛型参数类型 如:
-     *
      */
     @SuppressWarnings("unchecked")
     public static <T> Class<T> getSuperGenericType(Class<?> clazz) {

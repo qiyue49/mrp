@@ -6,12 +6,10 @@ import com.sunseagear.common.sms.config.SmsConfigProperties;
 import com.sunseagear.common.sms.disruptor.SmsDao;
 import com.sunseagear.common.sms.disruptor.SmsHelper;
 import com.sunseagear.wind.modules.sms.dao.SmsDaoImpl;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Objects;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -25,7 +23,7 @@ import java.util.Objects;
 @Configuration
 @EnableConfigurationProperties({SmsConfigProperties.class})
 public class SmsConfig {
-    @Resource
+    @Autowired
     private SmsConfigProperties smsConfigProperties;
 
     @Bean

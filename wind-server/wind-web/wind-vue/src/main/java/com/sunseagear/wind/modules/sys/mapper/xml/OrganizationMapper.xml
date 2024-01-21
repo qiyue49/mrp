@@ -4,16 +4,19 @@
 
 
     <sql id="Base_Column_List">
-		t.*,
+        t
+        .
+        *
+        ,
 		p.name AS "parentName",
 		(select count(*) from sys_organization s
 		WHERE s.parent_id=t.id) as
 		hasChildren
-	</sql>
+    </sql>
 
     <sql id="parentJoins">
-		LEFT JOIN sys_organization p ON p.id = t.parent_id
-	</sql>
+        LEFT JOIN sys_organization p ON p.id = t.parent_id
+    </sql>
 
     <select id="selectByTreeId" resultType="com.sunseagear.wind.modules.sys.entity.Organization">
         select
@@ -61,8 +64,9 @@
     </update>
     <!-- 删除子树 -->
     <delete id="deleteSunTree">
-		delete from sys_organization
-		where parent_ids like concat(#{oldParentIds}, '%')
-	</delete>
+        delete
+        from sys_organization
+        where parent_ids like concat(#{oldParentIds}, '%')
+    </delete>
 
 </mapper>

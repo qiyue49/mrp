@@ -1,7 +1,7 @@
 package com.sunseagear.common.oss.config;
 
-import jakarta.annotation.Resource;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -29,15 +29,15 @@ public class OssConfig {
     boolean needDatePath = false;
     boolean originalName = false;
 
-    @Resource
+    @Autowired
     private AliyunConfig aliyun;
 
-    @Resource
+    @Autowired
     private LocalConfig local;
 
-    @Resource
+    @Autowired
     private TencentConfig tencent;
 
-    @Resource
+    @Autowired
     private QiniuConfig qiniu;
 }

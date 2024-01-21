@@ -17,7 +17,6 @@ public interface ISmsClient {
 
     /**
      * 客户端初始化
-     *
      */
     void init(SmsConfigProperties smsConfigProperties);
 

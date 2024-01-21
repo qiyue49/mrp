@@ -43,7 +43,6 @@ public abstract class BaseBeanController<Entity extends Serializable> {
 
     /**
      * 初始化数据绑定
-     *
      */
     @InitBinder
     void initBinder(ServletRequestDataBinder binder) {

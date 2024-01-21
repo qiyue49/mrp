@@ -299,7 +299,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     /**
      * 将文件转字节数组
-     *
      */
     public static byte[] toByteArray(String filePath) throws IOException {
         FileInputStream in = null;
@@ -510,8 +509,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             return null;
         }
 
-        try(FileInputStream fis = new FileInputStream(sFile);
-            FileOutputStream outputStream = new FileOutputStream(targetPath + "\\" + tFileName);) {
+        try (FileInputStream fis = new FileInputStream(sFile);
+             FileOutputStream outputStream = new FileOutputStream(targetPath + "\\" + tFileName);) {
             byte[] buff = new byte[2048];
             int temp = 0;
             while ((temp = fis.read(buff, 0, 2048)) != -1) {
@@ -656,7 +655,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     public static String fileToBase64(String path) {
         String base64 = null;
-        try(InputStream in = new FileInputStream(new File(path));) {
+        try (InputStream in = new FileInputStream(new File(path));) {
             byte[] bytes = new byte[(int) new File(path).length()];
             in.read(bytes);
             base64 = Base64.getEncoder().encodeToString(bytes);
@@ -678,7 +677,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     /**
      * 是否是图片附件
-     *
      */
     public static boolean isImage(String filename) {
         if (filename == null || filename.trim().isEmpty()) {

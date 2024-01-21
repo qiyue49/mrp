@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.sunseagear.common.utils.CacheUtils;
 import com.sunseagear.common.utils.SpringContextHolder;
 import com.sunseagear.wind.modules.sys.service.impl.DictServiceImpl;
-import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
@@ -71,7 +70,6 @@ public class DictUtils {
 
     /**
      * 放入缓存
-     *
      */
     public static void putDict(Map<String, List<Dict>> dictMap) {
         CacheUtils.setCacheMap(DICT_CACHE_NAME, dictMap);

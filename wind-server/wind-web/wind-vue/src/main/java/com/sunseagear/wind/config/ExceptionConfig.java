@@ -28,7 +28,6 @@ public class ExceptionConfig {
 
     /**
      * 捕捉shiro的异常
-     *
      */
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(ExpiredJwtException.class)
@@ -38,7 +37,6 @@ public class ExceptionConfig {
 
     /**
      * 捕捉UnauthorizedException
-     *
      */
     //@ResponseStatus(HttpStatus.UNAUTHORIZED)
     //@ExceptionHandler(UnauthorizedException.class)
@@ -48,7 +46,6 @@ public class ExceptionConfig {
 
     /**
      * 捕捉其他所有异常
-     *
      */
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

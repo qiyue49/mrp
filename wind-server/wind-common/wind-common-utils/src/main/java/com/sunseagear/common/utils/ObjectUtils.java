@@ -21,7 +21,6 @@ public final class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 判断对象或对象数组中每一个对象是否为空: 对象为null，字符序列长度为0，集合类、Map为empty
-     *
      */
     public static boolean isNullOrEmpty(Object obj) {
         if (obj == null) {
@@ -72,7 +71,6 @@ public final class ObjectUtils extends org.apache.commons.lang3.ObjectUtils {
 
     /**
      * 判断是否相等
-     *
      */
     public static boolean isEquals(Object object1, Object object2, String[] fields) {
         for (String fieldName : fields) {

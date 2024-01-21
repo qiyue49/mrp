@@ -94,7 +94,7 @@ public class SysConfigHelper {
         }
         sysConfigMap.get(tenantId).clear();
         sysConfigMap.get(tenantId).addAll(sysConfigService.selectList(new QueryWrapper<SysConfig>().eq("tenant_id", tenantId)));
-        if (TenantProperties.getInstance().getDefaultTenantId().equals(tenantId)){
+        if (TenantProperties.getInstance().getDefaultTenantId().equals(tenantId)) {
             CommonServiceImpl.setDemo(Boolean.parseBoolean(getDefaultConfig("isDemo").getValue()));
         }
 

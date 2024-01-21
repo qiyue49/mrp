@@ -67,7 +67,6 @@ public class QuartzManager {
 
     /**
      * 添加任务
-     *
      */
     public void addJob(ScheduleJob job) throws SchedulerException {
         if (job == null || !ScheduleConstants.STATUS_RUNNING.equals(job.getJobStatus())) {
@@ -107,7 +106,6 @@ public class QuartzManager {
 
     /**
      * 获取所有计划中的任务列表
-     *
      */
     public List<ScheduleJob> getAllJob() throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -133,7 +131,6 @@ public class QuartzManager {
 
     /**
      * 所有正在运行的job
-     *
      */
     public List<ScheduleJob> getRunningJob() throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -156,7 +153,6 @@ public class QuartzManager {
 
     /**
      * 暂停一个job
-     *
      */
     public void pauseJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -166,7 +162,6 @@ public class QuartzManager {
 
     /**
      * 恢复一个job
-     *
      */
     public void resumeJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -176,7 +171,6 @@ public class QuartzManager {
 
     /**
      * 删除一个job
-     *
      */
     public void deleteJob(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -186,7 +180,6 @@ public class QuartzManager {
 
     /**
      * 立即执行job
-     *
      */
     public void runAJobNow(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -196,7 +189,6 @@ public class QuartzManager {
 
     /**
      * 更新job时间表达式
-     *
      */
     public void updateJobCron(ScheduleJob scheduleJob) throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();
@@ -219,7 +211,6 @@ public class QuartzManager {
 
     /**
      * 清空任务
-     *
      */
     public void empty() throws SchedulerException {
         Scheduler scheduler = SpringContextHolder.getBean(SchedulerFactoryBean.class).getScheduler();

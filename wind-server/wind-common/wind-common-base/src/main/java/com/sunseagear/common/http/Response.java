@@ -308,7 +308,7 @@ public class Response {
      * 如果内网请求返回的是http://内网地址/file/aaa.docx
      * 如果外网请求返回的是http://外网地址/file/aaa.docx
      * */
-    public static class ContextUrlAdapter implements JsonSerializer<String>{
+    public static class ContextUrlAdapter implements JsonSerializer<String> {
 
         @Override
         public JsonElement serialize(String s, Type type, JsonSerializationContext jsonSerializationContext) {
@@ -319,7 +319,8 @@ public class Response {
                 if (el.isJsonArray()) {
                     ossFileList.forEach(item -> {
                         if (!StringUtils.isEmpty(item.url) && !StringUtils.startsWith(item.url, "http")) {
-                            item.setUrl(ServletUtils.getContextUrl(Objects.requireNonNull(ServletUtils.getRequest())) + item.getUrl());;
+                            item.setUrl(ServletUtils.getContextUrl(Objects.requireNonNull(ServletUtils.getRequest())) + item.getUrl());
+                            ;
                         }
                     });
                     return new JsonPrimitive(new Gson().toJson(ossFileList));

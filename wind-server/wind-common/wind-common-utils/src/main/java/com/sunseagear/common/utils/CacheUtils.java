@@ -22,7 +22,9 @@ public class CacheUtils {
     private static final RedisTemplate redisTemplate = SpringContextHolder.getBean("redisTemplate");
     private static final String SYS_CACHE = "sys_cache";
 
-    private CacheUtils() {}
+    private CacheUtils() {
+    }
+
     /**
      * 缓存基本的对象，Integer、String、实体类等
      *
@@ -118,13 +120,12 @@ public class CacheUtils {
         return keys.size() == count;
     }
 
-    public static Set<String> keys(final String cacheName){
+    public static Set<String> keys(final String cacheName) {
         return redisTemplate.keys(cacheName + "*");
     }
 
     /**
      * 缓存Map
-     *
      */
     public static <T> void setCacheMap(final String key, final Map<String, T> dataMap) {
         if (dataMap != null) {
@@ -141,7 +142,6 @@ public class CacheUtils {
 
     /**
      * 缓存SET对象，名称为SYS_CACHE
-     *
      */
     public static void put(String key, Object value) {
         put(SYS_CACHE, key, value);
@@ -149,7 +149,6 @@ public class CacheUtils {
 
     /**
      * 缓存SET对象
-     *
      */
     public static void put(String cacheName, String key, Object value) {
         getCache(cacheName).put(key, value);
@@ -157,7 +156,6 @@ public class CacheUtils {
 
     /**
      * 获取SET对象，名称为SYS_CACHE
-     *
      */
     public static Object get(String key) {
         return get(SYS_CACHE, key);
@@ -183,7 +181,6 @@ public class CacheUtils {
 
     /**
      * 从SYS_CACHE缓存中移除SET对象，名称为SYS_CACHE
-     *
      */
     public static void remove(String key) {
         remove(SYS_CACHE, key);
@@ -191,7 +188,6 @@ public class CacheUtils {
 
     /**
      * 从缓存中移除SET对象
-     *
      */
     public static void remove(String cacheName, String key) {
         getCache(cacheName).delete(key);
@@ -199,7 +195,6 @@ public class CacheUtils {
 
     /**
      * 获得一个Cache，没有则创建一个。
-     *
      */
     public static BoundHashOperations getCache(String cacheName) {
         return redisTemplate.boundHashOps(cacheName);

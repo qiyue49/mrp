@@ -1,7 +1,7 @@
 package com.sunseagear.wind.security;
 
 import com.sunseagear.wind.common.helper.SysConfigHelper;
-import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,9 +23,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 public class SpringSecurityConfig {
 
-    @Resource
+    @Autowired
     com.sunseagear.wind.modules.sys.service.impl.UserDetailsService userDetailsService;
-    @Resource
+    @Autowired
     private JwtAuthFilter authFilter;
 
     @Bean

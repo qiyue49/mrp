@@ -3,7 +3,10 @@
 <mapper namespace="com.sunseagear.wind.modules.test.treetable.mapper.TreeTableMapper">
 
     <sql id="Base_Column_List">
-        a.id,
+        a
+        .
+        id
+        ,
         a.name,
         a.geocoding,
         a.postal_code,
@@ -23,8 +26,8 @@
 
     </sql>
     <select
-        id="selectByTreeId"
-        resultType="com.sunseagear.wind.modules.test.treetable.entity.TreeTable">
+            id="selectByTreeId"
+            resultType="com.sunseagear.wind.modules.test.treetable.entity.TreeTable">
         select
         <include refid="Base_Column_List"/>
         from test_tree_table a
@@ -33,8 +36,8 @@
     </select>
 
     <select
-        id="selectTreeList"
-        resultType="com.sunseagear.wind.modules.test.treetable.entity.TreeTable">
+            id="selectTreeList"
+            resultType="com.sunseagear.wind.modules.test.treetable.entity.TreeTable">
         select
         <include refid="Base_Column_List"/>
         from test_tree_table a
@@ -62,8 +65,9 @@
 
     <!-- 删除子树 -->
     <delete
-        id="deleteSunTree">
-        delete from test_tree_table
+            id="deleteSunTree">
+        delete
+        from test_tree_table
         where parent_ids like concat(#{oldParentIds}, '%')
     </delete>
 

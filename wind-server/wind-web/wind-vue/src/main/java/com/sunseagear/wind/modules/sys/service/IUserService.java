@@ -15,31 +15,26 @@ import com.sunseagear.wind.modules.sys.entity.User;
 public interface IUserService extends ICommonService<User> {
     /**
      * 修改密码
-     *
      */
     void changePassword(Long userId, String newPassword);
 
     /**
      * 根据用户名查找用户
-     *
      */
     User findByUsername(String username);
 
     /**
      * 根据Email查找用户
-     *
      */
     User findByEmail(String email);
 
     /**
      * 根据Email查找用户
-     *
      */
     User findByPhone(String phone);
 
     /**
      * 检查密码
-     *
      */
     Boolean checkPassword(Long userId, String password);
 

@@ -8,7 +8,6 @@ import com.sunseagear.wind.common.helper.JWTHelper;
 import com.sunseagear.wind.modules.sso.service.IOAuthService;
 import com.sunseagear.wind.utils.UserUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -99,7 +98,7 @@ public class OAuthServiceImpl implements IOAuthService {
     public void revokeToken(String accessToken) {
         Principal principal = getPrincipalByAccessToken(accessToken);
         if (principal != null) {
-             UserUtils.clearCache(principal);
+            UserUtils.clearCache(principal);
         }
         CacheUtils.deleteCacheObject(ACCESS_TOKEN + accessToken);
     }
@@ -128,7 +127,7 @@ public class OAuthServiceImpl implements IOAuthService {
         List<Principal> principalList = new ArrayList<>();
         Set<String> accessTokenList = CacheUtils.keys(ACCESS_TOKEN);
         for (String accessToken : accessTokenList) {
-            Principal principal = getPrincipalByAccessToken(accessToken.replace(ACCESS_TOKEN,""));
+            Principal principal = getPrincipalByAccessToken(accessToken.replace(ACCESS_TOKEN, ""));
             if (principal != null) {
                 principalList.add(principal);
             }

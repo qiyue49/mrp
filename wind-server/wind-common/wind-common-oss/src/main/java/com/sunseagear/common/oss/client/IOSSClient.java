@@ -25,13 +25,11 @@ public interface IOSSClient {
 
     /**
      * 客户端初始化
-     *
      */
     void init(String propertiesName);
 
     /**
      * 客户端初始化
-     *
      */
     void init(OssConfig config);
 

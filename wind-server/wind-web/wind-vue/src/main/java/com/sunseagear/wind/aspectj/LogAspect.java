@@ -46,7 +46,6 @@ public class LogAspect {
 
     /**
      * 前置通知 用于拦截操作
-     *
      */
     @AfterReturning(pointcut = "logPointCut()")
     public void doBefore(JoinPoint joinPoint) {
@@ -55,7 +54,6 @@ public class LogAspect {
 
     /**
      * 拦截异常操作
-     *
      */
     @AfterThrowing(value = "logPointCut()", throwing = "e")
     public void doAfter(JoinPoint joinPoint, Exception e) {
