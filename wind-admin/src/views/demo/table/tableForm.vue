@@ -63,9 +63,9 @@ export default {
   data() {
     return {
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }, { validator: this.formValidate.isIntegerGEZRule, tigger: 'blur' }]
+        type: [{ required: true, message: 'type is required' }],
+        timestamp: [{ type: 'date', required: true, message: 'timestamp is required' }],
+        title: [{ required: true, message: 'title is required' }, { validator: this.formValidate.isIntegerGEZRule, tigger: 'blur' }]
       },
       statusOptions: ['published', 'draft', 'deleted'],
       temp: {

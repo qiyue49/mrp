@@ -48,7 +48,6 @@
       <boom-right/>
     </div>
   </div>
-
 </template>
 <script>
 import { useFullscreen } from '@vueuse/core'

@@ -90,8 +90,8 @@ export default {
       dialogFormVisible: false,
       title: undefined,
       rules: {
-        name: [{ required: true, message: '分组名称必填', trigger: 'change' }],
-        code: [{ required: true, message: '分组编码必填', trigger: 'blur' }]
+        name: [{ required: true, message: '分组名称必填' }],
+        code: [{ required: true, message: '分组编码必填' }]
       }
     }
   },

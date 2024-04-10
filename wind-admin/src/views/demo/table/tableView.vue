@@ -1,58 +1,57 @@
 <template>
-  <el-card class="el-card">
-    <div>
-      <div class="tit">返回上一级</div>
-      <div style="color:#1762F2;fontSize:1.2rem">新 增 ：</div>
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
-        <div class="flexdi">
-          <el-form-item prop="title">
-            <span>标题：</span>
-            <el-input v-model="temp.title" />
-          </el-form-item>
-          <el-form-item prop="type">
-            <div>类型：</div>
-            <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-              <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-            </el-select>
-          </el-form-item>
-        </div>
-        <div class="flexdi">
-          <el-form-item prop="publishDate">
-            <div>发布时间：</div>
-            <el-date-picker v-model="temp.publishDate" type="datetime" value-format="YYYY-MM-DD HH:mm" format="YYYY-MM-DD HH:mm" />
-          </el-form-item>
-          <el-form-item prop="author">
-            <div>作者：</div>
-            <system-user v-model="temp.author" />
-          </el-form-item>
-          <el-form-item>
-            <div>状态：</div>
-            <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-              <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="重要程度：">
-            <!-- <div>重要程度：</div> -->
-            <el-rate v-model="temp.level" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
-          </el-form-item>
-        </div>
 
-        <el-form-item>
-          <div>内容：</div>
-          <Tinymce ref="editor" v-model="temp.content" type="textarea" placeholder="Please input" />
-
+  <div>
+    <div class="tit">返回上一级</div>
+    <div style="color:#1762F2;fontSize:1.2rem">新 增 ：</div>
+    <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px">
+      <div class="flexdi">
+        <el-form-item prop="title">
+          <span>标题：</span>
+          <el-input v-model="temp.title" />
         </el-form-item>
-      </el-form>
-      <div>
-        <el-button @click="getList">
-          取消
-        </el-button>
-        <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
-          确定
-        </el-button>
+        <el-form-item prop="type">
+          <div>类型：</div>
+          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+          </el-select>
+        </el-form-item>
       </div>
+      <div class="flexdi">
+        <el-form-item prop="publishDate">
+          <div>发布时间：</div>
+          <el-date-picker v-model="temp.publishDate" type="datetime" value-format="YYYY-MM-DD HH:mm" format="YYYY-MM-DD HH:mm" />
+        </el-form-item>
+        <el-form-item prop="author">
+          <div>作者：</div>
+          <system-user v-model="temp.author" />
+        </el-form-item>
+        <el-form-item>
+          <div>状态：</div>
+          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
+            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="重要程度：">
+          <!-- <div>重要程度：</div> -->
+          <el-rate v-model="temp.level" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
+        </el-form-item>
+      </div>
+
+      <el-form-item>
+        <div>内容：</div>
+        <Tinymce ref="editor" v-model="temp.content" type="textarea" placeholder="Please input" />
+
+      </el-form-item>
+    </el-form>
+    <div>
+      <el-button @click="getList">
+        取消
+      </el-button>
+      <el-button type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
+        确定
+      </el-button>
     </div>
-  </el-card>
+  </div>
 </template>
 
 <script>
@@ -74,9 +73,9 @@ export default {
   data() {
     return {
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [{ required: true, message: 'type is required' }],
+        timestamp: [{ type: 'date', required: true, message: 'timestamp is required' }],
+        title: [{ required: true, message: 'title is required' }]
       },
       statusOptions: ['published', 'draft', 'deleted'],
       temp: {

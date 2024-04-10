@@ -1,29 +1,28 @@
-<template>
-  <div class="app-container">
-    <el-row :gutter="6">
-      <el-col :span="12">
-        <el-card class="box-card">
-          <template #header>
-            <span>字典分组</span>
-          </template>
-          <div class="item">
-            <dict-group @refresh-dicts="onRefreshDicts" />
-          </div>
-        </el-card>
+<template>  <div class="app-container">
+  <el-row :gutter="6">
+    <el-col :span="12">
+      <el-card class="box-card">
+        <template #header>
+          <span>字典分组</span>
+        </template>
+        <div class="item">
+          <dict-group @refresh-dicts="onRefreshDicts" />
+        </div>
+      </el-card>
 
-      </el-col>
-      <el-col :span="12">
-        <el-card class="box-card">
-          <template #header>
-            <span>[{{ dictGroupName }}]字典值</span>
-          </template>
-          <div class="item">
-            <dict ref="dict" />
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+    </el-col>
+    <el-col :span="12">
+      <el-card class="box-card">
+        <template #header>
+          <span>[{{ dictGroupName }}]字典值</span>
+        </template>
+        <div class="item">
+          <dict ref="dict" />
+        </div>
+
+      </el-card></el-col>
+  </el-row>
+</div>
 </template>
 
 <script>

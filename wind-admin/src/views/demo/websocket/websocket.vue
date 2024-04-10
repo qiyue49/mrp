@@ -1,25 +1,22 @@
 <template>
-  <el-card>
-    <div class="app-container">
-      websocket样例:在输入框中输入任意信息，点击发送，信息的json串会通过服务器回传回来，显示在下方的textarea中<br />
-      相关后台代码见com.sunseagear.wind.modules.websocket包下文件夹
-      <br />
-      <el-input v-model="content" type="textarea" :rows="20" style="width: 60%" class="filter-item" />
-      <el-input v-model="temp.message" style="width: 60%;" />
-      <el-radio
-        v-for="item in dictList('sf')"
-        :key="'type' + item.label"
-        v-model="temp.type"
-        :label="item.value"
-      >
-        {{ item.label }}
-      </el-radio>
-      <el-button :loading="loading" type="primary" icon="Download" @click="sendMessage">
-        发送
-      </el-button>
-    </div>
-  </el-card>
-
+  <div class="app-container">
+    websocket样例:在输入框中输入任意信息，点击发送，信息的json串会通过服务器回传回来，显示在下方的textarea中<br />
+    相关后台代码见com.sunseagear.wind.modules.websocket包下文件夹
+    <br />
+    <el-input v-model="content" type="textarea" :rows="20" style="width: 60%" class="filter-item" />
+    <el-input v-model="temp.message" style="width: 60%;" />
+    <el-radio
+      v-for="item in dictList('sf')"
+      :key="'type' + item.label"
+      v-model="temp.type"
+      :label="item.value"
+    >
+      {{ item.label }}
+    </el-radio>
+    <el-button :loading="loading" type="primary" icon="Download" @click="sendMessage">
+      发送
+    </el-button>
+  </div>
 </template>
 
 <script>

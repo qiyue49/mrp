@@ -66,6 +66,7 @@ public class MenuTreeHelper implements Serializable {
             Map<String, Object> meta = new HashMap<>();
             meta.put("title", menu.getName());
             meta.put("icon", menu.getIcon());
+            meta.put("card", menu.getCard());
             meta.put("permission", menu.getPermission());
             put("meta", meta);
             return this;

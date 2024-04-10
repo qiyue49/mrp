@@ -1,85 +1,84 @@
 <template>
-  <el-card class="el-card">
-    <div>
-      <div class="filter-container">
-        <div class="filter-item">
-          <span>URI:</span>
-          <el-input v-model="listQuery.requestUri" placeholder="请输入URI" />
-        </div>
-        <div class="filter-item">
-          <span>操作IP:</span>
-          <el-input v-model="listQuery.operationIp" placeholder="请输入操作IP" />
-        </div>
-        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button class="filter-item" type="danger" icon="Document" @click="handleBatchDelete">删除</el-button>
+
+  <div>
+    <div class="filter-container">
+      <div class="filter-item">
+        <span>URI:</span>
+        <el-input v-model="listQuery.requestUri" placeholder="请输入URI" />
       </div>
-      <el-table
-        ref="multipleTable"
-        :key="tableKey"
-        v-loading="listLoading"
-        :data="list"
-        fit
-        highlight-current-row
-        header-cell-class-name="header-cell"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" />
-        <el-table-column min-width="120" label="操作标题">
-          <template #default="scope">
-            <span>{{ scope.row.title }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="操作类型">
-          <template #default="scope">
-            <span>{{ scope.row.logType }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="120" label="URI">
-          <template #default="scope">
-            <span>{{ scope.row.requestUri }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="操作人">
-          <template #default="scope">
-            <span>{{ scope.row.operationName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="操作IP">
-          <template #default="scope">
-            <span>{{ scope.row.operationIp }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="浏览器">
-          <template #default="scope">
-            <span>{{ scope.row.browser }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="100" label="操作系统">
-          <template #default="scope">
-            <span>{{ scope.row.os }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="请求状态">
-          <template #default="scope">
-            <el-tag :type="statusTypeFilter(scope.row.status)">{{ statusFilter(scope.row.status) }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="160" label="操作时间">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.createDate, '{y}-{m}-{d} {h}:{i}') }}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+      <div class="filter-item">
+        <span>操作IP:</span>
+        <el-input v-model="listQuery.operationIp" placeholder="请输入操作IP" />
+      </div>
+      <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button class="filter-item" type="danger" icon="Document" @click="handleBatchDelete">删除</el-button>
     </div>
-  </el-card>
+    <el-table
+      ref="multipleTable"
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      fit
+      highlight-current-row
+      header-cell-class-name="header-cell"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="操作标题">
+        <template #default="scope">
+          <span>{{ scope.row.title }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="操作类型">
+        <template #default="scope">
+          <span>{{ scope.row.logType }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="120" label="URI">
+        <template #default="scope">
+          <span>{{ scope.row.requestUri }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="操作人">
+        <template #default="scope">
+          <span>{{ scope.row.operationName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="操作IP">
+        <template #default="scope">
+          <span>{{ scope.row.operationIp }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="浏览器">
+        <template #default="scope">
+          <span>{{ scope.row.browser }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="100" label="操作系统">
+        <template #default="scope">
+          <span>{{ scope.row.os }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="请求状态">
+        <template #default="scope">
+          <el-tag :type="statusTypeFilter(scope.row.status)">{{ statusFilter(scope.row.status) }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="160" label="操作时间">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.createDate, '{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template #default="scope">
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+  </div>
 </template>
 
 <script>

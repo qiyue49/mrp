@@ -79,11 +79,11 @@ export default {
       dialogFormVisible: false,
       title: undefined,
       rules: {
-        realname: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        phone: [{ required: true, message: '请输入手机号码', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        organizationId: [{ required: true, message: '请选择部门', trigger: 'blur' }]
+        realname: [{ required: true, message: '请输入姓名' }],
+        username: [{ required: true, message: '请输入用户名' }],
+        phone: [{ required: true, message: '请输入手机号码' }],
+        password: [{ required: true, message: '请输入密码' }],
+        organizationId: [{ required: true, message: '请选择部门' }]
       }
     }
   },

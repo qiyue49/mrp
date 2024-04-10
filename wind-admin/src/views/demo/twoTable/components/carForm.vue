@@ -39,8 +39,8 @@ export default {
       dialogFormVisible: false,
       title: undefined,
       rules: {
-        name: [{ required: true, message: '品牌名称必填', trigger: 'change' }],
-        code: [{ required: true, message: '品牌编码必填', trigger: 'blur' }]
+        name: [{ required: true, message: '品牌名称必填' }],
+        code: [{ required: true, message: '品牌编码必填' }]
       }
 
     }

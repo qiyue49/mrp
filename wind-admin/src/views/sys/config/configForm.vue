@@ -92,12 +92,12 @@ export default {
       loading: false,
       dialogFormVisible: false,
       rules: {
-        name: [{ required: true, message: '配置名称为必填', trigger: 'blur' }],
-        code: [{ required: true, message: '配置编码为必填', trigger: 'blur' }],
-        setting: [{ required: true, message: '配置项为必填', trigger: 'blur' }],
-        type: [{ required: true, message: '组件类型为必填', trigger: 'blur' }],
-        isSys: [{ required: true, message: '是否系统参数为必填', trigger: 'blur' }],
-        value: [{ required: true, message: '配置值为必填', trigger: 'blur' }]
+        name: [{ required: true, message: '配置名称为必填' }],
+        code: [{ required: true, message: '配置编码为必填' }],
+        setting: [{ required: true, message: '配置项为必填' }],
+        type: [{ required: true, message: '组件类型为必填' }],
+        isSys: [{ required: true, message: '是否系统参数为必填' }],
+        value: [{ required: true, message: '配置值为必填' }]
       }
     }
   },

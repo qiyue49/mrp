@@ -2,7 +2,6 @@
   <div class="all">
     <div ref="$chart1" style="width: 100%;height: 100%"></div>
   </div>
-
 </template>
 
 <script>

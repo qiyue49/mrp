@@ -86,9 +86,9 @@ export default {
       dialogFormVisible: false,
       title: undefined,
       rules: {
-        label: [{ required: true, message: '字典标签不能为空', trigger: 'change' }],
-        value: [{ required: true, message: '字典值不能为空', trigger: 'change' }],
-        sort: [{ required: true, message: '排序不能为空', trigger: 'change' }]
+        label: [{ required: true, message: '字典标签不能为空' }],
+        value: [{ required: true, message: '字典值不能为空' }],
+        sort: [{ required: true, message: '排序不能为空' }]
       },
       downloadLoading: false
     }

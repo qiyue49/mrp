@@ -49,4 +49,11 @@ app.config.globalProperties.$store = store
 // 判空函数
 app.config.globalProperties.isNull = isNull
 
+// 正式环境清除所有console.log
+if (process.env.NODE_ENV === 'production') {
+  if (window) {
+    window.console.log = function () {}
+  }
+}
+
 app.mount('#app')

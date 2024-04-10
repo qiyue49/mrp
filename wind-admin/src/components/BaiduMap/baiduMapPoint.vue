@@ -9,7 +9,6 @@
       <el-button type="primary" icon="Delete" circle @click="clear"/>
     </div>
   </div>
-
 </template>
 
 <script>

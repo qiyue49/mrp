@@ -7,7 +7,6 @@
       {{ item.name }}
     </el-link>
   </div>
-
 </template>
 
 <script>

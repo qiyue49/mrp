@@ -1,77 +1,75 @@
 <template>
-  <el-card class="el-card">
-    <div class="app-container">
-      <div class="filter-container">
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
-          新增
-        </el-button>
-      </div>
-
-      <el-table
-        :key="tableKey"
-        v-loading="listLoading"
-        :data="list"
-        fit
-        highlight-current-row
-        style="width: 100%;"
-        header-cell-class-name="header-cell">
-        <el-table-column type="expand">
-          <template #default="props">
-            <el-form label-position="left" inline class="table-expand" label-width="120px" style="width: 90%; margin-left:50px;">
-              <el-form-item label="商品名称">
-                <span>{{ props.row.name }}</span>
-              </el-form-item>
-              <el-form-item label="所属店铺">
-                <span>{{ props.row.shop }}</span>
-              </el-form-item>
-              <el-form-item label="商品分类">
-                <span>{{ props.row.category }}</span>
-              </el-form-item>
-              <el-form-item label="店铺地址">
-                <span>{{ props.row.address }}</span>
-              </el-form-item>
-              <el-form-item label="商品描述">
-                <span>{{ props.row.description }}</span>
-              </el-form-item>
-              <el-form-item label="标签">
-                <span>{{ props.row.tag }}</span>
-              </el-form-item>
-            </el-form>
-          </template>
-        </el-table-column>
-        <el-table-column label="商品名称" min-width="150px">
-          <template #default="{row}">
-            <span>{{ row.name }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="所属店铺" min-width="150px">
-          <template #default="{row}">
-            <span>{{ row.shop }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="标签" min-width="150px">
-          <template #default="{row}">
-            <span>{{ row.tag }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="230">
-          <template #default="{row}">
-            <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
-              编辑
-            </el-button>
-            <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
-              删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-      <expand-table-form ref="form" @refresh-list="getList" />
-
+  <div class="app-container">
+    <div class="filter-container">
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleCreate">
+        新增
+      </el-button>
     </div>
-  </el-card>
+
+    <el-table
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      fit
+      highlight-current-row
+      style="width: 100%;"
+      header-cell-class-name="header-cell">
+      <el-table-column type="expand">
+        <template #default="props">
+          <el-form label-position="left" inline class="table-expand" label-width="120px" style="width: 90%; margin-left:50px;">
+            <el-form-item label="商品名称">
+              <span>{{ props.row.name }}</span>
+            </el-form-item>
+            <el-form-item label="所属店铺">
+              <span>{{ props.row.shop }}</span>
+            </el-form-item>
+            <el-form-item label="商品分类">
+              <span>{{ props.row.category }}</span>
+            </el-form-item>
+            <el-form-item label="店铺地址">
+              <span>{{ props.row.address }}</span>
+            </el-form-item>
+            <el-form-item label="商品描述">
+              <span>{{ props.row.description }}</span>
+            </el-form-item>
+            <el-form-item label="标签">
+              <span>{{ props.row.tag }}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
+      <el-table-column label="商品名称" min-width="150px">
+        <template #default="{row}">
+          <span>{{ row.name }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="所属店铺" min-width="150px">
+        <template #default="{row}">
+          <span>{{ row.shop }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="标签" min-width="150px">
+        <template #default="{row}">
+          <span>{{ row.tag }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="230">
+        <template #default="{row}">
+          <el-button v-permission="['test:expandtable:expandtable:detail']" size="small" icon="EditPen" type="primary" plain @click="handleUpdate(row)">
+            编辑
+          </el-button>
+          <el-button v-permission="['test:expandtable:expandtable:delete']" size="small" plain type="danger" icon="Delete" @click="handleDelete(row)">
+            删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+    <expand-table-form ref="form" @refresh-list="getList" />
+
+  </div>
 </template>
 
 <script>

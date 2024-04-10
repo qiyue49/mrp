@@ -48,7 +48,7 @@ export const permissionStore = defineStore('permission', () => {
             {
               path: tmp.path,
               name: tmp.name,
-              meta: { title: tmp.meta.title, affix: tmp.meta.affix, query }
+              meta: { title: tmp.meta.title, affix: tmp.meta.affix, card: tmp.meta.card, query }
             }
           ]
         }
@@ -98,13 +98,13 @@ export const permissionStore = defineStore('permission', () => {
     return new Promise((resolve, reject) => {
       getMenus(store.userStore.token).then(response => {
         if (fetchRoutes.value.length === 0) {
-          // console.log('response.data.data', response.data.data)
+          console.log('response.data.data', response.data.data)
           fetchRoutes.value = response.data.data
           const accessedRouters = filterAsyncRoutes(response.data.data)
-          // console.log('accessedRouters', accessedRouters)
+          console.log('accessedRouters', accessedRouters)
           setRoutes(accessedRouters)
           const accessedMenus = response.data.data
-          // console.log('accessedMenus', accessedMenus)
+          console.log('accessedMenus', accessedMenus)
           if (store.settingStore.topMenu) {
             for (let i = 0; i < accessedMenus.length; i++) {
               const accessedMenusKey = accessedMenus[i]

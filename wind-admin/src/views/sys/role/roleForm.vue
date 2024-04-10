@@ -59,10 +59,10 @@ export default {
       dialogFormVisible: false,
       title: undefined,
       rules: {
-        code: [{ required: true, message: '角色编码必填', trigger: 'change' }],
-        name: [{ required: true, message: '角色名称必填', trigger: 'change' }],
-        isSys: [{ required: true, message: '是否系统必选', trigger: 'blur' }],
-        usable: [{ required: true, message: '是否可用必选', trigger: 'blur' }]
+        code: [{ required: true, message: '角色编码必填' }],
+        name: [{ required: true, message: '角色名称必填' }],
+        isSys: [{ required: true, message: '是否系统必选' }],
+        usable: [{ required: true, message: '是否可用必选' }]
       }
 
     }

@@ -1,111 +1,110 @@
 <template>
-  <el-card class="el-card">
-    <div>
-      <div class="filter-container">
-        <div class="filter-item">
-          <span>Email:</span>
-          <el-input v-model="listQuery.email" placeholder="请输入Email" @keyup.enter="handleFilter" />
-        </div>
-        <div class="filter-item">
-          <span>主题:</span>
-          <el-input v-model="listQuery.subject" placeholder="请输入主题" @keyup.enter="handleFilter" />
-        </div>
-        <div class="filter-item">
-          <span>发送状态:</span>
-          <el-select v-model="listQuery.status" placeholder="请选择发送状态">
-            <el-option label="全部状态" value="" />
-            <el-option
-              v-for="item in statusOptions"
-              :key="'filter_status'+ item.label "
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
+
+  <div>
+    <div class="filter-container">
+      <div class="filter-item">
+        <span>Email:</span>
+        <el-input v-model="listQuery.email" placeholder="请输入Email" @keyup.enter="handleFilter" />
       </div>
-      <el-table
-        ref="multipleTable"
-        :key="tableKey"
-        v-loading="listLoading"
-        :data="list"
-        fit
-        highlight-current-row
-        tyle="width: 100%"
-        header-cell-class-name="header-cell"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" />
-        <el-table-column min-width="150" label="Email">
-          <template #default="scope">
-            <span>{{ scope.row.email }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="200" label="发送主题">
-          <template #default="scope">
-            <span>{{ scope.row.subject }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="发送状态">
-          <template #default="scope">
-            <span>{{ statusFilter(scope.row.status) }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="100" label="重试次数">
-          <template #default="scope">
-            <span>{{ scope.row.tryNum }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="100" label="返回消息">
-          <template #default="scope">
-            <span>{{ scope.row.msg }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="160" label="响应时间">
-          <template #default="scope">
-            <span>{{ scope.row.responseDate }}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-      <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="发送邮件" width="70%">
-        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
-          <el-form-item label="Email" prop="email">
-            <el-input
-              v-model="temp.email"
-              placeholder="Email，多个以英文逗号“,”隔开"
-            />
-          </el-form-item>
-          <el-form-item label="模版编码" prop="code">
-            <el-select v-model="temp.code" class="filter-item" placeholder="Please select" style="width: 100%" @change="handleSelect">
-              <el-option v-for="item in templateList" :key="item.id" :label="item.name + '(' + item.code + ')'" :value="item.code" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="变量值" prop="data">
-            模板变量的json字符串
-            <el-input ref="jsonEditor" v-model="temp.data" type="textarea" />
-            模板内容:{{ template.templateContent }}
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
-        </template>
-      </el-dialog>
-
+      <div class="filter-item">
+        <span>主题:</span>
+        <el-input v-model="listQuery.subject" placeholder="请输入主题" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>发送状态:</span>
+        <el-select v-model="listQuery.status" placeholder="请选择发送状态">
+          <el-option label="全部状态" value="" />
+          <el-option
+            v-for="item in statusOptions"
+            :key="'filter_status'+ item.label "
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+      <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="sendEmailLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendEmail">邮件重发</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendEmail">发送邮件</el-button>
     </div>
-  </el-card>
+    <el-table
+      ref="multipleTable"
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      fit
+      highlight-current-row
+      tyle="width: 100%"
+      header-cell-class-name="header-cell"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" />
+      <el-table-column min-width="150" label="Email">
+        <template #default="scope">
+          <span>{{ scope.row.email }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="200" label="发送主题">
+        <template #default="scope">
+          <span>{{ scope.row.subject }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="发送状态">
+        <template #default="scope">
+          <span>{{ statusFilter(scope.row.status) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="100" label="重试次数">
+        <template #default="scope">
+          <span>{{ scope.row.tryNum }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="100" label="返回消息">
+        <template #default="scope">
+          <span>{{ scope.row.msg }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="160" label="响应时间">
+        <template #default="scope">
+          <span>{{ scope.row.responseDate }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template #default="scope">
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+    <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="发送邮件" width="70%">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px">
+        <el-form-item label="Email" prop="email">
+          <el-input
+            v-model="temp.email"
+            placeholder="Email，多个以英文逗号“,”隔开"
+          />
+        </el-form-item>
+        <el-form-item label="模版编码" prop="code">
+          <el-select v-model="temp.code" class="filter-item" placeholder="Please select" style="width: 100%" @change="handleSelect">
+            <el-option v-for="item in templateList" :key="item.id" :label="item.name + '(' + item.code + ')'" :value="item.code" />
+          </el-select>
+        </el-form-item>
+        <el-form-item label="变量值" prop="data">
+          模板变量的json字符串
+          <el-input ref="jsonEditor" v-model="temp.data" type="textarea" />
+          模板内容:{{ template.templateContent }}
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" :loading="sendEmailLoading" @click="runSendEmail">发送邮件</el-button>
+      </template>
+    </el-dialog>
+
+  </div>
 </template>
 
 <script>
@@ -136,8 +135,8 @@ export default {
       },
       showReviewer: false,
       rules: {
-        email: [{ required: true, message: 'Email地址必填', trigger: 'blur' }],
-        code: [{ required: true, message: '编码必填', trigger: 'blur' }]
+        email: [{ required: true, message: 'Email地址必填' }],
+        code: [{ required: true, message: '编码必填' }]
       },
       dialogFormVisible: false,
       temp: {

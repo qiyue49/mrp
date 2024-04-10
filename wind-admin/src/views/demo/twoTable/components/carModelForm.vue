@@ -44,9 +44,9 @@ export default {
       dialogFormVisible: false,
       title: undefined,
       rules: {
-        name: [{ required: true, message: '汽车型号标签不能为空', trigger: 'change' }],
-        value: [{ required: true, message: '汽车型号值不能为空', trigger: 'change' }],
-        sort: [{ required: true, message: '排序不能为空', trigger: 'change' }]
+        name: [{ required: true, message: '汽车型号标签不能为空' }],
+        value: [{ required: true, message: '汽车型号值不能为空' }],
+        sort: [{ required: true, message: '排序不能为空' }]
       }
     }
   },

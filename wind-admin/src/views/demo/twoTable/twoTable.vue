@@ -1,29 +1,27 @@
-<template>
-  <div class="app-container">
-    <el-row :gutter="6">
-      <el-col :span="12">
-        <el-card class="box-card">
-          <template #header>
-            <span>汽车品牌</span>
-          </template>
-          <div class="item">
-            <car @refresh-car-model="refreshCarModel" />
-          </div>
-        </el-card>
+<template>  <div class="app-container">
+  <el-row :gutter="6">
+    <el-col :span="12">
+      <el-card class="box-card">
+        <template #header>
+          <span>汽车品牌</span>
+        </template>
+        <div class="item">
+          <car @refresh-car-model="refreshCarModel" />
+        </div>
 
-      </el-col>
-      <el-col :span="12">
-        <el-card class="box-card">
-          <template #header>
-            <span>[{{ carName }}]品牌名</span>
-          </template>
-          <div class="item">
-            <car-model ref="carModel" />
-          </div>
-        </el-card>
-      </el-col>
-    </el-row>
-  </div>
+      </el-card></el-col>
+    <el-col :span="12">
+      <el-card class="box-card">
+        <template #header>
+          <span>[{{ carName }}]品牌名</span>
+        </template>
+        <div class="item">
+          <car-model ref="carModel" />
+        </div>
+
+      </el-card></el-col>
+  </el-row>
+</div>
 </template>
 
 <script>

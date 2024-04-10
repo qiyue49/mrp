@@ -33,9 +33,9 @@ export const mixin = {
         identify: undefined
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur' }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
-        identify: [{ required: true, trigger: 'blur', validator: validateIdentify }]
+        username: [{ required: true }],
+        password: [{ required: true, validator: validatePassword }],
+        identify: [{ required: true, validator: validateIdentify }]
       },
       passwordType: 'password',
       capsTooltip: false,

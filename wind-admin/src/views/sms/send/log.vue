@@ -1,121 +1,120 @@
 <template>
-  <el-card class="el-card">
-    <div>
-      <div class="filter-container">
-        <div class="filter-item">
-          <span>手机号码:</span>
-          <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
-        </div>
-        <div class="filter-item">
-          <span>模板编码:</span>
-          <el-input v-model="listQuery.code" placeholder="请输入模板编码" @keyup.enter="handleFilter" />
-        </div>
-        <div class="filter-item">
-          <span>发送状态:</span>
-          <el-select v-model="listQuery.status" placeholder="请选择发送状态">
-            <el-option label="全部状态" value="" />
-            <el-option
-              v-for="item in statusOptions"
-              :key="item.label + 'filter_status'"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
 
-        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
-        <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
+  <div>
+    <div class="filter-container">
+      <div class="filter-item">
+        <span>手机号码:</span>
+        <el-input v-model="listQuery.phone" placeholder="请输入手机号码" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>模板编码:</span>
+        <el-input v-model="listQuery.code" placeholder="请输入模板编码" @keyup.enter="handleFilter" />
+      </div>
+      <div class="filter-item">
+        <span>发送状态:</span>
+        <el-select v-model="listQuery.status" placeholder="请选择发送状态">
+          <el-option label="全部状态" value="" />
+          <el-option
+            v-for="item in statusOptions"
+            :key="item.label + 'filter_status'"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </div>
 
-      <el-table
-        ref="multipleTable"
-        :key="tableKey"
-        v-loading="listLoading"
-        :data="list"
-        fit
-        highlight-current-row
-        tyle="width: 100%"
-        header-cell-class-name="header-cell"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" />
-        <el-table-column min-width="120" label="联系电话">
-          <template #default="scope">
-            <span>{{ scope.row.phone }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="200" label="模版名称">
-          <template #default="scope">
-            <span>{{ scope.row.templateName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="120" label="模版编码">
-          <template #default="scope">
-            <span>{{ scope.row.sendCode }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="发送状态">
-          <template #default="scope">
-            <span>{{ statusFilter(scope.row.status) }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="120" label="响应消息ID">
-          <template #default="scope">
-            <span>{{ scope.row.smsid }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="重试次数">
-          <template #default="scope">
-            <span>{{ scope.row.tryNum }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="返回消息">
-          <template #default="scope">
-            <span>{{ scope.row.msg }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="160" label="响应时间">
-          <template #default="scope">
-            <span>{{ scope.row.responseDate }}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-
-      <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="发送短信">
-        <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
-          <el-form-item label="电话号码" prop="phone">
-            <el-input
-              v-model="temp.phone"
-              :autosize="{ minRows: 8, maxRows: 12}"
-              type="textarea"
-              placeholder="电话号码，多个以英文逗号“,”隔开"
-            />
-          </el-form-item>
-          <el-form-item label="模版编码" prop="code">
-            <el-input v-model="temp.code" placeholder="请设置模版编码" />
-          </el-form-item>
-          <el-form-item label="变量值" prop="data">
-            <el-input ref="jsonEditor" v-model="temp.data" type="textarea"/>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-          <el-button @click="dialogFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="runSendMsg">发送短信</el-button>
-        </template>
-      </el-dialog>
-
+      <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="sendMsgLoading" class="filter-item" type="primary" icon="Document" @click="handleRetrySendMsg">短信重发</el-button>
+      <el-button class="filter-item" type="primary" icon="Plus" @click="handleSendMsg">发送短信</el-button>
     </div>
-  </el-card>
+
+    <el-table
+      ref="multipleTable"
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      fit
+      highlight-current-row
+      tyle="width: 100%"
+      header-cell-class-name="header-cell"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="联系电话">
+        <template #default="scope">
+          <span>{{ scope.row.phone }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="200" label="模版名称">
+        <template #default="scope">
+          <span>{{ scope.row.templateName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="120" label="模版编码">
+        <template #default="scope">
+          <span>{{ scope.row.sendCode }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="发送状态">
+        <template #default="scope">
+          <span>{{ statusFilter(scope.row.status) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="120" label="响应消息ID">
+        <template #default="scope">
+          <span>{{ scope.row.smsid }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="重试次数">
+        <template #default="scope">
+          <span>{{ scope.row.tryNum }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="返回消息">
+        <template #default="scope">
+          <span>{{ scope.row.msg }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="160" label="响应时间">
+        <template #default="scope">
+          <span>{{ scope.row.responseDate }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template #default="scope">
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+
+    <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="发送短信">
+      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="120px" style="width: 400px; margin-left:50px;">
+        <el-form-item label="电话号码" prop="phone">
+          <el-input
+            v-model="temp.phone"
+            :autosize="{ minRows: 8, maxRows: 12}"
+            type="textarea"
+            placeholder="电话号码，多个以英文逗号“,”隔开"
+          />
+        </el-form-item>
+        <el-form-item label="模版编码" prop="code">
+          <el-input v-model="temp.code" placeholder="请设置模版编码" />
+        </el-form-item>
+        <el-form-item label="变量值" prop="data">
+          <el-input ref="jsonEditor" v-model="temp.data" type="textarea"/>
+        </el-form-item>
+      </el-form>
+      <template #footer>
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="runSendMsg">发送短信</el-button>
+      </template>
+    </el-dialog>
+
+  </div>
 </template>
 
 <script>
@@ -141,8 +140,8 @@ export default {
       },
       showReviewer: false,
       rules: {
-        phone: [{ required: true, message: '手机号码必填', trigger: 'blur' }],
-        code: [{ required: true, message: '编码必填', trigger: 'blur' }]
+        phone: [{ required: true, message: '手机号码必填' }],
+        code: [{ required: true, message: '编码必填' }]
       },
       dialogFormVisible: false,
       temp: {

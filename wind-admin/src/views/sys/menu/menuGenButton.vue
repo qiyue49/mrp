@@ -80,9 +80,9 @@ export default {
       loading: false,
       generateButtonDialogFormVisible: false,
       generateButtonRules: {
-        parentPermission: [{ required: true, message: '父级权限必填', trigger: 'blur' }],
-        permission: [{ required: true, message: '请选择权限', trigger: 'change' }],
-        additional: [{ required: true, message: '是否新增必选', trigger: 'change' }]
+        parentPermission: [{ required: true, message: '父级权限必填' }],
+        permission: [{ required: true, message: '请选择权限' }],
+        additional: [{ required: true, message: '是否新增必选' }]
       }
     }
   },

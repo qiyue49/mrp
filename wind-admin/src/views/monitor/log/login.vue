@@ -1,96 +1,94 @@
 <template>
-  <el-card class="el-card">
-    <div class="app-container">
-      <div class="filter-container">
-        <div class="filter-item">
-          <span>登陆状态:</span>
-          <el-select v-model="listQuery.status" placeholder="请选择登陆状态" style="width: 200px">
-            <el-option label="全部状态" value="" />
-            <el-option
-              v-for="item in dictList('login_status')"
-              :key="item.label + 'loginstatus'"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-
-        <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
-        <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
-        <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
+  <div class="app-container">
+    <div class="filter-container">
+      <div class="filter-item">
+        <span>登陆状态:</span>
+        <el-select v-model="listQuery.status" placeholder="请选择登陆状态" style="width: 200px">
+          <el-option label="全部状态" value="" />
+          <el-option
+            v-for="item in dictList('login_status')"
+            :key="item.label + 'loginstatus'"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
       </div>
 
-      <el-table
-        ref="multipleTable"
-        :key="tableKey"
-        v-loading="listLoading"
-        :data="list"
-        fit
-        highlight-current-row
-        tyle="width: 100%"
-        header-cell-class-name="header-cell"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" />
-        <el-table-column min-width="120" label="登陆用户">
-          <template #default="scope">
-            <span>{{ scope.row.loginName }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="登陆IP">
-          <template #default="scope">
-            <span>{{ scope.row.loginIp }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="120" label="登录地点">
-          <template #default="scope">
-            <span>{{ scope.row.loginLocation }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="浏览器">
-          <template #default="scope">
-            <span>{{ scope.row.browser }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="操作系统">
-          <template #default="scope">
-            <span>{{ scope.row.os }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="80" label="登陆状态">
-          <template #default="scope">
-            <el-tag :type="statusTypeFilter(scope.row.status)">{{ dictLabel(scope.row.status, 'login_status') }}</el-tag>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="200" label="操作信息">
-          <template #default="scope">
-            <span class="tip" @click="detail(scope.row.msg)">{{ scope.row.msg }}</span>
-          </template>
-        </el-table-column>
-        <el-table-column min-width="160" label="操作时间">
-          <template #default="scope">
-            <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d} {h}:{i}') }}</span>
-          </template>
-        </el-table-column>
-
-        <el-table-column label="操作">
-          <template #default="scope">
-            <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-
-      <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
-      <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="详情" :close-on-click-modal="false">
-        <div v-html="msg" ></div>
-        <template #footer>
-          <el-button @click="dialogFormVisible = false">关闭</el-button>
-        </template>
-
-      </el-dialog>
+      <el-button class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
+      <el-button :loading="downloadLoading" class="filter-item" type="primary" icon="Download" @click="handleDownload">导出</el-button>
+      <el-button :loading="batchDeleteLoading" class="filter-item" type="danger" icon="Delete" @click="handleBatchDelete">删除</el-button>
     </div>
-  </el-card>
+
+    <el-table
+      ref="multipleTable"
+      :key="tableKey"
+      v-loading="listLoading"
+      :data="list"
+      fit
+      highlight-current-row
+      tyle="width: 100%"
+      header-cell-class-name="header-cell"
+      @selection-change="handleSelectionChange"
+    >
+      <el-table-column type="selection" />
+      <el-table-column min-width="120" label="登陆用户">
+        <template #default="scope">
+          <span>{{ scope.row.loginName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="登陆IP">
+        <template #default="scope">
+          <span>{{ scope.row.loginIp }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="120" label="登录地点">
+        <template #default="scope">
+          <span>{{ scope.row.loginLocation }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="浏览器">
+        <template #default="scope">
+          <span>{{ scope.row.browser }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="操作系统">
+        <template #default="scope">
+          <span>{{ scope.row.os }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="80" label="登陆状态">
+        <template #default="scope">
+          <el-tag :type="statusTypeFilter(scope.row.status)">{{ dictLabel(scope.row.status, 'login_status') }}</el-tag>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="200" label="操作信息">
+        <template #default="scope">
+          <span class="tip" @click="detail(scope.row.msg)">{{ scope.row.msg }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column min-width="160" label="操作时间">
+        <template #default="scope">
+          <span>{{ parseTime(scope.row.loginTime, '{y}-{m}-{d} {h}:{i}') }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template #default="scope">
+          <el-button size="small" type="danger" plain icon="Delete" @click="handleDelete(scope.row)">删除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+
+    <pagination v-show="total>0" v-model:page="listQuery.page" v-model:limit="listQuery.limit" :total="total" :page-sizes="pageArray" @pagination="getList" />
+    <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" title="详情" :close-on-click-modal="false">
+      <div v-html="msg" ></div>
+      <template #footer>
+        <el-button @click="dialogFormVisible = false">关闭</el-button>
+      </template>
+
+    </el-dialog>
+  </div>
 </template>
 
 <script>

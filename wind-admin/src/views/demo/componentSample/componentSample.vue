@@ -1,77 +1,76 @@
 <template>
-  <el-card>
-    <el-row :gutter="40">
-      <el-col :span="6">
-        <div class="title">图片上传</div>
-        upload-image组件传值为String。两种格式，一种是包含name和url两个字段的json数组字符串。另外一种是多个图片地址用逗号隔开的字符串<br/>
-        {{ urlImage }}
-        <upload-image v-model="urlImage" dir="test" :max-count="3"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">文件上传：{{ urlFile }}</div>
-        <upload-file v-model="urlFile" dir="test"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">多文件上传：{{ urlFileMulti }}</div>
-        <upload-file-multi v-model="urlFileMulti" dir="test"/>
-        <div class="title">文件列表</div>
-        <file-download-list v-model="imageFileList"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">图片列表</div>
-        <image-gallery v-model="imageFileList"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">二维码</div>
-        option属性参考qrcodejs2的option，<a :href="qrCode">{{ qrCode }}</a>
-        <qr-code :text="qrCode"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">checkBox{{ checkId }}</div>
-        <checkbox v-model="checkId" :list="dictList('sf')"/>
-        <div class="title">checkBox-字典{{ checkId }}</div>
-        <checkbox-dict v-model="checkId" dict-code="sf"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">下拉选择{{ selectId }}</div>
-        <select-list v-model="selectId" :list="dictList('sf')"/>
-        <div class="title">树形选择{{ treeId }}</div>
-        <cascader-list v-model="treeId" :list="treeList"/>
-        <div class="title">自动完成{{ selectId }}</div>
-        <autocomplete-list v-model="selectId" :list="dictList('sf')" :props="{ value: 'label', id: 'value' }"/>
-      </el-col>
-      <el-col :span="6">
-        <div class="title">SVG图标<svg-icon :icon-class="svgIcon" /></div>
-        <svg-icon-selector v-model="svgIcon" />
-        <div class="title">Icon图标<el-icon><component :is="icon"/></el-icon></div>
-        <icon-selector v-model="icon" />
-        <div class="title">用户选择</div>
-        {{ userId }}
-        <system-user v-model="userId" />
-        <div class="title">组织机构选择</div>
-        {{ orgId }}
-        <system-organization v-model="orgId" />
-      </el-col>
-      <el-col :span="8">
-        <div class="title">地图打点：</div>
-        {{ point }}
-        <baidu-map-point v-model="point" />
-      </el-col>
-      <el-col :span="8">
-        <div class="title">地图划线：</div>
-        {{ line }}
-        <baidu-map-line v-model="line" />
-      </el-col>
-      <el-col :span="8">
-        <div class="title">地图画框：</div>
-        {{ path }}
-        <baidu-map-rect v-model="path" />
-      </el-col>
-      <el-col :span="24">
-        <Tinymce v-model="richText" style="margin: 10px"/>
-      </el-col>
-    </el-row>
-  </el-card>
+
+  <el-row :gutter="40">
+    <el-col :span="6">
+      <div class="title">图片上传</div>
+      upload-image组件传值为String。两种格式，一种是包含name和url两个字段的json数组字符串。另外一种是多个图片地址用逗号隔开的字符串<br/>
+      {{ urlImage }}
+      <upload-image v-model="urlImage" dir="test" :max-count="3"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">文件上传：{{ urlFile }}</div>
+      <upload-file v-model="urlFile" dir="test"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">多文件上传：{{ urlFileMulti }}</div>
+      <upload-file-multi v-model="urlFileMulti" dir="test"/>
+      <div class="title">文件列表</div>
+      <file-download-list v-model="imageFileList"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">图片列表</div>
+      <image-gallery v-model="imageFileList"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">二维码</div>
+      option属性参考qrcodejs2的option，<a :href="qrCode">{{ qrCode }}</a>
+      <qr-code :text="qrCode"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">checkBox{{ checkId }}</div>
+      <checkbox v-model="checkId" :list="dictList('sf')"/>
+      <div class="title">checkBox-字典{{ checkId }}</div>
+      <checkbox-dict v-model="checkId" dict-code="sf"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">下拉选择{{ selectId }}</div>
+      <select-list v-model="selectId" :list="dictList('sf')"/>
+      <div class="title">树形选择{{ treeId }}</div>
+      <cascader-list v-model="treeId" :list="treeList"/>
+      <div class="title">自动完成{{ selectId }}</div>
+      <autocomplete-list v-model="selectId" :list="dictList('sf')" :props="{ value: 'label', id: 'value' }"/>
+    </el-col>
+    <el-col :span="6">
+      <div class="title">SVG图标<svg-icon :icon-class="svgIcon" /></div>
+      <svg-icon-selector v-model="svgIcon" />
+      <div class="title">Icon图标<el-icon><component :is="icon"/></el-icon></div>
+      <icon-selector v-model="icon" />
+      <div class="title">用户选择</div>
+      {{ userId }}
+      <system-user v-model="userId" />
+      <div class="title">组织机构选择</div>
+      {{ orgId }}
+      <system-organization v-model="orgId" />
+    </el-col>
+    <el-col :span="8">
+      <div class="title">地图打点：</div>
+      {{ point }}
+      <baidu-map-point v-model="point" />
+    </el-col>
+    <el-col :span="8">
+      <div class="title">地图划线：</div>
+      {{ line }}
+      <baidu-map-line v-model="line" />
+    </el-col>
+    <el-col :span="8">
+      <div class="title">地图画框：</div>
+      {{ path }}
+      <baidu-map-rect v-model="path" />
+    </el-col>
+    <el-col :span="24">
+      <Tinymce v-model="richText" style="margin: 10px"/>
+    </el-col>
+  </el-row>
 
 </template>
 

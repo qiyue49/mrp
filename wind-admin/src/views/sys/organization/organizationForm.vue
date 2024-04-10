@@ -37,7 +37,7 @@ export default {
   data() {
     return {
       rules: {
-        name: [{ required: true, message: '名称为必填项', trigger: 'blur' }]
+        name: [{ required: true, message: '名称为必填项' }]
       },
       list: [],
       temp: {},

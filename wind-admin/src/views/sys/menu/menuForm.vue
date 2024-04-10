@@ -1,7 +1,6 @@
 <template>
   <el-dialog v-model="dialogFormVisible" draggable class="dialog-title" :title="title" :close-on-click-modal="false">
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 90%; margin-left:50px;">
-
       <el-row :gutter="20">
         <el-col :span="12">
           <el-form-item label="权限类型" prop="type">
@@ -21,7 +20,7 @@
               v-for="item in dictList('sf')"
               :key="'enabled' + item.label"
               v-model="temp.enabled"
-              :label="item.value + ''"
+              :label="item.value"
               :disabled="temp.type === '3'"
             >
               {{ item.label }}
@@ -34,6 +33,19 @@
               v-for="item in dictList('sf')"
               :key="'enabled' + item.label"
               v-model="externalLink"
+              :label="item.value"
+              :disabled="!(temp.type === '2')"
+            >
+              {{ item.label }}
+            </el-radio>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12">
+          <el-form-item label="显示卡片" prop="card">
+            <el-radio
+              v-for="item in dictList('sf')"
+              :key="'enabled' + item.label"
+              v-model="temp.card"
               :label="item.value"
               :disabled="!(temp.type === '2')"
             >
@@ -113,28 +125,28 @@ export default {
       list: [],
       temp: {},
       rules1: {
-        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
-        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
-        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+        type: [{ required: true, message: '菜单名称必填' }],
+        name: [{ required: true, message: '菜单名称必填' }],
+        sort: [{ required: true, message: '排序必填' }]
       },
       rules2: {
-        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
-        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
-        path: [{ required: true, message: '前端路径必填', trigger: 'change' }],
-        component: [{ required: true, message: '前端组件必填', trigger: 'change' }],
-        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+        type: [{ required: true, message: '菜单名称必填' }],
+        name: [{ required: true, message: '菜单名称必填' }],
+        path: [{ required: true, message: '前端路径必填' }],
+        component: [{ required: true, message: '前端组件必填' }],
+        sort: [{ required: true, message: '排序必填' }]
       },
       rules3: {
-        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
-        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
-        permission: [{ required: true, message: '权限必填', trigger: 'change' }],
-        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+        type: [{ required: true, message: '菜单名称必填' }],
+        name: [{ required: true, message: '菜单名称必填' }],
+        permission: [{ required: true, message: '权限必填' }],
+        sort: [{ required: true, message: '排序必填' }]
       },
       rules4: {
-        type: [{ required: true, message: '菜单名称必填', trigger: 'change' }],
-        name: [{ required: true, message: '菜单名称必填', trigger: 'blur' }],
-        path: [{ required: true, message: '前端路径必填', trigger: 'change' }],
-        sort: [{ required: true, message: '排序必填', trigger: 'blur' }]
+        type: [{ required: true, message: '菜单名称必填' }],
+        name: [{ required: true, message: '菜单名称必填' }],
+        path: [{ required: true, message: '前端路径必填' }],
+        sort: [{ required: true, message: '排序必填' }]
       },
       ruleList: [],
       treeProps: {
@@ -183,6 +195,7 @@ export default {
         path: '',
         url: '',
         enabled: '1',
+        card: '1',
         sort: '0',
         icon: '',
         component: '',

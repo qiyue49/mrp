@@ -106,7 +106,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
             menu.setPermission(parentPermission + ":" + permissions[i]);
             menu.setSort(i + count);
             menu.setType("3");
-            menu.setEnabled((short) 1);
+            menu.setEnabled(Menu.YES);
             menuList.add(menu);
         }
         insertBatch(menuList);

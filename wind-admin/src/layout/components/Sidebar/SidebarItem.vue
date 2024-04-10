@@ -50,14 +50,46 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-menu-item{
+.el-menu-item {
   height: 40px;
 }
+
 .el-menu-item.is-active {
   background-color: var(--el-color-primary) !important;
   border-radius: 10px;
+  color: #fff;
   height: 40px;
   z-index: 10;
+}
+
+.el-sub-menu.is-active {
+  :deep(.el-icon) {
+    color: #1762f2;
+  }
+
+  :deep(.el-sub-menu__title span) {
+    color: #1762f2;
+  }
+
+  ul .el-sub-menu {
+    :deep(.el-sub-menu__title span) {
+      color: #000;
+    }
+
+    :deep(.el-icon) {
+      color: #000;
+    }
+  }
+
+  ul .is-active {
+    :deep(.el-sub-menu__title span) {
+      color: #1762f2 !important;
+    }
+
+    :deep(.el-icon) {
+      color: #1762f2 !important;
+    }
+  }
 }
 
 a {
@@ -65,4 +97,3 @@ a {
   color: var(--el-text-color-primary);
 }
 </style>
-

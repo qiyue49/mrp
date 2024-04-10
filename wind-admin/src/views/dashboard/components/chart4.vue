@@ -14,7 +14,6 @@
     </div>
     <div ref="$chart1" style="width: 100%;height: 90%;"></div>
   </div>
-
 </template>
 
 <script>

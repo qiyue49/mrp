@@ -39,10 +39,10 @@ export default {
   data() {
     return {
       rules: {
-        contact: [{ required: true, message: '联系人为必填项', trigger: 'blur' }],
-        phone: [{ required: true, message: '电话为必填项', trigger: 'blur' }, { validator: this.formValidate.validateTelOrMobileRule, tigger: 'blur' }],
-        name: [{ required: true, message: '租户名称为必填项', trigger: 'blur' }],
-        userName: [{ required: true, message: '用户名为必填项', trigger: 'blur' }]
+        contact: [{ required: true, message: '联系人为必填项' }],
+        phone: [{ required: true, message: '电话为必填项' }, { validator: this.formValidate.validateTelOrMobileRule, tigger: 'blur' }],
+        name: [{ required: true, message: '租户名称为必填项' }],
+        userName: [{ required: true, message: '用户名为必填项' }]
       },
       temp: {
         id: undefined,

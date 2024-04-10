@@ -1,6 +1,8 @@
 <template>
   <div @click="toggleClick">
-    <span><img src="@/assets/img/dashboard/navigation.svg" alt="" class="hamburger"/></span>
+    <span>
+      <img src="@/assets/img/dashboard/navigation.svg" alt="" class="hamburger" :class="isActive ? 'close-img' : 'open-img'"/>
+    </span>
   </div>
 </template>
 
@@ -30,7 +32,14 @@ export default {
   height: 20px;
   margin-left: 30px;
 }
-
+.close-img {
+  transform: rotate(0deg);
+  transition: all 0.5s;
+}
+.open-img {
+  transform: rotate(180deg);
+  transition: all 0.5s;
+}
 .hamburger.is-active {
   transform: rotate(180deg);
 }

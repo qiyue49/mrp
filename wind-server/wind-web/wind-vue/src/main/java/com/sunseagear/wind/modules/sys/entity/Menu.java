@@ -18,6 +18,9 @@ public class Menu extends TreeEntity<Long> {
     public static final String MENU = "2";
     public static final String BUTTON = "3";
 
+    public static final String YES = "1";
+    public static final String FALSE = "0";
+
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id; // ID
 
@@ -39,7 +42,12 @@ public class Menu extends TreeEntity<Long> {
      * 是否显示
      */
     @TableField(value = "enabled")
-    private Short enabled;
+    private String enabled;
+    /**
+     * 显示卡片
+     */
+    @TableField(value = "card")
+    private String card;
     /**
      * 排序
      */
@@ -59,7 +67,7 @@ public class Menu extends TreeEntity<Long> {
 
 
     public Boolean isEnable() {
-        return enabled == 1;
+        return YES.equals(enabled);
     }
 
 }

@@ -59,16 +59,16 @@ export default {
   data() {
     return {
       rules: {
-        resourceCode: [{ required: true, message: '资源编号为必填项', trigger: 'blur' }],
-        userColumn: [{ required: true, message: '用户数据表关联字段为必填项', trigger: 'blur' }],
-        tableName: [{ required: true, message: '权限判定关联表为必填项', trigger: 'blur' }],
-        userEntityField: [{ required: true, message: '用户实体类关联字段为必填项', trigger: 'blur' }],
-        scopeName: [{ required: true, message: '数据权限名称为必填项', trigger: 'blur' }],
-        scopeField: [{ required: true, message: '数据展示字段为必填项', trigger: 'blur' }, { validator: this.validateScopeField, tigger: 'blur' }],
-        scopeClass: [{ required: true, message: '数据权限类名为必填项', trigger: 'blur' }],
-        scopeColumn: [{ required: true, message: '权限判定字段为必填项', trigger: 'blur' }],
-        scopeValue: [{ required: true, message: '自定义SQL为必填项', trigger: 'blur' }],
-        scopeType: [{ required: true, message: '数据权限类型为必填项', trigger: 'blur' }]
+        resourceCode: [{ required: true, message: '资源编号为必填项' }],
+        userColumn: [{ required: true, message: '用户数据表关联字段为必填项' }],
+        tableName: [{ required: true, message: '权限判定关联表为必填项' }],
+        userEntityField: [{ required: true, message: '用户实体类关联字段为必填项' }],
+        scopeName: [{ required: true, message: '数据权限名称为必填项' }],
+        scopeField: [{ required: true, message: '数据展示字段为必填项' }, { validator: this.validateScopeField, tigger: 'blur' }],
+        scopeClass: [{ required: true, message: '数据权限类名为必填项' }],
+        scopeColumn: [{ required: true, message: '权限判定字段为必填项' }],
+        scopeValue: [{ required: true, message: '自定义SQL为必填项' }],
+        scopeType: [{ required: true, message: '数据权限类型为必填项' }]
       },
       temp: {},
       title: undefined,
