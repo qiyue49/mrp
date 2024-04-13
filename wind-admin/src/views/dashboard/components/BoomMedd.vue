@@ -3,10 +3,10 @@
     <div class="tit">
       <div class="left">
         <el-radio-group v-model="radio1" size="large">
-          <el-radio-button label="访问总量" />
-          <el-radio-button label="新增访问" />
-          <el-radio-button label="活跃访问" />
-          <el-radio-button label="流失访问" />
+          <el-radio-button value="访问总量" />
+          <el-radio-button value="新增访问" />
+          <el-radio-button value="活跃访问" />
+          <el-radio-button value="流失访问" />
         </el-radio-group>
         <!-- <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">访问总量</span>
         <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">新增访问</span>

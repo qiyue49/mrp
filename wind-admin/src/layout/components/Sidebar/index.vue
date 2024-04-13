@@ -1,7 +1,7 @@
 <template>
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
-    <el-scrollbar :class="{'scrollbar-left':$store.appStore.sidebar.opened}" wrap-class="scrollbar-wrapper">
+    <el-scrollbar :class="{'scrollbar-left':$store.appStore.sidebar.opened}" class="scrollbar">
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -57,6 +57,8 @@ export default {
   padding-left: 0px;
   padding-right: 0px;
 }
-
+.scrollbar {
+  height: calc(100vh - 50px);
+}
 </style>
 

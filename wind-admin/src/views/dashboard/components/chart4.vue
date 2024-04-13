@@ -2,10 +2,10 @@
   <div class="all">
     <div class="btn">
       <el-radio-group v-model="radio1" size="large">
-        <el-radio-button label="本年" />
-        <el-radio-button label="本季度" />
-        <el-radio-button label="本月" />
-        <el-radio-button label="本周" />
+        <el-radio-button value="本年" />
+        <el-radio-button value="本季度" />
+        <el-radio-button value="本月" />
+        <el-radio-button value="本周" />
       </el-radio-group>
       <!-- <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">本年</span>
       <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">本季度</span>

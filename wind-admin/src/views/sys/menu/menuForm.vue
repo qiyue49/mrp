@@ -190,16 +190,16 @@ export default {
       this.loading = false
       this.temp = {
         id: undefined,
-        name: '',
+        name: undefined,
         type: '2',
-        path: '',
-        url: '',
+        path: undefined,
+        url: undefined,
         enabled: '1',
         card: '1',
         sort: '0',
-        icon: '',
-        component: '',
-        remark: ''
+        icon: undefined,
+        component: undefined,
+        remark: undefined
       }
       this.externalLink = '0'
     },

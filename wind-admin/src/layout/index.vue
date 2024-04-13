@@ -101,7 +101,8 @@ export default {
 .el-main {
   background: var(--ep-color-background);
   padding-top: 0px;
-  min-height: calc(100vh - 129px);
+  padding-bottom: 0px;
+  height: calc(100vh - 129px);
   box-sizing: border-box;
   width: 100%;
 }
