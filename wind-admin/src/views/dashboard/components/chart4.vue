@@ -1,16 +1,12 @@
 <template>
   <div class="all">
     <div class="btn">
-      <el-radio-group v-model="radio1" size="large">
-        <el-radio-button value="本年" />
-        <el-radio-button value="本季度" />
-        <el-radio-button value="本月" />
-        <el-radio-button value="本周" />
+      <el-radio-group v-model="radio1">
+        <el-radio-button value="1">本年</el-radio-button>
+        <el-radio-button value="2">本季度</el-radio-button>
+        <el-radio-button value="3">本月</el-radio-button>
+        <el-radio-button value="4">本周</el-radio-button>
       </el-radio-group>
-      <!-- <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">本年</span>
-      <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">本季度</span>
-      <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">本月</span>
-      <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">本周</span> -->
     </div>
     <div ref="$chart1" style="width: 100%;height: 90%;"></div>
   </div>
@@ -23,7 +19,7 @@ export default {
   data() {
     return {
       isclick: 1,
-      radio1: ref('本年')
+      radio1: ref('1')
     }
   },
   mounted() {

@@ -2,16 +2,12 @@
   <div class="all">
     <div class="tit">
       <div class="left">
-        <el-radio-group v-model="radio1" size="large">
-          <el-radio-button value="访问总量" />
-          <el-radio-button value="新增访问" />
-          <el-radio-button value="活跃访问" />
-          <el-radio-button value="流失访问" />
+        <el-radio-group v-model="radio1">
+          <el-radio-button value="1">访问总量</el-radio-button>
+          <el-radio-button value="2">新增访问</el-radio-button>
+          <el-radio-button value="3">活跃访问</el-radio-button>
+          <el-radio-button value="4">流失访问</el-radio-button>
         </el-radio-group>
-        <!-- <span :class="{'clickbtn' : isclick ==1}" @click="isclick = 1">访问总量</span>
-        <span :class="{'clickbtn' : isclick ==2}" @click="isclick = 2">新增访问</span>
-        <span :class="{'clickbtn' : isclick ==3}" @click="isclick = 3">活跃访问</span>
-        <span :class="{'clickbtn' : isclick ==4}" @click="isclick = 4">流失访问</span> -->
 
       </div>
       <div class="right">
@@ -34,7 +30,7 @@ export default {
     return {
       isclick: 1,
       isclick1: 1,
-      radio1: ref('访问总量')
+      radio1: ref('1')
     }
   },
   mounted() {
