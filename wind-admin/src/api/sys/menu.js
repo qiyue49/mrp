@@ -15,11 +15,10 @@ export function fetchMenu(id) {
   })
 }
 
-export function getMenus(query) {
+export function getMenus() {
   return request({
     url: '/sys/menu/getMenus',
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }
 
@@ -63,11 +62,10 @@ export function generateButton(data) {
   })
 }
 
-export function fetchPermissionList(query) {
+export function fetchPermissionList() {
   return request({
     url: '/sys/menu/getPermissions',
-    method: 'get',
-    params: query
+    method: 'get'
   })
 }
 

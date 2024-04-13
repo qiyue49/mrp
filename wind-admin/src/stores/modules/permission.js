@@ -96,7 +96,7 @@ export const permissionStore = defineStore('permission', () => {
   // 获取未认证路由
   function getRoutes() {
     return new Promise((resolve, reject) => {
-      getMenus(store.userStore.token).then(response => {
+      getMenus().then(response => {
         if (fetchRoutes.value.length === 0) {
           console.log('response.data.data', response.data.data)
           fetchRoutes.value = response.data.data
@@ -126,7 +126,7 @@ export const permissionStore = defineStore('permission', () => {
   // 获取权限
   function getPermissions() {
     return new Promise((resolve, reject) => {
-      fetchPermissionList(store.userStore.token).then(response => {
+      fetchPermissionList().then(response => {
         permissions.value = response.data.data
         resolve(response)
       }).catch(error => {
