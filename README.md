@@ -176,8 +176,8 @@ npm run build
    ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/install/runDev.PNG)
 10. 出现如下提示的时候，说明项目启动项目<br>
     ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/doc/install/run.PNG)
-11. 点击链接http://localhost:9527或者http://192.168.1.101:9527，自动打开浏览器，出现如下界面，说明系统启动成功<br>
-    ![Image text](https://feilian.oss-cn-beijing.aliyuncs.com/wind/login0.png)
+11. 点击链接http://localhost:9527，自动打开浏览器，出现如下界面，说明系统启动成功<br>
+    ![Image text](http://feilian.oss-cn-beijing.aliyuncs.com/wind/v2/login.png)
 
 ### 后端运行
 
