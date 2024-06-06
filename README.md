@@ -80,13 +80,13 @@ gitee:https://gitee.com/sunseagear/wind
 
 ### 在线预览
 
-http://www.sunseagear.com/dist/
+https://www.sunseagear.com/dist/
 
     演示系统数据无法修改
 
 ### 在线文档
 
-http://www.sunseagear.com/
+https://www.sunseagear.com/
 
 ### 文鳐地址
 
