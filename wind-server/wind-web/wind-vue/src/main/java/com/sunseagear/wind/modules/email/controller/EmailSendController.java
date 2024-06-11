@@ -1,8 +1,9 @@
 package com.sunseagear.wind.modules.email.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.sunseagear.common.http.Response;
+import com.sunseagear.common.utils.JsonUtils;
+import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
@@ -38,8 +39,8 @@ public class EmailSendController {
         try {
             String[] emails = email.split(",");
             for (String emailItem : emails) {
-                if (!org.springframework.util.StringUtils.isEmpty(data)) {
-                    Map<String, Object> datas = JSON.parseObject(StringEscapeUtils.unescapeHtml4(data), Map.class);
+                if (!StringUtils.isEmpty(data)) {
+                    Map<String, Object> datas = JsonUtils.jsonToMap(StringEscapeUtils.unescapeHtml4(data));
                     emailSendService.send(emailItem, code, datas);
                 } else {
                     emailSendService.send(emailItem, code, Maps.newHashMap());

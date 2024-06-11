@@ -20,12 +20,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
         </dependency>
         <dependency>
             <groupId>com.ibeetl</groupId>
-            <artifactId>beetl-framework-starter</artifactId>
+            <artifactId>beetl</artifactId>
         </dependency>
     </dependencies>
 </project>

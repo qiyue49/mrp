@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.email.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.email.disruptor.EmailHelper;
 import com.sunseagear.common.sms.exception.SmsException;
@@ -147,7 +146,7 @@ public class EmailSendServiceImpl implements IEmailSendService {
     public void retrySend(List<Long> idList) {
         for (Long id : idList) {
             EmailSendLog sendLog = emailSendLogService.selectById(id);
-            Map<String, Object> datas = JSON.parseObject(StringEscapeUtils.unescapeHtml4(sendLog.getSendData()), Map.class);
+            Map<String, Object> datas = JsonUtils.jsonToMap(StringEscapeUtils.unescapeHtml4(sendLog.getSendData()));
             send(id, sendLog.getEmail().split(","), sendLog.getSendCode(), datas);
         }
     }

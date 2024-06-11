@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.oss.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -46,7 +45,6 @@ public class Attachment extends DataEntity<Long> {
      * 上传时间
      */
     @TableField(value = "upload_time")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date uploadTime;
     /**
      * 上传的ID

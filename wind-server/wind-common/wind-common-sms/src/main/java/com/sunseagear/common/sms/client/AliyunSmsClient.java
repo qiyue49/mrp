@@ -1,6 +1,5 @@
 package com.sunseagear.common.sms.client;
 
-import com.alibaba.fastjson.JSON;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.IAcsClient;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
@@ -10,6 +9,7 @@ import com.aliyuncs.profile.IClientProfile;
 import com.sunseagear.common.sms.config.SmsConfigProperties;
 import com.sunseagear.common.sms.data.SmsResult;
 import com.sunseagear.common.sms.exception.SmsException;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.StringUtils;
 
 import java.util.HashMap;
@@ -80,7 +80,7 @@ public class AliyunSmsClient implements ISmsClient {
             //必填:短信模板-可在短信控制台中找到
             request.setTemplateCode(template);
             //可选:模板中的变量替换JSON串,如模板内容为"亲爱的${name},您的验证码为${code}"时,此处的值为
-            request.setTemplateParam(JSON.toJSONString(datas));
+            request.setTemplateParam(JsonUtils.objectToJsonString(datas));
 
             //可选-上行短信扩展码(扩展码字段控制在7位或以下，无特殊需求用户请忽略此字段)
             request.setSmsUpExtendCode(StringUtils.randomNumber(7));
@@ -96,7 +96,7 @@ public class AliyunSmsClient implements ISmsClient {
                 smsResult = SmsResult.fail(sendSmsResponse.getMessage());
             }
             smsResult.setSmsid(request.getSmsUpExtendCode());
-            smsResult.setReponseData(JSON.toJSONString(sendSmsResponse));
+            smsResult.setReponseData(JsonUtils.objectToJsonString(sendSmsResponse));
         } catch (Exception e) {
             smsResult = SmsResult.fail(e.getMessage());
         }

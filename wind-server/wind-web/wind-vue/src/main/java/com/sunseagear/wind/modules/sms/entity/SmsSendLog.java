@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.sms.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -89,7 +88,6 @@ public class SmsSendLog extends AbstractEntity<Long> {
      * 响应时间
      */
     @TableField(value = "response_date")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date responseDate;
 
 }

@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.sms.task;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.wind.modules.sms.entity.SmsSendLog;
 import com.sunseagear.wind.modules.sms.service.ISmsSendLogService;
 import com.sunseagear.wind.modules.sms.service.ISmsSendService;
@@ -47,7 +47,7 @@ public class SmsTask implements ApplicationListener<ContextRefreshedEvent> {
         //恢复处理
         for (SmsSendLog smsSendLog : smsSendLogList) {
             smsSendService.send(smsSendLog.getId(), smsSendLog.getPhone(),
-                    smsSendLog.getSendCode(), JSON.parseObject(smsSendLog.getSendData(), Map.class));
+                    smsSendLog.getSendCode(), JsonUtils.jsonToMap(smsSendLog.getSendData()));
         }
     }
 
@@ -88,7 +88,7 @@ public class SmsTask implements ApplicationListener<ContextRefreshedEvent> {
             smsSendLog.setTryNum(smsSendLog.getTryNum() + 1);
             smsSendLogService.insertOrUpdate(smsSendLog);
             smsSendService.send(smsSendLog.getId(), smsSendLog.getPhone(), smsSendLog.getSendCode(),
-                    JSON.parseObject(smsSendLog.getSendData(), Map.class));
+                    JsonUtils.jsonToMap(smsSendLog.getSendData()));
         } catch (Exception e) {
             e.printStackTrace();
         }

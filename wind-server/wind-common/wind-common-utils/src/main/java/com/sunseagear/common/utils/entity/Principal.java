@@ -1,7 +1,5 @@
 package com.sunseagear.common.utils.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.ServletUtils;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -27,11 +25,8 @@ public class Principal implements UserDetails, Serializable {
     private String realname; // 姓名
     private String tenantId; //租户ID
     private String roleId; //角色ID
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date startTime;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date stopTime;
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date lastAccessTime;
 
     private List<GrantedAuthority> permission;
@@ -82,7 +77,6 @@ public class Principal implements UserDetails, Serializable {
     }
 
     @Override
-    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permission;
     }

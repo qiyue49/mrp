@@ -1,8 +1,8 @@
 package com.sunseagear.wind.modules.sms.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import com.sunseagear.common.http.Response;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.aspectj.annotation.Log;
 import com.sunseagear.wind.aspectj.enums.LogType;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Map;
 
 /**
  * @version V1.0
@@ -39,7 +37,7 @@ public class SmsSendController {
         try {
             String[] phones = phone.split(",");
             if (!StringUtils.isEmpty(data)) {
-                smsSendService.send(phones, code, JSON.parseObject(StringEscapeUtils.unescapeHtml4(data), Map.class));
+                smsSendService.send(phones, code, JsonUtils.jsonToMap(StringEscapeUtils.unescapeHtml4(data)));
             } else {
                 smsSendService.send(phones, code, Maps.newHashMap());
             }
@@ -58,7 +56,7 @@ public class SmsSendController {
             String data = request.getParameter("data");
             String[] phones = phone.split(",");
             if (!StringUtils.isEmpty(data)) {
-                smsSendService.send(phones, code, JSON.parseObject(StringEscapeUtils.unescapeHtml4(data), Map.class));
+                smsSendService.send(phones, code, JsonUtils.jsonToMap(StringEscapeUtils.unescapeHtml4(data)));
             } else {
                 smsSendService.send(phones, code, Maps.newHashMap());
             }

@@ -27,12 +27,11 @@
         <jwt.version>0.11.5</jwt.version>
         <jasypt.version>3.0.5</jasypt.version>
         <poi.version>4.4.0</poi.version>
-        <druid.version>1.1.21</druid.version>
         <mysql.version>8.0.17</mysql.version>
         <sqlserver.version>4.0</sqlserver.version>
         <disruptor.version>3.3.6</disruptor.version>
         <aspect.version>1.7.4</aspect.version>
-        <dom4j.version>1.6.1</dom4j.version>
+        <dom4j.version>2.1.4</dom4j.version>
         <aliyun.oss.version>2.5.0</aliyun.oss.version>
         <qiniu.oss.version>[7.7.0, 7.10.99]</qiniu.oss.version>
         <qcloud.cos.version>5.6.42</qcloud.cos.version>
@@ -46,13 +45,10 @@
         <commons-codec.version>1.10</commons-codec.version>
         <json.lib.version>2.4</json.lib.version>
         <quartz.version>2.3.2</quartz.version>
-        <druid.version>1.1.21</druid.version>
         <tencentcloud.sdk.java.version>3.1.672</tencentcloud.sdk.java.version>
-        <fastjson.version>1.2.83</fastjson.version>
         <commons-text.version>1.10.0</commons-text.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.version>2.7</commons-io.version>
-        <easypoi.version>3.2.0</easypoi.version>
         <poi.scratchpad.version>5.0.0</poi.scratchpad.version>
         <poi.ooxml.schemas.version>1.4</poi.ooxml.schemas.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
@@ -163,15 +159,9 @@
             </dependency>
 
             <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>fastjson</artifactId>
-                <version>${fastjson.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>com.ibeetl</groupId>
-                <artifactId>beetl-framework-starter</artifactId>
-                <version>${beetl.version}</version>
+                <artifactId>beetl</artifactId>
+                <version>3.16.1.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>com.aliyun</groupId>
@@ -186,7 +176,7 @@
 
             <!--huyi-->
             <dependency>
-                <groupId>dom4j</groupId>
+                <groupId>org.dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>${dom4j.version}</version>
             </dependency>
@@ -229,12 +219,6 @@
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>sqljdbc4</artifactId>
                 <version>${sqlserver.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid</artifactId>
-                <version>${druid.version}</version>
             </dependency>
 
             <dependency>

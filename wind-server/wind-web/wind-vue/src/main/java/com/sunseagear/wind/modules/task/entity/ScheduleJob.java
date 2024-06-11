@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.task.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -83,7 +82,6 @@ public class ScheduleJob extends AbstractEntity<Long> {
      * 创建时间
      */
     @TableField(value = "create_date")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
     /**
      * 任务状态
@@ -99,7 +97,6 @@ public class ScheduleJob extends AbstractEntity<Long> {
      * 更新时间
      */
     @TableField(value = "update_date")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date updateDate;
     /**
      * 创建者

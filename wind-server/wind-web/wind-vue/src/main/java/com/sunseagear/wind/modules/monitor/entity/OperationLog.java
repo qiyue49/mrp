@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.monitor.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import com.sunseagear.common.mvc.entity.AbstractEntity;
 import lombok.Data;
@@ -101,6 +100,5 @@ public class OperationLog extends AbstractEntity<Long> {
      * 创建时间
      */
     @TableField(value = "create_date", fill = FieldFill.INSERT)
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createDate;
 }

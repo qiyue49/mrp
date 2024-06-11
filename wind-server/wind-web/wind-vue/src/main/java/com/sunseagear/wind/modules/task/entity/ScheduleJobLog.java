@@ -1,6 +1,5 @@
 package com.sunseagear.wind.modules.task.entity;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -81,6 +80,5 @@ public class ScheduleJobLog extends AbstractEntity<Long> {
      * 创建时间
      */
     @TableField(value = "create_time")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 }

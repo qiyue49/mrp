@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.email.task;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.wind.modules.email.entity.EmailSendLog;
 import com.sunseagear.wind.modules.email.service.IEmailSendLogService;
 import com.sunseagear.wind.modules.email.service.IEmailSendService;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * All rights Reserved, Designed By www.sunseagear.com
@@ -47,7 +46,7 @@ public class EmailTask implements ApplicationListener<ContextRefreshedEvent> {
         //恢复处理
         for (EmailSendLog emailEmailSendLog : emailEmailSendLogList) {
             emailSendService.send(emailEmailSendLog.getId(), emailEmailSendLog.getEmail(), emailEmailSendLog.getSendCode(),
-                    JSON.parseObject(emailEmailSendLog.getSendData(), Map.class));
+                    JsonUtils.jsonToMap(emailEmailSendLog.getSendData()));
         }
     }
 
@@ -88,7 +87,7 @@ public class EmailTask implements ApplicationListener<ContextRefreshedEvent> {
             emailEmailSendLog.setTryNum(emailEmailSendLog.getTryNum() + 1);
             emailSendLogService.insertOrUpdate(emailEmailSendLog);
             emailSendService.send(emailEmailSendLog.getId(), emailEmailSendLog.getEmail(), emailEmailSendLog.getSendCode(),
-                    JSON.parseObject(emailEmailSendLog.getSendData(), Map.class));
+                    JsonUtils.jsonToMap(emailEmailSendLog.getSendData()));
         } catch (Exception e) {
             e.printStackTrace();
         }

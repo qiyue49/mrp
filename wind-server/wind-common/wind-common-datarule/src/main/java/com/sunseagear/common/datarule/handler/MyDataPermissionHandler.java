@@ -14,7 +14,6 @@ import net.sf.jsqlparser.expression.operators.conditional.AndExpression;
 import net.sf.jsqlparser.expression.operators.relational.EqualsTo;
 import net.sf.jsqlparser.expression.operators.relational.ExpressionList;
 import net.sf.jsqlparser.expression.operators.relational.InExpression;
-import net.sf.jsqlparser.expression.operators.relational.ItemsList;
 import net.sf.jsqlparser.parser.CCJSqlParserManager;
 import net.sf.jsqlparser.schema.Column;
 import net.sf.jsqlparser.statement.select.PlainSelect;
@@ -117,8 +116,8 @@ public class MyDataPermissionHandler implements DataPermissionHandler {
             List<String> deptIdList = dataRuleHandler.getChildren(dataScope.getTableName(), id);
             ids.addAll(deptIdList);
 
-            ItemsList itemsList = new ExpressionList(ids.stream().map(StringValue::new).collect(Collectors.toList())); // 把集合转变为JSQLParser需要的元素列表
-            InExpression inExpression = new InExpression(new Column(dataScope.getTableName() + "." + dataScope.getScopeColumn()), itemsList);
+            InExpression inExpression = new InExpression(new Column(dataScope.getTableName() + "." + dataScope.getScopeColumn()),
+                    new ExpressionList(ids.stream().map(StringValue::new).collect(Collectors.toList())));
             return new AndExpression(where, inExpression);
 
         }

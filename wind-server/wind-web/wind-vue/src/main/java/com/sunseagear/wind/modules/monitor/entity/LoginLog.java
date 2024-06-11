@@ -1,7 +1,6 @@
 package com.sunseagear.wind.modules.monitor.entity;
 
 import cn.afterturn.easypoi.excel.annotation.Excel;
-import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -81,7 +80,6 @@ public class LoginLog extends AbstractEntity<Long> {
      */
     @Excel(name = "操作时间", orderNum = "7", format = "yyyy-MM-dd HH:mm:ss", width = 30)
     @TableField(value = "login_time")
-    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     private Date loginTime;
 
     private String tenantId;
