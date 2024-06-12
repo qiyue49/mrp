@@ -1,11 +1,11 @@
-import service from '@/utils/request'
+import request from '@/utils/request'
 
 export function login(username, password) {
   const data = {
     username,
     password
   }
-  return service({
+  return request({
     url: '/sso/oauth2/accessToken',
     method: 'post',
     data
@@ -13,7 +13,7 @@ export function login(username, password) {
 }
 
 export function logout(token) {
-  return service({
+  return request({
     url: '/sso/oauth2/revokeToken',
     method: 'post',
     data: { accessToken: token }
@@ -21,7 +21,7 @@ export function logout(token) {
 }
 
 export function refreshToken(refreshToken) {
-  return service({
+  return request({
     url: '/sso/oauth2/refreshToken',
     method: 'post',
     data: { refreshToken }

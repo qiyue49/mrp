@@ -4,17 +4,36 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.sunseagear.common.mvc.service.impl.TreeCommonServiceImpl;
 import com.sunseagear.common.utils.StringUtils;
 import com.sunseagear.wind.modules.sys.entity.Menu;
+import com.sunseagear.wind.modules.sys.entity.RoleMenu;
 import com.sunseagear.wind.modules.sys.mapper.MenuMapper;
+import com.sunseagear.wind.modules.sys.mapper.RoleMenuMapper;
 import com.sunseagear.wind.modules.sys.service.IMenuService;
 import com.sunseagear.wind.utils.UserUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.*;
 
 @Transactional
 @Service("menuService")
 public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Long> implements IMenuService {
+
+    @Autowired
+    private RoleMenuMapper roleMenuMapper;
+
+    @Override
+    public void deleteBatchIds(List<Serializable> idList) {
+        roleMenuMapper.delete(new QueryWrapper<RoleMenu>().in("menu_id", idList));
+        super.deleteBatchIds(idList);
+    }
+
+    @Override
+    public boolean deleteById(Serializable id) {
+        roleMenuMapper.delete(new QueryWrapper<RoleMenu>().in("menu_id", id));
+        return super.deleteById(id);
+    }
 
     @Override
     public List<Menu> getCurrentUserMenus() {
