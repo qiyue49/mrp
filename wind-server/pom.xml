@@ -21,7 +21,7 @@
         <artifactId.root>wind-server</artifactId.root>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <mybatis-plus-boot-starter.version>3.5.3.1</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.5.7</mybatis-plus-boot-starter.version>
         <java.version>17</java.version>
         <bitwalker.version>1.21</bitwalker.version>
         <jwt.version>0.11.5</jwt.version>
