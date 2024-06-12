@@ -1,10 +1,10 @@
 package com.sunseagear.common.sms.test;
 
-import com.alibaba.fastjson.JSONObject;
 import com.sunseagear.common.sms.client.ISmsClient;
 import com.sunseagear.common.sms.client.TencentSmsClient;
 import com.sunseagear.common.sms.config.TencentConfigProperties;
 import com.sunseagear.common.sms.data.SmsResult;
+import com.sunseagear.common.utils.JsonUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +31,6 @@ public class TestSmsMain {
         datas.put("2", 654789);
         // String templateContent = "您的验证码是：${code}。请不要把验证码泄露给其他人。";
         SmsResult smsResult = smsClient.send("15085980308", "191479", datas);
-        System.out.println(JSONObject.toJSONString(smsResult));
+        System.out.println(JsonUtils.objectToJsonString(smsResult));
     }
 }
