@@ -1,7 +1,5 @@
 package com.sunseagear.common.utils;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -734,95 +732,6 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     * 将json中存在的属性填充到Object对象对应的属性中去,如果Json对象中不存在的将忽略
-     *
-     * @param obj 目标对象
-     */
-    public static Object json2Objec(Object obj, JSONObject json) {
-        if (json == null) {
-            return obj;
-        }
-        if (obj == null) {
-            return null;
-        }
-        Iterator it = json.keys();
-        // 遍历jsonObject数据，添加到Map对象
-        while (it.hasNext()) {
-            String key = String.valueOf(it.next());
-            Object value;
-            try {
-                value = json.get(key);
-                if (!(value instanceof JSONObject) && !(value instanceof JSONArray)) {
-                    setField(obj, key, value);
-                }
-
-            } catch (Exception e) {
-
-                e.printStackTrace();
-            }
-
-        }
-
-        return obj;
-    }
-
-    /**
-     * 将json中存在的属性填充到Object对象对应的属性中去,如果Json对象中不存在的将忽略
-     *
-     * @param obj 目标对象
-     */
-    public static void json2Objec(Object obj, JSONObject json, boolean applyChildren) {
-        if (json == null || obj == null) {
-            return;
-        }
-
-        Iterator<String> it = json.keys();
-        while (it.hasNext()) {
-            String key = it.next();
-            Object value = json.opt(key);
-            try {
-                if (value instanceof JSONObject) {
-                    if (applyChildren) {
-                        Method method = getField(obj, key);
-                        if (method != null) {
-                            Class<?> returnType = method.getReturnType();
-                            if (returnType.isAssignableFrom(JSONObject.class)) {
-                                Object newObject = returnType.getDeclaredConstructor().newInstance();
-                                json2Objec(newObject, (JSONObject) value, true);
-                                setField(obj, key, newObject);
-                            } else {
-                                throw new IllegalArgumentException("Return type of the method is not assignable from JSONObject");
-                            }
-                        }
-                    }
-                } else if (value instanceof JSONArray) {
-                    JSONArray jarray = (JSONArray) value;
-                    for (Object jobj : jarray) {
-                        if (jobj instanceof JSONObject && applyChildren) {
-                            Method method = getField(obj, key);
-                            if (method != null) {
-                                Class<?> returnType = method.getReturnType();
-                                if (returnType.isAssignableFrom(JSONObject.class)) {
-                                    Object newObject = returnType.getDeclaredConstructor().newInstance();
-                                    json2Objec(newObject, (JSONObject) jobj, true);
-                                    setField(obj, key, newObject);
-                                } else {
-                                    throw new IllegalArgumentException("Return type of the method is not assignable from JSONObject");
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    setField(obj, key, value);
-                }
-            } catch (InstantiationException | IllegalAccessException | NoSuchMethodException |
-                     InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 }

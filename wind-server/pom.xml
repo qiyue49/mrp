@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.5</version>
         <relativePath/>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -27,29 +27,24 @@
         <jwt.version>0.12.5</jwt.version>
         <jasypt.version>3.0.5</jasypt.version>
         <poi.version>4.4.0</poi.version>
-        <mysql.version>8.0.17</mysql.version>
+        <mysql.version>8.0.32</mysql.version>
         <sqlserver.version>4.0</sqlserver.version>
         <disruptor.version>3.3.6</disruptor.version>
         <aspect.version>1.7.4</aspect.version>
         <dom4j.version>2.1.4</dom4j.version>
-        <aliyun.oss.version>2.5.0</aliyun.oss.version>
+        <aliyun.oss.version>3.17.2</aliyun.oss.version>
         <qiniu.oss.version>[7.7.0, 7.10.99]</qiniu.oss.version>
         <qcloud.cos.version>5.6.213</qcloud.cos.version>
-        <aliyun.java.sdk.version>4.5.22</aliyun.java.sdk.version>
+        <aliyun.java.sdk.version>4.6.4</aliyun.java.sdk.version>
         <aliyun.java.sdk.dysmsapi.version>1.1.0</aliyun.java.sdk.dysmsapi.version>
         <commons-fileupload.version>1.5</commons-fileupload.version>
         <beetl.version>3.16.1.RELEASE</beetl.version>
-        <commons-text.version>1.9</commons-text.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
-        <commons-io.version>2.4</commons-io.version>
-        <commons-codec.version>1.10</commons-codec.version>
-        <json.lib.version>2.4</json.lib.version>
+        <commons-codec.version>1.17.0</commons-codec.version>
         <quartz.version>2.3.2</quartz.version>
         <tencentcloud.sdk.java.version>3.1.1039</tencentcloud.sdk.java.version>
-        <commons-text.version>1.10.0</commons-text.version>
+        <commons-text.version>1.12.0</commons-text.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <commons-io.version>2.7</commons-io.version>
-        <poi.scratchpad.version>5.0.0</poi.scratchpad.version>
         <poi.ooxml.schemas.version>1.4</poi.ooxml.schemas.version>
         <pinyin4j.version>2.5.1</pinyin4j.version>
         <oshi.version>5.8.0</oshi.version>
@@ -109,6 +104,18 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis-plus-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>com.google.protobuf</groupId>
+                        <artifactId>protobuf-java</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>
@@ -246,13 +253,6 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons-codec.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>net.sf.json-lib</groupId>
-                <artifactId>json-lib</artifactId>
-                <version>${json.lib.version}</version>
-                <classifier>jdk15</classifier>
             </dependency>
 
             <!--项目添加easypoi导出Excel支持开始-->

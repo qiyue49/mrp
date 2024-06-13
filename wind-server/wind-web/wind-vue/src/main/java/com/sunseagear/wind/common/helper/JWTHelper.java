@@ -8,6 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
@@ -17,7 +18,7 @@ import java.util.function.Function;
  * All rights Reserved, Designed By www.sunseagear.com
  *
  * @version V1.0
- * @package com.sunseagear.wind.common.utils
+ * @package com.sunseagear.wind.common.helper
  * @title:
  * @description: JWT加密，校验工具 * @date: 2018/3/16 9:59
  * @copyright: 2017 www.sunseagear.com Inc. All rights reserved.
@@ -42,12 +43,8 @@ public class JWTHelper {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        return Jwts.parser().verifyWith(getSignKey()).build()
+                .parseSignedClaims(token).getPayload();
     }
 
     public Boolean isTokenExpired(String token) {
@@ -62,23 +59,23 @@ public class JWTHelper {
 
     public String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userName)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + getExpireIn()))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+                .claims(claims)
+                .subject(userName)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + getExpireIn()))
+                .signWith(getSignKey()).compact();
     }
 
     public String createRefreshToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userName)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + getRefreshExpireIn()))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+                .claims(claims)
+                .subject(userName)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + getRefreshExpireIn()))
+                .signWith(getSignKey()).compact();
     }
 
-    private Key getSignKey() {
+    private SecretKey getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
