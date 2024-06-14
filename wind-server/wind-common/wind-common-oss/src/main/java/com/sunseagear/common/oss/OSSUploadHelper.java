@@ -138,7 +138,7 @@ public class OSSUploadHelper {
             throw new FileNameLengthLimitExceededException(file.getOriginalFilename(), fileNameLength,
                     OSSUploadHelper.DEFAULT_FILE_NAME_LENGTH);
         }
-        assertAllowed(file, allowedExtension, maxSize);
+        fileUploadValidate(file, allowedExtension, maxSize);
         String filename = extractFilename(file, baseDir, needDatePath);
         filename = StringUtils.trimDiagonal(filename);
         return ossClient.upload(file.getInputStream(), filename);
@@ -153,7 +153,7 @@ public class OSSUploadHelper {
      * @param maxSize          最大大小 字节为单位 -1表示不限制
      * @throws InvalidExtensionException 如果MIME类型不允许
      */
-    public void assertAllowed(String remoteUrl, String[] allowedExtension, long maxSize)
+    public void fileUploadValidate(String remoteUrl, String[] allowedExtension, long maxSize)
             throws InvalidExtensionException {
 
         String extension = FilenameUtils.getExtension(remoteUrl);
@@ -212,7 +212,7 @@ public class OSSUploadHelper {
      * @throws InvalidExtensionException      如果MIME类型不允许
      * @throws FileSizeLimitExceededException 如果超出最大大小
      */
-    public void assertAllowed(MultipartFile file, String[] allowedExtension, long maxSize)
+    public void fileUploadValidate(MultipartFile file, String[] allowedExtension, long maxSize)
             throws InvalidExtensionException, FileSizeLimitExceededException {
 
         String filename = file.getOriginalFilename();
