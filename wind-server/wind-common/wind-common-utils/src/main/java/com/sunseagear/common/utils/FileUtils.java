@@ -1,6 +1,5 @@
 package com.sunseagear.common.utils;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -29,112 +28,33 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
     protected static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
 
-    boolean flag = false;
-    File file;
     private static final String[] IMAGES_SUFFIXES = {"bmp", "jpg", "jpeg", "gif", "png", "tiff"};
 
-    /**
-     * 传入路径，返回是否是绝对路径，是绝对路径返回true，反之
-     *
-     * @since 2015年4月21日
-     */
     public static boolean isAbsolutePath(String path) {
         return path.startsWith("/") || path.contains(":");
     }
 
-    public boolean deleteFolder(String deletePath) {// 根据路径删除指定的目录或文件，无论存在与否
-        flag = false;
-        // 验证字符串是否为正确路径名的正则表达式
-        String matches = "[A-Za-z]:\\\\[^:?\"><*]*";
-        if (deletePath.matches(matches)) {
-            file = new File(deletePath);
-            if (!file.exists()) {// 判断目录或文件是否存在
-                return flag; // 不存在返回 false
-            } else {
-
-                if (file.isFile()) {// 判断是否为文件
-                    return deleteFile(deletePath);// 为文件时调用删除文件方法
-                } else {
-                    return deleteDirectory(deletePath);// 为目录时调用删除目录方法
-                }
-            }
-        } else {
-            //System.out.println("要传入正确路径！");
-            return false;
-        }
-    }
-
-    public boolean deleteFile(String filePath) {// 删除单个文件
-        flag = false;
-        file = new File(filePath);
-        if (file.isFile() && file.exists()) {// 路径为文件且不为空则进行删除
-            file.delete();// 文件删除
-            flag = true;
-        }
-        return flag;
-    }
-
-    public boolean deleteDirectory(String dirPath) {// 删除目录（文件夹）以及目录下的文件
-        // 如果sPath不以文件分隔符结尾，自动添加文件分隔符
-        if (!dirPath.endsWith(File.separator)) {
-            dirPath = dirPath + File.separator;
-        }
-        File dirFile = new File(dirPath);
-        // 如果dir对应的文件不存在，或者不是一个目录，则退出
-        if (!dirFile.exists() || !dirFile.isDirectory()) {
-            return false;
-        }
-        flag = true;
-        File[] files = dirFile.listFiles();// 获得传入路径下的所有文件
-        for (File value : Objects.requireNonNull(files)) {// 循环遍历删除文件夹下的所有文件(包括子目录)
-            if (value.isFile()) {// 删除子文件
-                flag = deleteFile(value.getAbsolutePath());
-                //System.out.println(files[i].getAbsolutePath() + " 删除成功");
-                if (!flag) {
-                    break;// 如果删除失败，则跳出
-                }
-            } else {// 运用递归，删除子目录
-                flag = deleteDirectory(value.getAbsolutePath());
-                if (!flag) {
-                    break;// 如果删除失败，则跳出
-                }
-            }
-        }
-        if (!flag) {
-            return false;
-        }
-        // 删除当前目录
-        return dirFile.delete();
-    }
-
     // 创建单个文件
-    public static void createFile(String filePath) {
+    public static File createFile(String filePath) {
         File file = new File(filePath);
         if (file.exists()) {// 判断文件是否存在
-            //System.out.println("目标文件已存在" + filePath);
-            return;
+            return file;
         }
-        if (filePath.endsWith(File.separator)) {// 判断文件是否为目录
-            //System.out.println("目标文件不能为目录！");
-            return;
+        if (file.isDirectory()) {// 判断文件是否为目录
+            throw new RuntimeException("目标文件不能为目录");
         }
         if (!file.getParentFile().exists()) {// 判断目标文件所在的目录是否存在
-            // 如果目标文件所在的文件夹不存在，则创建父文件夹
-            //System.out.println("目标文件所在目录不存在，准备创建它！");
             if (!file.getParentFile().mkdirs()) {// 判断创建目录是否成功
-                //System.out.println("创建目标文件所在的目录失败！");
-                return;
+                return null;
             }
         }
         try {
-            // 创建目标文件
-            //System.out.println("创建文件成功:" + filePath);
-            //System.out.println("创建文件失败！");
             file.createNewFile();
         } catch (IOException e) {// 捕获异常
             e.printStackTrace();
-            //System.out.println("创建文件失败！" + e.getMessage());
+            throw new RuntimeException("创建文件失败");
         }
+        return file;
     }
 
     // 创建临时文件
@@ -214,41 +134,36 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
      * @return 若删除成功，则返回True；反之，则返回False
      */
     public static boolean delFile(String filePath) {
-        return new File(filePath).delete();
+        File file = new File(filePath);
+        if (file.isFile() && file.exists()) {// 路径为文件且不为空则进行删除
+            file.delete();// 文件删除
+            return true;
+        }
+        return false;
     }
 
     /**
-     * 删除指定的文件夹
+     * 删除指定的文件目录，可以是文件也可以是文件夹
      *
-     * @param dirPath 文件夹路径
-     * @param delFile 文件夹中是否包含文件
+     * @param filePath 文件路径
      * @return 若删除成功，则返回True；反之，则返回False
      */
-    public static boolean delDir(String dirPath, boolean delFile) {
-        if (delFile) {
-            File file = new File(dirPath);
-            if (file.isFile()) {
-                return file.delete();
-            } else if (file.isDirectory()) {
-                if (Objects.requireNonNull(file.listFiles()).length == 0) {
-                    return file.delete();
-                } else {
-                    int zfiles = Objects.requireNonNull(file.listFiles()).length;
-                    File[] delfile = file.listFiles();
-                    for (int i = 0; i < zfiles; i++) {
-                        if (Objects.requireNonNull(delfile)[i].isDirectory()) {
-                            delDir(delfile[i].getAbsolutePath(), true);
-                        }
-                        delfile[i].delete();
-                    }
-                    return file.delete();
-                }
-            } else {
-                return false;
-            }
-        } else {
-            return new File(dirPath).delete();
+    public static boolean delDir(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            return true;
         }
+
+        String[] list = file.list();
+        if (list == null) {
+            return file.delete();
+        }
+
+        for (String s : list) {
+            delDir(filePath + File.separator + s);
+        }
+
+        return file.delete();
     }
 
     /**
@@ -291,7 +206,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     public static boolean move(String source, String target, boolean isFolder) throws Exception {
         copy(source, target, isFolder);
         if (isFolder) {
-            return delDir(source, true);
+            return delDir(source);
         } else {
             return delFile(source);
         }
@@ -312,22 +227,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     /**
      * 根据byte数组，生成文件
      */
-    public static void saveFile(byte[] bfile, String filePath, String fileName) {
-        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(getOrCreateFile(filePath, fileName)))) {
+    public static void saveFile(byte[] bfile, String filePath) {
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(Objects.requireNonNull(createFile(filePath))))) {
             bos.write(bfile);
         } catch (Exception e) {
             e.printStackTrace();
+            throw new RuntimeException("文件写入失败");
         }
     }
-
-    private static File getOrCreateFile(String filePath, String fileName) throws IOException {
-        File dir = new File(filePath);
-        if (!dir.exists() && dir.isDirectory()) {
-            dir.mkdirs();
-        }
-        return new File(filePath + "\\" + fileName);
-    }
-
 
     public static String[] readDirFilesName(String filePath, boolean isAll) {
         String[] rs = null;
@@ -343,9 +250,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return rs;
     }
 
-    public static List readDirFilesFilter(String filePath, boolean isAll, String filterName) {
+    public static List<File> readDirFilesFilter(String filePath, boolean isAll, String filterName) {
         List<File> fs = readDirFiles(filePath, isAll);
-        List rs = new ArrayList();
+        List<File> rs = new ArrayList<>();
         for (File file : fs) {
             String fName = file.getName();
             if (!fName.isEmpty() && fName.toLowerCase().endsWith(filterName.toLowerCase())) {
@@ -356,8 +263,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
         return rs;
     }
 
-    public static List readDirFiles(String filepath, boolean isAll) {
-        List fs = new ArrayList();
+    public static List<File> readDirFiles(String filepath, boolean isAll) {
+        List<File> fs = new ArrayList<>();
         try {
             File file = new File(filepath);
             if ((!isAll) && (file.isDirectory())) {
@@ -381,31 +288,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             System.out.println("readfile()   Exception:" + e.getMessage());
         }
         return fs;
-    }
-
-    public static boolean deleteFilePath(File file) {
-        if (file == null) {
-            return false;
-        }
-        return deleteFilePath(file.getAbsolutePath());
-    }
-
-    public static boolean deleteFilePath(String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()) {
-            return true;
-        }
-
-        String[] list = file.list();
-        if (list == null) {
-            return file.delete();
-        }
-
-        for (String s : list) {
-            deleteFilePath(filePath + File.separator + s);
-        }
-
-        return file.delete();
     }
 
     public static void zipFile(String srcFileName, String zipFileName) {
@@ -521,36 +403,6 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             System.err.println(e.getMessage());
         }
         return null;
-    }
-
-    public static void downloadFile(HttpServletRequest request, HttpServletResponse response, String filePath) {
-        File file = new File(filePath);
-        downloadFile(request, response, filePath, file.getName());
-    }
-
-    public static void downloadFile(HttpServletRequest request, HttpServletResponse response, String filePath, String fileName) {
-        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream(filePath + fileName));
-             BufferedOutputStream bos = new BufferedOutputStream(response.getOutputStream())) {
-
-            long fileLength = new File(filePath).length();
-
-            response.setHeader("content-disposition", String.format("attachment;filename=\"%s\"", fileName));
-            response.setHeader("content-length", String.valueOf(fileLength));
-            byte[] buff = new byte[2048];
-            int bytesRead;
-            while (-1 != (bytesRead = bis.read(buff, 0, buff.length))) {
-                bos.write(buff, 0, bytesRead);
-            }
-            bos.flush();
-        } catch (IOException e) {
-            logger.error("Failed to download file: " + filePath + fileName, e);
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            try {
-                response.getWriter().write("An error occurred while downloading the file.");
-            } catch (IOException ex) {
-                logger.error("Failed to write error message to response", ex);
-            }
-        }
     }
 
     public static void fileDownload(HttpServletResponse response, String filePath, String fileName) throws Exception {
@@ -686,16 +538,17 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     }
 
     public static void main(String[] args) {
-        String dirName = "E:/createFile/";// 创建目录
-        FileUtils.mkDir(dirName);// 调用方法创建目录
-        String fileName = dirName + "/file1.txt";// 创建文件
-        FileUtils.createFile(fileName);// 调用方法创建文件
-        String prefix = "temp";// 创建临时文件
-        String surfix = ".txt";// 后缀
-        for (int i = 0; i < 10; i++) {// 循环创建多个文件
-            System.out.println("创建临时文件: "// 调用方法创建临时文件
-                    + FileUtils.createTempFile(prefix, surfix, dirName));
-        }
+//        String dirName = "E:/createFile/";// 创建目录
+//        FileUtils.mkDir(dirName);// 调用方法创建目录
+//        String fileName = dirName + "/file1.txt";// 创建文件
+//        FileUtils.createFile(fileName);// 调用方法创建文件
+//        String prefix = "temp";// 创建临时文件
+//        String surfix = ".txt";// 后缀
+//        for (int i = 0; i < 10; i++) {// 循环创建多个文件
+//            System.out.println("创建临时文件: "// 调用方法创建临时文件
+//                    + FileUtils.createTempFile(prefix, surfix, dirName));
+//        }
+        FileUtils.delDir("C:\\Users\\dothe\\Desktop\\源代码\\wind.zip");
     }
 
 

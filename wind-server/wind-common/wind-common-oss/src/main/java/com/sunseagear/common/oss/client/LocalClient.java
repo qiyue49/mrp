@@ -3,11 +3,10 @@ package com.sunseagear.common.oss.client;
 import com.sunseagear.common.oss.config.LocalConfig;
 import com.sunseagear.common.oss.config.OssConfig;
 import com.sunseagear.common.oss.exception.OSSException;
+import com.sunseagear.common.utils.FileUtils;
 import com.sunseagear.common.utils.PropertiesUtil;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 
 /**
@@ -46,28 +45,13 @@ public class LocalClient extends AbstractOSSClient {
 
 
     /**
-     * 判断文件地址保存文件
-     */
-    private File getAbsoluteFile(String path) throws IOException {
-        String basePath = uploadFilePath;
-        File desc = new File(basePath + File.separator + path);
-        if (!desc.getParentFile().exists()) {
-            desc.getParentFile().mkdirs();
-        }
-        if (!desc.exists()) {
-            desc.createNewFile();
-        }
-        return desc;
-    }
-
-    /**
      * 文件上传
      */
     @Override
     public String upload(InputStream inputStream, String path) {
+        String fullPath = uploadFilePath + File.separator + path;
         try {
-            File outFile = getAbsoluteFile(path);
-            FileUtils.copyInputStreamToFile(inputStream, outFile);
+            FileUtils.saveFile(inputStream.readAllBytes(), fullPath);
         } catch (Exception e) {
             throw new OSSException("上传文件失败", e);
         }
@@ -77,11 +61,7 @@ public class LocalClient extends AbstractOSSClient {
     @Override
     public void delete(String filename) {
         filename = filename.replace(domain, "");
-        String basePath = uploadFilePath;
-        File desc = new File(basePath + filename);
-        if (desc.exists()) {
-            desc.delete();
-        }
+        FileUtils.delFile(uploadFilePath + filename);
     }
 
 }

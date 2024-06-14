@@ -133,9 +133,9 @@ public class OSSUploadHelper {
                          String[] allowedExtension, long maxSize, boolean needDatePath)
             throws InvalidExtensionException, FileSizeLimitExceededException, IOException,
             FileNameLengthLimitExceededException {
-        int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
-        if (fileNamelength > OSSUploadHelper.DEFAULT_FILE_NAME_LENGTH) {
-            throw new FileNameLengthLimitExceededException(file.getOriginalFilename(), fileNamelength,
+        int fileNameLength = Objects.requireNonNull(file.getOriginalFilename()).length();
+        if (fileNameLength > OSSUploadHelper.DEFAULT_FILE_NAME_LENGTH) {
+            throw new FileNameLengthLimitExceededException(file.getOriginalFilename(), fileNameLength,
                     OSSUploadHelper.DEFAULT_FILE_NAME_LENGTH);
         }
         assertAllowed(file, allowedExtension, maxSize);
