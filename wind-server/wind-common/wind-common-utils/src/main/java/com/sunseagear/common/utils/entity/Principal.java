@@ -29,7 +29,7 @@ public class Principal implements UserDetails, Serializable {
     private Date stopTime;
     private Date lastAccessTime;
 
-    private List<GrantedAuthority> permission;
+    private List<GrantedAuthority> authorities;
     /**
      * 登录IP
      */
@@ -78,7 +78,7 @@ public class Principal implements UserDetails, Serializable {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return permission;
+        return authorities;
     }
 
     @Override

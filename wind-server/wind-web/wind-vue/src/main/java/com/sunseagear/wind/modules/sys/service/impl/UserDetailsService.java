@@ -35,7 +35,7 @@ public class UserDetailsService implements org.springframework.security.core.use
         }
         Principal principal = new Principal(user.getId(), user.getUsername(), user.getRealname(), user.getTenantId(), user.findRoleIds());
         principal.setPassword(user.getPassword());
-        principal.setPermission(getAuthorities(user));
+        principal.setAuthorities(getAuthorities(user));
         return principal;
     }
 
