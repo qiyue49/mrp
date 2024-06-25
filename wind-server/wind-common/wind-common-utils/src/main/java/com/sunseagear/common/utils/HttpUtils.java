@@ -7,7 +7,12 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class HttpUtils {
-    private HttpUtils() {
+    private final static String httpHeaderMediaType = "application/json;charset=utf-8";
+
+    private final static String httpHeaderContentType = "Content-Type";
+
+
+    public HttpUtils() {
     }
 
     public static String SyncGet(final String webUrl, Headers headers) {
@@ -21,6 +26,19 @@ public class HttpUtils {
     public static String SyncGet(final String webUrl) {
         final Request request = new Request.Builder()
                 .url(webUrl)
+                .build();
+        return execute(request);
+    }
+
+    public static String SyncGet(final String webUrl, Headers headers, RequestParams requestParams) {
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(webUrl).newBuilder();
+
+        requestParams.names().forEach(item -> {
+            urlBuilder.addQueryParameter(item, requestParams.get(item).toString());
+        });
+        final Request request = new Request.Builder()
+                .url(urlBuilder.build().url())
+                .headers(headers)
                 .build();
         return execute(request);
     }
@@ -43,6 +61,32 @@ public class HttpUtils {
         final Request request = new Request.Builder()
                 .url(url)
                 .post(body)
+                .build();
+        return execute(request);
+    }
+
+    public static String SyncPost(String url, Headers headers, RequestParams params) {
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String name : params.names()) {
+            builder.add(name, "" + params.get(name));
+        }
+        RequestBody body = builder.build();
+        //创建一个Request
+        final Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .headers(headers)
+                .build();
+        return execute(request);
+    }
+
+    public static String SyncPost(String url, String json) {
+        RequestBody requestBody = RequestBody.create(json, MediaType.parse(httpHeaderMediaType));
+        Request request = new Request.Builder()
+                .addHeader(httpHeaderContentType, httpHeaderMediaType)
+                .addHeader("Accept", httpHeaderMediaType)
+                .post(requestBody)
+                .url(url)
                 .build();
         return execute(request);
     }
