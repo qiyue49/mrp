@@ -6,16 +6,14 @@
         <span>名称:</span>
         <el-input v-model="listQuery.name" placeholder="请输入名称" @keyup.enter="handleFilter" />
       </div>
-      <el-button v-permission="['sys:organization:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">
-        搜索
-      </el-button>
+      <el-button v-permission="['sys:organization:list']" class="filter-item" type="primary" icon="Search" @click="handleFilter">搜索</el-button>
       <el-button v-permission="['sys:organization:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" style="width: 100%;" row-key="id" header-cell-class-name="header-cell">
       <el-table-column prop="name" label="名称" width="180" />
       <el-table-column label="备注">
         <template #default="scope">
-          <span style="color:sandybrown">{{ scope.row.remarks }}</span>
+          <span>{{ scope.row.remarks }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -26,7 +24,7 @@
       </el-table-column>
     </el-table>
 
-    <organization-form ref="form" @refresh-list="getList" />
+    <organization-form ref="form" @refresh-list="refreshList" />
 
   </div>
 </template>
@@ -56,16 +54,32 @@ export default {
       this.listLoading = true
       this.list = []
       fetchOrganizationList(this.listQuery).then(response => {
-        const organizationList = response.data.data
-        for (let i = 0; i < organizationList.length; i++) {
-          this.list.push({
-            id: organizationList[i].id,
-            name: organizationList[i].name,
-            children: organizationList[i].children
-          })
+        if (response.data.code === 0) {
+          this.list = response.data.data
+          this.$refs.form.setList(this.list)
         }
-        this.$refs.form.setList(this.list)
         this.listLoading = false
+      })
+    },
+    refreshList(row) {
+      if (row.parentId === undefined) {
+        this.list.push(row)
+        return
+      }
+      this.refreshTree(this.list, row)
+    },
+    refreshTree(list, row) {
+      list.forEach((item) => {
+        if (item.id === row.parentId) {
+          const temp = item.children.find(child => child.id === row.id)
+          if (temp) {
+            Object.assign(temp, row)
+          } else {
+            item.children.push(row)
+          }
+        } else if (!this.isNull(item.children)) {
+          this.refreshTree(item.children, row)
+        }
       })
     },
     handleFilter() {
@@ -85,14 +99,24 @@ export default {
       }).then(() => {
         deleteOrganization(row.id).then(response => {
           if (response.data.code === 0) {
-            this.getList()
+            this.deleteTree(this.list, row)
             this.$message.success(response.data.msg)
           } else {
             this.$message.error(response.data.msg)
           }
         })
       })
+    },
+    deleteTree(list, row) {
+      list.forEach((item) => {
+        if (item.id === row.id) {
+          list.splice(list.indexOf(row), 1)
+        } else if (!this.isNull(item.children)) {
+          this.deleteTree(item.children, row)
+        }
+      })
     }
+
   }
 }
 </script>

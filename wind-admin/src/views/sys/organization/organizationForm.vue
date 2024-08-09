@@ -3,7 +3,7 @@
     <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="margin-left:50px;margin-right:50px;">
       <el-form-item label="上级部门" prop="parentIds">
         <el-cascader
-          v-model="temp.parentIds"
+          v-model="parentIds"
           :options="list"
           :props="treeProps"
           :show-all-levels="false"
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { fetchOrganization, createOrganization, updateOrganization } from '@/api/sys/organization'
+import { createOrganization, fetchOrganization, updateOrganization } from '@/api/sys/organization'
 
 export default {
   name: 'OrganizationForm',
@@ -42,6 +42,7 @@ export default {
       list: [],
       temp: {},
       title: undefined,
+      parentIds: undefined,
       treeProps: {
         value: 'id',
         label: 'name',
@@ -52,8 +53,8 @@ export default {
     }
   },
   methods: {
-    getList() {
-      this.$emit('refreshList')
+    getList(data) {
+      this.$emit('refreshList', data)
     },
     setList(list) {
       this.list = list
@@ -63,7 +64,7 @@ export default {
       this.temp = {
         id: undefined,
         name: undefined,
-        parentIds: undefined,
+        parentId: undefined,
         remark: undefined
       }
     },
@@ -77,24 +78,21 @@ export default {
     },
     createData() {
       // 预处理提交的数据
-      const parentIds = this.temp.parentIds
+      const parentIds = this.parentIds
       if (parentIds !== undefined && parentIds !== '') {
         if (parentIds instanceof Array && parentIds.length > 0) {
-          const parentId = parentIds[parentIds.length - 1]
-          this.temp.parentId = parentId
+          this.temp.parentId = parentIds[parentIds.length - 1]
         }
       }
       this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
-            this.temp.parentIds.length = 0
-          }
           createOrganization(this.temp).then((response) => {
             this.loading = false
             if (response.data.code === 0) {
               this.dialogFormVisible = false
-              this.getList()
+              const data = response.data.data
+              this.getList(data)
               this.$message.success(response.data.msg)
             } else {
               this.$message.error(response.data.msg)
@@ -121,7 +119,7 @@ export default {
             if (parentIds.length > 0) {
               parentIds = parentIds.substr(0, parentIds.length - 1)
             }
-            this.temp.parentIds = parentIds.split('\/')
+            this.parentIds = parentIds.split('\/')
           }
         } else {
           this.dialogFormVisible = false
@@ -133,26 +131,17 @@ export default {
       this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          const parentIds = this.temp.parentIds
-          if (parentIds !== undefined && parentIds !== '') {
-            if (parentIds instanceof Array && parentIds.length > 0) {
-              const parentId = parentIds[parentIds.length - 1]
-              this.temp.parentId = parentId
-            }
+          const parentIds = this.parentIds
+          if (parentIds instanceof Array && parentIds.length > 0) {
+            this.temp.parentId = parentIds[parentIds.length - 1]
+          } else {
+            this.temp.parentId = undefined
           }
-          if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
-            this.temp.parentIds = undefined
-          }
-          if (this.temp.parent !== undefined) {
-            this.temp.parent = undefined
-          }
-          const tempData = Object.assign({}, this.temp)
-          console.log(tempData)
-          updateOrganization(tempData).then((response) => {
+          updateOrganization(this.temp).then((response) => {
             this.loading = false
             if (response.data.code === 0) {
               this.dialogFormVisible = false
-              this.getList()
+              this.getList(this.temp)
               this.$message.success(response.data.msg)
             } else {
               this.$message.error(response.data.msg)
