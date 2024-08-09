@@ -16,7 +16,7 @@ public class WebSocketWebCodeServer extends WebSocketServer {
 
 
     @Override
-    public void intiMessage() {
+    public void registerMessage() {
         getMessageDispatcher().register(ConstantMessageCode.WEB_SERVER_HELLOW_REQ, new WebServerHellowRequestProcessor(this));
 
     }

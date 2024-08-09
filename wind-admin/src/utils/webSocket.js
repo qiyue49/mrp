@@ -4,7 +4,6 @@ let webSocket
 
 function getURL() {
   const userId = store.userStore.userInfo.id
-  console.log('import.meta.env.NODE_ENV', import.meta.env.NODE_ENV)
   console.log('import.meta.env.VITE_APP_BASE_WEBSOCKET', import.meta.env.VITE_APP_BASE_WEBSOCKET)
   console.log('import.meta.env.VITE_APP_ENV', import.meta.env.VITE_APP_ENV)
 

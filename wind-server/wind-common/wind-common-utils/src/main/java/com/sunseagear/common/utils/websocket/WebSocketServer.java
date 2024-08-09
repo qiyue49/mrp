@@ -22,7 +22,7 @@ public abstract class WebSocketServer {
 
     @Bean
     public void init() {
-        intiMessage();
+        registerMessage();
     }
 
     /**
@@ -59,53 +59,76 @@ public abstract class WebSocketServer {
         onlineSessions.remove(userId);
     }
 
-    public abstract void intiMessage();
-
-    /**
-     * 公共方法：发送信息给所有人
-     */
-    private void sendMessageToAll(String msg) {
-        onlineSessions.forEach((id, session) -> {
-            try {
-                session.getBasicRemote().sendText(msg);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-    }
+    public abstract void registerMessage();
 
     public MessageDispatcher getMessageDispatcher() {
         return messageDispatcher;
     }
 
-
-    public void sendSuccess(Long userId, int code, String message) {
-        send(userId, code, true, message, "");
-    }
-
-    public void sendFail(Long userId, int code, String message) {
-        send(userId, code, false, message, "");
-    }
-
     public void send(Long userId, int code, Object data) {
-        send(userId, code, true, "成功", data);
+        send(userId, code, true, "成功", data, true);
     }
 
-    public void send(Long userId, int code, boolean success, String message, Object data) {
+    public void asyncSend(Long userId, int code, Object data) {
+        send(userId, code, true, "成功", data, false);
+    }
+
+    public void send(Long userId, int code, boolean success, String message, Object data, boolean isSync) {
         if (onlineSessions.containsKey(userId)) {
             SocketMessage socketMessage = new SocketMessage();
             socketMessage.setCode(code);
             socketMessage.setMessage(message);
             socketMessage.setSuccess(success);
             socketMessage.setData(data);
+            sendText(userId, new Gson().toJson(socketMessage), isSync);
+        }
+    }
+
+    public void sendText(Long userId, String text, boolean isSync) {
+        if (isSync) {
             try {
-                onlineSessions.get(userId).getBasicRemote().sendText(new Gson().toJson(socketMessage));
+                onlineSessions.get(userId).getBasicRemote().sendText(text);
             } catch (IOException e) {
                 e.printStackTrace();
-                messageDispatcher.processError(String.format("messageSendFail:%s，message:%s", e.getMessage(), new Gson().toJson(message)));
+                messageDispatcher.processError(String.format("messageSendFail:%s，message:%s", e.getMessage(), text));
+            }
+        } else {
+            onlineSessions.get(userId).getAsyncRemote().sendText(new Gson().toJson(text));
+        }
+    }
+
+    public void broadcast(Long userId, int code, Object data) {
+        broadcast(userId, code, true, "成功", data, true);
+    }
+
+    public void AsyncBroadcast(Long userId, int code, Object data) {
+        broadcast(userId, code, true, "成功", data, false);
+    }
+
+    public void broadcast(Long userId, int code, boolean success, String message, Object data, boolean isSync) {
+        if (onlineSessions.containsKey(userId)) {
+            SocketMessage socketMessage = new SocketMessage();
+            socketMessage.setCode(code);
+            socketMessage.setMessage(message);
+            socketMessage.setSuccess(success);
+            socketMessage.setData(data);
+            broadcastText(new Gson().toJson(socketMessage), isSync);
+        }
+    }
+    public void broadcastText(String text, boolean isSync) {
+        for (Map.Entry<Long, Session> entry : onlineSessions.entrySet()) {
+            Session session = entry.getValue();
+            if (isSync) {
+                try {
+                    session.getBasicRemote().sendText(text);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    messageDispatcher.processError(String.format("messageSendFail:%s，message:%s", e.getMessage(), text));
+                }
+            } else {
+                session.getAsyncRemote().sendText(text);
             }
         }
-
-
     }
+
 }
