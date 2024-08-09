@@ -1,4 +1,4 @@
-package com.sunseagear.common.disruptor;
+package com.sunseagear.wind.disruptor;
 
 import lombok.Getter;
 

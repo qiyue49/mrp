@@ -1,7 +1,7 @@
 package com.sunseagear.wind.aspectj;
 
-import com.sunseagear.common.disruptor.Task;
-import com.sunseagear.common.disruptor.TaskHelper;
+import com.sunseagear.wind.disruptor.Task;
+import com.sunseagear.wind.disruptor.TaskHelper;
 import com.sunseagear.common.utils.IpUtils;
 import com.sunseagear.common.utils.JsonUtils;
 import com.sunseagear.common.utils.ServletUtils;
