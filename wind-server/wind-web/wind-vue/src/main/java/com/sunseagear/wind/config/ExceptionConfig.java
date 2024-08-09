@@ -36,15 +36,6 @@ public class ExceptionConfig {
     }
 
     /**
-     * 捕捉UnauthorizedException
-     */
-    //@ResponseStatus(HttpStatus.UNAUTHORIZED)
-    //@ExceptionHandler(UnauthorizedException.class)
-    public Object handle401() {
-        return Response.error(401, "Unauthorized");
-    }
-
-    /**
      * 捕捉其他所有异常
      */
     @ExceptionHandler(Exception.class)
