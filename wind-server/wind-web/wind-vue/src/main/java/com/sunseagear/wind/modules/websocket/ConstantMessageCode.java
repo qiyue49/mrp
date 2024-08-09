@@ -10,6 +10,6 @@ package com.sunseagear.wind.modules.websocket;
  * ack:2
  * */
 public class ConstantMessageCode {
-    public static final int WEB_SERVER_HELLOW_REQ = 101001;
-    public static final int SERVER_WEB_HELLOW_ACK = 111002;
+    public static final String WEB_SERVER_HELLO_REQ = "WEB_SERVER_HELLO_REQ";
+    public static final String SERVER_WEB_HELLO_ACK = "SERVER_WEB_HELLO_ACK";
 }

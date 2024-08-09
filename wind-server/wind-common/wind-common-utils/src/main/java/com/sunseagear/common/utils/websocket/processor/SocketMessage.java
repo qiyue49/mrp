@@ -2,15 +2,17 @@ package com.sunseagear.common.utils.websocket.processor;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
 public class SocketMessage<T> {
 
-    public static final int ERROR_CODE = -1;
-    public static final int OPEN_CODE = 1;
-    public static final int CLOSE_CODE = 2;
+    public static final String ERROR_CODE = "-1";
+    public static final String OPEN_CODE = "1";
+    public static final String CLOSE_CODE = "2";
 
 
-    private int code;
+    private String code;
     protected boolean success;
     protected String message;
     protected Long userId;

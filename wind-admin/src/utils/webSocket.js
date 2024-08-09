@@ -33,6 +33,7 @@ export function initWebSocket(onOpen, onMessage) {
   webSocket.onopen = onOpen // 连接成功
   webSocket.onclose = onClose // 连接关闭时回调
   webSocket.onmessage = (event) => {
+    console.log('onmessage', event)
     onMessage(event)
   } // 收到消息时回调
 }

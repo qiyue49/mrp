@@ -6,18 +6,19 @@ import com.google.gson.JsonParser;
 import com.sunseagear.common.utils.websocket.processor.JsonProcessor;
 import com.sunseagear.common.utils.websocket.processor.SocketMessage;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 public class MessageDispatcher {
 
-    private HashMap<Integer, JsonProcessor> jsonProcessorHashMap = new HashMap<>();
+    private HashMap<Serializable, JsonProcessor> jsonProcessorHashMap = new HashMap<>();
 
     private JsonProcessor errorProcessor;
 
     public MessageDispatcher() {
     }
 
-    public void register(int code, JsonProcessor jsonProcessor) {
+    public void register(Serializable code, JsonProcessor jsonProcessor) {
         jsonProcessorHashMap.put(code, jsonProcessor);
     }
 
@@ -48,7 +49,7 @@ public class MessageDispatcher {
             processError(String.format("socketMessage parse error: %s", msg));
             return;
         }
-        int code = jsonObject.get("code").getAsInt();
+        String code = jsonObject.get("code").getAsString();
         String data = jsonObject.get("data").toString();
         Long userId = jsonObject.get("userId").getAsLong();
         String message = jsonObject.get("message").getAsString();

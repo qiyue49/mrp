@@ -65,15 +65,15 @@ public abstract class WebSocketServer {
         return messageDispatcher;
     }
 
-    public void send(Long userId, int code, Object data) {
+    public void send(Long userId, String code, Object data) {
         send(userId, code, true, "成功", data, true);
     }
 
-    public void asyncSend(Long userId, int code, Object data) {
+    public void asyncSend(Long userId, String code, Object data) {
         send(userId, code, true, "成功", data, false);
     }
 
-    public void send(Long userId, int code, boolean success, String message, Object data, boolean isSync) {
+    public void send(Long userId, String code, boolean success, String message, Object data, boolean isSync) {
         if (onlineSessions.containsKey(userId)) {
             SocketMessage socketMessage = new SocketMessage();
             socketMessage.setCode(code);
@@ -97,15 +97,15 @@ public abstract class WebSocketServer {
         }
     }
 
-    public void broadcast(Long userId, int code, Object data) {
+    public void broadcast(Long userId, String code, Object data) {
         broadcast(userId, code, true, "成功", data, true);
     }
 
-    public void AsyncBroadcast(Long userId, int code, Object data) {
+    public void AsyncBroadcast(Long userId, String code, Object data) {
         broadcast(userId, code, true, "成功", data, false);
     }
 
-    public void broadcast(Long userId, int code, boolean success, String message, Object data, boolean isSync) {
+    public void broadcast(Long userId, String code, boolean success, String message, Object data, boolean isSync) {
         if (onlineSessions.containsKey(userId)) {
             SocketMessage socketMessage = new SocketMessage();
             socketMessage.setCode(code);

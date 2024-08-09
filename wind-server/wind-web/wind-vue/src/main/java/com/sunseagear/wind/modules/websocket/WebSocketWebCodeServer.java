@@ -1,7 +1,7 @@
 package com.sunseagear.wind.modules.websocket;
 
 import com.sunseagear.common.utils.websocket.WebSocketServer;
-import com.sunseagear.wind.modules.websocket.processor.WebServerHellowRequestProcessor;
+import com.sunseagear.wind.modules.websocket.processor.WebServerHelloRequestProcessor;
 import jakarta.websocket.server.ServerEndpoint;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +17,7 @@ public class WebSocketWebCodeServer extends WebSocketServer {
 
     @Override
     public void registerMessage() {
-        getMessageDispatcher().register(ConstantMessageCode.WEB_SERVER_HELLOW_REQ, new WebServerHellowRequestProcessor(this));
+        getMessageDispatcher().register(ConstantMessageCode.WEB_SERVER_HELLO_REQ, new WebServerHelloRequestProcessor(this));
 
     }
 }

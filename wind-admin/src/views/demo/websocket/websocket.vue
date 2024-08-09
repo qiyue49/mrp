@@ -4,15 +4,17 @@
     相关后台代码见com.sunseagear.wind.modules.websocket包下文件夹
     <br />
     <el-input v-model="content" type="textarea" :rows="20" style="width: 60%" class="filter-item" />
+    <div>
+      类型(只是作为一个参数，无实际意义)：
+      <el-radio
+        v-for="item in dictList('sf')"
+        :key="'type' + item.label"
+        v-model="temp.type"
+        :label="item.value">
+        {{ item.label }}
+      </el-radio>
+    </div>
     <el-input v-model="temp.message" style="width: 60%;" />
-    <el-radio
-      v-for="item in dictList('sf')"
-      :key="'type' + item.label"
-      v-model="temp.type"
-      :label="item.value"
-    >
-      {{ item.label }}
-    </el-radio>
     <el-button :loading="loading" type="primary" icon="Download" @click="sendMessage">
       发送
     </el-button>
@@ -42,7 +44,7 @@ export default {
   },
   methods: {
     sendMessage() {
-      this.message.code = 101001
+      this.message.code = 'WEB_SERVER_HELLO_REQ'
       this.message.success = true
       this.message.message = ''
       this.message.userId = this.$store.userStore.userInfo.id
@@ -53,10 +55,14 @@ export default {
     onMessage(event) {
       const message = JSON.parse(event.data)
       this.loading = false
-      if (message.success) {
-        this.content += '\n' + JSON.stringify(message.data)
+      if (message.code === 'SERVER_WEB_HELLO_ACK') {
+        if (message.success) {
+          this.content += '收到服务器回应:' + JSON.stringify(message.data) + '\n'
+        } else {
+          this.$message.error({ dangerouslyUseHTMLString: true, message: message.message })
+        }
       } else {
-        this.$message.error({ dangerouslyUseHTMLString: true, message: message.message })
+        this.$message.error('未知消息类型')
       }
     }
   }
