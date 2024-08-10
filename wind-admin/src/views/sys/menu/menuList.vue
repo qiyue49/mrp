@@ -10,7 +10,7 @@
       <el-button v-permission="['sys:menu:add']" class="filter-item" type="primary" icon="Plus" @click="handleCreate">新增</el-button>
     </div>
 
-    <el-table v-loading="listLoading" :data="list" row-key="id" lazy :load="load" header-cell-class-name="header-cell">
+    <el-table v-loading="listLoading" :data="list" row-key="id" header-cell-class-name="header-cell">
       <el-table-column ming-width="150" label="名称">
         <template #default="scope">
           <span>{{ scope.row.name }}</span>
@@ -90,9 +90,6 @@ export default {
         }
         this.listLoading = false
       })
-    },
-    load(tree, treeNode, resolve) {
-      resolve(tree.children)
     },
     refreshList(row) {
       if (row.parentId === undefined) {

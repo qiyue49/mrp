@@ -61,6 +61,7 @@ export default {
     },
     resetTemp() {
       this.loading = false
+      this.parentIds = undefined
       this.temp = {
         id: undefined,
         name: undefined,
@@ -111,9 +112,6 @@ export default {
       fetchOrganization(id).then(response => {
         if (response.data.code === 0) {
           this.temp = response.data.data // copy obj
-          if (this.temp.children !== undefined) {
-            this.temp.children.length = 0
-          }
           if (this.temp.parentIds !== undefined) {
             let parentIds = this.temp.parentIds.trim()
             if (parentIds.length > 0) {
