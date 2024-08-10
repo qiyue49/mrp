@@ -180,11 +180,6 @@ export default {
     setList(list) {
       this.list = list
     },
-    clear1() {
-      if (this.temp.icon) {
-        this.temp.icon = ''
-      }
-    },
     resetTemp() {
       this.loading = false
       this.temp = {
@@ -209,9 +204,6 @@ export default {
       this.$nextTick(() => {
         this.$refs.dataForm.clearValidate()
       })
-    },
-    addIcon() {
-      this.$refs.iconSelector.addIcon()
     },
     createData() {
       // 预处理提交的数据
