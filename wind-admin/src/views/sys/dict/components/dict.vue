@@ -187,7 +187,7 @@ export default {
               //   console.log('数据字典加载成功...')
               // })
               this.dialogFormVisible = false
-              this.$message.success('更新成功')
+              this.$message.success(data.msg)
               this.getList()
             } else {
               this.$message.error(data.msg)

@@ -350,7 +350,7 @@ export default {
         refreshSchedule(row.id).then(response => {
           const data = response.data
           if (data.code === 0) {
-            this.$message.success('更新成功')
+            this.$message.success(data.msg)
             this.getList()
           } else {
             this.$message.error(data.msg)
@@ -384,7 +384,7 @@ export default {
         changeJobStatus(row.id, cmd).then(response => {
           const data = response.data
           if (data.code === 0) {
-            this.$message.success('更新成功')
+            this.$message.success(data.msg)
             this.getList()
           } else {
             this.$message.error(data.errmsg)

@@ -58,7 +58,7 @@ public class MenuController extends BaseBeanController<Menu> {
         // 验证错误
         this.checkError(entity, result);
         menuService.insert(entity);
-        return Response.ok("添加成功");
+        return Response.successJson("添加成功", entity);
     }
 
     @PostMapping("update")

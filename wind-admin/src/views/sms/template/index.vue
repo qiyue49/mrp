@@ -220,7 +220,7 @@ export default {
                 }
               }
               this.dialogFormVisible = false
-              this.$message.success('更新成功')
+              this.$message.success(data.msg)
             } else {
               this.$message.error(response.data.msg)
             }

@@ -58,7 +58,7 @@ public class OrganizationController extends BaseBeanController<Organization> {
         this.checkError(entity, result);
         entity.setTenantId(UserUtils.getTenantId());
         organizationService.insert(entity);
-        return Response.successJson(entity);
+        return Response.successJson("添加成功", entity);
     }
 
 

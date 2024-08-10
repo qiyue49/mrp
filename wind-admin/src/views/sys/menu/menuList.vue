@@ -51,7 +51,7 @@
       </el-table-column>
     </el-table>
 
-    <menu-form ref="form" @refresh-list="getList" />
+    <menu-form ref="form" @refresh-list="refreshList" />
 
     <menu-gen-button ref="genButtonFrom" @refresh-list="getList" />
   </div>
@@ -94,6 +94,27 @@ export default {
     load(tree, treeNode, resolve) {
       resolve(tree.children)
     },
+    refreshList(row) {
+      if (row.parentId === undefined) {
+        this.list.push(row)
+        return
+      }
+      this.refreshTree(this.list, row)
+    },
+    refreshTree(list, row) {
+      list.forEach((item) => {
+        if (item.id === row.parentId) {
+          const temp = item.children.find(child => child.id === row.id)
+          if (temp) {
+            Object.assign(temp, row)
+          } else {
+            item.children.push(row)
+          }
+        } else if (!this.isNull(item.children)) {
+          this.refreshTree(item.children, row)
+        }
+      })
+    },
     handleFilter() {
       this.getList()
     },
@@ -128,11 +149,20 @@ export default {
           const data = response.data
           if (data.code === 0) {
             this.$message.success('删除成功')
-            this.getList()
+            this.deleteTree(this.list, row)
           } else {
             this.$message.error(data.errmsg)
           }
         })
+      })
+    },
+    deleteTree(list, row) {
+      list.forEach((item) => {
+        if (item.id === row.id) {
+          list.splice(list.indexOf(row), 1)
+        } else if (!this.isNull(item.children)) {
+          this.deleteTree(item.children, row)
+        }
       })
     }
   }

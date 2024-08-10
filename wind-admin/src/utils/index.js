@@ -257,8 +257,8 @@ export function toggleClass(element, className) {
     classString += '' + className
   } else {
     classString =
-      classString.substr(0, nameIndex) +
-      classString.substr(nameIndex + className.length)
+      classString.substring(0, nameIndex) +
+      classString.substring(nameIndex + className.length)
   }
   element.className = classString
 }

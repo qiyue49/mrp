@@ -174,7 +174,7 @@ export default {
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false
-              this.$message.success('更新成功')
+              this.$message.success(data.msg)
               this.getList()
             } else {
               this.$message.error(data.msg)

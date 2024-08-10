@@ -148,7 +148,7 @@ export default {
           if (this.temp.parentIds !== undefined) {
             let parentIds = this.temp.parentIds.trim()
             if (parentIds.length > 0) {
-              parentIds = parentIds.substr(0, parentIds.length - 1)
+              parentIds = parentIds.substring(0, parentIds.length - 1)
             }
             this.temp.parentIds = parentIds.split('\/')
           }

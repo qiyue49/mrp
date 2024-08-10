@@ -56,7 +56,7 @@
         <el-col :span="12">
           <el-form-item label="上级菜单" prop="parentIds">
             <el-cascader
-              v-model="temp.parentIds"
+              v-model="parentIds"
               :options="list"
               :props="treeProps"
               :show-all-levels="false"
@@ -103,12 +103,10 @@
     </el-form>
     <template #footer>
       <el-button @click="dialogFormVisible = false">取消</el-button>
-      <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData(true)">
+      <el-button v-permission="['sys:menu:update']" type="primary" :loading="loading" @click="title==='新增'?createData():updateData()">
         确定
       </el-button>
-      <el-button v-if="title==='新增'" :loading="loading" type="primary" @click="updateData(false)">保存</el-button>
     </template>
-
   </el-dialog>
 </template>
 <script>
@@ -123,6 +121,7 @@ export default {
   data() {
     return {
       list: [],
+      parentIds: undefined,
       temp: {},
       rules1: {
         type: [{ required: true, message: '菜单名称必填' }],
@@ -175,8 +174,8 @@ export default {
     this.ruleList = [this.rules1, this.rules2, this.rules3]
   },
   methods: {
-    getList() {
-      this.$emit('refreshList')
+    getList(data) {
+      this.$emit('refreshList', data)
     },
     setList(list) {
       this.list = list
@@ -216,26 +215,20 @@ export default {
     },
     createData() {
       // 预处理提交的数据
-      const parentIds = this.temp.parentIds
-      if (parentIds !== undefined && parentIds !== '') {
-        if (parentIds instanceof Array && parentIds.length > 0) {
-          const parentId = parentIds[parentIds.length - 1]
-          this.temp.parentId = parentId
-        }
+      const parentIds = this.parentIds
+      if (parentIds instanceof Array && parentIds.length > 0) {
+        this.temp.parentId = parentIds[parentIds.length - 1]
       }
       this.$refs.dataForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
-            this.temp.parentIds.length = 0
-          }
           createMenu(this.temp).then((response) => {
             this.loading = false
             const data = response.data
             if (data.code === 0) {
               this.dialogFormVisible = false
-              this.$message.success('删除成功')
-              this.getList()
+              this.getList(data.data)
+              this.$message.success(data.msg)
             } else {
               this.$message.error(data.msg)
             }
@@ -259,9 +252,9 @@ export default {
           if (this.temp.parentIds !== undefined) {
             let parentIds = this.temp.parentIds.trim()
             if (parentIds.length > 0) {
-              parentIds = parentIds.substr(0, parentIds.length - 1)
+              parentIds = parentIds.substring(0, parentIds.length - 1)
             }
-            this.temp.parentIds = parentIds.split('\/')
+            this.parentIds = parentIds.split('\/')
             this.externalLink = isExternal(this.temp.path) ? '1' : '0'
           }
         } else {
@@ -270,35 +263,22 @@ export default {
         }
       })
     },
-    updateData(refresh) {
+    updateData() {
       this.$refs.dataForm.validate((valid) => {
         if (valid) {
-          const parentIds = this.temp.parentIds
-          if (parentIds !== undefined && parentIds !== '') {
-            if (parentIds instanceof Array && parentIds.length > 0) {
-              const parentId = parentIds[parentIds.length - 1]
-              this.temp.parentId = parentId
-            } else {
-              this.temp.parentId = ''
-            }
+          const parentIds = this.parentIds
+          if (parentIds instanceof Array && parentIds.length > 0) {
+            this.temp.parentId = parentIds[parentIds.length - 1]
+          } else {
+            this.temp.parentId = undefined
           }
-          if (this.temp.parentIds !== undefined && this.temp.parentIds !== '') {
-            this.temp.parentIds = undefined
-          }
-          if (this.temp.parent !== undefined) {
-            this.temp.parent = undefined
-          }
-          const tempData = Object.assign({}, this.temp)
-          this.loading = true
-          updateMenu(tempData).then((response) => {
+          updateMenu(this.temp).then((response) => {
             this.loading = false
             const data = response.data
             if (data.code === 0) {
-              if (refresh) {
-                this.getList()
-              }
+              this.getList(this.temp)
               this.dialogFormVisible = false
-              this.$message.success('更新成功')
+              this.$message.success(data.msg)
             } else {
               this.$message.error(data.msg)
             }
@@ -310,7 +290,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
