@@ -17,7 +17,7 @@
     </sql>
 
     <select
-            id="selectPage"
+            id="selectList"
             resultType="com.sunseagear.wind.modules.sys.entity.User">
         select
         <include refid="Base_Column_List"/>
