@@ -1,6 +1,7 @@
 package com.sunseagear.wind.security;
 
 import com.sunseagear.wind.common.helper.SysConfigHelper;
+import com.sunseagear.wind.modules.sys.service.impl.UserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SpringSecurityConfig {
 
     @Autowired
-    com.sunseagear.wind.modules.sys.service.impl.UserDetailsService userDetailsService;
+    UserDetailsService userDetailsService;
     @Autowired
     private JwtAuthFilter authFilter;
 
