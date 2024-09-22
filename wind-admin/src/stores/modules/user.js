@@ -100,30 +100,5 @@ export const userStore = defineStore('user', () => {
     })
   }
 
-  // dynamically modify permissions
-  // function changeRoles(role) {
-  //   return new Promise(resolve => {
-  //     const token = role + '-token'
-  //
-  //     commit('SET_TOKEN', token)
-  //     setToken(token)
-  //
-  //     getInfo().then(({ roles }) => {
-  //       resetRouter()
-  //
-  //       // generate accessible routes map based on roles
-  //       dispatch('permission/generateRoutes', roles, { root: true }).then(accessRoutes => {
-  //         // dynamically add accessible routes
-  //         router.addRoutes(accessRoutes)
-  //
-  //         // reset visited views and cached views
-  //         dispatch('tagsView/delAllViews', null, { root: true })
-  //
-  //         resolve()
-  //       })
-  //     })
-  //   })
-  // }
-
   return { userInfo, token, refreshToken, roles, login, getInfo, logout, setToken }
 })

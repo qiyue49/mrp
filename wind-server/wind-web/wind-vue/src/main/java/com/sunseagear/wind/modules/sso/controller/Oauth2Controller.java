@@ -56,9 +56,13 @@ public class Oauth2Controller {
     public String accessToken(HttpServletRequest request) {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String platform = request.getHeader("platform");
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             LoginLogUtils.recordFailLoginLog(UserUtils.getUser().getUsername(), "用户名密码不能为空");
             return Response.failJson("用户名密码不能为空");
+        }
+        if (StringUtils.isEmpty(platform)){
+            platform = "PC";
         }
         try {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -69,6 +73,7 @@ public class Oauth2Controller {
             dataMap.put("username", principal.getUsername());
             dataMap.put("realname", principal.getRealname());
             dataMap.put("tenantId", principal.getTenantId());
+            dataMap.put("platform", platform);
             dataMap.put("roleId", principal.getRoleId());
             final String accessToken = jwtHelper.createToken(dataMap, username);
             oAuthService.addAccessToken(accessToken, principal);
@@ -103,6 +108,10 @@ public class Oauth2Controller {
     @ResponseBody
     public String refreshToken(HttpServletRequest request) {
         String refreshToken = request.getParameter("refreshToken");
+        String platform = request.getHeader("platform");
+        if (StringUtils.isEmpty(platform)){
+            platform = "PC";
+        }
 
         //生成Access Token
         Principal principal = oAuthService.getPrincipalByRefreshToken(refreshToken);
@@ -115,6 +124,7 @@ public class Oauth2Controller {
         dataMap.put("username", principal.getUsername());
         dataMap.put("realname", principal.getRealname());
         dataMap.put("tenantId", principal.getTenantId());
+        dataMap.put("platform", platform);
         dataMap.put("roleId", principal.getRoleId());
         final String accessToken = jwtHelper.createToken(dataMap, principal.getUsername());
         oAuthService.addAccessToken(accessToken, principal);
