@@ -89,8 +89,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('email:template:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         emailTemplateService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

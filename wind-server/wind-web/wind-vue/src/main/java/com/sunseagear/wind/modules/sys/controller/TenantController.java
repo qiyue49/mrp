@@ -105,8 +105,7 @@ public class TenantController extends BaseBeanController<Tenant> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:tenant:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         tenantService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

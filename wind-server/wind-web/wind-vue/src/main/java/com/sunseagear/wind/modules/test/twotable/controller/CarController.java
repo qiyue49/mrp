@@ -79,7 +79,6 @@ public class CarController extends BaseBeanController<Car> {
     @PostMapping("delete/{id}")
     @PreAuthorize("hasAuthority('test:twotable:car:delete')")
     public String delete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
         carService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

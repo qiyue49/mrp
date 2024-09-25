@@ -126,8 +126,7 @@ public class UserController extends BaseBeanController<User> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:user:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         userService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }
@@ -172,7 +171,6 @@ public class UserController extends BaseBeanController<User> {
     public String export(HttpServletRequest request) {
         HashMap<String, Object> response = new HashMap<>();
         try {
-            TemplateExportParams params = new TemplateExportParams("");
             //加入条件
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             // 子查询
@@ -192,7 +190,7 @@ public class UserController extends BaseBeanController<User> {
             response.put("bytes", bytesRes);
             response.put("title", title);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("导出失败", e);
             return Response.error(ResponseError.NORMAL_ERROR, "导出失败");
         }
         return Response.toJson(response, "导出成功");

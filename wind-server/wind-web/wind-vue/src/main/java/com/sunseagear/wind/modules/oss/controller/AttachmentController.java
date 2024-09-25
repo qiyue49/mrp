@@ -69,7 +69,6 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('oss:attachment:delete')")
     public String batchDelete(@RequestParam(value = "ids", required = false) String[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
         attachmentService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

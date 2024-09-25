@@ -108,8 +108,7 @@ public class TableController extends BaseBeanController<Table> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:table:table:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         tableService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

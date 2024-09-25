@@ -82,8 +82,7 @@ public class MenuController extends BaseBeanController<Menu> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:menu:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         menuService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

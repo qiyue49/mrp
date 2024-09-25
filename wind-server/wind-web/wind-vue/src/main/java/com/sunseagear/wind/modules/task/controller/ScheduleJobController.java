@@ -76,8 +76,7 @@ public class ScheduleJobController extends BaseBeanController<ScheduleJob> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('task:schedule:job:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         scheduleJobService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

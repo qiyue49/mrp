@@ -93,8 +93,7 @@ public class TreeTableController extends BaseBeanController<TreeTable> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:treetable:treetable:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         treeTableService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

@@ -75,8 +75,7 @@ public class DictGroupController extends BaseBeanController<DictGroup> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:dict:group:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         dictGroupService.deleteBatchIds(idList);
         DictUtils.initDict();
         return Response.ok("删除成功");

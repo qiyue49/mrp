@@ -65,8 +65,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sms:sendlog:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         smsSendLogService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }
@@ -74,8 +73,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
     @PostMapping(value = "retrySend")
     public String retrySend(@RequestParam(value = "ids", required = false) String[] ids) {
         try {
-            List<Serializable> idList = java.util.Arrays.asList(ids);
-            smsSendLogService.retrySend(idList);
+                smsSendLogService.retrySend(idList);
         } catch (Exception e) {
             e.printStackTrace();
             return Response.error("重发队列添加失败");

@@ -102,8 +102,7 @@ public class DictController extends BaseBeanController<Dict> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:dict:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         dictService.deleteBatchIds(idList);
         DictUtils.initDict();
         return Response.ok("删除成功");

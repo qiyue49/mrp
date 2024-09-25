@@ -77,8 +77,7 @@ public class OperationLogController extends BaseBeanController<OperationLog> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('monitor:operation:log:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         operationLogService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

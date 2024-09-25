@@ -86,8 +86,7 @@ public class SmsTemplateController extends BaseBeanController<SmsTemplate> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sms:template:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         smsTemplateService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

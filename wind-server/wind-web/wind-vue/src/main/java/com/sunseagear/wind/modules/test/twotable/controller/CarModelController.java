@@ -93,8 +93,7 @@ public class CarModelController extends BaseBeanController<CarModel> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('test:twotable:car:delete')")
-    public String batchDelete(@RequestParam("ids") Long[] ids) {
-        List<Serializable> idList = java.util.Arrays.asList(ids);
+    public String batchDelete(@RequestParam("ids") List<Long> idList) {
         carModelService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }
