@@ -86,11 +86,10 @@ public class UserServiceImpl extends CommonServiceImpl<UserMapper, User> impleme
         return super.deleteById(id);
     }
 
-    public boolean deleteBatchIds(Collection<? extends Serializable> idList) {
+    public void deleteBatchIds(Collection<? extends Serializable> idList) {
         for (Serializable id : idList) {
             this.deleteById(id);
         }
-        return true;
     }
 
     @Override
