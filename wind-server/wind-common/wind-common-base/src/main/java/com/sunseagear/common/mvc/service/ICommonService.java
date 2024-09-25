@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 public interface ICommonService<T> extends IService<T> {
@@ -21,7 +22,7 @@ public interface ICommonService<T> extends IService<T> {
 
     boolean delete(Wrapper<T> wrapper);
 
-    void deleteBatchIds(List<Serializable> idList);
+    void deleteBatchIds(Collection<? extends Serializable> idList);
 
     boolean update(T entity);
 

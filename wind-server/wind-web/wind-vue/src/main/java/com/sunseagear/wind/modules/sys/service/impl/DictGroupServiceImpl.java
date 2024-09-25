@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Collection;
 
 @Transactional
 @Service("dictGroupService")
@@ -27,7 +27,7 @@ public class DictGroupServiceImpl extends CommonServiceImpl<DictGroupMapper, Dic
     }
 
     @Override
-    public void deleteBatchIds(List<Serializable> ids) {
+    public void deleteBatchIds(Collection<? extends Serializable> ids) {
         dictService.delete(new QueryWrapper<Dict>().in("gid", ids));
         super.deleteBatchIds(ids);
     }

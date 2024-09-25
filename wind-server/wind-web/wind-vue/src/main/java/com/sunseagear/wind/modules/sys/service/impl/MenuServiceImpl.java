@@ -24,7 +24,7 @@ public class MenuServiceImpl extends TreeCommonServiceImpl<MenuMapper, Menu, Lon
     private RoleMenuMapper roleMenuMapper;
 
     @Override
-    public void deleteBatchIds(List<Serializable> idList) {
+    public void deleteBatchIds(Collection<? extends Serializable> idList) {
         roleMenuMapper.delete(new QueryWrapper<RoleMenu>().in("menu_id", idList));
         super.deleteBatchIds(idList);
     }

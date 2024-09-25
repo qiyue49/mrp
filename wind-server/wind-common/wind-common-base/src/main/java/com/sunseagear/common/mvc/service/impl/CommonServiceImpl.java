@@ -20,7 +20,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     public Page<T> selectPage(Page<T> page) {
-        return (Page<T>) page(page);
+        return page(page);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class CommonServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M
     }
 
     @Override
-    public void deleteBatchIds(List<Serializable> idList) {
+    public void deleteBatchIds(Collection<? extends Serializable> idList) {
         if (isDemo) {
             return;
         }

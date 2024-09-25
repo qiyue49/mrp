@@ -8,6 +8,7 @@ import com.sunseagear.common.utils.ObjectUtils;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Transactional
@@ -83,7 +84,7 @@ public class TreeCommonServiceImpl<M extends BaseTreeMapper<T>, T extends TreeEn
     }
 
     @Override
-    public void deleteBatchIds(List<Serializable> idList) {
+    public void deleteBatchIds(Collection<? extends Serializable> idList) {
         if (isDemo) {
             return;
         }

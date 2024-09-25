@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
 @Transactional
@@ -35,7 +36,7 @@ public class RoleServiceImpl extends CommonServiceImpl<RoleMapper, Role> impleme
     }
 
     @Override
-    public void deleteBatchIds(List<Serializable> idList) {
+    public void deleteBatchIds(Collection<? extends Serializable> idList) {
         roleDataRuleMapper.delete(new QueryWrapper<RoleDataRule>().in("role_id", idList));
         roleMenuMapper.delete(new QueryWrapper<RoleMenu>().in("role_id", idList));
         userRoleMapper.delete(new QueryWrapper<UserRole>().in("role_id", idList));
