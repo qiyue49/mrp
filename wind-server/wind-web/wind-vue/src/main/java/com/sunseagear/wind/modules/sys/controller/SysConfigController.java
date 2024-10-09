@@ -109,7 +109,7 @@ public class SysConfigController extends BaseBeanController<SysConfig> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('sys:config:delete')")
-    public String delete(@RequestParam("ids") Long[] ids) {
+    public String delete(@RequestParam("ids") List<Long> idList) {
         sysConfigService.deleteBatchIds(idList);
         SysConfigHelper.getInstance().update(UserUtils.getTenantId());
         return Response.ok("删除成功");

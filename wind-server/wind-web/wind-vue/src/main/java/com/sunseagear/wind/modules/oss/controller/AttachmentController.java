@@ -68,7 +68,7 @@ public class AttachmentController extends BaseBeanController<Attachment> {
     @PostMapping("delete")
     @Log(logType = LogType.DELETE)
     @PreAuthorize("hasAuthority('oss:attachment:delete')")
-    public String batchDelete(@RequestParam(value = "ids", required = false) String[] ids) {
+    public String batchDelete(@RequestParam(value = "ids") List<Long> idList) {
         attachmentService.deleteBatchIds(idList);
         return Response.ok("删除成功");
     }

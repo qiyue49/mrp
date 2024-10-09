@@ -71,7 +71,7 @@ public class SmsSendLogController extends BaseBeanController<SmsSendLog> {
     }
 
     @PostMapping(value = "retrySend")
-    public String retrySend(@RequestParam(value = "ids", required = false) String[] ids) {
+    public String retrySend(@RequestParam(value = "ids") List<Long> idList) {
         try {
                 smsSendLogService.retrySend(idList);
         } catch (Exception e) {
