@@ -220,7 +220,7 @@ export default {
                 }
               }
               this.dialogFormVisible = false
-              this.$message.success(data.msg)
+              this.$message.success(response.data.msg)
             } else {
               this.$message.error(response.data.msg)
             }

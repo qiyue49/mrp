@@ -44,7 +44,7 @@ public class EmailTemplateController extends BaseBeanController<EmailTemplate> {
      * 根据页码和每页记录数，以及查询条件动态加载数据
      */
     @GetMapping(value = "list")
-    @Log(logType = LogType.SELECT)
+    @Log(title = "查询列表", logType = LogType.SELECT)
     @PreAuthorize("hasAuthority('email:template:list')")
     public String list(HttpServletRequest request) {
         //加入条件
