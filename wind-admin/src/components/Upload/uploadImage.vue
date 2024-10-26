@@ -56,7 +56,7 @@ export default {
       resultUrl: undefined,
       dialogImageUrl: undefined,
       dialogVisible: false,
-      myHeaders: { access_token: getToken() },
+      myHeaders: { Authorization: getToken() },
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + '/oss/attachment/upload',
       uploadData: { base_path: this.basePath }
     }
@@ -114,7 +114,7 @@ export default {
         refreshToken(refreshTokenData).then(res => {
           if (res.data.code === 0) {
             this.$store.userStore.setToken(res.data.data.accessToken)
-            this.myHeaders = { access_token: res.data.data.accessToken }
+            this.myHeaders = { Authorization: res.data.data.accessToken }
             file.status = 'ready'
             // this.$refs.upload.$forceUpdate()
             this.$refs.upload.submit()

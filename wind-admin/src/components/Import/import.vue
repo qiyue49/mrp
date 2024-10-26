@@ -58,7 +58,7 @@ export default {
     return {
       uploadImageUrl: import.meta.env.VITE_APP_BASE_API + this.importUrl,
       uploadData: { base_path: this.basePath },
-      myHeaders: { access_token: getToken() },
+      myHeaders: { Authorization: getToken() },
       extensions: ['xls', 'xlsx'],
       dialogFormVisible: false,
       uploadLoading: false,

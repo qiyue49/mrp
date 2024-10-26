@@ -24,7 +24,7 @@ service.interceptors.request.use(
     // Do something before request is sent
     if (!isNull(store.userStore.token)) {
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      config.headers.access_token = store.userStore.token
+      config.headers.Authorization = store.userStore.token
     }
     return config
   },
@@ -70,7 +70,7 @@ service.interceptors.response.use(
           // Do something before request is sent
           if (store.userStore.token) {
             // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-            originalRequest.headers.access_token = getToken()
+            originalRequest.headers.Authorization = getToken()
           }
           return axios.request(originalRequest)
         }
