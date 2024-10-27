@@ -13,7 +13,7 @@ export default ({ mode }) => {
   return {
     // 静态资源服务的文件夹
     publicDir: 'public',
-    base: './',
+    base: '/',
     server: {
       host: '0.0.0.0',
       port: 9527,
