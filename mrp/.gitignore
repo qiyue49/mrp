@@ -1,72 +1,47 @@
-# Ignore unrelated directories
-../
-manage/
-CoinExchange/
-LibraryManagement/
-airplaneFlyInTheSky/
-app-server/
-cicd-files/
-clearing/
-coin-exchange/
-dragon-infra-report/
-fucking-algorithm/
-im-server/
-international-settle-service/
-lyb3.0-trans-os-1.0/
-platform-sys/
-redis-trib.rb/
-roncoo-pay/
-settle/
-spring-cloud-openfeign/
-vue-chat/
-
-# Ignore IDE files
+# IDE files
 .idea/
+.vscode/
 
-# Ignore build artifacts
+# Build files
 target/
 
-# Ignore logs
-debug.log
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Ignore test files
-Test.java
-HelloWorld.java
-DirectRunner.java
-RunApplication.java
-SimpleApplication.java
-StartApplication.java
-test_mrp.py
-test_mrp.ps1
+# Environment variables
+.env
+.env.local
+.env.*.local
 
-# Ignore batch files
-build-and-run.bat
-build.bat
-maven-build.bat
-run-app.bat
-run-debug.bat
-run-spring.bat
-run.bat
-setup-and-run.bat
-setup-and-run.sh
-setup-and-start.bat
-setup.bat
-start-app.bat
-start-frontend.bat
-start.sh
+# OS generated files
+.DS_Store
+Thumbs.db
 
-# Ignore SQL files
-test-data-new.sql
-test-data.sql
+# Log files
+*.log
 
-# Ignore documentation files
-api-doc.md
-TEST_PLAN.md
-test_report.md
+# Temporary files
+*.tmp
+*.temp
 
-# Ignore Docker files
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+
+# Testing
+coverage/
+
+# Docker
 docker-compose.yml
 Dockerfile
 
-# Ignore pom files
-simple-pom.xml
+# Batch files
+*.bat
+*.sh
+
+# Test files
+test-*.py
+test-*.ps1
