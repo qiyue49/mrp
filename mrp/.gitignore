@@ -4,6 +4,7 @@
 
 # Build files
 target/
+dist/
 
 # Node.js
 node_modules/
@@ -45,3 +46,6 @@ Dockerfile
 # Test files
 test-*.py
 test-*.ps1
+
+# Unrelated directories
+wind-server/
