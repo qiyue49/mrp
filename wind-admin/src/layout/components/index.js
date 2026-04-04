@@ -1,5 +1,0 @@
-export { AppMain } from './AppMain.vue'
-export { Navbar } from './Navbar.vue'
-export { Settings } from './Settings/index.vue'
-export { Sidebar } from './Sidebar/index.vue'
-export { TagsView } from './TagsView/index.vue'
