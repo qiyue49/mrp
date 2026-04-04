@@ -1,0 +1,72 @@
+# Ignore unrelated directories
+../
+manage/
+CoinExchange/
+LibraryManagement/
+airplaneFlyInTheSky/
+app-server/
+cicd-files/
+clearing/
+coin-exchange/
+dragon-infra-report/
+fucking-algorithm/
+im-server/
+international-settle-service/
+lyb3.0-trans-os-1.0/
+platform-sys/
+redis-trib.rb/
+roncoo-pay/
+settle/
+spring-cloud-openfeign/
+vue-chat/
+
+# Ignore IDE files
+.idea/
+
+# Ignore build artifacts
+target/
+
+# Ignore logs
+debug.log
+
+# Ignore test files
+Test.java
+HelloWorld.java
+DirectRunner.java
+RunApplication.java
+SimpleApplication.java
+StartApplication.java
+test_mrp.py
+test_mrp.ps1
+
+# Ignore batch files
+build-and-run.bat
+build.bat
+maven-build.bat
+run-app.bat
+run-debug.bat
+run-spring.bat
+run.bat
+setup-and-run.bat
+setup-and-run.sh
+setup-and-start.bat
+setup.bat
+start-app.bat
+start-frontend.bat
+start.sh
+
+# Ignore SQL files
+test-data-new.sql
+test-data.sql
+
+# Ignore documentation files
+api-doc.md
+TEST_PLAN.md
+test_report.md
+
+# Ignore Docker files
+docker-compose.yml
+Dockerfile
+
+# Ignore pom files
+simple-pom.xml
