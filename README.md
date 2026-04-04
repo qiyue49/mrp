@@ -98,11 +98,13 @@ Default database configuration:
 
 **Option A: Run via Maven**
 ```bash
+cd mrp
 mvn spring-boot:run
 ```
 
 **Option B: Build and Run JAR**
 ```bash
+cd mrp
 mvn clean package -DskipTests
 java -jar target/mrp-system-1.0.0.jar
 ```
@@ -156,27 +158,29 @@ java -jar target/mrp-system-1.0.0.jar
 ## Project Structure
 
 ```
-src/
-├── main/
-│   ├── java/com/sparkit/mrp/
-│   │   ├── MrpSystemApplication.java    # Application entry point
-│   │   ├── common/                      # Common utilities and handlers
-│   │   ├── config/                      # Configuration classes
-│   │   ├── controller/                  # REST API controllers
-│   │   ├── data/                        # Data initialization
-│   │   ├── dto/                         # Data transfer objects
-│   │   ├── entity/                      # JPA entities
-│   │   ├── event/                       # Event classes (order, production, sample)
-│   │   ├── health/                      # Health indicators
-│   │   ├── repository/                  # JPA repositories
-│   │   ├── service/                     # Business logic services
-│   │   └── util/                        # Utility classes
-│   └── resources/
-│       ├── static/                      # Frontend static files
-│       │   └── index.html               # Main frontend entry
-│       └── application.yml              # Application configuration
-└── test/                                # Unit and integration tests
-pom.xml                                  # Maven configuration
+mrp/
+├── src/
+│   ├── main/
+│   │   ├── java/com/sparkit/mrp/
+│   │   │   ├── MrpSystemApplication.java    # Application entry point
+│   │   │   ├── common/                      # Common utilities and handlers
+│   │   │   ├── config/                      # Configuration classes
+│   │   │   ├── controller/                  # REST API controllers
+│   │   │   ├── data/                        # Data initialization
+│   │   │   ├── dto/                         # Data transfer objects
+│   │   │   ├── entity/                      # JPA entities
+│   │   │   ├── event/                       # Event classes (order, production, sample)
+│   │   │   ├── health/                      # Health indicators
+│   │   │   ├── repository/                  # JPA repositories
+│   │   │   ├── service/                     # Business logic services
+│   │   │   └── util/                        # Utility classes
+│   │   └── resources/
+│   │       ├── static/                      # Frontend static files
+│   │       │   └── index.html               # Main frontend entry
+│   │       └── application.yml              # Application configuration
+│   └── test/                                # Unit and integration tests
+├── pom.xml                                  # Maven configuration
+└── README.md                                # This file
 ```
 
 ## Configuration
@@ -225,6 +229,7 @@ server:
 Run unit and integration tests:
 
 ```bash
+cd mrp
 mvn test
 ```
 
@@ -288,6 +293,10 @@ eventPublisher.publish(new OrderCreatedEvent(order));
 ## License
 
 MIT License - See LICENSE file for details
+
+## Support
+
+For issues and feature requests, please contact the development team.
 
 ---
 
