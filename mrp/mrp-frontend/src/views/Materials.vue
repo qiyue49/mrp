@@ -26,12 +26,14 @@
             prefix-icon="Search"
             clearable
             class="filter-item"
+            @keyup.enter="loadMaterials"
           />
           <el-select
             v-model="categoryFilter"
             placeholder="Filter by category"
             clearable
             class="filter-item"
+            @change="loadMaterials"
           >
             <el-option label="Raw Material" value="RAW" />
             <el-option label="Component" value="COMPONENT" />
@@ -50,7 +52,7 @@
     </div>
     <div v-else class="table-section">
       <el-card class="table-card">
-        <el-table :data="filteredMaterials" style="width: 100%" border stripe>
+        <el-table :data="materials" style="width: 100%" border stripe>
           <el-table-column prop="materialCode" label="Code" width="120" />
           <el-table-column prop="materialName" label="Name" width="200" />
           <el-table-column prop="category" label="Category" width="120">
@@ -59,11 +61,15 @@
             </template>
           </el-table-column>
           <el-table-column prop="unit" label="Unit" width="80" />
-          <el-table-column prop="cost" label="Cost" width="100">
-            <template #default="scope">${{ scope.row.cost }}</template>
+          <el-table-column prop="price" label="Price" width="100">
+            <template #default="scope">${{ scope.row.price.toFixed(2) }}</template>
           </el-table-column>
           <el-table-column prop="leadTime" label="Lead Time (days)" width="140" />
-          <el-table-column prop="supplier" label="Supplier" width="150" />
+          <el-table-column prop="status" label="Status" width="100">
+            <template #default="scope">
+              <el-tag :type="getStatusType(scope.row.status)">{{ scope.row.status }}</el-tag>
+            </template>
+          </el-table-column>
           <el-table-column label="Actions" width="150" fixed="right">
             <template #default="scope">
               <el-button type="primary" size="small" @click="handleView(scope.row)">
@@ -85,7 +91,9 @@
             v-model:page-size="pageSize"
             :page-sizes="[10, 20, 50, 100]"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="filteredMaterials.length"
+            :total="total"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
           />
         </div>
       </el-card>
@@ -115,14 +123,20 @@
             <el-option label="L" value="L" />
           </el-select>
         </el-form-item>
-        <el-form-item label="Cost" prop="cost">
-          <el-input-number v-model="form.cost" :min="0" :precision="2" />
+        <el-form-item label="Price" prop="price">
+          <el-input-number v-model="form.price" :min="0" :precision="2" />
         </el-form-item>
         <el-form-item label="Lead Time (days)" prop="leadTime">
           <el-input-number v-model="form.leadTime" :min="0" />
         </el-form-item>
-        <el-form-item label="Supplier" prop="supplier">
-          <el-input v-model="form.supplier" placeholder="Enter supplier name" />
+        <el-form-item label="Alternative Material" prop="alternativeMaterial">
+          <el-input v-model="form.alternativeMaterial" placeholder="Enter alternative material code" />
+        </el-form-item>
+        <el-form-item label="Status" prop="status">
+          <el-select v-model="form.status" placeholder="Select status">
+            <el-option label="ACTIVE" value="ACTIVE" />
+            <el-option label="INACTIVE" value="INACTIVE" />
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
@@ -134,15 +148,18 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { Box, Plus, Search, Refresh, View, Edit, Delete } from '@element-plus/icons-vue'
 import { ElMessageBox, ElMessage } from 'element-plus'
+import materialApi from '../api/materials'
 
 const isLoading = ref(true)
 const searchQuery = ref('')
 const categoryFilter = ref('')
 const currentPage = ref(1)
 const pageSize = ref(10)
+const total = ref(0)
+const materials = ref([])
 const dialogVisible = ref(false)
 const dialogTitle = ref('New Material')
 const formRef = ref(null)
@@ -153,56 +170,58 @@ const form = ref({
   materialName: '',
   category: 'RAW',
   unit: 'EA',
-  cost: 0,
+  price: 0,
   leadTime: 1,
-  supplier: ''
+  alternativeMaterial: '',
+  status: 'ACTIVE'
 })
 
 const rules = {
   materialCode: [{ required: true, message: 'Please enter material code', trigger: 'blur' }],
   materialName: [{ required: true, message: 'Please enter material name', trigger: 'blur' }],
   category: [{ required: true, message: 'Please select category', trigger: 'blur' }],
-  unit: [{ required: true, message: 'Please select unit', trigger: 'blur' }]
+  unit: [{ required: true, message: 'Please select unit', trigger: 'blur' }],
+  price: [{ required: true, message: 'Please enter price', trigger: 'blur' }],
+  leadTime: [{ required: true, message: 'Please enter lead time', trigger: 'blur' }],
+  status: [{ required: true, message: 'Please select status', trigger: 'blur' }]
 }
 
-const materials = ref([
-  { id: 1, materialCode: 'MAT001', materialName: 'Steel Plate', category: 'RAW', unit: 'KG', cost: 15.50, leadTime: 7, supplier: 'Steel Corp' },
-  { id: 2, materialCode: 'MAT002', materialName: 'Aluminum Sheet', category: 'RAW', unit: 'KG', cost: 20.00, leadTime: 5, supplier: 'Aluminum Inc' },
-  { id: 3, materialCode: 'MAT003', materialName: 'Plastic Resin', category: 'RAW', unit: 'KG', cost: 8.00, leadTime: 3, supplier: 'Plastic Co' },
-  { id: 4, materialCode: 'MAT004', materialName: 'Copper Wire', category: 'COMPONENT', unit: 'M', cost: 2.50, leadTime: 4, supplier: 'Copper Inc' },
-  { id: 5, materialCode: 'MAT005', materialName: 'Electronic Board', category: 'COMPONENT', unit: 'EA', cost: 25.00, leadTime: 2, supplier: 'Tech Electronics' },
-  { id: 6, materialCode: 'MAT006', materialName: 'Plastic Housing', category: 'COMPONENT', unit: 'EA', cost: 3.50, leadTime: 3, supplier: 'Plastic Co' },
-  { id: 7, materialCode: 'MAT007', materialName: 'Screws', category: 'COMPONENT', unit: 'EA', cost: 0.10, leadTime: 1, supplier: 'Hardware Inc' },
-  { id: 8, materialCode: 'MAT008', materialName: 'Paint', category: 'RAW', unit: 'L', cost: 12.00, leadTime: 2, supplier: 'Paint Co' }
-])
-
-const filteredMaterials = computed(() => {
-  let result = [...materials.value]
-  
-  if (searchQuery.value) {
-    const query = searchQuery.value.toLowerCase()
-    result = result.filter(material => 
-      material.materialName.toLowerCase().includes(query) ||
-      material.materialCode.toLowerCase().includes(query)
-    )
+const loadMaterials = async () => {
+  isLoading.value = true
+  try {
+    const params = {
+      page: currentPage.value - 1,
+      size: pageSize.value,
+      sortBy: 'id',
+      direction: 'asc'
+    }
+    
+    const response = await materialApi.getMaterials(params)
+    materials.value = response.data.content
+    total.value = response.data.totalElements
+  } catch (error) {
+    console.error('Error loading materials:', error)
+    ElMessage.error('Failed to load materials')
+  } finally {
+    isLoading.value = false
   }
-  
-  if (categoryFilter.value) {
-    result = result.filter(material => material.category === categoryFilter.value)
-  }
-  
-  return result
-})
+}
 
 const getCategoryType = (category) => {
   const types = { 'RAW': 'info', 'COMPONENT': 'warning', 'FINISHED': 'success' }
   return types[category] || 'info'
 }
 
+const getStatusType = (status) => {
+  const types = { 'ACTIVE': 'success', 'INACTIVE': 'danger' }
+  return types[status] || 'info'
+}
+
 const resetFilters = () => {
   searchQuery.value = ''
   categoryFilter.value = ''
   currentPage.value = 1
+  loadMaterials()
 }
 
 const handleAddMaterial = () => {
@@ -212,9 +231,10 @@ const handleAddMaterial = () => {
     materialName: '',
     category: 'RAW',
     unit: 'EA',
-    cost: 0,
+    price: 0,
     leadTime: 1,
-    supplier: ''
+    alternativeMaterial: '',
+    status: 'ACTIVE'
   }
   dialogTitle.value = 'New Material'
   dialogVisible.value = true
@@ -228,7 +248,7 @@ const handleEdit = (material) => {
 
 const handleView = (material) => {
   console.log('View material:', material)
-  // Implement view functionality
+  // Implement view functionality if needed
 }
 
 const handleDelete = (id) => {
@@ -240,11 +260,14 @@ const handleDelete = (id) => {
       cancelButtonText: 'No',
       type: 'warning'
     }
-  ).then(() => {
-    const index = materials.value.findIndex(m => m.id === id)
-    if (index > -1) {
-      materials.value.splice(index, 1)
+  ).then(async () => {
+    try {
+      await materialApi.deleteMaterial(id)
       ElMessage.success('Material deleted successfully')
+      loadMaterials()
+    } catch (error) {
+      console.error('Error deleting material:', error)
+      ElMessage.error('Failed to delete material')
     }
   }).catch(() => {
     // Cancel operation
@@ -259,26 +282,35 @@ const handleSave = async () => {
     
     if (form.value.id) {
       // Update existing material
-      const index = materials.value.findIndex(m => m.id === form.value.id)
-      if (index > -1) {
-        materials.value[index] = { ...form.value }
-        ElMessage.success('Material updated successfully')
-      }
+      await materialApi.updateMaterial(form.value.id, form.value)
+      ElMessage.success('Material updated successfully')
     } else {
       // Create new material
-      form.value.id = materials.value.length + 1
-      materials.value.push({ ...form.value })
+      await materialApi.createMaterial(form.value)
       ElMessage.success('Material created successfully')
     }
     
     dialogVisible.value = false
+    loadMaterials()
   } catch (error) {
-    console.error('Validation error:', error)
+    console.error('Error saving material:', error)
+    ElMessage.error('Failed to save material')
   }
 }
 
+const handleSizeChange = (size) => {
+  pageSize.value = size
+  currentPage.value = 1
+  loadMaterials()
+}
+
+const handleCurrentChange = (current) => {
+  currentPage.value = current
+  loadMaterials()
+}
+
 onMounted(() => {
-  isLoading.value = false
+  loadMaterials()
 })
 </script>
 
